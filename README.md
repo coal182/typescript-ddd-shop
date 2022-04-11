@@ -78,6 +78,16 @@ You also need to setup and initialise MongoDB database. Then, copy the `.env_exa
 cp .env_template .env
 ````
 
+To deploy docker container
+
+````bash
+docker build -t ts-bookstore-api .
+````
+
+````bash
+docker-compose up
+````
+
 Do adjust the DB_NAME and MONGODB_URI to match your configuration then run
 
 ````bash
