@@ -1,0 +1,49 @@
+version: '3.5'
+
+services:
+
+  redis:
+    image: redis:5-alpine
+    container_name: tba-redis
+    ports:
+      - 6379:6379
+
+  mongodb:
+    image: mongo:4.4
+    container_name: tba-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/apps/mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=cristian
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+
+  # Database Manager
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8099:8081
+    depends_on:
+      - mongodb
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: cristian
+      ME_CONFIG_BASICAUTH_PASSWORD: 123456
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 123456
+    links:
+      - mongodb
+
+  api:
+    image: ts-bookstore-api:latest
+    container_name: tba-api
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/app
+      - ./node_modules/:/node_modules
+    ports:
+      - 3000:3000
+    links:
+      - mongodb
+      - redis
