@@ -5,4 +5,5 @@ export default {
   REDIS_URI: process.env.REDIS_URI || 'redis://tba-redis:6379',
   REDIS_HOST: process.env.REDIS_HOST || 'tba-redis',
   REDIS_PORT: process.env.REDIS_PORT || 6379,
+  REDIS_PASSWORD: process.env.REDIS_PASSWORD || '123456',
 };

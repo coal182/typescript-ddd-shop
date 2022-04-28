@@ -49,13 +49,13 @@ import { errorHandler } from '@interfaces/http/middlewares/ErrorHandler';
 
 const initialise = async () => {
   const container = new Container();
-
+  console.log(config.MONGODB_URI);
   // Module Registration
   const db: Db = await createMongodbConnection(config.MONGODB_URI);
 
   // Initialise Redis
-  const redisSubscriber: Redis = getRedisClient();
-  const redis: Redis = getRedisClient();
+  const redisSubscriber: Redis = getRedisClient(Number(config.REDIS_PORT), config.REDIS_HOST, config.REDIS_PASSWORD);
+  const redis: Redis = getRedisClient(Number(config.REDIS_PORT), config.REDIS_HOST, config.REDIS_PASSWORD);
   await redisSubscriber.subscribe(['book', 'user', 'loan']);
 
   container.bind<Redis>(TYPES.RedisSubscriber).toConstantValue(redisSubscriber);

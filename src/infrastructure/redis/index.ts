@@ -1,5 +1,5 @@
 import RedisClient, { Redis } from 'ioredis';
 
-export const getRedisClient = (): Redis => {
-  return new RedisClient();
+export const getRedisClient = (port: number, host: string, password: string): Redis => {
+  return new RedisClient(port, host, { password });
 };

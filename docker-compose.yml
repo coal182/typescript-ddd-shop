@@ -2,48 +2,13 @@ version: '3.5'
 
 services:
 
-  redis:
-    image: redis:5-alpine
-    container_name: tba-redis
-    ports:
-      - "6379:6379"
-
-  redis-commander:
-    container_name: tba-redis-commander
-    hostname: redis-commander
-    image: rediscommander/redis-commander:latest
-    restart: always
-    environment:
-    - REDIS_HOSTS=local:redis:6379
-    ports:
-    - "8081:8081"
-
-  mongodb:
-    image: mongo:4.4
-    container_name: tba-mongo
-    command: mongod --auth
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./data/mongo:/data/db
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    environment:
-      - MONGO_INITDB_DATABASE=bookstore
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=123456
-
   api:
-    build: .
+    image: node:17.6-alpine
     container_name: tba-api
-    working_dir: /usr/src/app
+    working_dir: /app
     volumes:
       - ./:/app
-      - /node_modules
+      - ./node_modules/:/node_modules
     ports:
       - "3000:3000"
-    depends_on:
-      - mongodb
-      - redis
-    links:
-      - mongodb
-      - redis
+    command: sh -c "yarn && yarn dev"
