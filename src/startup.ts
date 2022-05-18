@@ -1,5 +1,6 @@
 import '@interfaces/http/controllers';
 
+import cors from 'cors';
 import { Application, urlencoded, json } from 'express';
 import { Container } from 'inversify';
 import { InversifyExpressServer } from 'inversify-express-utils';
@@ -105,7 +106,16 @@ const initialise = async () => {
 
   const server = new InversifyExpressServer(container);
 
+  // Add a list of allowed origins.
+  // If you have more origins you would like to add, you can add them to the array below.
+  const allowedOrigins = ['http://localhost:3000', 'https://angular-pvnyyc--4200.local.webcontainer.io/'];
+
+  const options: cors.CorsOptions = {
+    origin: allowedOrigins,
+  };
+
   server.setConfig((app: Application) => {
+    app.use(cors(options));
     app.use(urlencoded({ extended: true }));
     app.use(json());
   });
