@@ -1,5 +1,5 @@
 export default {
-  API_PORT: process.env.API_PORT || 3000,
+  API_PORT: process.env.PORT || 3000,
   MONGODB_URI: process.env.MONGODB_URI || 'mongodb://user:123456@mongodb:27017/bookstore',
   DB_NAME: process.env.DB_NAME || 'bookstore',
   REDIS_URI: process.env.REDIS_URI || 'redis://redis-16955.c278.us-east-1-4.ec2.cloud.redislabs.com:16955',
