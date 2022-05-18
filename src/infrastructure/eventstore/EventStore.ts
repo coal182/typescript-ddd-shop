@@ -41,7 +41,7 @@ export abstract class EventStore implements IEventStore {
     if (!events.length) {
       throw new NotFoundException('Aggregate with the requested Guid does not exist');
     }
-    return events.map((eventDescriptor: EventDescriptor) => eventDescriptor.payload);
+    return events.map((eventDescriptor: EventDescriptor) => eventDescriptor.data);
   }
 
   private async getLastEventDescriptor(aggregateGuid: string) {

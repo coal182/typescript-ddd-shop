@@ -5,7 +5,7 @@ import { TYPES } from '@constants/types';
 import { IEventBus } from '@core/IEventBus';
 import { IEventStore } from '@core/IEventStore';
 
-import { EventStore } from '.';
+import { EventStore } from './EventStore';
 
 @injectable()
 export class BookEventStore extends EventStore implements IEventStore {

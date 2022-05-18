@@ -4,10 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "start": "node -r tsconfig-paths/register -r ts-node ./src/index/ts",
     "dev": "ts-node-dev -r tsconfig-paths/register ./src/index.ts",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix .",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@types/body-parser": "^1.19.0",
@@ -27,6 +28,7 @@
     "nanoid": "^3.1.20",
     "nodemon": "^2.0.15",
     "reflect-metadata": "^0.1.13",
+    "tscpaths": "0.0.9",
     "uuid": "^8.2.0"
   },
   "devDependencies": {

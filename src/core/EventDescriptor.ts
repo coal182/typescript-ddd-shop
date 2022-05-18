@@ -4,7 +4,7 @@ export class EventDescriptor {
   constructor(
     public readonly aggregateGuid: string,
     public readonly aggregateName: string,
-    public readonly payload: IEvent,
+    public readonly data: IEvent,
     public readonly version: number
   ) {}
 }
