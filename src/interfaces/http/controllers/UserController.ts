@@ -1,3 +1,4 @@
+import { genSaltSync, hashSync } from 'bcryptjs';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, httpGet, httpPost, request, response } from 'inversify-express-utils';
@@ -18,8 +19,12 @@ export class UserController {
 
   @httpPost('')
   async createUser(@request() req: Request, @response() res: Response) {
-    const { email, firstname, lastname, dateOfBirth } = req.body;
-    const command = new CreateUserCommand(email, firstname, lastname, new Date(dateOfBirth));
+    const { email, firstname, lastname, dateOfBirth, password } = req.body;
+
+    const salt = genSaltSync(10);
+    const hash = hashSync(password, salt);
+
+    const command = new CreateUserCommand(email, firstname, lastname, new Date(dateOfBirth), hash);
     await this.commandBus.send(command);
     return res.json(ok('Successfully created the user', undefined));
   }

@@ -13,7 +13,7 @@ export class CreateBookCommandHandler implements ICommandHandler<CreateBookComma
   constructor(@inject(TYPES.BookRepository) private readonly repository: IBookRepository) {}
 
   async handle(command: CreateBookCommand) {
-    const book = new Book(command.guid, command.name, command.authorId, command.price);
+    const book = new Book(command.guid, command.name, command.description, command.authorId, command.price);
     this.repository.save(book, -1);
   }
 }

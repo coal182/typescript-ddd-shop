@@ -31,6 +31,7 @@ export class UserCreatedEventHandler implements IEventHandler<UserCreated> {
       firstname: event.firstname,
       lastname: event.lastname,
       dateOfBirth: event.dateOfBirth.toString(),
+      password: event.password,
     });
   }
 }

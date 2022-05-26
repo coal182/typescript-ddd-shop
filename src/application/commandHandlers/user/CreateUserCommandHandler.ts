@@ -13,7 +13,14 @@ export class CreateUserCommandHandler implements ICommandHandler<CreateUserComma
   constructor(@inject(TYPES.UserRepository) private readonly repository: IUserRepository) {}
 
   async handle(command: CreateUserCommand) {
-    const user = new User(command.guid, command.email, command.firstname, command.lastname, command.dateOfBirth);
+    const user = new User(
+      command.guid,
+      command.email,
+      command.firstname,
+      command.lastname,
+      command.dateOfBirth,
+      command.password
+    );
     this.repository.save(user, -1);
   }
 }

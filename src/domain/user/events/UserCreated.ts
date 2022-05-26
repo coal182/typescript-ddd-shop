@@ -10,7 +10,8 @@ export class UserCreated extends Event implements IEvent {
     public email: string,
     public firstname: string,
     public lastname: string,
-    public dateOfBirth: Date
+    public dateOfBirth: Date,
+    public password: string
   ) {
     super();
   }

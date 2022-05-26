@@ -31,8 +31,8 @@ export class BookController {
 
   @httpPost('/')
   async createBook(@request() req: Request, @response() res: Response) {
-    const { name, authorId, price } = req.body;
-    const command = new CreateBookCommand(name, authorId, price);
+    const { name, description, authorId, price } = req.body;
+    const command = new CreateBookCommand(name, description, authorId, price);
     await this.commandBus.send(command);
     return res.json(ok('Successfully created the book', undefined));
   }
