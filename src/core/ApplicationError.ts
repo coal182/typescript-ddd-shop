@@ -16,6 +16,12 @@ export class NotFoundException extends ApplicationError {
   }
 }
 
+export class PasswordNotMatchException extends ApplicationError {
+  constructor(public readonly message: string) {
+    super(NOT_FOUND, '404', message || 'Password not match');
+  }
+}
+
 export class ConcurrencyException extends ApplicationError {
   constructor(public readonly message: string) {
     super(CONFLICT, '409', message || 'Concurrency detected');

@@ -19,6 +19,7 @@ export const TYPES = {
   // Read Model Facade (for book)
   BookReadModelFacade: Symbol('BookReadModelFacade'),
   AuthorReadModelFacade: Symbol('AuthorReadModelFacade'),
+  UserReadModelFacade: Symbol('UserReadModelFacade'),
 
   // Command Bus
   CommandBus: Symbol('CommandBus'),

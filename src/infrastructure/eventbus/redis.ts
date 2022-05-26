@@ -16,6 +16,7 @@ export class RedisEventBus implements IEventBus {
   ) {}
 
   async publish(channel: string, event: IEvent): Promise<void> {
+    console.log(`Publishing event ${event.eventName} to channel ${channel}`, event);
     const data: string = JSON.stringify({ pattern: event.eventName, ...classToPlain(event) });
     await this._redis.publish(channel, data);
   }

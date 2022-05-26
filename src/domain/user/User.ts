@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@core/AggregateRoot';
 
 import { UserCreated } from './events/UserCreated';
+import { UserPasswordChanged } from './events/UserPasswordChanged';
 
 export class User extends AggregateRoot {
   private _email: string;
@@ -47,7 +48,17 @@ export class User extends AggregateRoot {
     }
   }
 
+  public changePassword(password: string) {
+    this._password = password;
+    this.applyChange(new UserPasswordChanged(this.guid, password));
+  }
+
+  public applyUserPasswordChanged(event: UserPasswordChanged): void {
+    this._password = event.password;
+  }
+
   public applyUserCreated(event: UserCreated): void {
+    this.guid = event.guid; // Important for set changes to the right aggregate guid
     this._email = event.email;
     this._firstname = event.firstname;
     this._lastname = event.lastname;

@@ -9,11 +9,13 @@ import { Db } from 'mongodb';
 
 import { AuthorReadModelFacade, IAuthorReadModelFacade } from '@application/projection/author/ReadModel';
 import { BookReadModelFacade, IBookReadModelFacade } from '@application/projection/book/ReadModel';
+import { UserReadModelFacade, IUserReadModelFacade } from '@application/projection/user/ReadModel';
 import { CreateBookCommandHandler } from '@commandHandlers/book/CreateBookCommandHandler';
 import { MarkBookAsBorrowedCommandHandler } from '@commandHandlers/book/MarkBookAsBorrowedCommandHandler';
 import { UpdateBookAuthorCommandHandler } from '@commandHandlers/book/UpdateBookAuthorCommandHandler';
 import { CreateLoanCommandHandler } from '@commandHandlers/loan/CreateLoanCommandHandler';
 import { CreateUserCommandHandler } from '@commandHandlers/user/CreateUserCommandHandler';
+import { UpdateUserPasswordCommandHandler } from '@commandHandlers/user/UpdateUserPasswordCommandHandler';
 import config from '@config/main';
 import { EVENT_STREAM_NAMES, TYPES } from '@constants/types';
 import { Command } from '@core/Command';
@@ -28,6 +30,7 @@ import { IBookRepository } from '@domain/book/IBookRepository';
 import { LoanCreated } from '@domain/loan/events/LoanCreated';
 import { ILoanRepository } from '@domain/loan/ILoanRepository';
 import { UserCreated } from '@domain/user/events/UserCreated';
+import { UserPasswordChanged } from '@domain/user/events/UserPasswordChanged';
 import { IUserRepository } from '@domain/user/IUserRepository';
 import { AuthorCreatedEventHandler } from '@eventHandlers/author/AuthorCreatedEventHandler';
 import { BookAuthorChangedEventHandler } from '@eventHandlers/book/BookAuthorChangedEventHandler';
@@ -36,6 +39,7 @@ import { BookCreatedEventHandler } from '@eventHandlers/book/BookCreatedEventHan
 import { FakeNotificationEventHandler } from '@eventHandlers/book/FakeNotificationEventHandler';
 import { LoanCreatedEventHandler } from '@eventHandlers/loan/LoanCreatedEventHandler';
 import { UserCreatedEventHandler } from '@eventHandlers/user/UserCreatedEventHandler';
+import { UserPasswordChangedEventHandler } from '@eventHandlers/user/UserPasswordChangedEventHandler';
 import { CommandBus } from '@infrastructure/commandBus';
 import { createMongodbConnection } from '@infrastructure/db/mongodb';
 import { RedisEventBus } from '@infrastructure/eventbus/redis';
@@ -66,10 +70,12 @@ const initialise = async () => {
   // Read models for query
   container.bind<IBookReadModelFacade>(TYPES.BookReadModelFacade).to(BookReadModelFacade);
   container.bind<IAuthorReadModelFacade>(TYPES.AuthorReadModelFacade).to(AuthorReadModelFacade);
+  container.bind<IUserReadModelFacade>(TYPES.UserReadModelFacade).to(UserReadModelFacade);
 
   // Event Handlers
   container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(FakeNotificationEventHandler);
   container.bind<IEventHandler<BookAuthorChanged>>(TYPES.Event).to(BookAuthorChangedEventHandler);
+  container.bind<IEventHandler<UserPasswordChanged>>(TYPES.Event).to(UserPasswordChangedEventHandler);
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(UserCreatedEventHandler);
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(AuthorCreatedEventHandler);
   container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(BookCreatedEventHandler);
@@ -87,6 +93,7 @@ const initialise = async () => {
   // Register command handlers
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateBookCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateBookAuthorCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateUserPasswordCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateUserCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateLoanCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(MarkBookAsBorrowedCommandHandler);

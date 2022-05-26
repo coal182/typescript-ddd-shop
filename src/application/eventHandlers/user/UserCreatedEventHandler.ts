@@ -24,7 +24,6 @@ export class UserCreatedEventHandler implements IEventHandler<UserCreated> {
       })
     );
     */
-    console.log(event);
     await this.db.collection('users').insertOne({
       _id: event.guid,
       email: event.email,

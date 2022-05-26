@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { Redis } from 'ioredis';
+import { Db } from 'mongodb';
 
 import { IAuthorReadModelFacade } from '@application/projection/author/ReadModel';
 import { TYPES } from '@constants/types';
@@ -11,11 +11,12 @@ export class BookAuthorChangedEventHandler implements IEventHandler<BookAuthorCh
   public event = BookAuthorChanged.name;
 
   constructor(
-    @inject(TYPES.Redis) private readonly redisClient: Redis,
+    @inject(TYPES.Db) private readonly db: Db,
     @inject(TYPES.AuthorReadModelFacade) private authorReadModel: IAuthorReadModelFacade
   ) {}
 
   async handle(event: BookAuthorChanged) {
+    /*
     const cachedBook = await this.redisClient.get(`books:${event.guid}`);
     if (cachedBook) {
       const book = JSON.parse(cachedBook);
@@ -28,6 +29,14 @@ export class BookAuthorChangedEventHandler implements IEventHandler<BookAuthorCh
           version: event.version,
         })
       );
+    }
+    */
+    const cachedBook = await this.db.collection('books').findOne({ _id: event.guid });
+    const authorData = await this.db.collection('authors').findOne({ _id: event.authorId });
+    if (cachedBook) {
+      await this.db
+        .collection('books')
+        .updateOne({ _id: event.guid }, { $set: { author: authorData, version: event.version } });
     }
   }
 }

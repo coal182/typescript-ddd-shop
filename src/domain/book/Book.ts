@@ -18,7 +18,7 @@ export class Book extends AggregateRoot {
   constructor(guid?: string, name?: string, description?: string, authorId?: string, price?: number) {
     super(guid);
     // This if block is required as we instantiate the aggregate root in the repository
-    if (guid && name && authorId && price) {
+    if (guid && name && description && authorId && price) {
       this.applyChange(new BookCreated(this.guid, name!, description!, authorId!, price!));
     }
   }
