@@ -36,6 +36,7 @@ export class BookCreatedEventHandler implements IEventHandler<BookCreated> {
     await this.db.collection('books').insertOne({
       _id: event.guid,
       name: event.name,
+      description: event.description,
       author: authorData,
       price: event.price,
       version: event.version,
