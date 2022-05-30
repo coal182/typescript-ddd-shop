@@ -13,6 +13,8 @@ import { UserReadModelFacade, IUserReadModelFacade } from '@application/projecti
 import { CreateBookCommandHandler } from '@commandHandlers/book/CreateBookCommandHandler';
 import { MarkBookAsBorrowedCommandHandler } from '@commandHandlers/book/MarkBookAsBorrowedCommandHandler';
 import { UpdateBookAuthorCommandHandler } from '@commandHandlers/book/UpdateBookAuthorCommandHandler';
+import { UpdateBookDescriptionCommandHandler } from '@commandHandlers/book/UpdateBookDescriptionCommandHandler';
+import { UpdateBookImageCommandHandler } from '@commandHandlers/book/UpdateBookImageCommandHandler';
 import { CreateLoanCommandHandler } from '@commandHandlers/loan/CreateLoanCommandHandler';
 import { CreateUserCommandHandler } from '@commandHandlers/user/CreateUserCommandHandler';
 import { UpdateUserPasswordCommandHandler } from '@commandHandlers/user/UpdateUserPasswordCommandHandler';
@@ -26,6 +28,8 @@ import { IEventStore } from '@core/IEventStore';
 import { BookAuthorChanged } from '@domain/book/events/BookAuthorChanged';
 import { BookBorrowed } from '@domain/book/events/BookBorrowed';
 import { BookCreated } from '@domain/book/events/BookCreated';
+import { BookDescriptionChanged } from '@domain/book/events/BookDescriptionChanged';
+import { BookImageChanged } from '@domain/book/events/BookImageChanged';
 import { IBookRepository } from '@domain/book/IBookRepository';
 import { LoanCreated } from '@domain/loan/events/LoanCreated';
 import { ILoanRepository } from '@domain/loan/ILoanRepository';
@@ -36,6 +40,8 @@ import { AuthorCreatedEventHandler } from '@eventHandlers/author/AuthorCreatedEv
 import { BookAuthorChangedEventHandler } from '@eventHandlers/book/BookAuthorChangedEventHandler';
 import { BookBorrowedEventHandler } from '@eventHandlers/book/BookBorrowedEventHandler';
 import { BookCreatedEventHandler } from '@eventHandlers/book/BookCreatedEventHandler';
+import { BookDescriptionChangedEventHandler } from '@eventHandlers/book/BookDescriptionChangedEventHandler';
+import { BookImageChangedEventHandler } from '@eventHandlers/book/BookImageChangedEventHandler';
 import { FakeNotificationEventHandler } from '@eventHandlers/book/FakeNotificationEventHandler';
 import { LoanCreatedEventHandler } from '@eventHandlers/loan/LoanCreatedEventHandler';
 import { UserCreatedEventHandler } from '@eventHandlers/user/UserCreatedEventHandler';
@@ -75,6 +81,8 @@ const initialise = async () => {
   // Event Handlers
   container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(FakeNotificationEventHandler);
   container.bind<IEventHandler<BookAuthorChanged>>(TYPES.Event).to(BookAuthorChangedEventHandler);
+  container.bind<IEventHandler<BookDescriptionChanged>>(TYPES.Event).to(BookDescriptionChangedEventHandler);
+  container.bind<IEventHandler<BookImageChanged>>(TYPES.Event).to(BookImageChangedEventHandler);
   container.bind<IEventHandler<UserPasswordChanged>>(TYPES.Event).to(UserPasswordChangedEventHandler);
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(UserCreatedEventHandler);
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(AuthorCreatedEventHandler);
@@ -93,6 +101,8 @@ const initialise = async () => {
   // Register command handlers
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateBookCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateBookAuthorCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateBookDescriptionCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateBookImageCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateUserPasswordCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateUserCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateLoanCommandHandler);

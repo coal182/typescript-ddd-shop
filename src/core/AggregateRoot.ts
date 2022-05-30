@@ -29,6 +29,7 @@ export abstract class AggregateRoot {
   }
 
   private applyEvent(event: IEvent, isNew = false) {
+    console.log('event: ', event);
     this[`apply${event.eventName}`](event);
     if (isNew) this.__changes.push(event);
   }

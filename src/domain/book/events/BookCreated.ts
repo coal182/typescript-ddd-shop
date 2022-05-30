@@ -9,6 +9,7 @@ export class BookCreated extends Event implements IEvent {
     public guid: string,
     public name: string,
     public description: string,
+    public image: string,
     public authorId: string,
     public price: number
   ) {

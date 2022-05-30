@@ -34,6 +34,7 @@
     "@types/ioredis": "^4.17.8",
     "@types/mongodb": "^3.5.25",
     "@types/uuid": "^8.0.0",
+    "@types/uuid-validate": "^0.0.1",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
     "cors": "^2.8.5",
@@ -48,7 +49,8 @@
     "nanoid": "^3.1.20",
     "nodemon": "^2.0.15",
     "reflect-metadata": "^0.1.13",
-    "uuid": "^8.2.0"
+    "uuid": "^8.2.0",
+    "uuid-validate": "^0.0.3"
   },
   "devDependencies": {
     "@types/node": "^16.10.3",
