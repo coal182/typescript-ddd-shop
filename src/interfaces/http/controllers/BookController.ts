@@ -10,9 +10,10 @@ import { TYPES } from '@constants/types';
 import { CommandBus } from '@infrastructure/commandBus';
 
 import { IBookReadModelFacade } from '../../../application/projection/book/ReadModel';
+import { verifyJWT_MW } from '../middlewares/auth';
 import { ok } from '../processors/response';
 
-@controller('/api/v1/books')
+@controller('/api/v1/books', verifyJWT_MW)
 export class BookController {
   constructor(
     @inject(TYPES.CommandBus) private readonly commandBus: CommandBus,

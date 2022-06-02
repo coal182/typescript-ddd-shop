@@ -33,4 +33,12 @@ export class UserReadModelFacade implements IUserReadModelFacade {
     }
     return user;
   }
+
+  async getByField(field: string, value: any): Promise<any> {
+    const user = await this.db.collection('users').findOne({ [field]: value });
+    if (!user) {
+      throw new NotFoundException('The requested user does not exist');
+    }
+    return user;
+  }
 }

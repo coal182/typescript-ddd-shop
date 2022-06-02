@@ -6,4 +6,5 @@ export default {
   REDIS_HOST: process.env.REDIS_HOST || 'redis-16955.c278.us-east-1-4.ec2.cloud.redislabs.com',
   REDIS_PORT: process.env.REDIS_PORT || 16955,
   REDIS_PASSWORD: process.env.REDIS_PASSWORD || 'password',
+  JWT_SECRET: process.env.JWT_SECRET || '123456',
 };

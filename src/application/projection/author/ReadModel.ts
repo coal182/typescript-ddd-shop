@@ -33,4 +33,12 @@ export class AuthorReadModelFacade implements IAuthorReadModelFacade {
     }
     return author;
   }
+
+  async getByField(field: string, value: any): Promise<any> {
+    const author = await this.db.collection('authors').findOne({ [field]: value });
+    if (!author) {
+      throw new NotFoundException('The requested author does not exist');
+    }
+    return author;
+  }
 }

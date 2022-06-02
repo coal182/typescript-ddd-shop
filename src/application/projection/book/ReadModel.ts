@@ -46,4 +46,12 @@ export class BookReadModelFacade implements IBookReadModelFacade {
     }
     return author;
   }
+
+  async getByField(field: string, value: any): Promise<any> {
+    const book = await this.db.collection('books').findOne({ [field]: value });
+    if (!book) {
+      throw new NotFoundException('The requested author does not exist');
+    }
+    return book;
+  }
 }
