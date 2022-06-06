@@ -18,7 +18,7 @@ export class LoginController {
     @inject(TYPES.UserReadModelFacade) private readonly userReadModel: IUserReadModelFacade
   ) {}
 
-  @httpPost('')
+  @httpPost('/signin')
   async login(@request() req: Request, @response() res: Response) {
     const { email, password } = req.body;
 
