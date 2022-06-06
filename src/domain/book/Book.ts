@@ -17,13 +17,20 @@ export class Book extends AggregateRoot {
 
   constructor();
 
-  constructor(guid: string, name: string, description: string, image: string, authorId: string, price: number);
+  constructor(guid: string, name: string, description: BookDescription, image: string, authorId: string, price: number);
 
-  constructor(guid?: string, name?: string, description?: string, image?: string, authorId?: string, price?: number) {
+  constructor(
+    guid?: string,
+    name?: string,
+    description?: BookDescription,
+    image?: string,
+    authorId?: string,
+    price?: number
+  ) {
     super(guid);
     // This if block is required as we instantiate the aggregate root in the repository
     if (guid && name && description && authorId && price) {
-      this.applyChange(new BookCreated(this.guid, name!, description!, image!, authorId!, price!));
+      this.applyChange(new BookCreated(this.guid, name!, description.value!, image!, authorId!, price!));
     }
   }
 
@@ -32,9 +39,9 @@ export class Book extends AggregateRoot {
     this.applyChange(new BookAuthorChanged(this.guid, authorId));
   }
 
-  public changeDescription(description: string) {
-    this.description = new BookDescription(description);
-    this.applyChange(new BookDescriptionChanged(this.guid, description));
+  public changeDescription(description: BookDescription) {
+    this.description = description;
+    this.applyChange(new BookDescriptionChanged(this.guid, description.value));
   }
 
   public changeImage(image: string) {

@@ -4,6 +4,7 @@ import { CreateBookCommand } from '@commands/book/CreateBook';
 import { TYPES } from '@constants/types';
 import { ICommandHandler } from '@core/ICommandHandler';
 import { Book } from '@domain/book/Book';
+import { BookDescription } from '@domain/book/BookDescription';
 import { IBookRepository } from '@domain/book/IBookRepository';
 
 @injectable()
@@ -16,7 +17,7 @@ export class CreateBookCommandHandler implements ICommandHandler<CreateBookComma
     const book = new Book(
       command.guid,
       command.name,
-      command.description,
+      new BookDescription(command.description),
       command.image,
       command.authorId,
       command.price
