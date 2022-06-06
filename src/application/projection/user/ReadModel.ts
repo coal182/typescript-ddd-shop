@@ -26,6 +26,19 @@ export class UserReadModelFacade implements IUserReadModelFacade {
     return users;
   }
 
+  async getByName(name: string) {
+    const users = [];
+
+    const usersData = await this.db
+      .collection('books')
+      .find({ name: { $regex: `.*${name}*.`, $options: 'i' } })
+      .toArray();
+    for (const userData of usersData) {
+      users.push({ ...userData });
+    }
+    return users;
+  }
+
   async getById(guid: string) {
     const user = await this.db.collection('users').findOne({ _id: guid });
     if (!user) {

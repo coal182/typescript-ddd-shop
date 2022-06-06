@@ -31,6 +31,19 @@ export class BookReadModelFacade implements IBookReadModelFacade {
     return books;
   }
 
+  async getByName(name: string) {
+    const books = [];
+
+    const booksData = await this.db
+      .collection('books')
+      .find({ name: { $regex: `.*${name}*.`, $options: 'i' } })
+      .toArray();
+    for (const bookData of booksData) {
+      books.push({ ...bookData });
+    }
+    return books;
+  }
+
   async getById(guid: string) {
     const book = await this.db.collection('books').findOne({ _id: guid });
     if (!book) {

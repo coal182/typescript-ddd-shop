@@ -22,8 +22,16 @@ export class BookController {
 
   @httpGet('/')
   async getAllBooks(@request() req: Request, @response() res: Response) {
-    const books = await this.readmodel.getAll();
-    return res.json(ok('Successfully retrieved all books', books));
+    console.log(req.query);
+    const query = req.query || {};
+    const name = query.name || '';
+    if (name) {
+      const books = await this.readmodel.getByName(name.toString());
+      return res.json(ok('Successfully retrieved all books', books));
+    } else {
+      const books = await this.readmodel.getAll();
+      return res.json(ok('Successfully retrieved all books', books));
+    }
   }
 
   @httpGet('/:guid')

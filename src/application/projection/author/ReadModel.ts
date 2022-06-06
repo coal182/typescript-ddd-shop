@@ -26,6 +26,19 @@ export class AuthorReadModelFacade implements IAuthorReadModelFacade {
     return authors;
   }
 
+  async getByName(name: string) {
+    const authors = [];
+
+    const authorsData = await this.db
+      .collection('books')
+      .find({ name: { $regex: `.*${name}*.`, $options: 'i' } })
+      .toArray();
+    for (const authorData of authorsData) {
+      authors.push({ ...authorData });
+    }
+    return authors;
+  }
+
   async getById(guid: string) {
     const author = await this.db.collection('authors').findOne({ _id: guid });
     if (!author) {
