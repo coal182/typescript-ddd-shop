@@ -46,7 +46,7 @@ export class UserReadModelFacade implements IUserReadModelFacade {
     }
     delete user.password;
     delete user._id;
-    delete user._version;
+    delete user.version;
     return user;
   }
 
