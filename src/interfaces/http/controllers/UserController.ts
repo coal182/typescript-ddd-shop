@@ -11,9 +11,10 @@ import { CommandBus } from '@infrastructure/commandBus';
 
 import { IAuthorReadModelFacade } from '../../../application/projection/author/ReadModel';
 import { IUserReadModelFacade } from '../../../application/projection/user/ReadModel';
+import { verifyJWT_MW } from '../middlewares/auth';
 import { ok } from '../processors/response';
 
-@controller('/api/v1/users')
+@controller('/api/v1/users', verifyJWT_MW)
 export class UserController {
   constructor(
     @inject(TYPES.CommandBus) private readonly commandBus: CommandBus,
@@ -41,8 +42,8 @@ export class UserController {
 
   @httpGet('/:guid')
   async getById(@request() req: Request, @response() res: Response) {
-    const author = await this.authorReadModel.getById(req.params.guid);
-    return res.json(ok('Successfully retrieve the author', author));
+    const user = await this.userReadModel.getById(req.params.guid);
+    return res.json(ok('Successfully retrieve the user', user));
   }
 
   @httpPut('/:guid/password')
