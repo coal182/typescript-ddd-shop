@@ -44,6 +44,9 @@ export class UserReadModelFacade implements IUserReadModelFacade {
     if (!user) {
       throw new NotFoundException('The requested user does not exist');
     }
+    delete user.password;
+    delete user._id;
+    delete user._version;
     return user;
   }
 
