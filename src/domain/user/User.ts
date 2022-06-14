@@ -2,6 +2,7 @@ import { AggregateRoot } from '@core/AggregateRoot';
 
 import { UserCreated } from './events/UserCreated';
 import { UserPasswordChanged } from './events/UserPasswordChanged';
+import { UserUpdated } from './events/UserUpdated';
 
 export class User extends AggregateRoot {
   private _email: string;
@@ -46,6 +47,21 @@ export class User extends AggregateRoot {
     if (email && firstname && lastname && dateOfBirth && password) {
       this.applyChange(new UserCreated(this.guid, email, firstname, lastname, dateOfBirth, password));
     }
+  }
+
+  public updateUser(email: string, firstname: string, lastname: string, dateOfBirth: Date) {
+    this._email = email;
+    this._firstname = firstname;
+    this._lastname = lastname;
+    this._dateOfBirth = dateOfBirth;
+    this.applyChange(new UserUpdated(this.guid, email, firstname, lastname, dateOfBirth));
+  }
+
+  public applyUserUpdated(event: UserUpdated): void {
+    this._email = event.email;
+    this._firstname = event.firstname;
+    this._lastname = event.lastname;
+    this._dateOfBirth = event.dateOfBirth;
   }
 
   public changePassword(password: string) {

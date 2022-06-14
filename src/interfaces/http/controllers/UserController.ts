@@ -4,9 +4,10 @@ import { inject } from 'inversify';
 import { controller, httpGet, httpPost, httpPut, request, response } from 'inversify-express-utils';
 
 import { CreateUserCommand } from '@commands/user/CreateUser';
+import { UpdateUserCommand } from '@commands/user/UpdateUser';
 import { UpdateUserPasswordCommand } from '@commands/user/UpdateUserPassword';
 import { TYPES } from '@constants/types';
-import { PasswordNotMatchException } from '@core/ApplicationError';
+import { PasswordNotMatchException, NotFoundException } from '@core/ApplicationError';
 import { CommandBus } from '@infrastructure/commandBus';
 
 import { IAuthorReadModelFacade } from '../../../application/projection/author/ReadModel';
@@ -46,8 +47,23 @@ export class UserController {
     return res.json(ok('Successfully retrieve the user', user));
   }
 
+  @httpPut('/:guid')
+  async updateUser(@request() req: Request, @response() res: Response) {
+    const { email, firstname, lastname, dateOfBirth, version } = req.body;
+
+    const userData = await this.userReadModel.getById(req.params.guid);
+
+    if (!userData) {
+      throw new NotFoundException('User not found');
+    }
+
+    const command = new UpdateUserCommand(req.params.guid, email, firstname, lastname, dateOfBirth, version);
+    await this.commandBus.send(command);
+    return res.json(ok('Successfully updated the user', undefined));
+  }
+
   @httpPut('/:guid/password')
-  async updateAuthor(@request() req: Request, @response() res: Response) {
+  async updatePassword(@request() req: Request, @response() res: Response) {
     const { currentPassword, newPassword, newPasswordConfirm, version } = req.body;
 
     const userData = await this.userReadModel.getById(req.params.guid);

@@ -17,6 +17,7 @@ import { UpdateBookDescriptionCommandHandler } from '@commandHandlers/book/Updat
 import { UpdateBookImageCommandHandler } from '@commandHandlers/book/UpdateBookImageCommandHandler';
 import { CreateLoanCommandHandler } from '@commandHandlers/loan/CreateLoanCommandHandler';
 import { CreateUserCommandHandler } from '@commandHandlers/user/CreateUserCommandHandler';
+import { UpdateUserCommandHandler } from '@commandHandlers/user/UpdateUserCommandHandler';
 import { UpdateUserPasswordCommandHandler } from '@commandHandlers/user/UpdateUserPasswordCommandHandler';
 import config from '@config/main';
 import { EVENT_STREAM_NAMES, TYPES } from '@constants/types';
@@ -35,6 +36,7 @@ import { LoanCreated } from '@domain/loan/events/LoanCreated';
 import { ILoanRepository } from '@domain/loan/ILoanRepository';
 import { UserCreated } from '@domain/user/events/UserCreated';
 import { UserPasswordChanged } from '@domain/user/events/UserPasswordChanged';
+import { UserUpdated } from '@domain/user/events/UserUpdated';
 import { IUserRepository } from '@domain/user/IUserRepository';
 import { AuthorCreatedEventHandler } from '@eventHandlers/author/AuthorCreatedEventHandler';
 import { BookAuthorChangedEventHandler } from '@eventHandlers/book/BookAuthorChangedEventHandler';
@@ -46,6 +48,7 @@ import { FakeNotificationEventHandler } from '@eventHandlers/book/FakeNotificati
 import { LoanCreatedEventHandler } from '@eventHandlers/loan/LoanCreatedEventHandler';
 import { UserCreatedEventHandler } from '@eventHandlers/user/UserCreatedEventHandler';
 import { UserPasswordChangedEventHandler } from '@eventHandlers/user/UserPasswordChangedEventHandler';
+import { UserUpdatedEventHandler } from '@eventHandlers/user/UserUpdatedEventHandler';
 import { CommandBus } from '@infrastructure/commandBus';
 import { createMongodbConnection } from '@infrastructure/db/mongodb';
 import { RedisEventBus } from '@infrastructure/eventbus/redis';
@@ -83,6 +86,7 @@ const initialise = async () => {
   container.bind<IEventHandler<BookAuthorChanged>>(TYPES.Event).to(BookAuthorChangedEventHandler);
   container.bind<IEventHandler<BookDescriptionChanged>>(TYPES.Event).to(BookDescriptionChangedEventHandler);
   container.bind<IEventHandler<BookImageChanged>>(TYPES.Event).to(BookImageChangedEventHandler);
+  container.bind<IEventHandler<UserUpdated>>(TYPES.Event).to(UserUpdatedEventHandler);
   container.bind<IEventHandler<UserPasswordChanged>>(TYPES.Event).to(UserPasswordChangedEventHandler);
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(UserCreatedEventHandler);
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(AuthorCreatedEventHandler);
@@ -103,6 +107,7 @@ const initialise = async () => {
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateBookAuthorCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateBookDescriptionCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateBookImageCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateUserCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateUserPasswordCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateUserCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateLoanCommandHandler);
