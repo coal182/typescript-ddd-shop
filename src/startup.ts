@@ -130,7 +130,11 @@ const initialise = async () => {
 
   // Add a list of allowed origins.
   // If you have more origins you would like to add, you can add them to the array below.
-  const allowedOrigins = ['http://localhost:3000', 'https://angular-pvnyyc--4200.local.webcontainer.io'];
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:4200',
+    'https://angular-pvnyyc--4200.local.webcontainer.io',
+  ];
 
   const options: cors.CorsOptions = {
     origin: allowedOrigins,
