@@ -1,0 +1,38 @@
+<div class="auth-wrapper container">
+  <div class="row">
+    <div class="col-md-12">
+      <form
+        class="form-signin text-center"
+        [formGroup]="signinForm"
+        (ngSubmit)="loginUser()"
+      >
+        <h3 class="h3 mb-3 font-weight-normal">Please sign in</h3>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="Enter email"
+            required
+          />
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="Password"
+          />
+        </mat-form-field>
+        <br />
+        <button type="submit" mat-flat-button color="primary">
+          <mat-icon>login</mat-icon> Sign in
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

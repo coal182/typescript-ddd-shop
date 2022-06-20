@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 v-centered">
+      <a [routerLink]="['/products']">
+        <h1>Book Store</h1>
+      </a>
+    </div>
+
+    <div class="col-md-6 v-centered">
+      <finder *ngIf="this.authService.isLoggedIn" class="v-centered"></finder>
+    </div>
+
+    <div class="col-md-3 v-centered">
+      <button
+        *ngIf="this.authService.isLoggedIn"
+        routerLink="/cart"
+        type="button"
+      >
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+
+      <button
+        *ngIf="this.authService.isLoggedIn"
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['user-profile/' + this.user_id]">
+          <mat-icon>manage_accounts</mat-icon>
+          <span>User Profile</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+
+      <button
+        *ngIf="!this.authService.isLoggedIn"
+        mat-flat-button
+        type="button"
+        routerLinkActive="active"
+        routerLink="/log-in"
+      >
+        <mat-icon>login</mat-icon> Sign in
+      </button>
+      &nbsp;
+      <button
+        *ngIf="!this.authService.isLoggedIn"
+        mat-flat-button
+        type="button"
+        routerLinkActive="active"
+        routerLink="/sign-up"
+      >
+        <mat-icon>add</mat-icon>
+        Sign up
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at https://angular.io/license
+-->

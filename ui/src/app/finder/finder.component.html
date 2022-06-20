@@ -1,0 +1,30 @@
+<form class="example-form">
+  <mat-form-field class="finder-form-field" appearance="outline">
+    <mat-label>Search...</mat-label>
+    <input
+      matInput
+      aria-label="Search..."
+      id="search-box-input"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option
+        *ngFor="let product of filteredProducts"
+        [value]="product.name"
+        [routerLink]="['/products', product._id]"
+      >
+        <img
+          class="example-option-img"
+          aria-hidden
+          [src]="product.image"
+          height="25"
+        />
+        &nbsp;
+        <span>{{ product.name }}</span> |
+        <small>Price: {{ product.price }}</small>
+      </mat-option>
+    </mat-autocomplete>
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</form>
+<div id="loading" style="display: none">Loading...</div>

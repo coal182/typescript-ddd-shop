@@ -1,0 +1,38 @@
+/*
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at https://angular.io/license
+*/
+
+::ng-deep .mat-progress-spinner {
+  margin-left: 8px;
+}
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #ffffff;
+}
+
+.product-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-gap: 10px;
+}
+
+.product-list article {
+  max-width: 250px;
+  border: 1px solid #f0f0f0;
+  padding: 0px 20px;
+  margin: 0 10px;
+}
+
+.product-list article img {
+  width: 200px;
+  height: 304px;
+  margin: 5px auto;
+  float: left;
+}
+
+.custom-modalbox .mat-dialog-container {
+  padding: 0;
+}
