@@ -1,15 +1,21 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { MockRouter } from 'src/app/test/mock-router';
 
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   let service: AuthService;
-  let http: HttpClient;
 
   beforeEach(() => {
+    let mockRouter: MockRouter;
+  
     TestBed.configureTestingModule({
-      providers: [{ provide: HttpClient, useValue: http }],
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: Router, useValue: mockRouter }
+      ],
     }).compileComponents();
     service = TestBed.inject(AuthService);
   });

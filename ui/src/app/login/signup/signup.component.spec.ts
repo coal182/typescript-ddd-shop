@@ -1,25 +1,27 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MockRouter } from 'src/app/test/mock-router';
 
 import { SignupComponent } from './signup.component';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
   let fixture: ComponentFixture<SignupComponent>;
-  let fb: FormBuilder;
-  let signupForm: FormGroup;
-  let http: HttpClient;
-  let router: Router;
+  const formBuilderStub = () => ({group: object => ({})});
+  let mockRouter: MockRouter;
+  let httpMock: HttpClientTestingModule;
+  
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [SignupComponent],
       providers: [
-        { provide: FormBuilder, useValue: fb },
-        { provide: HttpClient, useValue: http },
-        { provide: Router, useValue: router },
+        { provide: FormBuilder, useFactory: formBuilderStub },
+        { provide: Router, useValue: mockRouter },
       ],
     }).compileComponents();
   });
@@ -27,6 +29,7 @@ describe('SignupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SignupComponent);
     component = fixture.componentInstance;
+    httpMock = fixture.debugElement.injector.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
     fixture.detectChanges();
   });
 

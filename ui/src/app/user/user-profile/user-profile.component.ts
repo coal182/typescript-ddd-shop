@@ -29,7 +29,7 @@ export class UserProfileComponent implements OnInit {
   currentUser: User;
   user$: Observable<User> | undefined;
   userIdFromRoute: string;
-  profileForm: FormGroup = this.fb.group({});
+  profileForm: FormGroup;
   version: number;
   public isLoading = false;
   public subscribedValidity = 'Unkwown';
@@ -44,6 +44,7 @@ export class UserProfileComponent implements OnInit {
     public userService: HttpUserService,
     public readonly validateFormService: ValidationService
   ) {
+
     this.profileForm = this.fb.group(
       {
         firstname: ['', [Validators.required, Validators.pattern(this.namesRegex)]],
@@ -57,7 +58,7 @@ export class UserProfileComponent implements OnInit {
       { validators: this.mandatoryFieldsValidator('email') }
     );
   }
-  ngOnInit(): void {
+  ngOnInit(): void {    
     const routeParams = this.route.snapshot.paramMap;
     this.userIdFromRoute = routeParams.get('id');
     const params = { _id: this.userIdFromRoute };
