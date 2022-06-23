@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { StatusCodes } from 'http-status-codes';
 
 import { AuthService } from './auth.service';
 @Injectable()
@@ -29,9 +30,8 @@ export class AuthInterceptor implements HttpInterceptor {
         if (this.isClientSideError(error)) {
           errorMsg = `Error: ${error.error.message}`;
         } else {
-          if (
-            error.error.message === 'Invalid auth token provided. TokenExpiredError: jwt expired' &&
-            error.status === 400 &&
+          if (            
+            error.status === StatusCodes.UNAUTHORIZED &&
             error.url !== 'https://ts-bookstore-api.herokuapp.com/api/v1/login/signin'
           ) {
             this.authService.doLogout();

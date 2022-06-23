@@ -1,27 +1,23 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { firstValueFrom, map, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, Observable } from 'rxjs';
+import { StatusCodes } from 'http-status-codes';
 import Swal from 'sweetalert2';
 
 import { ValidationService } from 'src/app/shared/services/validation.service';
-
 import { HttpUserService } from '../user-service/http-user.service';
 import { PutUserParams } from '../user-service/user.service';
-
 import { AuthService } from './../../shared/auth/auth.service';
 import { User } from './../../shared/user';
 
-import { StatusCodes } from 'http-status-codes';
 
 @Component({
   selector: 'app-user-profile',
@@ -113,8 +109,40 @@ export class UserProfileComponent implements OnInit {
 
     this.userService.putUser(params).subscribe({
       next: (data) => {
-        if (data.status === StatusCodes.OK) {
-          Swal.fire('Profile Updated!', 'You have updated your profile correctly! ', 'success');
+        switch (data.status) {
+          case StatusCodes.OK:
+            this.version++;
+            Swal.fire({
+              title: 'Success',
+              text: 'User updated successfully',
+              icon: 'success',
+              confirmButtonText: 'OK',
+            });
+            break;
+          case StatusCodes.CONFLICT:
+            Swal.fire({
+              title: 'Error',
+              text: 'There was a version conflict!',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
+            break;
+          case StatusCodes.BAD_REQUEST:
+            Swal.fire({
+              title: 'Error',
+              text: 'User already exists',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
+            break;
+          default:
+            Swal.fire({
+              title: 'Error',
+              text: 'There was an error!',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
+            break;
         }
       },
       error: (error) => {

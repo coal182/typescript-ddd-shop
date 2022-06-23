@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import * as StatusCodes from 'http-status-codes';
 import { JwtPayload, verify, sign } from 'jsonwebtoken';
 import _ from 'lodash';
 
@@ -59,7 +60,7 @@ export function verifyJWT_MW(req: Request, res: Response, next: NextFunction): v
       next();
     })
     .catch((err) => {
-      res.status(400).json({ message: `Invalid auth token provided. ${err}` });
+      res.status(StatusCodes.getStatusCode('UNAUTHORIZED')).json({ message: `Invalid auth token provided. ${err}` });
     });
 }
 
