@@ -21,6 +21,8 @@ import { PutUserParams } from '../user-service/user.service';
 import { AuthService } from './../../shared/auth/auth.service';
 import { User } from './../../shared/user';
 
+import { StatusCodes } from 'http-status-codes';
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -111,7 +113,7 @@ export class UserProfileComponent implements OnInit {
 
     this.userService.putUser(params).subscribe({
       next: (data) => {
-        if (data.status === 200) {
+        if (data.status === StatusCodes.OK) {
           Swal.fire('Profile Updated!', 'You have updated your profile correctly! ', 'success');
         }
       },

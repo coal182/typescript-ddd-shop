@@ -1,5 +1,7 @@
+import * as StatusCodes from 'http-status-codes';
+
 export const ok = (message: string, data: any) => ({
-  status: '200',
+  status: StatusCodes.OK,
   message: message || 'Success',
   data,
 });
