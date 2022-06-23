@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom, map, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { ValidationService } from 'src/app/shared/services/validation.service';
@@ -36,6 +37,7 @@ export class UserProfileComponent implements OnInit {
   namesRegex = new RegExp(
     /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
   );
+  formattedMessage: string;
 
   constructor(
     public fb: FormBuilder,
@@ -63,9 +65,26 @@ export class UserProfileComponent implements OnInit {
     this.userIdFromRoute = routeParams.get('id');
     const params = { _id: this.userIdFromRoute };
     this.get(params);
+    this.onChanges();
   }
 
-  get(params) {
+  onChanges(): void {
+    this.profileForm.valueChanges.subscribe(val => {
+      this.formattedMessage =
+      `Hello,
+  
+      My name is <b>${val.firstname} ${val.lastname}</b>, my email is <b>${val.email}</b>,
+  
+      and my date of birth is <b>${val.dateOfBirth.toLocaleDateString("en-US")}</b>.`;
+
+    });
+  }
+
+  onSubmit(): void {
+    this.save();
+  }
+
+  get(params): void {
     this.user$ = this.userService.getUser(params).pipe(map((data) => data.data));
 
     this.user$.subscribe((data) => {
@@ -79,7 +98,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  save() {
+  save(): void {
     const queryParams = { _id: this.userIdFromRoute };
     const params: PutUserParams = {
       _id: queryParams._id,
@@ -90,12 +109,11 @@ export class UserProfileComponent implements OnInit {
       version: this.version,
     };
 
-    console.log(params);
-
     this.userService.putUser(params).subscribe({
       next: (data) => {
-        //this.get(queryParams);
-        Swal.fire('Profile Updated!', 'You have updated your profile correctly! ', 'success');
+        if (data.status === 200) {
+          Swal.fire('Profile Updated!', 'You have updated your profile correctly! ', 'success');
+        }
       },
       error: (error) => {
         console.error('There was an error!', error);

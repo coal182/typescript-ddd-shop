@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 export abstract class UserService {
   abstract getUsers(params: GetUsersParams): Observable<any>;
   abstract getUser(params: GetUserParams): Observable<any>;
+  abstract putUser(params: PutUserParams): Observable<any>;
 }
 
 export interface GetUsersParams {
