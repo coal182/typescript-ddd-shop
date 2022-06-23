@@ -18,7 +18,7 @@ export class NotFoundException extends ApplicationError {
 
 export class PasswordNotMatchException extends ApplicationError {
   constructor(public readonly message: string) {
-    super(StatusCodes.NOT_FOUND, StatusCodes.UNAUTHORIZED, message || 'Password not match');
+    super(StatusCodes.UNAUTHORIZED, StatusCodes.UNAUTHORIZED, message || 'Password not match');
   }
 }
 
