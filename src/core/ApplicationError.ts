@@ -1,9 +1,9 @@
-import { CONFLICT, NOT_FOUND } from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 
 export class ApplicationError extends Error {
   public readonly httpCode: number;
-  public readonly statusCode: string;
-  constructor(httpCode: number, statusCode: string, message: string) {
+  public readonly statusCode: number;
+  constructor(httpCode: number, statusCode: number, message: string) {
     super(message);
     this.httpCode = httpCode;
     this.statusCode = statusCode;
@@ -12,18 +12,18 @@ export class ApplicationError extends Error {
 
 export class NotFoundException extends ApplicationError {
   constructor(public readonly message: string) {
-    super(NOT_FOUND, '404', message || 'Entity not found');
+    super(StatusCodes.NOT_FOUND, StatusCodes.NOT_FOUND, message || 'Entity not found');
   }
 }
 
 export class PasswordNotMatchException extends ApplicationError {
   constructor(public readonly message: string) {
-    super(NOT_FOUND, '404', message || 'Password not match');
+    super(StatusCodes.NOT_FOUND, StatusCodes.UNAUTHORIZED, message || 'Password not match');
   }
 }
 
 export class ConcurrencyException extends ApplicationError {
   constructor(public readonly message: string) {
-    super(CONFLICT, '409', message || 'Concurrency detected');
+    super(StatusCodes.CONFLICT, StatusCodes.CONFLICT, message || 'Concurrency detected');
   }
 }

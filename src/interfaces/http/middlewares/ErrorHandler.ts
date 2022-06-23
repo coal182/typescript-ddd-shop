@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import * as StatusCodes from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {

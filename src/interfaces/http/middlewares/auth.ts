@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import * as StatusCodes from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 import { JwtPayload, verify, sign } from 'jsonwebtoken';
 import _ from 'lodash';
 

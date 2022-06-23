@@ -35,7 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
             error.url !== 'https://ts-bookstore-api.herokuapp.com/api/v1/login/signin'
           ) {
             this.authService.doLogout();
-            this.router.navigate(['/login']);
+            this.router.navigate(['/log-in']);
           }
           errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
         }
