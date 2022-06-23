@@ -60,7 +60,7 @@ export function verifyJWT_MW(req: Request, res: Response, next: NextFunction): v
       next();
     })
     .catch((err) => {
-      res.status(StatusCodes.getStatusCode('UNAUTHORIZED')).json({ message: `Invalid auth token provided. ${err}` });
+      res.status(StatusCodes.UNAUTHORIZED).json({ message: `Invalid auth token provided. ${err}` });
     });
 }
 
