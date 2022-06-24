@@ -1,43 +1,61 @@
 <h2>Product Details</h2>
 
 <div *ngIf="product$ | async">
-  <div class="row">
-    <div class="col">
-      <img
-        [src]="
-          (product$ | async)?.image ||
-          'https://upload.wikimedia.org/wikipedia/commons/1/14/Product_sample_icon_picture.png'
-        "
-      />
+<div *ngIf="!isLoading">
+    <div class="row">
+      <div class="col-md-6">
+        <img
+          [src]="
+            (product$ | async)?.image ||
+            'https://upload.wikimedia.org/wikipedia/commons/1/14/Product_sample_icon_picture.png'
+          "
+        />
+      </div>
+      <div class="col-md-6">
+        <h3>{{ (product$ | async)?.name }}</h3>
+        <h4>{{ (product$ | async)?.price | currency }}</h4>
+     
+        <button
+          mat-flat-button
+          type="button"
+          color="primary"
+          (click)="addToCart()"
+        >
+          Buy <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+        <button
+          mat-flat-button
+          type="button"
+          color="basic"
+          (click)="share()"
+          [disabled]="isLoading"
+        >
+          Share <mat-icon>share</mat-icon>
+          <mat-icon *ngIf="isLoading">
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="24"
+              data-test="progress-spinner"
+            ></mat-progress-spinner>
+          </mat-icon>
+        </button>
+      </div>
     </div>
-    <div class="col">
-      <h3>{{ (product$ | async)?.name }}</h3>
-      <h4>{{ (product$ | async)?.price | currency }}</h4>
-      <p>{{ (product$ | async)?.description }}</p>
-      <button
-        mat-flat-button
-        type="button"
-        color="primary"
-        (click)="addToCart()"
-      >
-        Buy <mat-icon>add_shopping_cart</mat-icon>
-      </button>
-      <button
-        mat-flat-button
-        type="button"
-        color="basic"
-        (click)="share()"
-        [disabled]="isLoading"
-      >
-        Share <mat-icon>share</mat-icon>
-        <mat-icon *ngIf="isLoading">
-          <mat-progress-spinner
-            mode="indeterminate"
-            diameter="24"
-            data-test="progress-spinner"
-          ></mat-progress-spinner>
-        </mat-icon>
-      </button>
+    <div class="row">
+      <div class="col"><br /></div>
+    </div>
+    <div class="row">
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Description"><br />{{ (product$ | async)?.description }}</mat-tab>
+        <mat-tab label="Caracteristics"><br />Caracteristics</mat-tab>
+        <mat-tab label="Reviews"><br />Reviews</mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>
+
+<mat-progress-spinner *ngIf="isLoading"
+  mode="indeterminate"
+  data-test="progress-spinner-2"
+  style="margin:0 auto;"
+></mat-progress-spinner>

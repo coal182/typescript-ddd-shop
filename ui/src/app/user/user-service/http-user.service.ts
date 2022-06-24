@@ -19,7 +19,6 @@ export class HttpUserService extends UserService {
   }
 
   public getUsers(params): Observable<any> {
-    console.log(params);
     let headers = { 'Content-Type': 'application/json' };
     let parameters = new HttpParams()
       .set('name', params?.name || '')

@@ -37,7 +37,8 @@ can be found in the LICENSE file at https://angular.io/license
     </h3>
   </article>
 </div>
-<mat-progress-spinner
+<mat-progress-spinner *ngIf="isLoading"
   mode="indeterminate"
   data-test="progress-spinner-2"
+  style="margin:0 auto;"
 ></mat-progress-spinner>

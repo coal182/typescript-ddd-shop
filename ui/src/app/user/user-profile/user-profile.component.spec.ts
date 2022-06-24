@@ -11,6 +11,7 @@ import { MockRouter } from '../../test/mock-router';
 import { ValidationService } from 'src/app/shared/services/validation.service';
 import { MockUserService } from 'src/app/test/mock-user-service';
 import { HttpUserService } from '../user-service/http-user.service';
+import { By } from '@angular/platform-browser';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -48,29 +49,68 @@ describe('UserProfileComponent', () => {
   });
 
   describe('when user submit the form', () => {
-    it('should call UserService with expected params', () => {
-      const testqueryParams = {_id: 'r9n16bJtQlpxxrTTThEKn'};
-      const version = 1;
-      const testProfileForm = {
-        firstname: 'John',
-        lastname: 'Doe',
-        email: 'test@test.com',
-        dateOfBirth: new Date('1991-01-01'),
-      };
-      const params: PutUserParams = {
-        _id: testqueryParams._id,
-        firstname: testProfileForm.firstname,
-        lastname: testProfileForm.lastname,
-        email: testProfileForm.email,
-        dateOfBirth: testProfileForm.dateOfBirth.toISOString().split('T')[0],
-        version,
-      };
-      component.profileForm.setValue(testProfileForm);
-      component.onSubmit();
-      expect(mockUserService.putUser).toHaveBeenCalledWith(params);
-    
-    });
-    
-  });
 
+    describe('and fields are not valid', () => {
+
+      beforeEach(async () => {
+        initializeComponent();
+      });
+      
+
+      it('should not allow submitting the form', async () => {
+          
+          const testInvalidProfileForm = {
+            firstname: 'jon',
+            lastname: 'Doe',
+            email: 'test@test.com',
+            dateOfBirth: new Date('1991-01-01'),
+          };
+          component.profileForm.setValue(testInvalidProfileForm);
+          //component.profileForm.updateValueAndValidity();
+          fixture.detectChanges();
+          console.log("->>>>>>>>>>>>>>>>>>>>>>>>>>>>><");
+          console.log(fixture.debugElement.query(By.css('[data-testid=submit-button]')).nativeElement);
+          
+          fixture.debugElement.query(By.css('[data-testid=submit-button]')).nativeElement.click();
+          fixture.detectChanges();
+          expect(mockUserService.putUser).not.toHaveBeenCalled();
+      });
+    }); 
+
+    describe('and fields are valid', () => {
+
+      
+        it('should call UserService with expected params', () => {
+          const testqueryParams = {_id: 'r9n16bJtQlpxxrTTThEKn'};
+          const version = 1;
+          const testProfileForm = {
+            firstname: 'John',
+            lastname: 'Doe',
+            email: 'test@test.com',
+            dateOfBirth: new Date('1991-01-01'),
+          };
+          const expectedParams: PutUserParams = {
+            _id: testqueryParams._id,
+            firstname: testProfileForm.firstname,
+            lastname: testProfileForm.lastname,
+            email: testProfileForm.email,
+            dateOfBirth: testProfileForm.dateOfBirth.toISOString().split('T')[0],
+            version,
+          };
+          component.profileForm.setValue(testProfileForm);
+          component.onSubmit();
+          expect(mockUserService.putUser).toHaveBeenCalledWith(expectedParams);
+        
+        });
+        
+    });
+  });
+  async function initializeComponent(): Promise<void> {
+    fixture = TestBed.createComponent(UserProfileComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    await fixture.whenStable();
+  }
 });
+
+

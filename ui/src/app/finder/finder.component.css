@@ -23,6 +23,13 @@
   margin-left: 8px;
 }
 
+::ng-deep .mat-progress-spinner circle {
+  stroke: #3f51b5;
+} 
+
+::ng-deep .finder-form-field.mat-form-field .mat-form-field-wrapper {
+  padding: 0;
+}
 ::ng-deep .mat-form-field .mat-form-field-flex {
   display: flex;
   align-items: center;

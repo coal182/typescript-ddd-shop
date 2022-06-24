@@ -27,20 +27,16 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMsg = '';
-        if (this.isClientSideError(error)) {
-          errorMsg = `Error: ${error.error.message}`;
-        } else {
-          if (            
-            error.status === StatusCodes.UNAUTHORIZED &&
-            error.url !== 'https://ts-bookstore-api.herokuapp.com/api/v1/login/signin'
-          ) {
-            this.authService.doLogout();
-            this.router.navigate(['/log-in']);
-          }
-          errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
-        }
 
-        return throwError(errorMsg);
+        if (            
+          error.status === StatusCodes.UNAUTHORIZED &&
+          error.url !== 'https://ts-bookstore-api.herokuapp.com/api/v1/login/signin'
+        ) {
+          this.authService.doLogout();
+          this.router.navigate(['/log-in']);
+        }        
+
+        return throwError(() => error);
       }),
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {

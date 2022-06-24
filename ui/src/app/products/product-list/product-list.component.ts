@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { firstValueFrom, map, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { HttpProductService } from '../product-service/http-product.service';
 import { Product } from '../../products';
 
@@ -24,9 +25,14 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     const params = {};
 
+    this.isLoading = true;
+
     this.products$ = this.productService
       .getProducts(params)
-      .pipe(map((pro) => pro.data));
+      .pipe(
+        map((pro) => pro.data), 
+        tap((pro) => (this.isLoading = false))
+      );
   }
 
   ngAfterViewInit(): void {}

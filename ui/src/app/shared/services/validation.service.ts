@@ -7,7 +7,6 @@ export class ValidationService {
   }
 
   getError(name: string, field: any): string {
-    console.log(field.errors);
     if (field.errors) {
       if (field.errors.required) {
         return `Field ${name} is required`;

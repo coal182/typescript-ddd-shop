@@ -9,6 +9,7 @@ import {
 } from '@angular/common/http';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { StatusCodes } from 'http-status-codes';
 
 @Injectable({
   providedIn: 'root',
@@ -27,20 +28,33 @@ export class AuthService {
   signIn(user: User) {
     return this.http
       .post<any>(`${this.endpoint}/login/signin`, user)
+      .pipe(
+        catchError((error: HttpErrorResponse): Observable<Error> => {
+          if (error.status === StatusCodes.UNAUTHORIZED) {
+            Swal.fire(
+              'Error!',
+              'You have entered an invalid email or password!',
+              'error'
+            );
+          }
+          return throwError(() => error);
+        })
+      )
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.data.token);
         localStorage.setItem('user_id', res.data._id);
-        this.getUserProfile(res.data._id).subscribe((res) => {
-          this.currentUser = res;
-          console.log(res);
-          Swal.fire(
-            `Hello !`,
-            'You have been signed up correctly! ',
-            'success'
-          );
-          this.router.navigate(['products']);
+        this.getUserProfile(res.data._id).subscribe({
+          next: (res) => {
+            this.currentUser = res;
+            Swal.fire(
+              `Hello !`,
+              'You have been signed up correctly! ',
+              'success'
+            );
+            this.router.navigate(['products']);
+          } 
         });
-      });
+      })
   }
   getToken() {
     return localStorage.getItem('access_token');

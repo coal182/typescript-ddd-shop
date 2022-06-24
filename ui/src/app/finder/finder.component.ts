@@ -30,40 +30,29 @@ export interface State {
 })
 export class FinderComponent {
   filteredProducts: Product[];
-
+  loading: boolean = false;
+  
   ngOnInit() {
-    console.log('oninit');
     const searchBoxElement = <HTMLInputElement>(
       document.getElementById('search-box-input')
     );
-    const loadingElement = document.getElementById('loading');
-
-    // loading state observable
-    const loadingSubject = new Subject<boolean>();
-    const loading$ = loadingSubject.asObservable().pipe(startWith(false));
-
-    // loading event subscription
-    loading$.subscribe((isLoading) => {
-      loadingElement.style.display = isLoading ? 'block' : 'none';
-    });
-
+    
     // search composed observable
     const search$ = fromEvent(searchBoxElement, 'keyup').pipe(
       distinctUntilChanged(),
       debounceTime(300),
-      tap(() => loadingSubject.next(true)),
+      tap(() => this.loading = true),
       switchMap((event) =>
         this.productService.getProducts({
           name: searchBoxElement.value,
         })
       ),
-      tap(() => loadingSubject.next(false))
+      tap(() => this.loading = false),
     );
 
     // search subscription
     search$.subscribe((data) => {
       this.filteredProducts = data.data;
-      console.log(data.data);
     });
   }
 

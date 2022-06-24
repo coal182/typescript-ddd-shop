@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom, map, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { AlertDialogComponent } from '../../alert-dialog/alert-dialog.component';
@@ -32,7 +33,12 @@ export class ProductDetailsComponent implements OnInit {
 
     const params = { _id: productIdFromRoute };
 
-    this.product$ = this.productService.getProduct(params).pipe(map((data) => data.data));
+    this.isLoading = true;
+
+    this.product$ = this.productService.getProduct(params).pipe(
+      map((data) => data.data),
+      tap((pro) => (this.isLoading = false))
+      );
   }
 
   addToCart() {

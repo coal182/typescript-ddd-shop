@@ -9,6 +9,7 @@ export const TYPES = {
   BookRepository: Symbol('BookRepository'),
   UserRepository: Symbol('UserRepository'),
   LoanRepository: Symbol('LoanRepository'),
+  CartRepository: Symbol('CartRepository'),
 
   // Data Mappers
   BookDataMapper: Symbol('BookDataMapper'),
@@ -20,6 +21,7 @@ export const TYPES = {
   BookReadModelFacade: Symbol('BookReadModelFacade'),
   AuthorReadModelFacade: Symbol('AuthorReadModelFacade'),
   UserReadModelFacade: Symbol('UserReadModelFacade'),
+  CartReadModelFacade: Symbol('CartReadModelFacade'),
 
   // Command Bus
   CommandBus: Symbol('CommandBus'),
@@ -39,10 +41,12 @@ export const TYPES = {
   BookEventStore: Symbol('BookEventStore'),
   UserEventStore: Symbol('UserEventStore'),
   LoanEventStore: Symbol('LoanEventStore'),
+  CartEventStore: Symbol('CartEventStore'),
 };
 
 export const EVENT_STREAM_NAMES = {
   Book: Symbol('Book'),
   User: Symbol('User'),
   Loan: Symbol('Loan'),
+  Cart: Symbol('Cart'),
 };

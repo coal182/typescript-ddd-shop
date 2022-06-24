@@ -1,11 +1,17 @@
 <div class="auth-wrapper container">
   <div class="row">
     <div class="col-md-12">
-      <form
+      <mat-progress-spinner *ngIf="isLoading"
+        mode="indeterminate"
+        data-test="progress-spinner-2"
+        style="margin:0 auto;"
+      ></mat-progress-spinner>
+      <form *ngIf="!isLoading"
         class="form-signin text-center"
         [formGroup]="profileForm"
         (ngSubmit)="onSubmit()"
       >
+        
         <h3 class="h3 mb-3 font-weight-normal">
           This is your profile, {{ (user$ | async)?.firstname }}
         </h3>
@@ -74,7 +80,7 @@
         <p>Form Status: {{ profileForm.status }}</p>
         <p [innerHTML]="formattedMessage"></p>
         <br />
-        <button type="submit" mat-flat-button color="primary" [disabled]="!profileForm.valid">Update</button>
+        <button type="submit" mat-flat-button color="primary" data-testid="submit-button" [disabled]="!profileForm.valid">Update</button>
       </form>
     </div>
   </div>

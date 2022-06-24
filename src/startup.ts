@@ -9,12 +9,14 @@ import { Db } from 'mongodb';
 
 import { AuthorReadModelFacade, IAuthorReadModelFacade } from '@application/projection/author/ReadModel';
 import { BookReadModelFacade, IBookReadModelFacade } from '@application/projection/book/ReadModel';
+import { CartReadModelFacade, ICartReadModelFacade } from '@application/projection/cart/ReadModel';
 import { UserReadModelFacade, IUserReadModelFacade } from '@application/projection/user/ReadModel';
 import { CreateBookCommandHandler } from '@commandHandlers/book/CreateBookCommandHandler';
 import { MarkBookAsBorrowedCommandHandler } from '@commandHandlers/book/MarkBookAsBorrowedCommandHandler';
 import { UpdateBookAuthorCommandHandler } from '@commandHandlers/book/UpdateBookAuthorCommandHandler';
 import { UpdateBookDescriptionCommandHandler } from '@commandHandlers/book/UpdateBookDescriptionCommandHandler';
 import { UpdateBookImageCommandHandler } from '@commandHandlers/book/UpdateBookImageCommandHandler';
+import { CreateCartCommandHandler } from '@commandHandlers/cart/CreateCartCommandHandler';
 import { CreateLoanCommandHandler } from '@commandHandlers/loan/CreateLoanCommandHandler';
 import { CreateUserCommandHandler } from '@commandHandlers/user/CreateUserCommandHandler';
 import { UpdateUserCommandHandler } from '@commandHandlers/user/UpdateUserCommandHandler';
@@ -32,6 +34,8 @@ import { BookCreated } from '@domain/book/events/BookCreated';
 import { BookDescriptionChanged } from '@domain/book/events/BookDescriptionChanged';
 import { BookImageChanged } from '@domain/book/events/BookImageChanged';
 import { IBookRepository } from '@domain/book/IBookRepository';
+import { CartCreated } from '@domain/cart/events/CartCreated';
+import { ICartRepository } from '@domain/cart/ICartRepository';
 import { LoanCreated } from '@domain/loan/events/LoanCreated';
 import { ILoanRepository } from '@domain/loan/ILoanRepository';
 import { UserCreated } from '@domain/user/events/UserCreated';
@@ -45,6 +49,7 @@ import { BookCreatedEventHandler } from '@eventHandlers/book/BookCreatedEventHan
 import { BookDescriptionChangedEventHandler } from '@eventHandlers/book/BookDescriptionChangedEventHandler';
 import { BookImageChangedEventHandler } from '@eventHandlers/book/BookImageChangedEventHandler';
 import { FakeNotificationEventHandler } from '@eventHandlers/book/FakeNotificationEventHandler';
+import { CartCreatedEventHandler } from '@eventHandlers/cart/CartCreatedEventHandler';
 import { LoanCreatedEventHandler } from '@eventHandlers/loan/LoanCreatedEventHandler';
 import { UserCreatedEventHandler } from '@eventHandlers/user/UserCreatedEventHandler';
 import { UserPasswordChangedEventHandler } from '@eventHandlers/user/UserPasswordChangedEventHandler';
@@ -53,10 +58,12 @@ import { CommandBus } from '@infrastructure/commandBus';
 import { createMongodbConnection } from '@infrastructure/db/mongodb';
 import { RedisEventBus } from '@infrastructure/eventbus/redis';
 import { BookEventStore } from '@infrastructure/eventstore/BookEventStore';
+import { CartEventStore } from '@infrastructure/eventstore/CartEventStore';
 import { LoanEventStore } from '@infrastructure/eventstore/LoanEventStore';
 import { UserEventStore } from '@infrastructure/eventstore/UserEventStore';
 import { getRedisClient } from '@infrastructure/redis';
 import { BookRepository } from '@infrastructure/repositories/BookRepository';
+import { CartRepository } from '@infrastructure/repositories/CartRepository';
 import { LoanRepository } from '@infrastructure/repositories/LoanRepository';
 import { UserRepository } from '@infrastructure/repositories/UserRepository';
 import { errorHandler } from '@interfaces/http/middlewares/ErrorHandler';
@@ -70,7 +77,7 @@ const initialise = async () => {
   // Initialise Redis
   const redisSubscriber: Redis = getRedisClient(Number(config.REDIS_PORT), config.REDIS_HOST, config.REDIS_PASSWORD);
   const redis: Redis = getRedisClient(Number(config.REDIS_PORT), config.REDIS_HOST, config.REDIS_PASSWORD);
-  await redisSubscriber.subscribe(['book', 'user', 'loan']);
+  await redisSubscriber.subscribe(['book', 'user', 'loan', 'cart']);
 
   container.bind<Redis>(TYPES.RedisSubscriber).toConstantValue(redisSubscriber);
   container.bind<Redis>(TYPES.Redis).toConstantValue(redis);
@@ -80,6 +87,7 @@ const initialise = async () => {
   container.bind<IBookReadModelFacade>(TYPES.BookReadModelFacade).to(BookReadModelFacade);
   container.bind<IAuthorReadModelFacade>(TYPES.AuthorReadModelFacade).to(AuthorReadModelFacade);
   container.bind<IUserReadModelFacade>(TYPES.UserReadModelFacade).to(UserReadModelFacade);
+  container.bind<CartReadModelFacade>(TYPES.CartReadModelFacade).to(CartReadModelFacade);
 
   // Event Handlers
   container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(FakeNotificationEventHandler);
@@ -98,9 +106,11 @@ const initialise = async () => {
   container.bind<IEventStore>(TYPES.EventStore).to(BookEventStore).whenTargetNamed(EVENT_STREAM_NAMES.Book);
   container.bind<IEventStore>(TYPES.EventStore).to(UserEventStore).whenTargetNamed(EVENT_STREAM_NAMES.User);
   container.bind<IEventStore>(TYPES.EventStore).to(LoanEventStore).whenTargetNamed(EVENT_STREAM_NAMES.Loan);
+  container.bind<IEventStore>(TYPES.EventStore).to(CartEventStore).whenTargetNamed(EVENT_STREAM_NAMES.Cart);
   container.bind<IBookRepository>(TYPES.BookRepository).to(BookRepository);
   container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
   container.bind<ILoanRepository>(TYPES.LoanRepository).to(LoanRepository);
+  container.bind<ICartRepository>(TYPES.CartRepository).to(CartRepository);
 
   // Register command handlers
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateBookCommandHandler);
@@ -111,6 +121,7 @@ const initialise = async () => {
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(UpdateUserPasswordCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateUserCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateLoanCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(MarkBookAsBorrowedCommandHandler);
 
   // Create command bus
@@ -125,6 +136,7 @@ const initialise = async () => {
 
   // Event Handlers that depend on CommandBus
   container.bind<IEventHandler<LoanCreated>>(TYPES.Event).to(LoanCreatedEventHandler);
+  container.bind<IEventHandler<CartCreated>>(TYPES.Event).to(CartCreatedEventHandler);
 
   const server = new InversifyExpressServer(container);
 

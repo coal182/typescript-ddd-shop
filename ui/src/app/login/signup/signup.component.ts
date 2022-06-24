@@ -11,7 +11,6 @@ import { AuthService } from './../../shared/auth/auth.service';
 export class SignupComponent {
   signupForm: FormGroup;
   constructor(public fb: FormBuilder, public authService: AuthService, public router: Router) {
-    console.log("🚀 ~ file: signup.component.ts ~ line 14 ~ SignupComponent ~ constructor ~ fb", fb);
     this.signupForm = this.fb.group({
       name: [''],
       email: [''],

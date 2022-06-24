@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { StatusCodes } from 'http-status-codes';
 import Swal from 'sweetalert2';
 
@@ -62,12 +63,15 @@ export class UserProfileComponent implements OnInit {
     const routeParams = this.route.snapshot.paramMap;
     this.userIdFromRoute = routeParams.get('id');
     const params = { _id: this.userIdFromRoute };
+    this.isLoading = true;
     this.get(params);
     this.onChanges();
   }
 
   onChanges(): void {
+    console.log("🚀 ~ file: user-profile.component.ts ~ line 70 ~ UserProfileComponent ~ onChanges ~ onChanges", 'onChanges')
     this.profileForm.valueChanges.subscribe(val => {
+      console.log(val);
       this.formattedMessage =
       `Hello,
   
@@ -79,11 +83,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log("🚀 ~ file: user-profile.component.ts ~ line 82 ~ UserProfileComponent ~ onSubmit ~ onSubmit", "onSubmit")
     this.save();
   }
 
   get(params): void {
-    this.user$ = this.userService.getUser(params).pipe(map((data) => data.data));
+    this.user$ = this.userService.getUser(params).pipe(map((data) => data.data),tap((pro) => (this.isLoading = false)));
 
     this.user$.subscribe((data) => {
       this.profileForm.reset({
