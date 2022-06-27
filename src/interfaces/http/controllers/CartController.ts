@@ -41,7 +41,7 @@ export class CartController {
       req.params.bookId,
       Number(req.params.qty),
       Number(req.params.price),
-      req.params.originalVersion
+      Number(req.params.originalVersion)
     );
     await this.commandBus.send(command);
     return res.json(ok('Successfully removed item to cart', undefined));
