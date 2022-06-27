@@ -8,6 +8,9 @@
   <span>{{ (item$ | async)?.product.name }}</span>
   <span>{{ (item$ | async)?.qty }}</span>
   <span>{{ (item$ | async)?.price | currency }}</span>
+  <button mat-icon-button type="button" (click)="removeFromCart(item$)">
+    <mat-icon mat-icon matTooltip="Remove">delete</mat-icon>
+  </button>
 </div>
 
 <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">

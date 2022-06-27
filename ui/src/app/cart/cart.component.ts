@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { CartItem } from './cart';
 
 import { HttpCartService } from './cart-service/http-cart.service';
 
@@ -28,5 +30,9 @@ export class CartComponent implements OnInit {
     this.items = this.cartService.clearCart();
     console.warn('Your order has been submitted', this.checkoutForm.value);
     this.checkoutForm.reset();
+  }
+
+  removeFromCart(item: Observable<CartItem>): void {
+    this.cartService.removeFromCart(item);
   }
 }

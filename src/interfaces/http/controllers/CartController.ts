@@ -34,10 +34,15 @@ export class CartController {
     return res.json(ok('Successfully added item to cart', undefined));
   }
 
-  @httpDelete('/remove')
+  @httpDelete('/remove/:guid/:bookId/:qty/:price/:originalVersion')
   async RemoveItemFromCart(@request() req: Request, @response() res: Response) {
-    const { guid, bookId, qty, price, originalVersion } = req.body;
-    const command = new RemoveItemFromCartCommand(guid, bookId, qty, price, originalVersion);
+    const command = new RemoveItemFromCartCommand(
+      req.params.guid,
+      req.params.bookId,
+      Number(req.params.qty),
+      Number(req.params.price),
+      req.params.originalVersion
+    );
     await this.commandBus.send(command);
     return res.json(ok('Successfully removed item to cart', undefined));
   }

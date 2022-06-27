@@ -80,6 +80,44 @@ export class HttpCartService extends CartService {
     });
     
   }
+
+  removeFromCart(item: Observable<CartItem>): void {
+    item.subscribe((item: CartItem) => {
+      alert("removed");
+      const params: AddToCartParams = {
+        guid: this.cart._id,
+        bookId: item.product._id,
+        qty: item.qty,
+        price: item.price,
+        originalVersion: this.cart.version
+      }
+      
+      let httpParams = new HttpParams({fromObject: {...params}});
+      let options = { params: httpParams };
+
+      this.http
+        .delete<any>(`https://ts-bookstore-api.herokuapp.com/api/v1/cart/remove`, options)
+        .pipe(
+          catchError((error: HttpErrorResponse): Observable<Error> => {
+            return throwError(() => error);
+          })
+        )
+        .subscribe((res: any) => {
+          this.cart.version = this.cart.version++;          
+          this.items.push(of(item));
+
+          Swal.fire(
+            'Success!',
+            'Product removed from cart!',
+            'success'
+          );  
+        
+        });
+
+      });
+  
+  }
+
   clearCart(): any[] {
     throw new Error('Method not implemented.');
   }
