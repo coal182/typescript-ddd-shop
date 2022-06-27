@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
-import { controller, httpGet, httpPost, request, response } from 'inversify-express-utils';
+import { controller, httpDelete, httpGet, httpPost, request, response } from 'inversify-express-utils';
 
 import { ICartReadModelFacade } from '@application/projection/cart/ReadModel';
+import { AddItemToCartCommand } from '@commands/cart/AddItemToCart';
 import { CreateCartCommand } from '@commands/cart/CreateCart';
+import { RemoveItemFromCartCommand } from '@commands/cart/RemoveItemFromCart';
 import { TYPES } from '@constants/types';
 import { ICommandBus } from '@core/ICommandBus';
 
@@ -24,6 +26,22 @@ export class CartController {
     return res.json(ok('Successfully create cart request', undefined));
   }
 
+  @httpPost('/add')
+  async addItemToCart(@request() req: Request, @response() res: Response) {
+    const { guid, bookId, qty, price, originalVersion } = req.body;
+    const command = new AddItemToCartCommand(guid, bookId, qty, price, originalVersion);
+    await this.commandBus.send(command);
+    return res.json(ok('Successfully added item to cart', undefined));
+  }
+
+  @httpDelete('/remove')
+  async RemoveItemFromCart(@request() req: Request, @response() res: Response) {
+    const { guid, bookId, qty, price, originalVersion } = req.body;
+    const command = new RemoveItemFromCartCommand(guid, bookId, qty, price, originalVersion);
+    await this.commandBus.send(command);
+    return res.json(ok('Successfully removed item to cart', undefined));
+  }
+
   @httpGet('/:guid')
   async getById(@request() req: Request, @response() res: Response) {
     const cart = await this.readmodel.getById(req.params.guid);
@@ -32,7 +50,7 @@ export class CartController {
 
   @httpGet('/user/:guid')
   async getByUserId(@request() req: Request, @response() res: Response) {
-    const cart = await this.readmodel.getById(req.params.guid);
+    const cart = await this.readmodel.getByField('userId', req.params.guid);
     return res.json(ok('Successfully retrieve the cart', cart));
   }
 }

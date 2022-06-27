@@ -1,5 +1,6 @@
 import '@interfaces/http/controllers';
 
+import { CartItemAddedEventHandler } from '@eventHandlers/cart/CartItemAddedEventHandler';
 import cors from 'cors';
 import { Application, urlencoded, json } from 'express';
 import { Container } from 'inversify';
@@ -16,7 +17,9 @@ import { MarkBookAsBorrowedCommandHandler } from '@commandHandlers/book/MarkBook
 import { UpdateBookAuthorCommandHandler } from '@commandHandlers/book/UpdateBookAuthorCommandHandler';
 import { UpdateBookDescriptionCommandHandler } from '@commandHandlers/book/UpdateBookDescriptionCommandHandler';
 import { UpdateBookImageCommandHandler } from '@commandHandlers/book/UpdateBookImageCommandHandler';
+import { AddItemToCartCommandHandler } from '@commandHandlers/cart/AddItemToCartCommandHandler';
 import { CreateCartCommandHandler } from '@commandHandlers/cart/CreateCartCommandHandler';
+import { RemoveItemFromCartCommandHandler } from '@commandHandlers/cart/RemoveItemFromCartCommandHandler';
 import { CreateLoanCommandHandler } from '@commandHandlers/loan/CreateLoanCommandHandler';
 import { CreateUserCommandHandler } from '@commandHandlers/user/CreateUserCommandHandler';
 import { UpdateUserCommandHandler } from '@commandHandlers/user/UpdateUserCommandHandler';
@@ -35,6 +38,8 @@ import { BookDescriptionChanged } from '@domain/book/events/BookDescriptionChang
 import { BookImageChanged } from '@domain/book/events/BookImageChanged';
 import { IBookRepository } from '@domain/book/IBookRepository';
 import { CartCreated } from '@domain/cart/events/CartCreated';
+import { CartItemAdded } from '@domain/cart/events/CartItemAdded';
+import { CartItemRemoved } from '@domain/cart/events/CartItemRemoved';
 import { ICartRepository } from '@domain/cart/ICartRepository';
 import { LoanCreated } from '@domain/loan/events/LoanCreated';
 import { ILoanRepository } from '@domain/loan/ILoanRepository';
@@ -50,6 +55,7 @@ import { BookDescriptionChangedEventHandler } from '@eventHandlers/book/BookDesc
 import { BookImageChangedEventHandler } from '@eventHandlers/book/BookImageChangedEventHandler';
 import { FakeNotificationEventHandler } from '@eventHandlers/book/FakeNotificationEventHandler';
 import { CartCreatedEventHandler } from '@eventHandlers/cart/CartCreatedEventHandler';
+import { CartItemRemovedEventHandler } from '@eventHandlers/cart/CartItemRemovedEventHandler';
 import { LoanCreatedEventHandler } from '@eventHandlers/loan/LoanCreatedEventHandler';
 import { UserCreatedEventHandler } from '@eventHandlers/user/UserCreatedEventHandler';
 import { UserPasswordChangedEventHandler } from '@eventHandlers/user/UserPasswordChangedEventHandler';
@@ -122,6 +128,8 @@ const initialise = async () => {
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateUserCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateLoanCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateCartCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(AddItemToCartCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(RemoveItemFromCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(MarkBookAsBorrowedCommandHandler);
 
   // Create command bus
@@ -137,6 +145,8 @@ const initialise = async () => {
   // Event Handlers that depend on CommandBus
   container.bind<IEventHandler<LoanCreated>>(TYPES.Event).to(LoanCreatedEventHandler);
   container.bind<IEventHandler<CartCreated>>(TYPES.Event).to(CartCreatedEventHandler);
+  container.bind<IEventHandler<CartItemAdded>>(TYPES.Event).to(CartItemAddedEventHandler);
+  container.bind<IEventHandler<CartItemRemoved>>(TYPES.Event).to(CartItemRemovedEventHandler);
 
   const server = new InversifyExpressServer(container);
 

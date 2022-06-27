@@ -19,7 +19,7 @@ export class CartCreatedEventHandler implements IEventHandler<CartCreated> {
     await this.db.collection('carts').insertOne({
       _id: event.guid,
       userId: event.userId,
-      content: {},
+      items: [],
       version: event.version,
     });
   }

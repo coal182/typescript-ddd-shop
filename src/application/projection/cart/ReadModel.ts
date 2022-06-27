@@ -21,22 +21,30 @@ export class CartReadModelFacade implements ICartReadModelFacade {
   getAll(): Promise<any[]> {
     throw new Error('Method not implemented.');
   }
-  getById(guid: string): Promise<any> {
-    throw new Error('Method not implemented.');
-  }
-  getByField(field: string, value: any): Promise<any> {
-    throw new Error('Method not implemented.');
+  async getByField(field: string, value: any): Promise<any> {
+    const cart = await this.db.collection('carts').findOne({ [field]: value });
+    if (!cart) {
+      throw new NotFoundException('The requested cart does not exist');
+    }
+    return cart;
   }
   getByName(name: string): Promise<any> {
     throw new Error('Method not implemented.');
   }
 
   async getByUserId(userId: string) {
-    const user = await this.db.collection('carts').findOne({ userId: userId });
-    if (!user) {
+    const cart = await this.db.collection('carts').findOne({ userId: userId });
+    if (!cart) {
       throw new NotFoundException('The requested cart does not exist');
     }
-    delete user.password;
-    return user;
+    return cart;
+  }
+
+  async getById(guid: string) {
+    const cart = await this.db.collection('carts').findOne({ _id: guid });
+    if (!cart) {
+      throw new NotFoundException('The requested cart does not exist');
+    }
+    return cart;
   }
 }
