@@ -5,7 +5,8 @@
 </p>
 
 <div class="cart-item" *ngFor="let item$ of items">
-  <span>{{ (item$ | async)?.name }}</span>
+  <span>{{ (item$ | async)?.product.name }}</span>
+  <span>{{ (item$ | async)?.qty }}</span>
   <span>{{ (item$ | async)?.price | currency }}</span>
 </div>
 

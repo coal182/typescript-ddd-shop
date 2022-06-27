@@ -7,7 +7,7 @@ import {
   GetProductParams,
 } from './product.service';
 
-import { Product } from '../../products';
+import { Product } from '../products';
 
 @Injectable({
   providedIn: 'root',

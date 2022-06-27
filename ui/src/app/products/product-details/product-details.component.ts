@@ -6,8 +6,8 @@ import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { AlertDialogComponent } from '../../alert-dialog/alert-dialog.component';
-import { CartService } from '../../cart/cart.service';
-import { Product } from '../../products';
+import { HttpCartService } from '../../cart/cart-service/http-cart.service';
+import { Product } from '../products';
 import { HttpProductService } from '../product-service/http-product.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public productService: HttpProductService,
-    private cartService: CartService,
+    private cartService: HttpCartService,
     private readonly dialog: MatDialog
   ) {}
 

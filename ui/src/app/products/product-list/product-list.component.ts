@@ -8,7 +8,7 @@ import {
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HttpProductService } from '../product-service/http-product.service';
-import { Product } from '../../products';
+import { Product } from '../products';
 
 @Component({
   selector: 'app-product-list',

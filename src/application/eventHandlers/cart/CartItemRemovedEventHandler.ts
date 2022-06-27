@@ -14,16 +14,10 @@ export class CartItemRemovedEventHandler implements IEventHandler<CartItemRemove
 
   async handle(event: CartItemRemoved) {
     const cart = await this.db.collection('carts').findOne({ _id: event.guid });
-    console.log(
-      '🚀 ~ file: CartItemRemovedEventHandler.ts ~ line 17 ~ CartItemRemovedEventHandler ~ handle ~ cart',
-      cart
-    );
+
     if (cart) {
       const newItems = cart.items.filter((item: CartItem) => item.bookId != event.item.bookId);
-      console.log(
-        '🚀 ~ file: CartItemRemovedEventHandler.ts ~ line 19 ~ CartItemRemovedEventHandler ~ handle ~ newItems',
-        newItems
-      );
+
       await this.db
         .collection('carts')
         .updateOne({ _id: event.guid }, { $set: { items: newItems, version: event.version } });

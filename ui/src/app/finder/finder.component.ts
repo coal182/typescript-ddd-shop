@@ -12,7 +12,7 @@ import {
   distinctUntilChanged,
 } from 'rxjs/operators';
 import { HttpProductService } from '../products/product-service/http-product.service';
-import { Product } from '../products';
+import { Product } from '../products/products';
 
 export interface State {
   flag: string;

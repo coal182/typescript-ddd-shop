@@ -9,7 +9,7 @@ export class CartDTO {
   constructor(
     public readonly guid: string,
     public readonly userId: string,
-    public readonly content: Record<string, number>
+    public readonly items: Record<string, number>
   ) {}
 }
 
@@ -18,9 +18,11 @@ export interface ICartReadModelFacade extends IReadModelFacade<any> {}
 @injectable()
 export class CartReadModelFacade implements ICartReadModelFacade {
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
+
   getAll(): Promise<any[]> {
     throw new Error('Method not implemented.');
   }
+
   async getByField(field: string, value: any): Promise<any> {
     const cart = await this.db.collection('carts').findOne({ [field]: value });
     if (!cart) {
@@ -28,6 +30,7 @@ export class CartReadModelFacade implements ICartReadModelFacade {
     }
     return cart;
   }
+
   getByName(name: string): Promise<any> {
     throw new Error('Method not implemented.');
   }

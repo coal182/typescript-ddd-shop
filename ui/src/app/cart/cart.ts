@@ -1,0 +1,24 @@
+import { Product } from "../products/products";
+
+export interface Cart {
+    
+    _id: string;
+    userId: string;
+    items: CartItem[];
+    version: number;
+    
+}
+
+export interface CartItem {
+    product: Product;
+    qty: number;
+    price: number;
+}
+
+export interface AddToCartParams {
+    guid: string;
+    bookId: string;
+    qty: number;
+    price: number;
+    originalVersion: number;
+}

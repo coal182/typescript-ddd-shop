@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
-import { CartService } from './cart.service';
+import { HttpCartService } from './cart-service/http-cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
   });
 
   constructor(
-    private cartService: CartService,
+    private cartService: HttpCartService,
     private formBuilder: FormBuilder
   ) {}
 

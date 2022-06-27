@@ -24,7 +24,8 @@ export class CartItemAddedEventHandler implements IEventHandler<CartItemAdded> {
           return item;
         });
       } else {
-        newItems.push(event.item);
+        const book = await this.db.collection('books').findOne({ _id: event.item.bookId });
+        newItems.push({ ...event.item, product: book });
       }
       await this.db
         .collection('carts')

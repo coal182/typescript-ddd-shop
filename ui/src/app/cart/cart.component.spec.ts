@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MockRouter } from '../test/mock-router';
 
 import { CartComponent } from './cart.component';
-import { CartService } from './cart.service';
+import { CartService } from './cart-service/cart.service';
 
 describe('CartComponent', () => {
   let component: CartComponent;
