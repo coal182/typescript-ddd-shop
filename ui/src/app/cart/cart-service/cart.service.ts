@@ -11,7 +11,7 @@ export abstract class CartService {
 
   abstract addToCart(product: Observable<Product>) : void;
 
-  abstract getItems(): Observable<CartItem>[];
+  abstract getItems(): CartItem[];
 
   abstract clearCart(): Array<any>;
 

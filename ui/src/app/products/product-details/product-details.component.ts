@@ -42,8 +42,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addToCart() {
-    this.cartService.addToCart(this.product$.pipe(map((pro) => pro)));
-    Swal.fire('Product added', 'Your product has been added to the cart!', 'success');
+    this.cartService.addToCart(this.product$.pipe(map((pro) => pro)));    
   }
 
   share() {

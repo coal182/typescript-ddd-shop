@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MatTable } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { CartItem } from './cart';
 
@@ -11,8 +12,9 @@ import { HttpCartService } from './cart-service/http-cart.service';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  items = this.cartService.getItems();
-
+  items: CartItem | unknown = [];
+  columnsToDisplay = ['name', 'qty', 'price', 'actions'];
+  @ViewChild(MatTable) table!: MatTable<CartItem>;
   checkoutForm = this.formBuilder.group({
     name: '',
     address: '',
@@ -21,9 +23,14 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: HttpCartService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.items = this.cartService.getItems();
+    
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.table.renderRows();
+  }
 
   onSubmit(): void {
     // Process checkout data here
@@ -32,7 +39,8 @@ export class CartComponent implements OnInit {
     this.checkoutForm.reset();
   }
 
-  removeFromCart(item: Observable<CartItem>): void {
-    this.cartService.removeFromCart(item);
+  removeFromCart(item: CartItem): void {
+    this.items = this.cartService.removeFromCart(item);    
   }
+
 }

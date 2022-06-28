@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { catchError, firstValueFrom, map, Observable, of, throwError } from 'rxjs';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { catchError, filter, firstValueFrom, map, Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import {
   CartService,
@@ -15,20 +15,21 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class HttpCartService extends CartService {
-  items: Observable<CartItem>[] = []; 
+  items: CartItem[] = []; 
   cart: Cart; 
+
   public constructor(private http: HttpClient) {
     super();
   }
 
-  public getItems(): Observable<CartItem>[] {
+  public getItems(): CartItem[] {
     this.items = [];
     const userId = localStorage.getItem('user_id');
     this.http.get(
       `https://ts-bookstore-api.herokuapp.com/api/v1/cart/user/${userId}`
     ).subscribe((data: GetCartResponse) => {
       data.data.items.map((item: CartItem) => {
-        this.items.push(of(item));
+        this.items.push(item);
       });
 
       this.cart = data.data;
@@ -66,14 +67,10 @@ export class HttpCartService extends CartService {
           })
         )
         .subscribe((res: any) => {
-          this.cart.version = this.cart.version++;          
-          this.items.push(of(item));
+          this.cart.version = this.cart.version+1;          
+          this.items.push(item);
 
-          Swal.fire(
-            'Success!',
-            'Product added to cart!',
-            'success'
-          );  
+          Swal.fire('Product added', 'Your product has been added to the cart!', 'success'); 
         
         });
 
@@ -81,41 +78,33 @@ export class HttpCartService extends CartService {
     
   }
 
-  removeFromCart(item: Observable<CartItem>): void {
-    item.subscribe((item: CartItem) => {
-      alert("removed");
-      const params: AddToCartParams = {
-        guid: this.cart._id,
-        bookId: item.product._id,
-        qty: item.qty,
-        price: item.price,
-        originalVersion: this.cart.version
-      }
-      
-      let httpParams = new HttpParams({fromObject: {...params}});
-      let options = { params: httpParams };
+  removeFromCart(item: CartItem): CartItem[] {
+    const params: AddToCartParams = {
+      guid: this.cart._id,
+      bookId: item.product._id,
+      qty: item.qty,
+      price: item.price,
+      originalVersion: this.cart.version
+    }
 
-      this.http
-        .delete<any>(`https://ts-bookstore-api.herokuapp.com/api/v1/cart/remove`, options)
-        .pipe(
-          catchError((error: HttpErrorResponse): Observable<Error> => {
-            return throwError(() => error);
-          })
-        )
-        .subscribe((res: any) => {
-          this.cart.version = this.cart.version++;          
-          this.items.push(of(item));
-
-          Swal.fire(
-            'Success!',
-            'Product removed from cart!',
-            'success'
-          );  
-        
-        });
+    this.http
+      .delete<any>(`https://ts-bookstore-api.herokuapp.com/api/v1/cart/remove/${params.guid}/${params.bookId}/${params.qty}/${params.price}/${params.originalVersion}`)
+      .pipe(
+        catchError((error: HttpErrorResponse): Observable<Error> => {
+          return throwError(() => error);
+        })
+      )
+      .subscribe((res: any) => {
+        this.cart.version = this.cart.version+1;
+        this.items = this.items.filter(it => it.product._id !== item.product._id);
+        Swal.fire(
+          'Success!',
+          'Your product has been removed from cart!',
+          'success'
+        );  
 
       });
-  
+    return this.items;
   }
 
   clearCart(): any[] {
