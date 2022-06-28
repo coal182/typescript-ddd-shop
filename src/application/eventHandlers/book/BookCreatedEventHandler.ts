@@ -33,13 +33,17 @@ export class BookCreatedEventHandler implements IEventHandler<BookCreated> {
     );
     */
     const authorData = await this.db.collection('authors').findOne({ _id: event.authorId });
-    await this.db.collection('books').insertOne({
+
+    const bookToCollection = {
       _id: event.guid,
       name: event.name,
       description: event.description,
+      image: event.image,
       author: authorData,
       price: event.price,
       version: event.version,
-    });
+    };
+
+    await this.db.collection('books').insertOne(bookToCollection);
   }
 }
