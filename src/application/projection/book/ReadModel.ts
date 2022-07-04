@@ -8,8 +8,9 @@ import { IReadModelFacade } from '@core/IReadModelFacade';
 export class BookListDTO {
   constructor(
     public readonly name: string,
+    public readonly description: string,
+    public readonly image: string,
     public readonly author: string,
-    public readonly isBorrowed: boolean,
     public readonly price: number,
     public readonly version: number
   ) {}

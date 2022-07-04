@@ -1,6 +1,5 @@
 import '@interfaces/http/controllers';
 
-import { CartItemAddedEventHandler } from '@eventHandlers/cart/CartItemAddedEventHandler';
 import cors from 'cors';
 import { Application, urlencoded, json } from 'express';
 import { Container } from 'inversify';
@@ -13,7 +12,6 @@ import { BookReadModelFacade, IBookReadModelFacade } from '@application/projecti
 import { CartReadModelFacade, ICartReadModelFacade } from '@application/projection/cart/ReadModel';
 import { UserReadModelFacade, IUserReadModelFacade } from '@application/projection/user/ReadModel';
 import { CreateBookCommandHandler } from '@commandHandlers/book/CreateBookCommandHandler';
-import { MarkBookAsBorrowedCommandHandler } from '@commandHandlers/book/MarkBookAsBorrowedCommandHandler';
 import { UpdateBookAuthorCommandHandler } from '@commandHandlers/book/UpdateBookAuthorCommandHandler';
 import { UpdateBookDescriptionCommandHandler } from '@commandHandlers/book/UpdateBookDescriptionCommandHandler';
 import { UpdateBookImageCommandHandler } from '@commandHandlers/book/UpdateBookImageCommandHandler';
@@ -32,7 +30,6 @@ import { IEventBus } from '@core/IEventBus';
 import { IEventHandler } from '@core/IEventHandler';
 import { IEventStore } from '@core/IEventStore';
 import { BookAuthorChanged } from '@domain/book/events/BookAuthorChanged';
-import { BookBorrowed } from '@domain/book/events/BookBorrowed';
 import { BookCreated } from '@domain/book/events/BookCreated';
 import { BookDescriptionChanged } from '@domain/book/events/BookDescriptionChanged';
 import { BookImageChanged } from '@domain/book/events/BookImageChanged';
@@ -49,12 +46,12 @@ import { UserUpdated } from '@domain/user/events/UserUpdated';
 import { IUserRepository } from '@domain/user/IUserRepository';
 import { AuthorCreatedEventHandler } from '@eventHandlers/author/AuthorCreatedEventHandler';
 import { BookAuthorChangedEventHandler } from '@eventHandlers/book/BookAuthorChangedEventHandler';
-import { BookBorrowedEventHandler } from '@eventHandlers/book/BookBorrowedEventHandler';
 import { BookCreatedEventHandler } from '@eventHandlers/book/BookCreatedEventHandler';
 import { BookDescriptionChangedEventHandler } from '@eventHandlers/book/BookDescriptionChangedEventHandler';
 import { BookImageChangedEventHandler } from '@eventHandlers/book/BookImageChangedEventHandler';
 import { FakeNotificationEventHandler } from '@eventHandlers/book/FakeNotificationEventHandler';
 import { CartCreatedEventHandler } from '@eventHandlers/cart/CartCreatedEventHandler';
+import { CartItemAddedEventHandler } from '@eventHandlers/cart/CartItemAddedEventHandler';
 import { CartItemRemovedEventHandler } from '@eventHandlers/cart/CartItemRemovedEventHandler';
 import { LoanCreatedEventHandler } from '@eventHandlers/loan/LoanCreatedEventHandler';
 import { UserCreatedEventHandler } from '@eventHandlers/user/UserCreatedEventHandler';
@@ -93,7 +90,7 @@ const initialise = async () => {
   container.bind<IBookReadModelFacade>(TYPES.BookReadModelFacade).to(BookReadModelFacade);
   container.bind<IAuthorReadModelFacade>(TYPES.AuthorReadModelFacade).to(AuthorReadModelFacade);
   container.bind<IUserReadModelFacade>(TYPES.UserReadModelFacade).to(UserReadModelFacade);
-  container.bind<CartReadModelFacade>(TYPES.CartReadModelFacade).to(CartReadModelFacade);
+  container.bind<ICartReadModelFacade>(TYPES.CartReadModelFacade).to(CartReadModelFacade);
 
   // Event Handlers
   container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(FakeNotificationEventHandler);
@@ -105,7 +102,6 @@ const initialise = async () => {
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(UserCreatedEventHandler);
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(AuthorCreatedEventHandler);
   container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(BookCreatedEventHandler);
-  container.bind<IEventHandler<BookBorrowed>>(TYPES.Event).to(BookBorrowedEventHandler);
 
   // Prepare persistence components
   container.bind<Db>(TYPES.Db).toConstantValue(db);
@@ -130,7 +126,6 @@ const initialise = async () => {
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(AddItemToCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(RemoveItemFromCartCommandHandler);
-  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(MarkBookAsBorrowedCommandHandler);
 
   // Create command bus
   const commandBus = new CommandBus();

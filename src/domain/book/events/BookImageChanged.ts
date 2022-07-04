@@ -5,7 +5,7 @@ export class BookImageChanged extends Event implements IEvent {
   eventName = BookImageChanged.name;
   aggregateName = 'book';
 
-  constructor(public guid: string, public image: string) {
+  constructor(public id: string, public image: string) {
     super();
   }
 }

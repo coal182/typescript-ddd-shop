@@ -14,7 +14,7 @@ export class Cart extends AggregateRoot {
   constructor(guid: string, userId: string);
 
   constructor(guid?: string, userId?: string) {
-    super(guid);
+    super();
     if (guid && userId) {
       this.applyChange(new CartCreated(guid, userId));
     }

@@ -1,10 +1,7 @@
-import { nanoid } from 'nanoid';
-
 import { IEvent } from './IEvent';
 
 export abstract class AggregateRoot {
   [x: string]: any;
-  public guid: string;
   private __version = -1;
   private __changes: any[] = [];
 
@@ -12,8 +9,8 @@ export abstract class AggregateRoot {
     return this.__version;
   }
 
-  constructor(guid?: string) {
-    this.guid = guid || nanoid();
+  constructor() {
+    this.__changes = [];
   }
 
   public getUncommittedEvents(): IEvent[] {

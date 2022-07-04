@@ -3,6 +3,7 @@ import { inject, injectable } from 'inversify';
 import { UpdateBookAuthorCommand } from '@commands/book/UpdateBookAuthor';
 import { TYPES } from '@constants/types';
 import { ICommandHandler } from '@core/ICommandHandler';
+import { BookAuthor } from '@domain/book/BookAuthor';
 import { IBookRepository } from '@domain/book/IBookRepository';
 
 @injectable()
@@ -13,7 +14,7 @@ export class UpdateBookAuthorCommandHandler implements ICommandHandler<UpdateBoo
 
   async handle(command: UpdateBookAuthorCommand) {
     const book = await this.repository.getById(command.guid);
-    book.changeAuthor(command.authorId);
+    book.changeAuthor(new BookAuthor(command.authorId));
     await this.repository.save(book, command.originalVersion);
   }
 }

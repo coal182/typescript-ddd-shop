@@ -11,7 +11,7 @@ export class Loan extends AggregateRoot {
   constructor(guid: string, bookId: string, userId: string);
 
   constructor(guid?: string, bookId?: string, userId?: string) {
-    super(guid);
+    super();
     if (guid && bookId && userId) {
       this.applyChange(new LoanCreated(guid, bookId, userId));
     }

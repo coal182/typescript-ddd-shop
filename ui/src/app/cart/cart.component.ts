@@ -12,7 +12,7 @@ import { HttpCartService } from './cart-service/http-cart.service';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  items: CartItem | unknown = [];
+  items: CartItem[];
   columnsToDisplay = ['name', 'qty', 'price', 'actions'];
   @ViewChild(MatTable) table!: MatTable<CartItem>;
   checkoutForm = this.formBuilder.group({
@@ -40,7 +40,10 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCart(item: CartItem): void {
-    this.items = this.cartService.removeFromCart(item);    
+    this.items = this.cartService.removeFromCart(item);  
+    this.items = this.items.filter(
+      (it) => it.product._id !== item.product._id
+    );  
   }
 
 }

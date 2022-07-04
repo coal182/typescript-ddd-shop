@@ -43,7 +43,7 @@ export class User extends AggregateRoot {
     dateOfBirth?: Date,
     password?: string
   ) {
-    super(guid);
+    super();
     if (email && firstname && lastname && dateOfBirth && password) {
       this.applyChange(new UserCreated(this.guid, email, firstname, lastname, dateOfBirth, password));
     }

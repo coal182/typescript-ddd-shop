@@ -35,7 +35,7 @@ export class BookCreatedEventHandler implements IEventHandler<BookCreated> {
     const authorData = await this.db.collection('authors').findOne({ _id: event.authorId });
 
     const bookToCollection = {
-      _id: event.guid,
+      _id: event.id,
       name: event.name,
       description: event.description,
       image: event.image,

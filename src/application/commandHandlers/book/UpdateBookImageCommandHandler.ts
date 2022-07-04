@@ -3,6 +3,7 @@ import { inject, injectable } from 'inversify';
 import { UpdateBookImageCommand } from '@commands/book/UpdateBookImage';
 import { TYPES } from '@constants/types';
 import { ICommandHandler } from '@core/ICommandHandler';
+import { BookImage } from '@domain/book/BookImage';
 import { IBookRepository } from '@domain/book/IBookRepository';
 
 @injectable()
@@ -14,7 +15,7 @@ export class UpdateBookImageCommandHandler implements ICommandHandler<UpdateBook
   async handle(command: UpdateBookImageCommand) {
     const book = await this.repository.getById(command.guid);
     console.log(book);
-    book.changeImage(command.image);
+    book.changeImage(new BookImage(command.image));
     await this.repository.save(book, command.originalVersion);
   }
 }
