@@ -87,3 +87,44 @@ Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at https://angular.io/license
 */
+
+.colored-toast.swal2-icon-success {
+  background-color: #a5dc86 !important;
+  color: #286f00 !important;
+}
+.colored-toast.swal2-icon-success .swal2-title {
+  background-color: #a5dc86 !important;
+  color: #286f00 !important;
+}
+
+.colored-toast .swal2-html-container {
+  color: #286f00 !important;
+}
+
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+  background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+  background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
+}

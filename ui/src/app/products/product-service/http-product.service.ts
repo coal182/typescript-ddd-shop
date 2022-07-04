@@ -20,8 +20,7 @@ export class HttpProductService extends ProductService {
   public getProducts(params): Observable<any> {
     let headers = { 'Content-Type': 'application/json' };
     let parameters = new HttpParams()
-      .set('name', params?.name || '')
-      .set('paramName2', 0); //Create new HttpParams
+      .set('name', params?.name || '');
     return this.http.get(
       'https://ts-bookstore-api.herokuapp.com/api/v1/books',
       { headers: headers, params: parameters }

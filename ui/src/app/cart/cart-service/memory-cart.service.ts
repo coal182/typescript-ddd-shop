@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../../products/products';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable, of } from 'rxjs';
 import { CartService } from './cart.service';
 import { CartItem } from '../cart';
 
@@ -15,14 +15,12 @@ export class MemoryCartService extends CartService {
     super();
   }
 
-  addToCart(product: Observable<Product>): void {
-    product.pipe(
-      map((pro): CartItem => ({product: pro, qty: 1, price: pro.price }))
-    );
+  addToCart(item: CartItem): void {
+    this.items.push(item);
   }
 
   getItems() {
-    return this.items;
+    return of(this.items);
   }
 
   clearCart() {

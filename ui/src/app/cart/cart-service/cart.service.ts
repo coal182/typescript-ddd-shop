@@ -9,9 +9,9 @@ import { Product } from 'src/app/products/products';
 })
 export abstract class CartService {
 
-  abstract addToCart(product: Observable<Product>) : void;
+  abstract addToCart(item: CartItem) : void;
 
-  abstract getItems(): CartItem[];
+  abstract getItems(): Observable<Object>;
 
   abstract clearCart(): Array<any>;
 

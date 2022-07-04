@@ -108,7 +108,7 @@ export class Book extends AggregateRoot {
       description: this.description.value,
       image: this.image.value,
       authorId: this.authorId.value,
-      price: String(this.price.value),
+      price: this.price.value,
     };
   }
 }
