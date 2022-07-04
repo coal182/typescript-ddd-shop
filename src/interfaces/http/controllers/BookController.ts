@@ -50,26 +50,26 @@ export class BookController {
     return res.json(ok('Successfully created the book', undefined));
   }
 
-  @httpPut('/:guid/author')
+  @httpPut('/:id/author')
   async updateAuthor(@request() req: Request, @response() res: Response) {
     const { authorId, version } = req.body;
-    const command = new UpdateBookAuthorCommand(req.params.guid, authorId, version);
+    const command = new UpdateBookAuthorCommand(req.params.id, authorId, version);
     await this.commandBus.send(command);
     return res.json(ok('Successfully updated the book', undefined));
   }
 
-  @httpPut('/:guid/description')
+  @httpPut('/:id/description')
   async updateDescription(@request() req: Request, @response() res: Response) {
     const { description, version } = req.body;
-    const command = new UpdateBookDescriptionCommand(req.params.guid, description, version);
+    const command = new UpdateBookDescriptionCommand(req.params.id, description, version);
     await this.commandBus.send(command);
     return res.json(ok('Successfully updated the book', undefined));
   }
 
-  @httpPut('/:guid/image')
+  @httpPut('/:id/image')
   async updateImage(@request() req: Request, @response() res: Response) {
     const { image, version } = req.body;
-    const command = new UpdateBookImageCommand(req.params.guid, image, version);
+    const command = new UpdateBookImageCommand(req.params.id, image, version);
     await this.commandBus.send(command);
     return res.json(ok('Successfully updated the book', undefined));
   }

@@ -31,12 +31,12 @@ export class BookAuthorChangedEventHandler implements IEventHandler<BookAuthorCh
       );
     }
     */
-    const cachedBook = await this.db.collection('books').findOne({ _id: event.id });
+    const cachedBook = await this.db.collection('books').findOne({ _id: event.guid });
     const authorData = await this.db.collection('authors').findOne({ _id: event.authorId });
     if (cachedBook) {
       await this.db
         .collection('books')
-        .updateOne({ _id: event.id }, { $set: { author: authorData, version: event.version } });
+        .updateOne({ _id: event.guid }, { $set: { author: authorData, version: event.version } });
     }
   }
 }

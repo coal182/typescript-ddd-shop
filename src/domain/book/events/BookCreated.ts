@@ -6,7 +6,7 @@ export class BookCreated extends Event implements IEvent {
   aggregateName = 'book';
 
   constructor(
-    public id: string,
+    public guid: string,
     public name: string,
     public description: string,
     public image: string,

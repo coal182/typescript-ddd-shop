@@ -5,7 +5,7 @@ export class BookDescriptionChanged extends Event implements IEvent {
   eventName = BookDescriptionChanged.name;
   aggregateName = 'book';
 
-  constructor(public id: string, public description: string) {
+  constructor(public guid: string, public description: string) {
     super();
   }
 }
