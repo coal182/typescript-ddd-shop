@@ -18,24 +18,39 @@ can be found in the LICENSE file at https://angular.io/license
   border: 1px solid #f0f0f0;
   padding: 0px 20px;
   margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
+.product-list article h3 {
+  flex: 1 1 auto;
+}
 .product-list article img {
   width: 200px;
   height: 304px;
   margin: 5px auto;
   float: left;
+  flex: 1 1 auto;
 }
 .product-list article a {
   margin-top: 20px;
   color: #505050;
   text-decoration: none;
   font-weight: normal;  
+  flex: 1 1 auto;
+}
+
+.product-list article p {
+  font-size: 17px;
+  color: #b90000;
 }
 
 .product-list article button {
   width: 100%!important;
   min-width: unset!important;
+  flex: 1;
+  margin-bottom: 20px;
 }
 
 .custom-modalbox .mat-dialog-container {

@@ -19,31 +19,19 @@ can be found in the LICENSE file at https://angular.io/license
           "
         />
         {{ product.name }}
-      </a>
-
-      <p *ngIf="product.price">{{ product.price | currency }}</p>
-
-      <button
-          mat-flat-button
-          type="button"
-          color="primary"
-          (click)="addToCart(product)"     
-        >
-          Buy <mat-icon>add_shopping_cart</mat-icon>
-        </button>
-
-      <app-product-alerts [product]="product" (notify)="onNotify()">
-      </app-product-alerts>
-
-      <ng-template #msgDialog let-data>
-        <mat-dialog-content>
-          {{ data.msg }}
-        </mat-dialog-content>
-        <mat-dialog-actions align="center">
-          <button mat-dialog-close tabindex="-1">Cerrar</button>
-        </mat-dialog-actions>
-      </ng-template>
+      </a>      
     </h3>
+
+    <p *ngIf="product.price">{{ product.price | currency }}</p>
+    
+    <button
+      mat-flat-button
+      type="button"
+      color="primary"
+      (click)="addToCart(product)"     
+    >
+      Buy <mat-icon>add_shopping_cart</mat-icon>
+    </button>
   </article>
 </div>
 <mat-progress-spinner *ngIf="isLoading"

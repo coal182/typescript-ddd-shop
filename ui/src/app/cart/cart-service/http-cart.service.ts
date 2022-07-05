@@ -18,7 +18,7 @@ export class HttpCartService extends CartService {
     super();
   }
 
-  public getItems(): Observable<Object> {
+  public getItems(): Observable<Cart> {
 
     const userId = localStorage.getItem('user_id');
     return this.http.get(
