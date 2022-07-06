@@ -7,7 +7,7 @@ import { TYPES } from '@constants/types';
 import { PasswordNotMatchException } from '@core/ApplicationError';
 import { CommandBus } from '@infrastructure/commandBus';
 
-import { IUserReadModelFacade } from '../../../application/projection/user/ReadModel';
+import { IUserReadModelFacade } from '../../../contexts/store/backend/user/infrastructure/projection/users/ReadModel';
 import { createJWToken } from '../middlewares/auth';
 import { ok } from '../processors/response';
 

@@ -4,8 +4,8 @@ import { Request, Response } from 'express';
 import sinon from 'sinon';
 import { v4 as uuidv4 } from 'uuid';
 
-import { CreateBookCommand } from '@commands/book/CreateBook';
 import { CommandBus } from '@infrastructure/commandBus';
+import { CreateBookCommand } from '@storeback/book/application/commands/CreateBook';
 
 import { BookReadModelFacadeMock } from '../../../test/application/projection/book/ReadModel';
 

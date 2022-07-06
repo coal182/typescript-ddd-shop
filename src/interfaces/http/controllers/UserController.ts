@@ -3,15 +3,15 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, httpGet, httpPost, httpPut, request, response } from 'inversify-express-utils';
 
-import { CreateUserCommand } from '@commands/user/CreateUser';
-import { UpdateUserCommand } from '@commands/user/UpdateUser';
-import { UpdateUserPasswordCommand } from '@commands/user/UpdateUserPassword';
+import { CreateUserCommand } from '@storeback/user/application/commands/CreateUser';
+import { UpdateUserCommand } from '@storeback/user/application/commands/UpdateUser';
+import { UpdateUserPasswordCommand } from '@storeback/user/application/commands/UpdateUserPassword';
 import { TYPES } from '@constants/types';
 import { PasswordNotMatchException, NotFoundException } from '@core/ApplicationError';
 import { CommandBus } from '@infrastructure/commandBus';
 
-import { IAuthorReadModelFacade } from '../../../application/projection/author/ReadModel';
-import { IUserReadModelFacade } from '../../../application/projection/user/ReadModel';
+import { IAuthorReadModelFacade } from '../../../contexts/store/backend/author/infrastructure/projection/authors/ReadModel';
+import { IUserReadModelFacade } from '../../../contexts/store/backend/user/infrastructure/projection/users/ReadModel';
 import { verifyJWT_MW } from '../middlewares/auth';
 import { ok } from '../processors/response';
 

@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, httpDelete, httpGet, httpPost, request, response } from 'inversify-express-utils';
 
-import { ICartReadModelFacade } from '@application/projection/cart/ReadModel';
-import { AddItemToCartCommand } from '@commands/cart/AddItemToCart';
-import { CreateCartCommand } from '@commands/cart/CreateCart';
-import { RemoveItemFromCartCommand } from '@commands/cart/RemoveItemFromCart';
 import { TYPES } from '@constants/types';
 import { ICommandBus } from '@core/ICommandBus';
+import { AddItemToCartCommand } from '@storeback/cart/application/commands/AddItemToCart';
+import { CreateCartCommand } from '@storeback/cart/application/commands/CreateCart';
+import { RemoveItemFromCartCommand } from '@storeback/cart/application/commands/RemoveItemFromCart';
+import { ICartReadModelFacade } from '@storeback/cart/infrastructure/projection/carts/ReadModel';
 
 import { ok } from '../processors/response';
 

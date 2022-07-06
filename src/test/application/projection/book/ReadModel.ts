@@ -1,4 +1,4 @@
-import { IBookReadModelFacade } from '@application/projection/book/ReadModel';
+import { IBookReadModelFacade } from '@storeback/book/infrastructure/projection/books/ReadModel';
 
 export class BookReadModelFacadeMock implements IBookReadModelFacade {
   constructor() {
