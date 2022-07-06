@@ -15,17 +15,13 @@
     "test": "mocha -r ts-node/register -r tsconfig-paths/register src/**/*.spec.ts --timeout 60000 --exit"
   },
   "_moduleAliases": {
-    "@core": "dist/core",
-    "@commandHandlers": "dist/application/commandHandlers",
-    "@eventHandlers": "dist/application/eventHandlers",
-    "@commands": "dist/commands",
-    "@projection": "dist/projection",
+    "@core": "dist/shared/core",    
     "@config": "dist/config",
-    "@constants": "dist/constants",
-    "@domain": "dist/domain",
-    "@application": "dist/application",
-    "@infrastructure": "dist/infrastructure",
-    "@interfaces": "dist/interfaces"
+    "@constants": "dist/shared/constants",
+    "@infrastructure": "dist/shared/infrastructure",
+    "@interfaces": "dist/interfaces",
+    "@storeback": "dist/contexts/store/backend",
+    "@shared": "dist/shared"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",

@@ -5,12 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { TYPES } from '@constants/types';
 import { CommandBus } from '@infrastructure/commandBus';
-import { CreateBookCommand } from 'contexts/store/backend/book/application/commands/CreateBook';
-import { UpdateBookAuthorCommand } from 'contexts/store/backend/book/application/commands/UpdateBookAuthor';
-import { UpdateBookDescriptionCommand } from 'contexts/store/backend/book/application/commands/UpdateBookDescription';
-import { UpdateBookImageCommand } from 'contexts/store/backend/book/application/commands/UpdateBookImage';
+import { CreateBookCommand } from '@storeback/book/application/commands/CreateBook';
+import { UpdateBookAuthorCommand } from '@storeback/book/application/commands/UpdateBookAuthor';
+import { UpdateBookDescriptionCommand } from '@storeback/book/application/commands/UpdateBookDescription';
+import { UpdateBookImageCommand } from '@storeback/book/application/commands/UpdateBookImage';
+import { IBookReadModelFacade } from '@storeback/book/infrastructure/projection/books/ReadModel';
 
-import { IBookReadModelFacade } from '../../../contexts/store/backend/book/infrastructure/projection/books/ReadModel';
 import { verifyJWT_MW } from '../middlewares/auth';
 import { ok } from '../processors/response';
 
