@@ -69,7 +69,7 @@ export class CartComponent implements OnInit {
           popup: 'colored-toast'
         },
         showConfirmButton: false,
-        timer: 900000,
+        timer: 3000,
         timerProgressBar: true
       });  
       
