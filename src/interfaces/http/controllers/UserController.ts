@@ -6,12 +6,12 @@ import { controller, httpGet, httpPost, httpPut, request, response } from 'inver
 import { TYPES } from '@constants/types';
 import { PasswordNotMatchException, NotFoundException } from '@core/ApplicationError';
 import { CommandBus } from '@infrastructure/commandBus';
+import { IAuthorReadModelFacade } from '@storeback/author/infrastructure/projection/authors/ReadModel';
 import { CreateUserCommand } from '@storeback/user/application/commands/CreateUser';
 import { UpdateUserCommand } from '@storeback/user/application/commands/UpdateUser';
 import { UpdateUserPasswordCommand } from '@storeback/user/application/commands/UpdateUserPassword';
+import { IUserReadModelFacade } from '@storeback/user/infrastructure/projection/users/ReadModel';
 
-import { IAuthorReadModelFacade } from '../../../contexts/store/backend/author/infrastructure/projection/authors/ReadModel';
-import { IUserReadModelFacade } from '../../../contexts/store/backend/user/infrastructure/projection/users/ReadModel';
 import { verifyJWT_MW } from '../middlewares/auth';
 import { ok } from '../processors/response';
 

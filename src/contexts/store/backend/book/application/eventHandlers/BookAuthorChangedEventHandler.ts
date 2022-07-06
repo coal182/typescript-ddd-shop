@@ -4,7 +4,7 @@ import { Db } from 'mongodb';
 import { TYPES } from '@constants/types';
 import { IEventHandler } from '@core/IEventHandler';
 import { IAuthorReadModelFacade } from '@storeback/author/infrastructure/projection/authors/ReadModel';
-import { BookAuthorChanged } from 'contexts/store/backend/book/domain/events/BookAuthorChanged';
+import { BookAuthorChanged } from '@storeback/book/domain/events/BookAuthorChanged';
 
 @injectable()
 export class BookAuthorChangedEventHandler implements IEventHandler<BookAuthorChanged> {

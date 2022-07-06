@@ -6,7 +6,7 @@ import { TYPES } from '@constants/types';
 import { IEventHandler } from '@core/IEventHandler';
 import { IAuthorReadModelFacade } from '@storeback/author/infrastructure/projection/authors/ReadModel';
 import { IBookReadModelFacade } from '@storeback/book/infrastructure/projection/books/ReadModel';
-import { BookCreated } from 'contexts/store/backend/book/domain/events/BookCreated';
+import { BookCreated } from '@storeback/book/domain/events/BookCreated';
 
 @injectable()
 export class BookCreatedEventHandler implements IEventHandler<BookCreated> {

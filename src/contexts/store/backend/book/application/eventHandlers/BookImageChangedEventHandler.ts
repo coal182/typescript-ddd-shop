@@ -3,7 +3,7 @@ import { Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
 import { IEventHandler } from '@core/IEventHandler';
-import { BookImageChanged } from 'contexts/store/backend/book/domain/events/BookImageChanged';
+import { BookImageChanged } from '@storeback/book/domain/events/BookImageChanged';
 
 @injectable()
 export class BookImageChangedEventHandler implements IEventHandler<BookImageChanged> {

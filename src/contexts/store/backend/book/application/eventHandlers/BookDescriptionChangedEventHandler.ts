@@ -3,7 +3,7 @@ import { Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
 import { IEventHandler } from '@core/IEventHandler';
-import { BookDescriptionChanged } from 'contexts/store/backend/book/domain/events/BookDescriptionChanged';
+import { BookDescriptionChanged } from '@storeback/book/domain/events/BookDescriptionChanged';
 
 @injectable()
 export class BookDescriptionChangedEventHandler implements IEventHandler<BookDescriptionChanged> {

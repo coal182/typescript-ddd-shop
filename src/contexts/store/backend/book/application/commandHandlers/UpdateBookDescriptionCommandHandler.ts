@@ -2,9 +2,9 @@ import { inject, injectable } from 'inversify';
 
 import { TYPES } from '@constants/types';
 import { ICommandHandler } from '@core/ICommandHandler';
+import { UpdateBookDescriptionCommand } from '@storeback/book/application/commands/UpdateBookDescription';
 import { BookDescription } from '@storeback/book/domain/BookDescription';
 import { IBookRepository } from '@storeback/book/domain/IBookRepository';
-import { UpdateBookDescriptionCommand } from 'contexts/store/backend/book/application/commands/UpdateBookDescription';
 
 @injectable()
 export class UpdateBookDescriptionCommandHandler implements ICommandHandler<UpdateBookDescriptionCommand> {
