@@ -46,32 +46,14 @@
       "@core/*": [
         "shared/core/*"
       ],
-      "@commandHandlers/*": [
-        "application/commandHandlers/*"
-      ],
-      "@eventHandlers/*": [
-        "application/eventHandlers/*"
-      ],
-      "@commands/*": [
-        "commands/*"
-      ],
       "@config/*": [
         "config/*"
       ],
       "@constants/*": [
         "shared/constants/*"
       ],
-      "@domain/*": [
-        "domain/*"
-      ],
-      "@application/*": [
-        "application/*"
-      ],
       "@infrastructure/*": [
         "shared/infrastructure/*"
-      ],
-      "@projection/*": [
-        "projection/*"
       ],
       "@interfaces/*": [
         "interfaces/*"      
