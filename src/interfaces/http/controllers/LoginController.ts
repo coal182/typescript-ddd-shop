@@ -6,8 +6,8 @@ import { controller, httpPost, request, response } from 'inversify-express-utils
 import { TYPES } from '@constants/types';
 import { PasswordNotMatchException } from '@core/ApplicationError';
 import { CommandBus } from '@infrastructure/commandBus';
+import { IUserReadModelFacade } from '@storeback/user/infrastructure/projection/users/ReadModel';
 
-import { IUserReadModelFacade } from '../../../@storeback/user/infrastructure/projection/users/ReadModel';
 import { createJWToken } from '../middlewares/auth';
 import { ok } from '../processors/response';
 
