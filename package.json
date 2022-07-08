@@ -8,20 +8,20 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "start": "node dist/index.js",
-    "dev": "ts-node-dev -r tsconfig-paths/register ./src/index.ts",
+    "start": "node dist/apps/store/backend/index.js",
+    "dev": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/store/backend/index.ts",
     "lint": "eslint --fix .",
     "postinstall": "npm run build",
-    "test": "mocha -r ts-node/register -r tsconfig-paths/register src/**/*.spec.ts --timeout 60000 --exit"
+    "test": "mocha -r ts-node/register -r tsconfig-paths/register test/**/*.spec.ts --timeout 60000 --exit"
   },
   "_moduleAliases": {
-    "@core": "dist/shared/core",    
-    "@config": "dist/config",
-    "@constants": "dist/shared/constants",
-    "@infrastructure": "dist/shared/infrastructure",
-    "@interfaces": "dist/interfaces",
-    "@storeback": "dist/contexts/store/backend",
-    "@shared": "dist/shared"
+    "@core": "dist/src/shared/core",    
+    "@config": "dist/src/config",
+    "@constants": "dist/src/shared/constants",
+    "@infrastructure": "dist/src/shared/infrastructure",
+    "@interfaces": "dist/src/interfaces",
+    "@storeback": "dist/src/contexts/store/backend",
+    "@shared": "dist/src/shared"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",

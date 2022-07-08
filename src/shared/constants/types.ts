@@ -11,9 +11,6 @@ export const TYPES = {
   LoanRepository: Symbol('LoanRepository'),
   CartRepository: Symbol('CartRepository'),
 
-  // Data Mappers
-  BookDataMapper: Symbol('BookDataMapper'),
-
   // Application Services
   BookApplication: Symbol('BookApplication'),
 

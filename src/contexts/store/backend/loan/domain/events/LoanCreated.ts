@@ -1,5 +1,5 @@
-import { Event } from '@core/Event';
-import { IEvent } from '@core/IEvent';
+import { Event } from '@core/event';
+import { IEvent } from '@core/i-event';
 
 export class LoanCreated extends Event implements IEvent {
   eventName = LoanCreated.name;
