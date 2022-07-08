@@ -1,4 +1,4 @@
-import 'src/apps/store/backend/controllers';
+import '@storebackapp/controllers';
 
 import cors from 'cors';
 import { Application, urlencoded, json } from 'express';
