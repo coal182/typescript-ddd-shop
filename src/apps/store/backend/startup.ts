@@ -1,4 +1,4 @@
-import 'src/apps/store/backend/controllers';
+import '@storebackapp/controllers';
 
 import cors from 'cors';
 import { Application, urlencoded, json } from 'express';
@@ -72,7 +72,7 @@ import { IUserRepository } from '@storeback/user/domain/i-user-repository';
 import { UserEventStore } from '@storeback/user/infrastructure/persistence/user-event-store';
 import { UserRepository } from '@storeback/user/infrastructure/persistence/user-repository';
 import { UserReadModelFacade, IUserReadModelFacade } from '@storeback/user/infrastructure/projection/users/read-model';
-import { errorHandler } from 'src/apps/store/backend/middlewares/error-handler';
+import { errorHandler } from '@storebackapp/middlewares/error-handler';
 
 const initialise = async () => {
   const container = new Container();
