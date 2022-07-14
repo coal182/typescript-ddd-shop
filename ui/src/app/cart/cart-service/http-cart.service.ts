@@ -17,6 +17,16 @@ export class HttpCartService extends CartService {
 
   public constructor(private http: HttpClient) {
     super();
+    if (!this.cart && localStorage.getItem('cart') !== null) {
+        const sessionCart = JSON.parse(localStorage.getItem('cart'));
+        this.cart = {
+          id : sessionCart.id,
+          userId : sessionCart.userId,
+          items : [],
+          version : sessionCart.version          
+        }
+    
+    }
   }
 
   public getItems(): Observable<Cart> {

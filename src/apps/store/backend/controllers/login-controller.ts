@@ -63,7 +63,7 @@ export class LoginController {
         maxAge: 3600,
       }),
       id: user.id,
-      cart,
+      cart: { id: cart.id, userId: cart.userId, version: cart.version },
     };
 
     return res.json(ok('Successfully logged in', data));
