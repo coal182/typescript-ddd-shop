@@ -43,7 +43,7 @@ export class AuthService {
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.data.token);
         localStorage.setItem('user_id', res.data.id);
-        localStorage.setItem('cart', res.data.cart);
+        localStorage.setItem('cart', JSON.stringify(res.data.cart));
         this.getUserProfile(res.data.id).subscribe({
           next: (res) => {
             this.currentUser = res;
@@ -67,7 +67,7 @@ export class AuthService {
   doLogout() {
     let removeToken = localStorage.removeItem('access_token');
     let removeUserId = localStorage.removeItem('user_id');
-    let removeCartId = localStorage.removeItem('cart_id');
+    let removeCartId = localStorage.removeItem('cart');
     if (removeToken == null && removeUserId == null && removeCartId == null) {
       this.router.navigate(['log-in']);
     }
