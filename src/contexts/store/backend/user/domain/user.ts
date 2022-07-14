@@ -5,11 +5,16 @@ import { UserPasswordChanged } from './events/user-password-changed';
 import { UserUpdated } from './events/user-updated';
 
 export class User extends AggregateRoot {
+  private _guid: string;
   private _email: string;
   private _firstname: string;
   private _lastname: string;
   private _dateOfBirth: Date;
   private _password: string;
+
+  get guid() {
+    return this._guid;
+  }
 
   get email() {
     return this._email;
@@ -44,8 +49,8 @@ export class User extends AggregateRoot {
     password?: string
   ) {
     super();
-    if (email && firstname && lastname && dateOfBirth && password) {
-      this.applyChange(new UserCreated(this.guid, email, firstname, lastname, dateOfBirth, password));
+    if (guid && email && firstname && lastname && dateOfBirth && password) {
+      this.applyChange(new UserCreated(guid, email, firstname, lastname, dateOfBirth, password));
     }
   }
 
@@ -54,7 +59,7 @@ export class User extends AggregateRoot {
     this._firstname = firstname;
     this._lastname = lastname;
     this._dateOfBirth = dateOfBirth;
-    this.applyChange(new UserUpdated(this.guid, email, firstname, lastname, dateOfBirth));
+    this.applyChange(new UserUpdated(this._guid, email, firstname, lastname, dateOfBirth));
   }
 
   public applyUserUpdated(event: UserUpdated): void {
@@ -74,7 +79,7 @@ export class User extends AggregateRoot {
   }
 
   public applyUserCreated(event: UserCreated): void {
-    this.guid = event.guid; // Important for set changes to the right aggregate guid
+    this._guid = event.guid; // Important for set changes to the right aggregate guid
     this._email = event.email;
     this._firstname = event.firstname;
     this._lastname = event.lastname;
