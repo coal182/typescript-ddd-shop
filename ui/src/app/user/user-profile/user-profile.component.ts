@@ -62,7 +62,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {    
     const routeParams = this.route.snapshot.paramMap;
     this.userIdFromRoute = routeParams.get('id');
-    const params = { _id: this.userIdFromRoute };
+    const params = { id: this.userIdFromRoute };
     this.isLoading = true;
     this.get(params);
     this.onChanges();
@@ -102,9 +102,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   save(): void {
-    const queryParams = { _id: this.userIdFromRoute };
+    const queryParams = { id: this.userIdFromRoute };
     const params: PutUserParams = {
-      _id: queryParams._id,
+      id: queryParams.id,
       firstname: this.profileForm.value.firstname,
       lastname: this.profileForm.value.lastname,
       email: this.profileForm.value.email,

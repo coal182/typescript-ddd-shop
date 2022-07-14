@@ -20,7 +20,7 @@ export class UserReadModelFacade implements IUserReadModelFacade {
 
     const usersData = await this.db.collection('users').find({}).toArray();
     for (const userData of usersData) {
-      users.push({ guid: userData._id, ...userData });
+      users.push({ guid: userData.id, ...userData });
     }
 
     return users;
@@ -40,7 +40,7 @@ export class UserReadModelFacade implements IUserReadModelFacade {
   }
 
   async getById(guid: string) {
-    const user = await this.db.collection('users').findOne({ _id: guid });
+    const user = await this.db.collection('users').findOne({ id: guid });
     if (!user) {
       throw new NotFoundException('The requested user does not exist');
     }

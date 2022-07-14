@@ -12,11 +12,11 @@ export class UserPasswordChangedEventHandler implements IEventHandler<UserPasswo
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
 
   async handle(event: UserPasswordChanged) {
-    const cachedUser = await this.db.collection('users').findOne({ _id: event.guid });
+    const cachedUser = await this.db.collection('users').findOne({ id: event.guid });
     if (cachedUser) {
       await this.db
         .collection('users')
-        .updateOne({ _id: event.guid }, { $set: { password: event.password, version: event.version } });
+        .updateOne({ id: event.guid }, { $set: { password: event.password, version: event.version } });
     }
   }
 }

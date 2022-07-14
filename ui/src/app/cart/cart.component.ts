@@ -57,7 +57,7 @@ export class CartComponent implements OnInit {
     )
     .subscribe((res: any) => {
       this.cartService.cart.version = this.cartService.cart.version+1;
-      this.items = this.items.filter(it => it.product._id !== item.product._id);
+      this.items = this.items.filter(it => it.product.id !== item.product.id);
       Swal.fire({
         title: 'Product removed', 
         html: 'Your product has been removed from cart!', 

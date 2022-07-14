@@ -21,7 +21,7 @@
         <mat-option
           *ngFor="let product of filteredProducts"
           [value]="product.name"
-          [routerLink]="['/products', product._id]"
+          [routerLink]="['/products', product.id]"
         >
           <img
             class="example-option-img"

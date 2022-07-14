@@ -1,5 +1,5 @@
 export interface Product {
-  _id: string;
+  id: string;
   name: string;
   author: Author;
   price: number;
@@ -28,7 +28,7 @@ export const products = [
 ];
 
 export interface Author {
-  _id: string;
+  id: string;
   firstname: string;
   lastname: string;
 }

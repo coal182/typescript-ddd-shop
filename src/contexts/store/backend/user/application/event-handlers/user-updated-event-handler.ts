@@ -12,10 +12,10 @@ export class UserUpdatedEventHandler implements IEventHandler<UserUpdated> {
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
 
   async handle(event: UserUpdated) {
-    const cachedUser = await this.db.collection('users').findOne({ _id: event.guid });
+    const cachedUser = await this.db.collection('users').findOne({ id: event.guid });
     if (cachedUser) {
       await this.db.collection('users').updateOne(
-        { _id: event.guid },
+        { id: event.guid },
         {
           $set: {
             email: event.email,

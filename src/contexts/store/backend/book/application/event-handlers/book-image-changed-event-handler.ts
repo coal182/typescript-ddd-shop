@@ -12,11 +12,11 @@ export class BookImageChangedEventHandler implements IEventHandler<BookImageChan
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
 
   async handle(event: BookImageChanged) {
-    const cachedBook = await this.db.collection('books').findOne({ _id: event.guid });
+    const cachedBook = await this.db.collection('books').findOne({ id: event.guid });
     if (cachedBook) {
       await this.db
         .collection('books')
-        .updateOne({ _id: event.guid }, { $set: { image: event.image, version: event.version } });
+        .updateOne({ id: event.guid }, { $set: { image: event.image, version: event.version } });
     }
   }
 }

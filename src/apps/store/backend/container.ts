@@ -77,7 +77,7 @@ export const initialiseContainer = async () => {
   // Initialise Redis
   const redisSubscriber: Redis = getRedisClient(Number(config.REDIS_PORT), config.REDIS_HOST, config.REDIS_PASSWORD);
   const redis: Redis = getRedisClient(Number(config.REDIS_PORT), config.REDIS_HOST, config.REDIS_PASSWORD);
-  await redisSubscriber.subscribe(['book', 'user', 'loan', 'cart']);
+  await redisSubscriber.subscribe(...['book', 'user', 'loan', 'cart']);
 
   container.bind<Redis>(TYPES.RedisSubscriber).toConstantValue(redisSubscriber);
   container.bind<Redis>(TYPES.Redis).toConstantValue(redis);

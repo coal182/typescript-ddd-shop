@@ -42,8 +42,8 @@ export class AuthService {
       )
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.data.token);
-        localStorage.setItem('user_id', res.data._id);
-        this.getUserProfile(res.data._id).subscribe({
+        localStorage.setItem('user_id', res.data.id);
+        this.getUserProfile(res.data.id).subscribe({
           next: (res) => {
             this.currentUser = res;
             Swal.fire(

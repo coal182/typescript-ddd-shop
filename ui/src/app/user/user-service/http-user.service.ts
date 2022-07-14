@@ -31,13 +31,13 @@ export class HttpUserService extends UserService {
 
   public getUser(params: GetUserParams): Observable<any> {
     return this.http.get(
-      `https://ts-bookstore-api.herokuapp.com/api/v1/users/${params._id}`
+      `https://ts-bookstore-api.herokuapp.com/api/v1/users/${params.id}`
     );
   }
 
   public putUser(params: PutUserParams): Observable<any> {
     return this.http.put(
-      `https://ts-bookstore-api.herokuapp.com/api/v1/users/${params._id}`,
+      `https://ts-bookstore-api.herokuapp.com/api/v1/users/${params.id}`,
       params
     );
   }

@@ -32,8 +32,8 @@ export class HttpCartService extends CartService {
   addToCart(item: CartItem): Observable<Object> {
 
       const params: AddToCartParams = {
-        guid: this.cart._id,
-        bookId: item.product._id,
+        guid: this.cart.id,
+        bookId: item.product.id,
         qty: item.qty,
         price: item.price,
         originalVersion: this.cart.version
@@ -46,8 +46,8 @@ export class HttpCartService extends CartService {
 
   removeFromCart(item: CartItem): Observable<Object> {
     const params: AddToCartParams = {
-      guid: this.cart._id,
-      bookId: item.product._id,
+      guid: this.cart.id,
+      bookId: item.product.id,
       qty: item.qty,
       price: item.price,
       originalVersion: this.cart.version
@@ -70,7 +70,7 @@ export interface GetCartResponse {
     items: CartItem[],
     userId: string,
     version: number
-    _id: string
+    id: string
     message: string
     status: number
   };

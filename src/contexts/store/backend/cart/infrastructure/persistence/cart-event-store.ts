@@ -9,6 +9,6 @@ import { EventStore } from '@infrastructure/event-store/event-store';
 @injectable()
 export class CartEventStore extends EventStore implements IEventStore {
   constructor(@inject(TYPES.Db) private readonly db: Db, @inject(TYPES.EventBus) private readonly eventBus: IEventBus) {
-    super(db.collection('carts-events'), eventBus);
+    super(db.collection('cart-events'), eventBus);
   }
 }

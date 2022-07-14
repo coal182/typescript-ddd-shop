@@ -20,7 +20,7 @@ export class AuthorReadModelFacade implements IAuthorReadModelFacade {
 
     const authorsData = await this.db.collection('authors').find({}).toArray();
     for (const authorData of authorsData) {
-      authors.push({ guid: authorData._id, ...authorData });
+      authors.push({ guid: authorData.id, ...authorData });
     }
 
     return authors;
@@ -40,7 +40,7 @@ export class AuthorReadModelFacade implements IAuthorReadModelFacade {
   }
 
   async getById(guid: string) {
-    const author = await this.db.collection('authors').findOne({ _id: guid });
+    const author = await this.db.collection('authors').findOne({ id: guid });
     if (!author) {
       throw new NotFoundException('The requested author does not exist');
     }

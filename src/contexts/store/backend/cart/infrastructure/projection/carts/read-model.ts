@@ -44,7 +44,7 @@ export class CartReadModelFacade implements ICartReadModelFacade {
   }
 
   async getById(guid: string) {
-    const cart = await this.db.collection('carts').findOne({ _id: guid });
+    const cart = await this.db.collection('carts').findOne({ id: guid });
     if (!cart) {
       throw new NotFoundException('The requested cart does not exist');
     }

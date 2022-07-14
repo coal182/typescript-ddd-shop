@@ -81,7 +81,7 @@ describe('UserProfileComponent', () => {
 
       
         it('should call UserService with expected params', () => {
-          const testqueryParams = {_id: 'r9n16bJtQlpxxrTTThEKn'};
+          const testqueryParams = {id: 'r9n16bJtQlpxxrTTThEKn'};
           const version = 1;
           const testProfileForm = {
             firstname: 'John',
@@ -90,7 +90,7 @@ describe('UserProfileComponent', () => {
             dateOfBirth: new Date('1991-01-01'),
           };
           const expectedParams: PutUserParams = {
-            _id: testqueryParams._id,
+            id: testqueryParams.id,
             firstname: testProfileForm.firstname,
             lastname: testProfileForm.lastname,
             email: testProfileForm.email,

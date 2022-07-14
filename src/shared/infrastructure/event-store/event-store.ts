@@ -2,7 +2,7 @@ import { injectable, unmanaged } from 'inversify';
 import { Collection } from 'mongodb';
 
 import { ConcurrencyException, NotFoundException } from '@core/application-error';
-import { EventDescriptor } from '@core/event-descriptor';
+import { EventDescriptor, IEventDescriptor } from '@core/event-descriptor';
 import { IEvent } from '@core/i-event';
 import { IEventBus } from '@core/i-event-bus';
 import { IEventStore } from '@core/i-event-store';
@@ -37,11 +37,13 @@ export abstract class EventStore implements IEventStore {
   }
 
   async getEventsForAggregate(aggregateGuid: string): Promise<IEvent[]> {
-    const events = await this.eventCollection.find({ aggregateGuid }).toArray();
+    const events = await this.eventCollection.find({ aggregateGuid }).toArray() as IEventDescriptor[];
     if (!events.length) {
       throw new NotFoundException('Aggregate with the requested Guid does not exist');
     }
-    return events.map((eventDescriptor: EventDescriptor) => eventDescriptor.data);
+    return events.map((eventDescriptor: EventDescriptor) => {
+      return eventDescriptor.data;
+    });
   }
 
   private async getLastEventDescriptor(aggregateGuid: string) {

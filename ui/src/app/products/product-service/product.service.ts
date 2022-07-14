@@ -13,5 +13,5 @@ export interface GetProductsParams {
   name: string;
 }
 export interface GetProductParams {
-  _id: string;
+  id: string;
 }

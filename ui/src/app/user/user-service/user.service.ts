@@ -14,10 +14,10 @@ export interface GetUsersParams {
   name: string;
 }
 export interface GetUserParams {
-  _id: string;
+  id: string;
 }
 export interface PutUserParams {
-  _id: string;
+  id: string;
   firstname: string;
   lastname: string;
   email: string;

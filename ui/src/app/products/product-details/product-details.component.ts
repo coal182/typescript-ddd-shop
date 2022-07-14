@@ -34,7 +34,7 @@ export class ProductDetailsComponent implements OnInit {
     const routeParams = this.route.snapshot.paramMap;
     const productIdFromRoute: string = routeParams.get('productId');
 
-    const params = { _id: productIdFromRoute };
+    const params = { id: productIdFromRoute };
 
     this.isLoading = true;
 

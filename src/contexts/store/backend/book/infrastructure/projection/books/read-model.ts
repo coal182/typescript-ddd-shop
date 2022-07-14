@@ -46,7 +46,7 @@ export class BookReadModelFacade implements IBookReadModelFacade {
   }
 
   async getById(guid: string) {
-    const book = await this.db.collection('books').findOne({ _id: guid });
+    const book = await this.db.collection('books').findOne({ id: guid });
     if (!book) {
       throw new NotFoundException('The requested book does not exist');
     }
@@ -54,7 +54,7 @@ export class BookReadModelFacade implements IBookReadModelFacade {
   }
 
   async getAuthorById(authorId: string) {
-    const author = await this.db.collection('authors').findOne({ _id: authorId });
+    const author = await this.db.collection('authors').findOne({ id: authorId });
     if (!author) {
       throw new NotFoundException('The requested author does not exist');
     }

@@ -29,7 +29,7 @@ export class HttpProductService extends ProductService {
 
   public getProduct(params: GetProductParams): Observable<any> {
     return this.http.get(
-      `https://ts-bookstore-api.herokuapp.com/api/v1/books/${params._id}`
+      `https://ts-bookstore-api.herokuapp.com/api/v1/books/${params.id}`
     );
   }
 }

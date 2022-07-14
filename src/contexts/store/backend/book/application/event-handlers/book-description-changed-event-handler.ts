@@ -12,11 +12,11 @@ export class BookDescriptionChangedEventHandler implements IEventHandler<BookDes
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
 
   async handle(event: BookDescriptionChanged) {
-    const cachedBook = await this.db.collection('books').findOne({ _id: event.guid });
+    const cachedBook = await this.db.collection('books').findOne({ id: event.guid });
     if (cachedBook) {
       await this.db
         .collection('books')
-        .updateOne({ _id: event.guid }, { $set: { description: event.description, version: event.version } });
+        .updateOne({ id: event.guid }, { $set: { description: event.description, version: event.version } });
     }
   }
 }

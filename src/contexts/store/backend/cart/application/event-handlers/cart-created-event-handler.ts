@@ -17,7 +17,7 @@ export class CartCreatedEventHandler implements IEventHandler<CartCreated> {
 
   async handle(event: CartCreated) {
     await this.db.collection('carts').insertOne({
-      _id: event.guid,
+      id: event.guid,
       userId: event.userId,
       items: [],
       version: event.version,

@@ -12,7 +12,7 @@ export class CartItemAddedEventHandler implements IEventHandler<CartItemAdded> {
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
 
   async handle(event: CartItemAdded) {
-    const cart = await this.db.collection('carts').findOne({ _id: event.guid });
+    const cart = await this.db.collection('carts').findOne({ id: event.guid });
     if (cart) {
       let newItems = [...cart.items];
       if (newItems.find((item) => item.bookId == event.item.bookId)) {
@@ -24,12 +24,12 @@ export class CartItemAddedEventHandler implements IEventHandler<CartItemAdded> {
           return item;
         });
       } else {
-        const book = await this.db.collection('books').findOne({ _id: event.item.bookId });
+        const book = await this.db.collection('books').findOne({ id: event.item.bookId });
         newItems.push({ ...event.item, product: book });
       }
       await this.db
         .collection('carts')
-        .updateOne({ _id: event.guid }, { $set: { items: newItems, version: event.version } });
+        .updateOne({ id: event.guid }, { $set: { items: newItems, version: event.version } });
     }
   }
 }
