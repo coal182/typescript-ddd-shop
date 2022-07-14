@@ -7,8 +7,9 @@ export class CreateUserCommand extends Command {
   public dateOfBirth: Date;
   public password: string;
 
-  constructor(email: string, firstname: string, lastname: string, dateOfBirth: Date, password: string, guid?: string) {
+  constructor(guid: string, email: string, firstname: string, lastname: string, dateOfBirth: Date, password: string) {
     super(guid);
+    this.guid = guid;
     this.email = email;
     this.firstname = firstname;
     this.lastname = lastname;

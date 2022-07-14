@@ -2,6 +2,7 @@ import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, httpGet, httpPost, httpPut, request, response } from 'inversify-express-utils';
+import { v4 as uuidv4 } from 'uuid';
 
 import { TYPES } from '@constants/types';
 import { PasswordNotMatchException, NotFoundException } from '@core/application-error';
@@ -26,11 +27,14 @@ export class UserController {
   @httpPost('')
   async createUser(@request() req: Request, @response() res: Response) {
     const { email, firstname, lastname, dateOfBirth, password } = req.body;
-
+    let id = uuidv4();
+    if (req.body.id) {
+      id = req.body.id;
+    }
     const salt = genSaltSync(10);
     const hash = hashSync(password, salt);
 
-    const command = new CreateUserCommand(email, firstname, lastname, new Date(dateOfBirth), hash);
+    const command = new CreateUserCommand(id, email, firstname, lastname, new Date(dateOfBirth), hash);
     await this.commandBus.send(command);
     return res.json(ok('Successfully created the user', undefined));
   }
