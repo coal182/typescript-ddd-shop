@@ -15,7 +15,7 @@ import { IUserReadModelFacade } from '@storeback/user/infrastructure/projection/
 import { verifyJWT_MW } from '../middlewares/auth';
 import { ok } from '../processors/response';
 
-@controller('/api/v1/users')
+@controller('/api/v1/users', verifyJWT_MW)
 export class UserController {
   constructor(
     @inject(TYPES.CommandBus) private readonly commandBus: CommandBus,
