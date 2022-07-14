@@ -65,7 +65,9 @@ export class AuthService {
   }
   doLogout() {
     let removeToken = localStorage.removeItem('access_token');
-    if (removeToken == null) {
+    let removeUserId = localStorage.removeItem('user_id');
+    let removeCartId = localStorage.removeItem('cart_id');
+    if (removeToken == null && removeUserId == null && removeCartId == null) {
       this.router.navigate(['log-in']);
     }
   }

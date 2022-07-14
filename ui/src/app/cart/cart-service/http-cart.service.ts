@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { catchError, filter, firstValueFrom, map, Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import * as uuid from 'uuid';
 import {
   CartService,
   GetCartParams
@@ -31,17 +32,17 @@ export class HttpCartService extends CartService {
 
   addToCart(item: CartItem): Observable<Object> {
 
-      const params: AddToCartParams = {
-        guid: this.cart.id,
-        bookId: item.product.id,
-        qty: item.qty,
-        price: item.price,
-        originalVersion: this.cart.version
-      }
-      
-       return this.http
-        .post<any>(`https://ts-bookstore-api.herokuapp.com/api/v1/cart/add`, params);
+    const params: AddToCartParams = {
+      guid: this.cart.id,
+      bookId: item.product.id,
+      qty: item.qty,
+      price: item.price,
+      originalVersion: this.cart.version
+    }
     
+    return this.http
+      .post<any>(`https://ts-bookstore-api.herokuapp.com/api/v1/cart/add`, params);
+
   }
 
   removeFromCart(item: CartItem): Observable<Object> {

@@ -7,9 +7,10 @@ import { IReadModelFacade } from '@core/i-read-model-facade';
 
 export class CartDTO {
   constructor(
-    public readonly guid: string,
+    public readonly id: string,
     public readonly userId: string,
-    public readonly items: Record<string, number>
+    public readonly items: [],
+    public readonly version: number
   ) {}
 }
 
@@ -23,12 +24,13 @@ export class CartReadModelFacade implements ICartReadModelFacade {
     throw new Error('Method not implemented.');
   }
 
-  async getByField(field: string, value: any): Promise<any> {
+  async getByField(field: string, value: any): Promise<CartDTO> {
     const cart = await this.db.collection('carts').findOne({ [field]: value });
     if (!cart) {
       throw new NotFoundException('The requested cart does not exist');
     }
-    return cart;
+    const cartDTO = new CartDTO(cart.id, cart.userId, cart.items, cart.version);
+    return cartDTO;
   }
 
   getByName(name: string): Promise<any> {
