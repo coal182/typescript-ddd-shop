@@ -14,7 +14,6 @@ export class UpdateBookImageCommandHandler implements ICommandHandler<UpdateBook
 
   async handle(command: UpdateBookImageCommand) {
     const book = await this.repository.getById(command.guid);
-    console.log(book);
     book.changeImage(new BookImage(command.image));
     await this.repository.save(book, command.originalVersion);
   }

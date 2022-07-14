@@ -23,7 +23,6 @@ export class BookController {
 
   @httpGet('/')
   async getAllBooks(@request() req: Request, @response() res: Response) {
-    console.log(req.query);
     const query = req.query || {};
     const name = query.name || '';
     if (name) {

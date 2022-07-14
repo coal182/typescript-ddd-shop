@@ -6,10 +6,10 @@ import 'reflect-metadata';
 import { TYPES } from '@constants/types';
 import { IEventBus } from '@core/i-event-bus';
 
-import { initialise } from './startup';
+import { server } from './server';
 
 (async () => {
-  const container = await initialise();
+  const container = await server();
   const baseEventHandler = container.get<IEventBus>(TYPES.EventBus);
   baseEventHandler.subscribeEvents();
 })();

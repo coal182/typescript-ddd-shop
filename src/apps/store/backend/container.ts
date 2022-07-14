@@ -1,9 +1,4 @@
-import '@storebackapp/controllers';
-
-import cors from 'cors';
-import { Application, urlencoded, json } from 'express';
 import { Container } from 'inversify';
-import { InversifyExpressServer } from 'inversify-express-utils';
 import { Redis } from 'ioredis';
 import { Db } from 'mongodb';
 
@@ -72,9 +67,8 @@ import { IUserRepository } from '@storeback/user/domain/i-user-repository';
 import { UserEventStore } from '@storeback/user/infrastructure/persistence/user-event-store';
 import { UserRepository } from '@storeback/user/infrastructure/persistence/user-repository';
 import { UserReadModelFacade, IUserReadModelFacade } from '@storeback/user/infrastructure/projection/users/read-model';
-import { errorHandler } from '@storebackapp/middlewares/error-handler';
 
-const initialise = async () => {
+export const initialiseContainer = async () => {
   const container = new Container();
   console.log(config.MONGODB_URI);
   // Module Registration
@@ -146,36 +140,5 @@ const initialise = async () => {
   container.bind<IEventHandler<CartItemAdded>>(TYPES.Event).to(CartItemAddedEventHandler);
   container.bind<IEventHandler<CartItemRemoved>>(TYPES.Event).to(CartItemRemovedEventHandler);
 
-  const server = new InversifyExpressServer(container);
-
-  // Add a list of allowed origins.
-  // If you have more origins you would like to add, you can add them to the array below.
-  const allowedOrigins = [
-    'http://localhost:3000',
-    'http://localhost:4200',
-    'https://angular-pvnyyc--4200.local.webcontainer.io',
-  ];
-
-  const options: cors.CorsOptions = {
-    origin: allowedOrigins,
-  };
-
-  server.setConfig((app: Application) => {
-    app.use(cors(options));
-    app.use(urlencoded({ extended: true }));
-    app.use(json());
-  });
-
-  server.setErrorConfig((app: Application) => {
-    app.use(errorHandler);
-  });
-
-  const apiServer = server.build();
-  apiServer.listen(config.API_PORT, () =>
-    console.log('The application is initialised on the port %s', config.API_PORT)
-  );
-
   return container;
 };
-
-export { initialise };
