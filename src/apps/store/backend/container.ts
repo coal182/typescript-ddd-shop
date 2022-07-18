@@ -54,6 +54,22 @@ import { LoanCreated } from '@storeback/loan/domain/events/LoanCreated';
 import { ILoanRepository } from '@storeback/loan/domain/i-loan-repository';
 import { LoanEventStore } from '@storeback/loan/infrastructure/persistence/loan-event-store';
 import { LoanRepository } from '@storeback/loan/infrastructure/persistence/loan-repository';
+import { AddLineToOrderCommandHandler } from '@storeback/order/application/command-handlers/add-line-to-order-command-handler';
+import { CancelOrderCommandHandler } from '@storeback/order/application/command-handlers/cancel-order-command-handler';
+import { CreateOrderCommandHandler } from '@storeback/order/application/command-handlers/create-order-command-handler';
+import { OrderCancelledEventHandler } from '@storeback/order/application/event-handlers/order-cancelled-event-handler';
+import { OrderCreatedEventHandler } from '@storeback/order/application/event-handlers/order-created-event-handler';
+import { OrderLineAddedEventHandler } from '@storeback/order/application/event-handlers/order-line-added-event-handler';
+import { OrderCancelled } from '@storeback/order/domain/events/order-cancelled';
+import { OrderCreated } from '@storeback/order/domain/events/order-created';
+import { OrderLineAdded } from '@storeback/order/domain/events/order-line-added';
+import { IOrderRepository } from '@storeback/order/domain/i-order-repository';
+import { OrderEventStore } from '@storeback/order/infrastructure/persistence/order-event-store';
+import { OrderRepository } from '@storeback/order/infrastructure/persistence/order-repository';
+import {
+  OrderReadModelFacade,
+  IOrderReadModelFacade,
+} from '@storeback/order/infrastructure/projection/orders/read-model';
 import { CreateUserCommandHandler } from '@storeback/user/application/command-handlers/create-user-command-handler';
 import { UpdateUserCommandHandler } from '@storeback/user/application/command-handlers/update-user-command-handler';
 import { UpdateUserPasswordCommandHandler } from '@storeback/user/application/command-handlers/update-user-password-command-handler';
@@ -77,7 +93,7 @@ export const initialiseContainer = async () => {
   // Initialise Redis
   const redisSubscriber: Redis = getRedisClient(Number(config.REDIS_PORT), config.REDIS_HOST, config.REDIS_PASSWORD);
   const redis: Redis = getRedisClient(Number(config.REDIS_PORT), config.REDIS_HOST, config.REDIS_PASSWORD);
-  await redisSubscriber.subscribe(...['book', 'user', 'loan', 'cart']);
+  await redisSubscriber.subscribe(...['book', 'user', 'loan', 'cart', 'order']);
 
   container.bind<Redis>(TYPES.RedisSubscriber).toConstantValue(redisSubscriber);
   container.bind<Redis>(TYPES.Redis).toConstantValue(redis);
@@ -88,6 +104,7 @@ export const initialiseContainer = async () => {
   container.bind<IAuthorReadModelFacade>(TYPES.AuthorReadModelFacade).to(AuthorReadModelFacade);
   container.bind<IUserReadModelFacade>(TYPES.UserReadModelFacade).to(UserReadModelFacade);
   container.bind<ICartReadModelFacade>(TYPES.CartReadModelFacade).to(CartReadModelFacade);
+  container.bind<IOrderReadModelFacade>(TYPES.OrderReadModelFacade).to(OrderReadModelFacade);
 
   // Event Handlers
   container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(FakeNotificationEventHandler);
@@ -106,10 +123,12 @@ export const initialiseContainer = async () => {
   container.bind<IEventStore>(TYPES.EventStore).to(UserEventStore).whenTargetNamed(EVENT_STREAM_NAMES.User);
   container.bind<IEventStore>(TYPES.EventStore).to(LoanEventStore).whenTargetNamed(EVENT_STREAM_NAMES.Loan);
   container.bind<IEventStore>(TYPES.EventStore).to(CartEventStore).whenTargetNamed(EVENT_STREAM_NAMES.Cart);
+  container.bind<IEventStore>(TYPES.EventStore).to(OrderEventStore).whenTargetNamed(EVENT_STREAM_NAMES.Order);
   container.bind<IBookRepository>(TYPES.BookRepository).to(BookRepository);
   container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
   container.bind<ILoanRepository>(TYPES.LoanRepository).to(LoanRepository);
   container.bind<ICartRepository>(TYPES.CartRepository).to(CartRepository);
+  container.bind<IOrderRepository>(TYPES.OrderRepository).to(OrderRepository);
 
   // Register command handlers
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateBookCommandHandler);
@@ -123,6 +142,9 @@ export const initialiseContainer = async () => {
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(AddItemToCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(RemoveItemFromCartCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateOrderCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(AddLineToOrderCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CancelOrderCommandHandler);
 
   // Create command bus
   const commandBus = new CommandBus();
@@ -139,6 +161,9 @@ export const initialiseContainer = async () => {
   container.bind<IEventHandler<CartCreated>>(TYPES.Event).to(CartCreatedEventHandler);
   container.bind<IEventHandler<CartItemAdded>>(TYPES.Event).to(CartItemAddedEventHandler);
   container.bind<IEventHandler<CartItemRemoved>>(TYPES.Event).to(CartItemRemovedEventHandler);
+  container.bind<IEventHandler<OrderCreated>>(TYPES.Event).to(OrderCreatedEventHandler);
+  container.bind<IEventHandler<OrderLineAdded>>(TYPES.Event).to(OrderLineAddedEventHandler);
+  container.bind<IEventHandler<OrderCancelled>>(TYPES.Event).to(OrderCancelledEventHandler);
 
   return container;
 };
