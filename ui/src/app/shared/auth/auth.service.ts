@@ -30,12 +30,21 @@ export class AuthService {
       .post<any>(`${this.endpoint}/login/signin`, user)
       .pipe(
         catchError((error: HttpErrorResponse): Observable<Error> => {
-          if (error.status === StatusCodes.UNAUTHORIZED) {
-            Swal.fire(
-              'Error!',
-              'You have entered an invalid email or password!',
-              'error'
-            );
+          switch (error.status) {
+            case StatusCodes.UNAUTHORIZED:
+              Swal.fire({
+                title: 'Error',
+                text: 'You have entered an invalid password!',
+                icon: 'error',
+              });
+              break;
+            default:
+              Swal.fire({
+                title: 'Error',
+                text: 'Something went wrong',
+                icon: 'error',
+              });
+              break;
           }
           return throwError(() => error);
         })
