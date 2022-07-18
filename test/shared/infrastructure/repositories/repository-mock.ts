@@ -26,10 +26,19 @@ export class RepositoryMock<T extends AggregateRoot> implements IRepository<T> {
     expect(this.mockSave).to.have.been.calledWith(aggregateRoot, expectedVersion);
   }
 
+  assertSaveHasBeenCalledTwice() {
+    expect(this.mockSave).to.have.been.calledTwice;
+  }
+
   async getById(guid: string): Promise<T> {
     const aggregateRoot = new this.Type() as T;
     const history = await this.eventStore.getEventsForAggregate(guid);
     aggregateRoot.loadFromHistory(history);
     return aggregateRoot;
+  }
+
+  assertSavedAggregate<T>(savedAggregate: T, savedEntity: Partial<T>, expectedEntity: Partial<T>) {
+    expect(savedAggregate).to.be.instanceof(this.Type);
+    expect(savedEntity).to.be.deep.equal(expectedEntity);
   }
 }

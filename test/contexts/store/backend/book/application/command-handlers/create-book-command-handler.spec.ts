@@ -37,7 +37,6 @@ describe(CreateBookCommandHandler.name, () => {
 
     it('should be capable to get the aggregate from the events on event store', async () => {
       const savedAggregate = await repository.getById(expectedAggregateRoot.guid);
-      expect(savedAggregate).to.be.instanceof(Book);
       const savedBook = (({ guid, name, description, image, authorId, price }) => ({
         guid,
         name,
@@ -54,7 +53,7 @@ describe(CreateBookCommandHandler.name, () => {
         authorId,
         price,
       }))(expectedAggregateRoot);
-      expect(savedBook).to.be.deep.equal(expectedBook);
+      repository.assertSavedAggregate<Book>(savedAggregate, savedBook, expectedBook);
     });
   });
 });
