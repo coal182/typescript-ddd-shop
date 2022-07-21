@@ -20,7 +20,7 @@ describe(CreateBookCommandHandler.name, () => {
 
     beforeEach(() => {
       const command = new CreateBookCommand(
-        expectedAggregateRoot.guid,
+        expectedAggregateRoot.guid.value,
         expectedAggregateRoot.name.value,
         expectedAggregateRoot.description.value,
         expectedAggregateRoot.image.value,
@@ -36,7 +36,7 @@ describe(CreateBookCommandHandler.name, () => {
     });
 
     it('should be capable to get the aggregate from the events on event store', async () => {
-      const savedAggregate = await repository.getById(expectedAggregateRoot.guid);
+      const savedAggregate = await repository.getById(expectedAggregateRoot.guid.value);
       const savedBook = (({ guid, name, description, image, authorId, price }) => ({
         guid,
         name,

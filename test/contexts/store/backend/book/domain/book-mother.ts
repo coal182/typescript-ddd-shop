@@ -1,6 +1,7 @@
 import { Book } from '@storeback/book/domain/book';
 import { BookAuthor } from '@storeback/book/domain/book-author';
 import { BookDescription } from '@storeback/book/domain/book-description';
+import { BookId } from '@storeback/book/domain/book-id';
 import { BookImage } from '@storeback/book/domain/book-image';
 import { BookName } from '@storeback/book/domain/book-name';
 import { BookPrice } from '@storeback/book/domain/book-price';
@@ -14,7 +15,7 @@ import { BookPriceMother } from './book-price-mother';
 
 export class BookMother {
   static create(
-    guid: string,
+    guid: BookId,
     name: BookName,
     description: BookDescription,
     image: BookImage,
@@ -26,7 +27,7 @@ export class BookMother {
 
   static random(): Book {
     return this.create(
-      BookIdMother.random().value,
+      BookIdMother.random(),
       BookNameMother.random(),
       BookDescriptionMother.random(),
       BookImageMother.random(),

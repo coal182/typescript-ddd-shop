@@ -20,7 +20,7 @@ export class CreateBookCommandHandler implements ICommandHandler<CreateBookComma
 
   async handle(command: CreateBookCommand) {
     const book = new Book(
-      command.guid,
+      new BookId(command.guid),
       new BookName(command.name),
       new BookDescription(command.description),
       new BookImage(command.image),

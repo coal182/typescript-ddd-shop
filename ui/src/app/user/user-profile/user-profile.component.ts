@@ -69,9 +69,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onChanges(): void {
-    console.log("🚀 ~ file: user-profile.component.ts ~ line 70 ~ UserProfileComponent ~ onChanges ~ onChanges", 'onChanges')
     this.profileForm.valueChanges.subscribe(val => {
-      console.log(val);
       this.formattedMessage =
       `Hello,
   
@@ -83,7 +81,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log("🚀 ~ file: user-profile.component.ts ~ line 82 ~ UserProfileComponent ~ onSubmit ~ onSubmit", "onSubmit")
     this.save();
   }
 

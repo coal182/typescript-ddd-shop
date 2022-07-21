@@ -11,7 +11,7 @@ export class Repository<T extends AggregateRoot> implements IRepository<T> {
   ) {}
 
   async save(aggregateRoot: T, expectedVersion: number) {
-    await this.eventStore.saveEvents(aggregateRoot.guid, aggregateRoot.getUncommittedEvents(), expectedVersion);
+    await this.eventStore.saveEvents(aggregateRoot.guid.value, aggregateRoot.getUncommittedEvents(), expectedVersion);
     aggregateRoot.markChangesAsCommitted();
   }
 

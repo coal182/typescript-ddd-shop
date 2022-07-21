@@ -4,6 +4,7 @@ import { Primitives } from '@shared/value-objects/primitives-type';
 
 import { BookAuthor } from './book-author';
 import { BookDescription } from './book-description';
+import { BookId } from './book-id';
 import { BookImage } from './book-image';
 import { BookName } from './book-name';
 import { BookPrice } from './book-price';
@@ -12,7 +13,7 @@ import { BookCreated } from './events/book-created';
 import { BookDescriptionChanged } from './events/book-description-changed';
 import { BookImageChanged } from './events/book-image-changed';
 export class Book extends AggregateRoot {
-  public guid: string;
+  public guid: BookId;
   public name: BookName;
   public description: BookDescription;
   public image: BookImage;
@@ -22,7 +23,7 @@ export class Book extends AggregateRoot {
   constructor();
 
   constructor(
-    guid: string,
+    guid: BookId,
     name: BookName,
     description: BookDescription,
     image: BookImage,
@@ -31,7 +32,7 @@ export class Book extends AggregateRoot {
   );
 
   constructor(
-    guid?: string,
+    guid?: BookId,
     name?: BookName,
     description?: BookDescription,
     image?: BookImage,
@@ -42,28 +43,28 @@ export class Book extends AggregateRoot {
     // This if block is required as we instantiate the aggregate root in the repository
     if (guid && name && description && image && authorId && price) {
       this.applyChange(
-        new BookCreated(guid!, name.value!, description.value!, image.value!, authorId.value!, price.value!)
+        new BookCreated(guid.value!, name.value!, description.value!, image.value!, authorId.value!, price.value!)
       );
     }
   }
 
   public changeAuthor(authorId: BookAuthor) {
     this.authorId = authorId;
-    this.applyChange(new BookAuthorChanged(this.guid, authorId.value));
+    this.applyChange(new BookAuthorChanged(this.guid.value, authorId.value));
   }
 
   public changeDescription(description: BookDescription) {
     this.description = description;
-    this.applyChange(new BookDescriptionChanged(this.guid, description.value));
+    this.applyChange(new BookDescriptionChanged(this.guid.value, description.value));
   }
 
   public changeImage(image: BookImage) {
     this.image = image;
-    this.applyChange(new BookImageChanged(this.guid, image.value));
+    this.applyChange(new BookImageChanged(this.guid.value, image.value));
   }
 
   public applyBookCreated(event: BookCreated): void {
-    this.guid = event.guid;
+    this.guid = new BookId(event.guid);
     this.name = new BookName(event.name);
     this.description = new BookDescription(event.description);
     this.image = new BookImage(event.image);
@@ -92,7 +93,7 @@ export class Book extends AggregateRoot {
     price: number;
   }): Book {
     return new Book(
-      plainData.guid,
+      new BookId(plainData.guid),
       new BookName(plainData.name),
       new BookDescription(plainData.description),
       new BookImage(plainData.image),
@@ -103,7 +104,7 @@ export class Book extends AggregateRoot {
 
   toPrimitives(): Primitives<Book> {
     return {
-      guid: this.guid,
+      guid: this.guid.value,
       name: this.name.value,
       description: this.description.value,
       image: this.image.value,

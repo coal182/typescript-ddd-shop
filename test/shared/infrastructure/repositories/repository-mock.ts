@@ -18,7 +18,7 @@ export class RepositoryMock<T extends AggregateRoot> implements IRepository<T> {
 
   async save(aggregateRoot: T, expectedVersion: number) {
     this.mockSave(aggregateRoot, expectedVersion);
-    await this.eventStore.saveEvents(aggregateRoot.guid, aggregateRoot.getUncommittedEvents(), expectedVersion);
+    await this.eventStore.saveEvents(aggregateRoot.guid.value, aggregateRoot.getUncommittedEvents(), expectedVersion);
     aggregateRoot.markChangesAsCommitted();
   }
 
@@ -34,6 +34,7 @@ export class RepositoryMock<T extends AggregateRoot> implements IRepository<T> {
     const aggregateRoot = new this.Type() as T;
     const history = await this.eventStore.getEventsForAggregate(guid);
     aggregateRoot.loadFromHistory(history);
+
     return aggregateRoot;
   }
 

@@ -25,7 +25,7 @@ describe(UpdateBookImageCommandHandler.name, () => {
 
     before(() => {
       const command = new CreateBookCommand(
-        expectedAggregateRoot.guid,
+        expectedAggregateRoot.guid.value,
         expectedAggregateRoot.name.value,
         expectedAggregateRoot.description.value,
         expectedAggregateRoot.image.value,
@@ -38,7 +38,7 @@ describe(UpdateBookImageCommandHandler.name, () => {
 
     describe('and asked to update his image', () => {
       before(() => {
-        const updateCommand = new UpdateBookImageCommand(expectedAggregateRoot.guid, updatedImage.value, 0);
+        const updateCommand = new UpdateBookImageCommand(expectedAggregateRoot.guid.value, updatedImage.value, 0);
         updateCommandHandler.handle(updateCommand);
       });
 
@@ -47,7 +47,7 @@ describe(UpdateBookImageCommandHandler.name, () => {
       });
 
       it('should update the image', async () => {
-        const savedAggregate = await repository.getById(expectedAggregateRoot.guid);
+        const savedAggregate = await repository.getById(expectedAggregateRoot.guid.value);
         expect(savedAggregate.image.value).not.to.be.equal(expectedAggregateRoot.image);
         expect(savedAggregate.image.value).to.be.equal(updatedImage.value);
       });

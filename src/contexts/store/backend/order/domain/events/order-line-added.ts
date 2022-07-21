@@ -1,6 +1,7 @@
 import { Event } from '@core/event';
 import { IEvent } from '@core/i-event';
 
+import { OrderId } from '../order-id';
 import { OrderLine } from '../order-line';
 
 export class OrderLineAdded extends Event implements IEvent {

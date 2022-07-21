@@ -3,15 +3,15 @@ import { Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
 import { IEventHandler } from '@core/i-event-handler';
-import { OrderLineAdded } from '@storeback/order/domain/events/order-line-added';
+import { OrderInitiated } from '@storeback/order/domain/events/order-initiated';
 
 @injectable()
-export class OrderLineAddedEventHandler implements IEventHandler<OrderLineAdded> {
-  public event = OrderLineAdded.name;
+export class OrderInitiatedEventHandler implements IEventHandler<OrderInitiated> {
+  public event: string = OrderInitiated.name;
 
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
 
-  async handle(event: OrderLineAdded) {
+  async handle(event: OrderInitiated) {
     // nothing to do in this step
   }
 }

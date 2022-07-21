@@ -5,6 +5,7 @@ import { ICommandHandler } from '@core/i-command-handler';
 import { CreateUserCommand } from '@storeback/user/application/commands/create-user';
 import { IUserRepository } from '@storeback/user/domain/i-user-repository';
 import { User } from '@storeback/user/domain/user';
+import { UserId } from '@storeback/user/domain/user-id';
 
 @injectable()
 export class CreateUserCommandHandler implements ICommandHandler<CreateUserCommand> {
@@ -14,7 +15,7 @@ export class CreateUserCommandHandler implements ICommandHandler<CreateUserComma
 
   async handle(command: CreateUserCommand) {
     const user = new User(
-      command.guid,
+      new UserId(command.guid),
       command.email,
       command.firstname,
       command.lastname,

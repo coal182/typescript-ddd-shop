@@ -3,9 +3,10 @@ import { AggregateRoot } from '@core/aggregate-root';
 import { UserCreated } from './events/user-created';
 import { UserPasswordChanged } from './events/user-password-changed';
 import { UserUpdated } from './events/user-updated';
+import { UserId } from './user-id';
 
 export class User extends AggregateRoot {
-  private _guid: string;
+  private _guid: UserId;
   private _email: string;
   private _firstname: string;
   private _lastname: string;
@@ -38,10 +39,10 @@ export class User extends AggregateRoot {
 
   constructor();
 
-  constructor(guid: string, email: string, firstname: string, lastname: string, dateOfBirth: Date, password: string);
+  constructor(guid: UserId, email: string, firstname: string, lastname: string, dateOfBirth: Date, password: string);
 
   constructor(
-    guid?: string,
+    guid?: UserId,
     email?: string,
     firstname?: string,
     lastname?: string,
@@ -50,7 +51,7 @@ export class User extends AggregateRoot {
   ) {
     super();
     if (guid && email && firstname && lastname && dateOfBirth && password) {
-      this.applyChange(new UserCreated(guid, email, firstname, lastname, dateOfBirth, password));
+      this.applyChange(new UserCreated(guid.value, email, firstname, lastname, dateOfBirth, password));
     }
   }
 
@@ -59,7 +60,7 @@ export class User extends AggregateRoot {
     this._firstname = firstname;
     this._lastname = lastname;
     this._dateOfBirth = dateOfBirth;
-    this.applyChange(new UserUpdated(this._guid, email, firstname, lastname, dateOfBirth));
+    this.applyChange(new UserUpdated(this._guid.value, email, firstname, lastname, dateOfBirth));
   }
 
   public applyUserUpdated(event: UserUpdated): void {
@@ -71,7 +72,7 @@ export class User extends AggregateRoot {
 
   public changePassword(password: string) {
     this._password = password;
-    this.applyChange(new UserPasswordChanged(this.guid, password));
+    this.applyChange(new UserPasswordChanged(this.guid.value, password));
   }
 
   public applyUserPasswordChanged(event: UserPasswordChanged): void {
@@ -79,7 +80,7 @@ export class User extends AggregateRoot {
   }
 
   public applyUserCreated(event: UserCreated): void {
-    this._guid = event.guid; // Important for set changes to the right aggregate guid
+    this._guid = new UserId(event.guid); // Important for set changes to the right aggregate guid
     this._email = event.email;
     this._firstname = event.firstname;
     this._lastname = event.lastname;

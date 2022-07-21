@@ -57,11 +57,14 @@ import { LoanRepository } from '@storeback/loan/infrastructure/persistence/loan-
 import { AddLineToOrderCommandHandler } from '@storeback/order/application/command-handlers/add-line-to-order-command-handler';
 import { CancelOrderCommandHandler } from '@storeback/order/application/command-handlers/cancel-order-command-handler';
 import { CreateOrderCommandHandler } from '@storeback/order/application/command-handlers/create-order-command-handler';
+import { InitiateOrderCommandHandler } from '@storeback/order/application/command-handlers/initiate-order-command-handler';
 import { OrderCancelledEventHandler } from '@storeback/order/application/event-handlers/order-cancelled-event-handler';
 import { OrderCreatedEventHandler } from '@storeback/order/application/event-handlers/order-created-event-handler';
+import { OrderInitiatedEventHandler } from '@storeback/order/application/event-handlers/order-initiated-event-handler';
 import { OrderLineAddedEventHandler } from '@storeback/order/application/event-handlers/order-line-added-event-handler';
 import { OrderCancelled } from '@storeback/order/domain/events/order-cancelled';
 import { OrderCreated } from '@storeback/order/domain/events/order-created';
+import { OrderInitiated } from '@storeback/order/domain/events/order-initiated';
 import { OrderLineAdded } from '@storeback/order/domain/events/order-line-added';
 import { IOrderRepository } from '@storeback/order/domain/i-order-repository';
 import { OrderEventStore } from '@storeback/order/infrastructure/persistence/order-event-store';
@@ -108,14 +111,24 @@ export const initialiseContainer = async () => {
 
   // Event Handlers
   container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(FakeNotificationEventHandler);
+  container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(BookCreatedEventHandler);
   container.bind<IEventHandler<BookAuthorChanged>>(TYPES.Event).to(BookAuthorChangedEventHandler);
   container.bind<IEventHandler<BookDescriptionChanged>>(TYPES.Event).to(BookDescriptionChangedEventHandler);
   container.bind<IEventHandler<BookImageChanged>>(TYPES.Event).to(BookImageChangedEventHandler);
-  container.bind<IEventHandler<UserUpdated>>(TYPES.Event).to(UserUpdatedEventHandler);
-  container.bind<IEventHandler<UserPasswordChanged>>(TYPES.Event).to(UserPasswordChangedEventHandler);
+
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(UserCreatedEventHandler);
   container.bind<IEventHandler<UserCreated>>(TYPES.Event).to(AuthorCreatedEventHandler);
-  container.bind<IEventHandler<BookCreated>>(TYPES.Event).to(BookCreatedEventHandler);
+  container.bind<IEventHandler<UserUpdated>>(TYPES.Event).to(UserUpdatedEventHandler);
+  container.bind<IEventHandler<UserPasswordChanged>>(TYPES.Event).to(UserPasswordChangedEventHandler);
+
+  container.bind<IEventHandler<CartCreated>>(TYPES.Event).to(CartCreatedEventHandler);
+  container.bind<IEventHandler<CartItemAdded>>(TYPES.Event).to(CartItemAddedEventHandler);
+  container.bind<IEventHandler<CartItemRemoved>>(TYPES.Event).to(CartItemRemovedEventHandler);
+
+  container.bind<IEventHandler<OrderInitiated>>(TYPES.Event).to(OrderInitiatedEventHandler);
+  container.bind<IEventHandler<OrderLineAdded>>(TYPES.Event).to(OrderLineAddedEventHandler);
+  container.bind<IEventHandler<OrderCancelled>>(TYPES.Event).to(OrderCancelledEventHandler);
+  container.bind<IEventHandler<OrderCreated>>(TYPES.Event).to(OrderCreatedEventHandler);
 
   // Prepare persistence components
   container.bind<Db>(TYPES.Db).toConstantValue(db);
@@ -142,6 +155,7 @@ export const initialiseContainer = async () => {
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(AddItemToCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(RemoveItemFromCartCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(InitiateOrderCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateOrderCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(AddLineToOrderCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CancelOrderCommandHandler);
@@ -158,12 +172,6 @@ export const initialiseContainer = async () => {
 
   // Event Handlers that depend on CommandBus
   container.bind<IEventHandler<LoanCreated>>(TYPES.Event).to(LoanCreatedEventHandler);
-  container.bind<IEventHandler<CartCreated>>(TYPES.Event).to(CartCreatedEventHandler);
-  container.bind<IEventHandler<CartItemAdded>>(TYPES.Event).to(CartItemAddedEventHandler);
-  container.bind<IEventHandler<CartItemRemoved>>(TYPES.Event).to(CartItemRemovedEventHandler);
-  container.bind<IEventHandler<OrderCreated>>(TYPES.Event).to(OrderCreatedEventHandler);
-  container.bind<IEventHandler<OrderLineAdded>>(TYPES.Event).to(OrderLineAddedEventHandler);
-  container.bind<IEventHandler<OrderCancelled>>(TYPES.Event).to(OrderCancelledEventHandler);
 
   return container;
 };

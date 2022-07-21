@@ -37,7 +37,7 @@ export abstract class EventStore implements IEventStore {
   }
 
   async getEventsForAggregate(aggregateGuid: string): Promise<IEvent[]> {
-    const events = await this.eventCollection.find({ aggregateGuid }).toArray() as IEventDescriptor[];
+    const events = (await this.eventCollection.find({ aggregateGuid }).toArray()) as IEventDescriptor[];
     if (!events.length) {
       throw new NotFoundException('Aggregate with the requested Guid does not exist');
     }

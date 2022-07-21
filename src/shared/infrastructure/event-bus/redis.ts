@@ -1,4 +1,4 @@
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { injectable, inject, multiInject } from 'inversify';
 import { Redis } from 'ioredis';
 
@@ -16,8 +16,8 @@ export class RedisEventBus implements IEventBus {
   ) {}
 
   async publish(channel: string, event: IEvent): Promise<void> {
-    console.log(`Publishing event ${event.eventName} to channel ${channel}`, event);
-    const data: string = JSON.stringify({ pattern: event.eventName, ...classToPlain(event) });
+    console.log(`Publishing event ${event.eventName} to channel [${channel}]: `, event);
+    const data: string = JSON.stringify({ pattern: event.eventName, ...instanceToPlain(event) });
     await this._redis.publish(channel, data);
   }
 

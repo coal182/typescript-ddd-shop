@@ -11,14 +11,8 @@ export class CreateOrderCommandHandler implements ICommandHandler<CreateOrderCom
   constructor(@inject(TYPES.OrderRepository) private readonly repository: IOrderRepository) {}
   public static commandToHandle: string = CreateOrderCommand.name;
   async handle(command: CreateOrderCommand) {
-    const order: Order = new Order(
-      command.guid,
-      command.userId,
-      command.status,
-      command.name,
-      command.address,
-      command.total
-    );
-    await this.repository.save(order, -1);
+    const order: Order = await this.repository.getById(command.guid);
+    order.create();
+    await this.repository.save(order, command.originalVersion);
   }
 }
