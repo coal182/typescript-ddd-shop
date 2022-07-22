@@ -16,9 +16,12 @@ import { ValidationService } from './shared/services/validation.service';
 import { SharedModule } from './shared/shared.module';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
+import { OrderDetailsComponent } from './orders/order-details/order-details.component';
+import { OrdersModule } from './orders/orders.module';
 
 @NgModule({
-  imports: [HttpClientModule, AppRoutingModule, SharedModule, ProductsModule, CartModule],
+  imports: [HttpClientModule, AppRoutingModule, SharedModule, ProductsModule, CartModule, OrdersModule],
   declarations: [
     AppComponent,
     TopBarComponent,
@@ -27,6 +30,8 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     SigninComponent,
     SignupComponent,
     UserProfileComponent,
+    OrderListComponent,
+    OrderDetailsComponent,
   ],
   providers: [
     {

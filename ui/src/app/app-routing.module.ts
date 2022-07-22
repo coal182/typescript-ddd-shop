@@ -10,6 +10,8 @@ import { SigninComponent } from './login/signin/signin.component';
 import { SignupComponent } from './login/signup/signup.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { AuthGuard } from './shared/auth/auth.guard';
+import { OrderListComponent } from './orders/order-list/order-list.component';
+import { OrderDetailsComponent } from './orders/order-details/order-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/log-in', pathMatch: 'full' },
@@ -27,6 +29,8 @@ const routes: Routes = [
   },
   { path: 'products/:productId', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'orders', component: OrderListComponent },
+  { path: 'orders/:id', component: OrderDetailsComponent },
   { path: 'shipping', component: ShippingComponent },
 ];
 

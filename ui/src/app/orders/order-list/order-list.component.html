@@ -1,0 +1,35 @@
+<h2>Orders</h2>
+
+<!-- 
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at https://angular.io/license
+-->
+<div class="order-list">
+  <article *ngFor="let order of orders$ | async">
+    <h3>
+      <a
+        [title]="order.name + ' details'"
+        [routerLink]="['/orders', order.id]"
+      >        
+        {{ order.name }}
+      </a>      
+    </h3>
+
+    <p *ngIf="order.price">{{ order.total | currency }}</p>
+    
+    <button
+      mat-flat-button
+      type="button"
+      color="primary"
+      [routerLink]="['/orders', order.id]" 
+    >
+      Detail <mat-icon>add_shopping_cart</mat-icon>
+    </button>
+  </article>
+</div>
+<mat-progress-spinner *ngIf="isLoading"
+  mode="indeterminate"
+  data-test="progress-spinner-2"
+  style="margin:0 auto;"
+></mat-progress-spinner>

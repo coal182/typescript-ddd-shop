@@ -1,6 +1,6 @@
 <h2>Product Details</h2>
 
-<div *ngIf="product$ | async">
+<div class="product-detail" *ngIf="product$ | async">
 <div *ngIf="!isLoading">
     <div class="row">
       <div class="col-md-6">
@@ -20,6 +20,7 @@
           type="button"
           color="primary"
           (click)="addToCart()"
+          class="add-to-cart"
         >
           Buy <mat-icon>add_shopping_cart</mat-icon>
         </button>

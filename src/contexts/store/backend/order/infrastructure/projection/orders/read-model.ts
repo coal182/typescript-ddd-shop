@@ -23,25 +23,36 @@ export interface IOrderReadModelFacade extends IReadModelFacade<any> {}
 export class OrderReadModelFacade implements IOrderReadModelFacade {
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
 
-  getAll(): Promise<any[]> {
-    throw new Error('Method not implemented.');
+  async getAll() {
+    const orders = [];
+
+    const ordersData = await this.db.collection('orders').find({}).toArray();
+    for (const orderData of ordersData) {
+      orders.push({ ...orderData });
+    }
+    return orders;
   }
 
-  async getByField(field: string, value: any): Promise<OrderDTO> {
-    const order = await this.db.collection('orders').findOne({ [field]: value });
-    if (!order) {
-      throw new NotFoundException('The requested order does not exist');
+  async getByField(field: string, value: any): Promise<Array<OrderDTO>> {
+    const orders = [];
+
+    const ordersData = await this.db
+      .collection('orders')
+      .find({ [field]: value })
+      .toArray();
+    for (const orderData of ordersData) {
+      const orderDTO = new OrderDTO(
+        orderData.id,
+        orderData.userId,
+        orderData.name,
+        orderData.address,
+        orderData.total,
+        orderData.lines,
+        orderData.version
+      );
+      orders.push(orderDTO);
     }
-    const orderDTO = new OrderDTO(
-      order.id,
-      order.userId,
-      order.name,
-      order.address,
-      order.total,
-      order.lines,
-      order.version
-    );
-    return orderDTO;
+    return orders;
   }
 
   getByName(name: string): Promise<any> {

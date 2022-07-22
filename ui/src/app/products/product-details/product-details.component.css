@@ -11,3 +11,10 @@ img {
   width: 300px;
   margin: 0 auto;
 }
+
+.product-detail .add-to-cart {
+  width: 100%!important;
+  min-width: unset!important;
+  flex: 1;
+  margin-bottom: 20px;
+}

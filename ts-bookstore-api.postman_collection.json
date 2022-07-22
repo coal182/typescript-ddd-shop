@@ -1,41 +1,751 @@
 {
 	"info": {
-		"_postman_id": "dfdc7f9f-bae0-4c89-bd6b-ec88dabadbc4",
+		"_postman_id": "1bff236e-219d-4249-83b1-efd1c3ffda13",
 		"name": "ts-bookstore-api",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20880998"
 	},
 	"item": [
 		{
-			"name": "GET Books",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "127.0.0.1:3000/api/v1/books",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"v1",
-						"books"
-					]
+			"name": "Books",
+			"item": [
+				{
+					"name": "GET Books",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTh9LCJpYXQiOjE2NTcyNzE4NTAsImV4cCI6MTY1NzI3NTQ1MH0.xw9qpsG--GVggqP4qF-t4Qb_8U62NM80U7x5wRHZ3IU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/api/v1/books",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Book",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/books/LE9G8_jAwMSjb2FZ0k5wE",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"LE9G8_jAwMSjb2FZ0k5wE"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Book Batch",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTV9LCJpYXQiOjE2NTY5MTY3NDEsImV4cCI6MTY1NjkyMDM0MX0.LRQc102aAGW8RJtEnhrJ_KaaMDIzuzkHOQA6L9WU6CM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"books\": {\"count\":432,\"next\":\"https://gutendex.com/books/?page=2&topic=space\",\"previous\":null,\"results\":[{\"id\":36,\"title\":\"The War of the Worlds\",\"authors\":[{\"name\":\"Wells, H. G. (Herbert George)\",\"birth_year\":1866,\"death_year\":1946}],\"translators\":[],\"subjects\":[\"Imaginary wars and battles -- Fiction\",\"Life on other planets -- Fiction\",\"Mars (Planet) -- Fiction\",\"Martians -- Fiction\",\"Science fiction\",\"Space warfare -- Fiction\",\"War stories\"],\"bookshelves\":[\"Movie Books\",\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/36/pg36.cover.medium.jpg\",\"application/octet-stream\":\"https://www.gutenberg.org/files/36/36-h.zip\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/36.epub.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/36.rdf\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/36.kindle.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/36.txt.utf-8\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/36/36-0.txt\",\"text/html\":\"https://www.gutenberg.org/files/36/36-h/36-h.htm\"},\"download_count\":6405},{\"id\":68008,\"title\":\"Venus Equilateral\",\"authors\":[{\"name\":\"Smith, George O. (George Oliver)\",\"birth_year\":1911,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Inventions -- Fiction\",\"Science fiction\",\"Space stations -- Fiction\",\"Technology -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/68008/68008-0.txt\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/68008/pg68008.cover.medium.jpg\",\"text/plain\":\"https://www.gutenberg.org/ebooks/68008.txt.utf-8\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/68008.epub.images\",\"application/zip\":\"https://www.gutenberg.org/files/68008/68008-h.zip\",\"text/html\":\"https://www.gutenberg.org/ebooks/68008.html.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/68008.rdf\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/68008.kindle.images\"},\"download_count\":1858},{\"id\":68047,\"title\":\"Off the Beam\",\"authors\":[{\"name\":\"Smith, George O. (George Oliver)\",\"birth_year\":1911,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Communication -- Fiction\",\"Science fiction\",\"Space ships -- Fiction\",\"Space stations -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/68047/68047-0.txt\",\"application/octet-stream\":\"https://www.gutenberg.org/files/68047/68047-0.zip\",\"text/html\":\"https://www.gutenberg.org/files/68047/68047-h/68047-h.htm\",\"application/zip\":\"https://www.gutenberg.org/files/68047/68047-h.zip\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/68047/pg68047.cover.small.jpg\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/68047.epub.images\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/68047.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/68047.rdf\",\"text/plain\":\"https://www.gutenberg.org/ebooks/68047.txt.utf-8\"},\"download_count\":1664},{\"id\":68006,\"title\":\"Recoil\",\"authors\":[{\"name\":\"Smith, George O. (George Oliver)\",\"birth_year\":1911,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Pirates -- Fiction\",\"Science fiction\",\"Space stations -- Fiction\",\"Weapons -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/68006.epub.images\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/68006/pg68006.cover.medium.jpg\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/68006.rdf\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/68006.kindle.images\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/68006/68006-0.txt\",\"text/plain\":\"https://www.gutenberg.org/ebooks/68006.txt.utf-8\",\"application/octet-stream\":\"https://www.gutenberg.org/files/68006/68006-h.zip\",\"text/html\":\"https://www.gutenberg.org/ebooks/68006.html.images\",\"application/zip\":\"https://www.gutenberg.org/files/68006/68006-0.zip\"},\"download_count\":846},{\"id\":68003,\"title\":\"The Long Way\",\"authors\":[{\"name\":\"Smith, George O. (George Oliver)\",\"birth_year\":1911,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Engineers -- Fiction\",\"Lawyers -- Fiction\",\"Science fiction\",\"Space stations -- Fiction\",\"Technology -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"application/zip\":\"https://www.gutenberg.org/files/68003/68003-h.zip\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/68003/68003-0.txt\",\"text/html\":\"https://www.gutenberg.org/files/68003/68003-h/68003-h.htm\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/68003.epub.images\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/68003/pg68003.cover.small.jpg\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/68003.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/68003.rdf\",\"application/octet-stream\":\"https://www.gutenberg.org/files/68003/68003-0.zip\",\"text/plain\":\"https://www.gutenberg.org/ebooks/68003.txt.utf-8\"},\"download_count\":802},{\"id\":68004,\"title\":\"Pandora's Millions\",\"authors\":[{\"name\":\"Smith, George O. (George Oliver)\",\"birth_year\":1911,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Inventions -- Fiction\",\"Science fiction\",\"Space stations -- Fiction\",\"Technology -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/68004/68004-0.txt\",\"text/html\":\"https://www.gutenberg.org/ebooks/68004.html.images\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/68004.kindle.images\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/68004/pg68004.cover.medium.jpg\",\"text/plain\":\"https://www.gutenberg.org/ebooks/68004.txt.utf-8\",\"application/zip\":\"https://www.gutenberg.org/files/68004/68004-h.zip\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/68004.epub.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/68004.rdf\"},\"download_count\":774},{\"id\":67998,\"title\":\"Beam Pirate\",\"authors\":[{\"name\":\"Smith, George O. (George Oliver)\",\"birth_year\":1911,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Inventions -- Fiction\",\"Science fiction\",\"Space stations -- Fiction\",\"Stocks -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/67998/67998-0.txt\",\"text/html\":\"https://www.gutenberg.org/files/67998/67998-h/67998-h.htm\",\"text/plain\":\"https://www.gutenberg.org/ebooks/67998.txt.utf-8\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/67998.epub.images\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/67998.kindle.images\",\"application/octet-stream\":\"https://www.gutenberg.org/files/67998/67998-h.zip\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/67998/pg67998.cover.small.jpg\",\"application/zip\":\"https://www.gutenberg.org/files/67998/67998-0.zip\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/67998.rdf\"},\"download_count\":758},{\"id\":68001,\"title\":\"The Firing Line\",\"authors\":[{\"name\":\"Smith, George O. (George Oliver)\",\"birth_year\":1911,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Criminals -- Fiction\",\"Pirates -- Fiction\",\"Science fiction\",\"Space stations -- Fiction\",\"Weapons -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"application/octet-stream\":\"https://www.gutenberg.org/files/68001/68001-0.zip\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/68001/68001-0.txt\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/68001.kindle.images\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/68001.epub.images\",\"text/html\":\"https://www.gutenberg.org/ebooks/68001.html.images\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/68001/pg68001.cover.medium.jpg\",\"text/plain\":\"https://www.gutenberg.org/ebooks/68001.txt.utf-8\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/68001.rdf\"},\"download_count\":707},{\"id\":83,\"title\":\"From the Earth to the Moon; and, Round the Moon\",\"authors\":[{\"name\":\"Verne, Jules\",\"birth_year\":1828,\"death_year\":1905}],\"translators\":[],\"subjects\":[\"Manned space flight -- Fiction\",\"Moon -- Fiction\",\"Science fiction\",\"Space flight to the moon -- Fiction\",\"Space ships -- Fiction\"],\"bookshelves\":[\"Movie Books\",\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=utf-8\":\"https://www.gutenberg.org/files/83/83-0.txt\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/83.epub.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/83.rdf\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/83.kindle.images\",\"text/html; charset=utf-8\":\"https://www.gutenberg.org/files/83/83-h/83-h.htm\",\"application/zip\":\"https://www.gutenberg.org/files/83/83-h.zip\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/83/pg83.cover.small.jpg\",\"text/html\":\"https://www.gutenberg.org/ebooks/83.html.images\"},\"download_count\":541},{\"id\":68005,\"title\":\"QRM-Interplanetary\",\"authors\":[{\"name\":\"Smith, George O. (George Oliver)\",\"birth_year\":1911,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Science fiction\",\"Space stations -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/68005/68005-0.txt\",\"application/octet-stream\":\"https://www.gutenberg.org/files/68005/68005-h.zip\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/68005.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/68005.txt.utf-8\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/68005/pg68005.cover.medium.jpg\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/68005.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/68005.rdf\",\"text/html\":\"https://www.gutenberg.org/files/68005/68005-h/68005-h.htm\"},\"download_count\":343},{\"id\":50774,\"title\":\"Contagion\",\"authors\":[{\"name\":\"MacLean, Katherine\",\"birth_year\":1925,\"death_year\":null}],\"translators\":[],\"subjects\":[\"Diseases -- Fiction\",\"Science fiction\",\"Space colonies -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/html; charset=us-ascii\":\"https://www.gutenberg.org/files/50774/50774-h/50774-h.htm\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/50774/pg50774.cover.small.jpg\",\"application/zip\":\"https://www.gutenberg.org/files/50774/50774.zip\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/50774/50774.txt\",\"text/html\":\"https://www.gutenberg.org/ebooks/50774.html.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/50774.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/50774.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/50774.txt.utf-8\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/50774.kindle.images\"},\"download_count\":342},{\"id\":68000,\"title\":\"Calling the Empress\",\"authors\":[{\"name\":\"Smith, George O. (George Oliver)\",\"birth_year\":1911,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Communication -- Fiction\",\"Science fiction\",\"Space ships -- Fiction\",\"Space stations -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/68000/68000-0.txt\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/68000/pg68000.cover.small.jpg\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/68000.epub.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/68000.rdf\",\"text/plain\":\"https://www.gutenberg.org/ebooks/68000.txt.utf-8\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/68000.kindle.images\",\"text/html\":\"https://www.gutenberg.org/ebooks/68000.html.images\",\"application/zip\":\"https://www.gutenberg.org/files/68000/68000-0.zip\"},\"download_count\":306},{\"id\":26839,\"title\":\"Mathematical Recreations and Essays\",\"authors\":[{\"name\":\"Ball, W. W. Rouse (Walter William Rouse)\",\"birth_year\":1850,\"death_year\":1925}],\"translators\":[],\"subjects\":[\"Astrology\",\"Ciphers\",\"Cryptography\",\"Geometry -- Famous problems\",\"Magic squares\",\"Mathematical recreations\",\"Mathematics -- Study and teaching -- England -- Cambridge\",\"Matter\",\"Numbers, Prime\",\"Space and time\",\"University of Cambridge -- History\"],\"bookshelves\":[\"Mathematics\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/26839.rdf\",\"application/zip\":\"https://www.gutenberg.org/files/26839/26839-t.zip\",\"application/octet-stream\":\"https://www.gutenberg.org/files/26839/26839-pdf.zip\",\"application/pdf\":\"https://www.gutenberg.org/files/26839/26839-pdf.pdf\",\"application/prs.tex\":\"https://www.gutenberg.org/files/26839/26839-t/26839-t.tex\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/26839/pg26839.cover.medium.jpg\"},\"download_count\":304},{\"id\":18458,\"title\":\"Star Born\",\"authors\":[{\"name\":\"Norton, Andre\",\"birth_year\":1912,\"death_year\":2005}],\"translators\":[],\"subjects\":[\"Science fiction\",\"Space colonies -- Fiction\"],\"bookshelves\":[\"Science Fiction\",\"Science Fiction by Women\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/18458/pg18458.cover.small.jpg\",\"text/plain; charset=iso-8859-1\":\"https://www.gutenberg.org/files/18458/18458-8.txt\",\"text/html\":\"https://www.gutenberg.org/ebooks/18458.html.images\",\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/18458/18458-h/18458-h.htm\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/18458.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/18458.epub.images\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/18458.kindle.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/18458.txt.utf-8\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/18458/18458.txt\",\"application/zip\":\"https://www.gutenberg.org/files/18458/18458-h.zip\"},\"download_count\":291},{\"id\":32706,\"title\":\"Triplanetary\",\"authors\":[{\"name\":\"Smith, E. E. (Edward Elmer)\",\"birth_year\":1890,\"death_year\":1965}],\"translators\":[],\"subjects\":[\"Human-alien encounters -- Fiction\",\"Science fiction\",\"Space warfare -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/32706.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/32706.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/32706.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/32706.txt.utf-8\",\"text/html\":\"https://www.gutenberg.org/ebooks/32706.html.images\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/32706/pg32706.cover.small.jpg\",\"application/zip\":\"https://www.gutenberg.org/files/32706/32706.zip\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/32706/32706.txt\",\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/32706/32706-h.zip\",\"text/plain; charset=iso-8859-1\":\"https://www.gutenberg.org/files/32706/32706-8.txt\"},\"download_count\":286},{\"id\":43006,\"title\":\"Space—Time—Matter\",\"authors\":[{\"name\":\"Weyl, Hermann\",\"birth_year\":1885,\"death_year\":1955}],\"translators\":[{\"name\":\"Brose, Henry L. (Henry Leopold)\",\"birth_year\":1890,\"death_year\":null}],\"subjects\":[\"Relativity (Physics)\",\"Space and time\"],\"bookshelves\":[\"Mathematics\",\"Physics\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"application/prs.tex\":\"https://www.gutenberg.org/files/43006/43006-t/43006-t.tex\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/43006/pg43006.cover.medium.jpg\",\"application/zip\":\"https://www.gutenberg.org/files/43006/43006-t.zip\",\"application/pdf\":\"https://www.gutenberg.org/files/43006/43006-pdf.pdf\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/43006.rdf\",\"application/octet-stream\":\"https://www.gutenberg.org/files/43006/43006-pdf.zip\"},\"download_count\":285},{\"id\":49525,\"title\":\"First Lensman\",\"authors\":[{\"name\":\"Smith, E. E. (Edward Elmer)\",\"birth_year\":1890,\"death_year\":1965}],\"translators\":[],\"subjects\":[\"Human-alien encounters -- Fiction\",\"Imaginary wars and battles -- Fiction\",\"Outer space -- Exploration -- Fiction\",\"Psychic ability -- Fiction\",\"Science fiction\",\"Space colonies -- Fiction\",\"Space security -- Fiction\",\"Space warfare -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/49525/pg49525.cover.medium.jpg\",\"text/html; charset=us-ascii\":\"https://www.gutenberg.org/files/49525/49525-h/49525-h.htm\",\"application/zip\":\"https://www.gutenberg.org/files/49525/49525-h.zip\",\"text/plain; charset=iso-8859-1\":\"https://www.gutenberg.org/files/49525/49525-8.txt\",\"text/html\":\"https://www.gutenberg.org/ebooks/49525.html.images\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/49525.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/49525.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/49525.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/49525.txt.utf-8\"},\"download_count\":269},{\"id\":32522,\"title\":\"Mr. Spaceship\",\"authors\":[{\"name\":\"Dick, Philip K.\",\"birth_year\":1928,\"death_year\":1982}],\"translators\":[],\"subjects\":[\"Science fiction\",\"Space ships -- Fiction\",\"War stories\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/32522/32522.txt\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/32522/pg32522.cover.small.jpg\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/32522.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/32522.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/32522.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/32522.txt.utf-8\",\"text/html\":\"https://www.gutenberg.org/ebooks/32522.html.images\",\"text/html; charset=utf-8\":\"https://www.gutenberg.org/files/32522/32522-h.zip\",\"application/zip\":\"https://www.gutenberg.org/files/32522/32522.zip\"},\"download_count\":268},{\"id\":20869,\"title\":\"The Skylark of Space\",\"authors\":[{\"name\":\"Smith, E. E. (Edward Elmer)\",\"birth_year\":1890,\"death_year\":1965},{\"name\":\"Garby, Lee Hawkins\",\"birth_year\":1892,\"death_year\":1953}],\"translators\":[],\"subjects\":[\"Science fiction\",\"Space flight -- Fiction\",\"Space ships -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain\":\"https://www.gutenberg.org/ebooks/20869.txt.utf-8\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/20869.kindle.images\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/20869.epub.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/20869.rdf\",\"text/plain; charset=iso-8859-1\":\"https://www.gutenberg.org/files/20869/20869-8.txt\",\"application/zip\":\"https://www.gutenberg.org/files/20869/20869-8.zip\",\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/20869/20869-h/20869-h.htm\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/20869/pg20869.cover.medium.jpg\",\"text/html\":\"https://www.gutenberg.org/ebooks/20869.html.images\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/20869/20869.txt\"},\"download_count\":252},{\"id\":20121,\"title\":\"Lone Star Planet\",\"authors\":[{\"name\":\"Piper, H. Beam\",\"birth_year\":1904,\"death_year\":1964},{\"name\":\"McGuire, John Joseph\",\"birth_year\":1917,\"death_year\":1981}],\"translators\":[],\"subjects\":[\"Science fiction\",\"Space colonies -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/20121/pg20121.cover.small.jpg\",\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/20121/20121-h/20121-h.htm\",\"text/plain\":\"https://www.gutenberg.org/ebooks/20121.txt.utf-8\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/20121.kindle.images\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/20121.epub.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/20121.rdf\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/20121/20121.txt\",\"text/plain; charset=iso-8859-1\":\"https://www.gutenberg.org/files/20121/20121-8.txt\",\"application/zip\":\"https://www.gutenberg.org/files/20121/20121-8.zip\",\"text/html\":\"https://www.gutenberg.org/ebooks/20121.html.images\"},\"download_count\":220},{\"id\":16457,\"title\":\"All Around the Moon\",\"authors\":[{\"name\":\"Verne, Jules\",\"birth_year\":1828,\"death_year\":1905}],\"translators\":[{\"name\":\"Roth, Edward\",\"birth_year\":1826,\"death_year\":1911}],\"subjects\":[\"Manned space flight -- Fiction\",\"Moon -- Fiction\",\"Science fiction\",\"Space flight to the moon -- Fiction\",\"Space ships -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/16457/16457.txt\",\"application/zip\":\"https://www.gutenberg.org/files/16457/16457-h.zip\",\"text/plain; charset=iso-8859-1\":\"https://www.gutenberg.org/files/16457/16457-8.zip\",\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/16457/16457-h/16457-h.htm\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/16457/pg16457.cover.small.jpg\",\"text/html\":\"https://www.gutenberg.org/ebooks/16457.html.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/16457.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/16457.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/16457.txt.utf-8\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/16457.kindle.images\"},\"download_count\":205},{\"id\":51171,\"title\":\"A Little Journey\",\"authors\":[{\"name\":\"Bradbury, Ray\",\"birth_year\":1920,\"death_year\":2012}],\"translators\":[],\"subjects\":[\"Older women -- Fiction\",\"Science fiction\",\"Short stories\",\"Space flight -- Fiction\",\"Swindlers and swindling -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/html\":\"https://www.gutenberg.org/ebooks/51171.html.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/51171.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/51171.epub.images\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/51171.kindle.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/51171.txt.utf-8\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/51171/51171.txt\",\"application/zip\":\"https://www.gutenberg.org/files/51171/51171-h.zip\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/51171/pg51171.cover.medium.jpg\",\"text/html; charset=us-ascii\":\"https://www.gutenberg.org/files/51171/51171-h/51171-h.htm\"},\"download_count\":202},{\"id\":1013,\"title\":\"The First Men in the Moon\",\"authors\":[{\"name\":\"Wells, H. G. (Herbert George)\",\"birth_year\":1866,\"death_year\":1946}],\"translators\":[],\"subjects\":[\"Imperialism -- Fiction\",\"Moon -- Fiction\",\"Satire\",\"Science fiction\",\"Space flight to the moon -- Fiction\",\"Utopian fiction\",\"Utopias -- Fiction\"],\"bookshelves\":[\"Movie Books\",\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/html; charset=utf-8\":\"https://www.gutenberg.org/files/1013/1013-h/1013-h.htm\",\"application/zip\":\"https://www.gutenberg.org/files/1013/1013-h.zip\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/1013.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/1013.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/1013.epub.images\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/1013/pg1013.cover.medium.jpg\",\"text/html\":\"https://www.gutenberg.org/ebooks/1013.html.images\",\"text/plain; charset=utf-8\":\"https://www.gutenberg.org/files/1013/1013-0.txt\"},\"download_count\":196},{\"id\":557,\"title\":\"Puck of Pook's Hill\",\"authors\":[{\"name\":\"Kipling, Rudyard\",\"birth_year\":1865,\"death_year\":1936}],\"translators\":[],\"subjects\":[\"Fantasy fiction\",\"Great Britain -- History -- Fiction\",\"Space and time -- Fiction\"],\"bookshelves\":[\"Children's Literature\",\"Scouts\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/557/557-h/557-h.htm\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/557/557.txt\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/557.epub.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/557.rdf\",\"text/plain\":\"https://www.gutenberg.org/ebooks/557.txt.utf-8\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/557.kindle.images\",\"application/zip\":\"https://www.gutenberg.org/files/557/557.zip\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/557/pg557.cover.medium.jpg\",\"text/html\":\"https://www.gutenberg.org/ebooks/557.html.images\"},\"download_count\":184},{\"id\":20728,\"title\":\"Space Viking\",\"authors\":[{\"name\":\"Piper, H. Beam\",\"birth_year\":1904,\"death_year\":1964}],\"translators\":[],\"subjects\":[\"Revenge -- Fiction\",\"Science fiction\",\"Space warfare -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/20728/20728-h/20728-h.htm\",\"text/plain\":\"https://www.gutenberg.org/ebooks/20728.txt.utf-8\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/20728.kindle.images\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/20728.epub.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/20728.rdf\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/20728/pg20728.cover.medium.jpg\",\"text/html\":\"https://www.gutenberg.org/ebooks/20728.html.images\",\"text/plain; charset=iso-8859-1\":\"https://www.gutenberg.org/files/20728/20728-8.txt\",\"application/zip\":\"https://www.gutenberg.org/files/20728/20728-8.zip\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/20728/20728.txt\",\"application/octet-stream\":\"https://www.gutenberg.org/files/20728/20728-page-images.zip\"},\"download_count\":180},{\"id\":67362,\"title\":\"Glow Worm\",\"authors\":[{\"name\":\"Ellison, Harlan\",\"birth_year\":1934,\"death_year\":2018}],\"translators\":[],\"subjects\":[\"Apocalyptic fiction\",\"Science fiction\",\"Short stories\",\"Space flight -- Fiction\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/67362/67362-0.txt\",\"application/zip\":\"https://www.gutenberg.org/files/67362/67362-0.zip\",\"application/octet-stream\":\"https://www.gutenberg.org/files/67362/67362-h.zip\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/67362/pg67362.cover.small.jpg\",\"text/html\":\"https://www.gutenberg.org/ebooks/67362.html.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/67362.rdf\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/67362.kindle.images\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/67362.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/67362.txt.utf-8\"},\"download_count\":177},{\"id\":21051,\"title\":\"Skylark Three\",\"authors\":[{\"name\":\"Smith, E. E. (Edward Elmer)\",\"birth_year\":1890,\"death_year\":1965}],\"translators\":[],\"subjects\":[\"Science fiction\",\"Space ships -- Fiction\",\"Space warfare -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/21051.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/21051.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/21051.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/21051.txt.utf-8\",\"application/octet-stream\":\"https://www.gutenberg.org/files/21051/21051-page-images.zip\",\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/21051/21051-h/21051-h.htm\",\"application/zip\":\"https://www.gutenberg.org/files/21051/21051.zip\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/21051/pg21051.cover.medium.jpg\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/21051/21051.txt\",\"text/html\":\"https://www.gutenberg.org/ebooks/21051.html.images\",\"text/plain; charset=iso-8859-1\":\"https://www.gutenberg.org/files/21051/21051-8.txt\"},\"download_count\":166},{\"id\":56852,\"title\":\"Time and Free Will: An Essay on the Immediate Data of Consciousness\",\"authors\":[{\"name\":\"Bergson, Henri\",\"birth_year\":1859,\"death_year\":1941}],\"translators\":[{\"name\":\"Pogson, Frank Lubecki\",\"birth_year\":null,\"death_year\":1910}],\"subjects\":[\"Consciousness\",\"Free will and determinism\",\"Space and time\"],\"bookshelves\":[],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"application/zip\":\"https://www.gutenberg.org/files/56852/56852-h.zip\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/56852.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/56852.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/56852.epub.images\",\"text/html\":\"https://www.gutenberg.org/ebooks/56852.html.images\",\"text/html; charset=utf-8\":\"https://www.gutenberg.org/files/56852/56852-h/56852-h.htm\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/56852/pg56852.cover.medium.jpg\",\"text/plain; charset=utf-8\":\"https://www.gutenberg.org/files/56852/56852-0.txt\"},\"download_count\":166},{\"id\":16921,\"title\":\"Plague Ship\",\"authors\":[{\"name\":\"Norton, Andre\",\"birth_year\":1912,\"death_year\":2005}],\"translators\":[],\"subjects\":[\"Life on other planets -- Fiction\",\"Science fiction\",\"Solar Queen (Imaginary space vehicle) -- Fiction\",\"Space ships -- Fiction\"],\"bookshelves\":[\"Pirates, Buccaneers, Corsairs, etc.\",\"Science Fiction\",\"Science Fiction by Women\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/html; charset=us-ascii\":\"https://www.gutenberg.org/files/16921/16921-h/16921-h.htm\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/16921/16921.txt\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/16921/pg16921.cover.small.jpg\",\"application/zip\":\"https://www.gutenberg.org/files/16921/16921.zip\",\"text/html\":\"https://www.gutenberg.org/ebooks/16921.html.images\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/16921.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/16921.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/16921.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/16921.txt.utf-8\"},\"download_count\":162},{\"id\":18846,\"title\":\"Voodoo Planet\",\"authors\":[{\"name\":\"Norton, Andre\",\"birth_year\":1912,\"death_year\":2005}],\"translators\":[],\"subjects\":[\"Life on other planets -- Fiction\",\"Science fiction\",\"Solar Queen (Imaginary space vehicle) -- Fiction\",\"Space ships -- Fiction\"],\"bookshelves\":[\"Science Fiction\",\"Science Fiction by Women\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/18846/18846-h/18846-h.htm\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/18846/pg18846.cover.small.jpg\",\"text/html\":\"https://www.gutenberg.org/ebooks/18846.html.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/18846.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/18846.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/18846.txt.utf-8\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/18846.kindle.images\",\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/18846/18846.zip\"},\"download_count\":132},{\"id\":18753,\"title\":\"The Space Pioneers\",\"authors\":[{\"name\":\"Rockwell, Carey\",\"birth_year\":null,\"death_year\":null}],\"translators\":[],\"subjects\":[\"Astronauts -- Juvenile fiction\",\"Corbett, Tom (Fictitious character) -- Juvenile fiction\",\"Interstellar travel -- Juvenile fiction\",\"Science fiction\",\"Space colonies -- Juvenile fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=us-ascii\":\"https://www.gutenberg.org/files/18753/18753.txt\",\"text/html; charset=iso-8859-1\":\"https://www.gutenberg.org/files/18753/18753-h/18753-h.htm\",\"application/zip\":\"https://www.gutenberg.org/files/18753/18753-8.zip\",\"text/plain; charset=iso-8859-1\":\"https://www.gutenberg.org/files/18753/18753-8.txt\",\"text/html\":\"https://www.gutenberg.org/ebooks/18753.html.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/18753.rdf\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/18753.epub.images\",\"text/plain\":\"https://www.gutenberg.org/ebooks/18753.txt.utf-8\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/18753.kindle.images\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/18753/pg18753.cover.medium.jpg\"},\"download_count\":126},{\"id\":52228,\"title\":\"Search the Sky\",\"authors\":[{\"name\":\"Pohl, Frederik\",\"birth_year\":1919,\"death_year\":2013},{\"name\":\"Kornbluth, C. M. (Cyril M.)\",\"birth_year\":1923,\"death_year\":1958}],\"translators\":[],\"subjects\":[\"Interstellar travel -- Fiction\",\"Science fiction\",\"Space colonies -- Fiction\"],\"bookshelves\":[\"Science Fiction\"],\"languages\":[\"en\"],\"copyright\":false,\"media_type\":\"Text\",\"formats\":{\"text/plain; charset=utf-8\":\"https://www.gutenberg.org/files/52228/52228-0.zip\",\"text/html; charset=utf-8\":\"https://www.gutenberg.org/files/52228/52228-h.zip\",\"text/html\":\"https://www.gutenberg.org/ebooks/52228.html.images\",\"image/jpeg\":\"https://www.gutenberg.org/cache/epub/52228/pg52228.cover.medium.jpg\",\"application/epub+zip\":\"https://www.gutenberg.org/ebooks/52228.epub.images\",\"application/x-mobipocket-ebook\":\"https://www.gutenberg.org/ebooks/52228.kindle.images\",\"application/rdf+xml\":\"https://www.gutenberg.org/ebooks/52228.rdf\"},\"download_count\":126}]}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/books/batch/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"batch",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo0fSwiaWF0IjoxNjU4MjI0OTU3LCJleHAiOjE2NTgyMjg1NTd9.C5T2dOxhQyDQKWqsjPlzCjSY-FdAIPZ5yn9g_n0ETv0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"El Fin de la Eternidad 2\", \"authorId\": \"h1wbASjW6vRXBCOM7eKB6\", \"price\": 20.25}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/books",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Book Description",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo0fSwiaWF0IjoxNjU4MjI0OTU3LCJleHAiOjE2NTgyMjg1NTd9.C5T2dOxhQyDQKWqsjPlzCjSY-FdAIPZ5yn9g_n0ETv0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"description\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum faucibus semper vulputate. In id ex ac urna dictum feugiat aliquam sit amet lorem. Nunc ut eleifend massa, at ultrices nunc. Aenean dignissim luctus magna non egestas. Praesent feugiat turpis sed tristique elementum. Quisque pharetra imperdiet erat quis facilisis. Nam dictum venenatis mi vitae aliquam. Morbi ac augue at nibh convallis imperdiet ac id ipsum. Etiam auctor, arcu in iaculis convallis, neque est scelerisque metus, eu tincidunt turpis ex quis ex. Proin at nisi a sem fringilla ultrices. Pellentesque egestas iaculis sapien, a congue dolor pretium eget. Nunc at metus tellus. Morbi sollicitudin placerat leo, ut viverra ante semper dignissim. Duis posuere, elit quis elementum pretium, tellus justo aliquam massa, quis iaculis metus purus non neque. Maecenas bibendum efficitur blandit. Aenean egestas malesuada elit sit amet bibendum.\",\"version\":0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/books/6b3b8fd2-d9b4-4dc8-aaf4-5e20b9cd6964/description",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"6b3b8fd2-d9b4-4dc8-aaf4-5e20b9cd6964",
+								"description"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Book Image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo0fSwiaWF0IjoxNjU4MjI0OTU3LCJleHAiOjE2NTgyMjg1NTd9.C5T2dOxhQyDQKWqsjPlzCjSY-FdAIPZ5yn9g_n0ETv0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"image\":\"https://d2sofvawe08yqg.cloudfront.net/tdd-en-castellano/s_hero2x\",\"version\":1}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/books/6b3b8fd2-d9b4-4dc8-aaf4-5e20b9cd6964/image",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"6b3b8fd2-d9b4-4dc8-aaf4-5e20b9cd6964",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Book Author",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"authorId\":\"vXKkjNuts7MCwfsbtUIEA\",\"version\":1}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/books/bzxMokTFhDnYs9EJpzOOh/author",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"bzxMokTFhDnYs9EJpzOOh",
+								"author"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "POST Book",
+			"name": "Cart",
+			"item": [
+				{
+					"name": "GET Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYzMTg2NzcsImV4cCI6MTY1NjMyMjI3N30.o7bMHj44zUmSUQp2ymJ7fYCozy2nXYQW0xY49O4S5_k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/api/v1/cart/DCioJQaVhPplmxxGmK5vD",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"cart",
+								"DCioJQaVhPplmxxGmK5vD"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Cart by User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo0fSwiaWF0IjoxNjU4MjI0OTU3LCJleHAiOjE2NTgyMjg1NTd9.C5T2dOxhQyDQKWqsjPlzCjSY-FdAIPZ5yn9g_n0ETv0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/api/v1/cart/user/d0c3ce2f-3134-4357-9742-658f64d4d8b9",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"cart",
+								"user",
+								"d0c3ce2f-3134-4357-9742-658f64d4d8b9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYwNjcyNTIsImV4cCI6MTY1NjA3MDg1Mn0.JsPxdLpFegIfju66zHkdVBLwLSp_WW6tvI4IlWn674I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"DCioJQaVhPplmxxGmK5vD\", \"userId\": \"r9n16bJtQlpxxrTTThEKn\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/cart",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Cart Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYwNjcyNTIsImV4cCI6MTY1NjA3MDg1Mn0.JsPxdLpFegIfju66zHkdVBLwLSp_WW6tvI4IlWn674I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"DCioJQaVhPplmxxGmK5vD\", \"bookId\": \"vBKnK8NdZjiu68uI7BM3l\", \"qty\": 2, \"price\": 20.25, \"originalVersion\": 0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/cart/add",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"cart",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Cart Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYwNjcyNTIsImV4cCI6MTY1NjA3MDg1Mn0.JsPxdLpFegIfju66zHkdVBLwLSp_WW6tvI4IlWn674I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"DCioJQaVhPplmxxGmK5vD\", \"bookId\": \"LE9G8_jAwMSjb2FZ0k5wE\", \"qty\": 2, \"price\": 20.25, \"originalVersion\": 10}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/cart/remove/DCioJQaVhPplmxxGmK5vD/LE9G8_jAwMSjb2FZ0k5wE/2/20.25/14",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"cart",
+								"remove",
+								"DCioJQaVhPplmxxGmK5vD",
+								"LE9G8_jAwMSjb2FZ0k5wE",
+								"2",
+								"20.25",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "GET Orders by User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo2fSwiaWF0IjoxNjU4NDc3Mzc3LCJleHAiOjE2NTg0ODA5Nzd9.QBimwV3W5Iy3lYS-Gz-kngbBWX-fvX0ARwN7WA_LKOI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/api/v1/orders/user/d0c3ce2f-3134-4357-9742-658f64d4d8b9",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"user",
+								"d0c3ce2f-3134-4357-9742-658f64d4d8b9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo2fSwiaWF0IjoxNjU4NDc3Mzc3LCJleHAiOjE2NTg0ODA5Nzd9.QBimwV3W5Iy3lYS-Gz-kngbBWX-fvX0ARwN7WA_LKOI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/api/v1/orders/bea877ef-378a-4608-81eb-b2f5cf85cf69",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"bea877ef-378a-4608-81eb-b2f5cf85cf69"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTZ9LCJpYXQiOjE2NTcxMDAzNjgsImV4cCI6MTY1NzEwMzk2OH0.zlIaL0j3bUOoDYorOPPc06lHTvm5CUI-Ljr07hlyFi8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\": \"bea877ef-378a-4608-81eb-b2f5cf85cf69\", \"userId\": \"d0c3ce2f-3134-4357-9742-658f64d4d8b9\", \"status\": \"created\", \"name\": \"CRISTIAN MARTIN\", \"address\": \"Barca 3 2º2 29011 Málaga\", \"total\": 120, \n\"lines\": [\n    {\"bookId\": \"478d7150-4975-4492-ae53-35507d316a37\", \"qty\": 2, \"price\": 31.76},\n    {\"bookId\": \"dc30fc82-a127-4292-94ca-38deb774bd60\", \"qty\": 2, \"price\": 23.96}\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/orders",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "GET Authors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYwNjcyNTIsImV4cCI6MTY1NjA3MDg1Mn0.JsPxdLpFegIfju66zHkdVBLwLSp_WW6tvI4IlWn674I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/users",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Author",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"niclife7@gmail.com\", \"firstname\":\"Cristian\", \"lastname\":\"Martin Niclife\", \"dateOfBirth\":\"1991-06-03\", \"password\": \"123456\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/users",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/users",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT User Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"currentPassword\":\"123456\", \"newPassword\":\"123456\", \"newPasswordConfirm\":\"123456\", \"version\":0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/users/DCioJQaVhPplmxxGmK5vD/password",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"DCioJQaVhPplmxxGmK5vD",
+								"password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST Login",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"name\":\"El Fin de la Eternidad\", \"authorId\": \"h1wbASjW6vRXBCOM7eKB6\", \"price\": 20.25}",
+					"raw": "{\"email\":\"niclife7@gmail.com\", \"password\": \"123456\"}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -43,7 +753,7 @@
 					}
 				},
 				"url": {
-					"raw": "127.0.0.1:3000/api/v1/books",
+					"raw": "127.0.0.1:3000/api/v1/login/signin",
 					"host": [
 						"127",
 						"0",
@@ -54,97 +764,8 @@
 					"path": [
 						"api",
 						"v1",
-						"books"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST Author",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"email\":\"coal182@gmail.com\", \"firstname\":\"Cristian\", \"lastname\":\"Martín\", \"dateOfBirth\":\"10/07/1991\"}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "127.0.0.1:3000/api/v1/users",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"v1",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "PUT Book Author",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"authorId\":\"vXKkjNuts7MCwfsbtUIEA\",\"version\":\"1\"}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "127.0.0.1:3000/api/v1/books/bzxMokTFhDnYs9EJpzOOh/author",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"v1",
-						"books",
-						"bzxMokTFhDnYs9EJpzOOh",
-						"author"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET Book",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "127.0.0.1:3000/api/v1/books/0Q7cwCJsevziNtv4bcmtL",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"v1",
-						"books",
-						"0Q7cwCJsevziNtv4bcmtL"
+						"login",
+						"signin"
 					]
 				}
 			},
