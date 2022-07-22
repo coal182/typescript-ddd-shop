@@ -6,7 +6,6 @@ import { NotFoundException } from '@core/application-error';
 import { EventDescriptor, IEventDescriptor } from '@core/event-descriptor';
 import { IEventHandler } from '@core/i-event-handler';
 import { OrderCreated } from '@storeback/order/domain/events/order-created';
-import { IOrderRepository } from '@storeback/order/domain/i-order-repository';
 import { Order } from '@storeback/order/domain/order';
 
 @injectable()
