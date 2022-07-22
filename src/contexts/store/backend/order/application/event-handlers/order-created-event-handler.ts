@@ -18,11 +18,6 @@ export class OrderCreatedEventHandler implements IEventHandler<OrderCreated> {
   // Circular Dependency OrderRepository: OrderCreatedEventHandler -> OrderRepository -> OrderEventStore -> EventBus -> EventHandlers[] -> OrderCreatedEventHandler
 
   async handle(event: OrderCreated) {
-    console.log(
-      '🚀 ~ file: order-created-event-handler.ts ~ line 18 ~ OrderCreatedEventHandler ~ handle ~ event',
-      event
-    );
-
     const order = new Order();
     const events = (await this.db
       .collection('order-events')
@@ -36,6 +31,11 @@ export class OrderCreatedEventHandler implements IEventHandler<OrderCreated> {
     });
     order.loadFromHistory(history);
 
+    const lines = order.lines.map(async (line) => {
+      const book = await this.db.collection('books').findOne({ id: line.bookId });
+      return { ...line, product: book };
+    });
+
     await this.db.collection('orders').insertOne({
       id: order.guid.value,
       userId: order.userId.value,
@@ -43,7 +43,7 @@ export class OrderCreatedEventHandler implements IEventHandler<OrderCreated> {
       name: order.name.value,
       address: order.address.value,
       total: order.total.value,
-      items: order.lines,
+      lines,
       version: order.version,
     });
   }

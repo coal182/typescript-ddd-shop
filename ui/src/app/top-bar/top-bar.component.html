@@ -32,6 +32,10 @@
           <mat-icon>manage_accounts</mat-icon>
           <span>User Profile</span>
         </button>
+        <button mat-menu-item [routerLink]="['orders/']">
+          <mat-icon>list</mat-icon>
+          <span>Orders</span>
+        </button>
         <button mat-menu-item (click)="logout()">
           <mat-icon>logout</mat-icon>
           <span>Logout</span>

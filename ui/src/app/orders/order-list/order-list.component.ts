@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpOrderService } from '../order-service/http-order.service';
+import { Order } from '../orders';
 
 @Component({
   selector: 'app-order-list',
@@ -10,6 +11,8 @@ import { HttpOrderService } from '../order-service/http-order.service';
 })
 export class OrderListComponent implements OnInit {
   public isLoading = false;
+
+  columnsToDisplay = ['name', 'address', 'total', 'actions'];
 
   orders$: Observable<any>;
 
@@ -27,5 +30,7 @@ export class OrderListComponent implements OnInit {
         tap((ord) => (this.isLoading = false))
       );
   }
+
+  cancel(order: Order): void {}
 
 }

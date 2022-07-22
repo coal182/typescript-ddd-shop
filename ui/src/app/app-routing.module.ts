@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'products/:productId', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent },
   { path: 'orders', component: OrderListComponent },
-  { path: 'orders/:id', component: OrderDetailsComponent },
+  { path: 'orders/:orderId', component: OrderDetailsComponent },
   { path: 'shipping', component: ShippingComponent },
 ];
 
