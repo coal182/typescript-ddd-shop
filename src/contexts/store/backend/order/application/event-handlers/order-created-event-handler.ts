@@ -31,10 +31,17 @@ export class OrderCreatedEventHandler implements IEventHandler<OrderCreated> {
     });
     order.loadFromHistory(history);
 
-    const lines = order.lines.map(async (line) => {
-      const book = await this.db.collection('books').findOne({ id: line.bookId });
-      return { ...line, product: book };
-    });
+    const lines = await Promise.all(
+      order.lines.map(async (line) => {
+        const book = await this.db.collection('books').findOne({ id: line.bookId });
+        return { ...line, product: book };
+      })
+    );
+
+    console.log(
+      '🚀 ~ file: order-created-event-handler.ts ~ line 38 ~ OrderCreatedEventHandler ~ lines ~ lines',
+      lines
+    );
 
     await this.db.collection('orders').insertOne({
       id: order.guid.value,
