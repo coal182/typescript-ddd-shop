@@ -22,7 +22,7 @@ export class BookMother {
     authorId: BookAuthor,
     price: BookPrice
   ): Book {
-    return new Book(guid, name, description, image, authorId, price);
+    return new Book({ guid, name, description, image, authorId, price });
   }
 
   static random(): Book {

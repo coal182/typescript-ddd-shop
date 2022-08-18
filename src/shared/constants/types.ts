@@ -15,6 +15,9 @@ export const TYPES = {
   // Application Services
   BookApplication: Symbol('BookApplication'),
 
+  // Use Cases
+  BookCreator: Symbol('BookCreator'),
+
   // Read Model Facade (for book)
   BookReadModelFacade: Symbol('BookReadModelFacade'),
   AuthorReadModelFacade: Symbol('AuthorReadModelFacade'),

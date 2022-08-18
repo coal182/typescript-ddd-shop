@@ -22,23 +22,37 @@ export class Book extends AggregateRoot {
 
   constructor();
 
-  constructor(
-    guid: BookId,
-    name: BookName,
-    description: BookDescription,
-    image: BookImage,
-    authorId: BookAuthor,
-    price: BookPrice
-  );
+  constructor({
+    guid,
+    name,
+    description,
+    image,
+    authorId,
+    price,
+  }: {
+    guid: BookId;
+    name: BookName;
+    description: BookDescription;
+    image: BookImage;
+    authorId: BookAuthor;
+    price: BookPrice;
+  });
 
-  constructor(
-    guid?: BookId,
-    name?: BookName,
-    description?: BookDescription,
-    image?: BookImage,
-    authorId?: BookAuthor,
-    price?: BookPrice
-  ) {
+  constructor({
+    guid,
+    name,
+    description,
+    image,
+    authorId,
+    price,
+  }: {
+    guid?: BookId;
+    name?: BookName;
+    description?: BookDescription;
+    image?: BookImage;
+    authorId?: BookAuthor;
+    price?: BookPrice;
+  } = {}) {
     super();
     // This if block is required as we instantiate the aggregate root in the repository
     if (guid && name && description && image && authorId && price) {
@@ -92,14 +106,14 @@ export class Book extends AggregateRoot {
     authorId: string;
     price: number;
   }): Book {
-    return new Book(
-      new BookId(plainData.guid),
-      new BookName(plainData.name),
-      new BookDescription(plainData.description),
-      new BookImage(plainData.image),
-      new BookAuthor(plainData.authorId),
-      new BookPrice(plainData.price)
-    );
+    return new Book({
+      guid: new BookId(plainData.guid),
+      name: new BookName(plainData.name),
+      description: new BookDescription(plainData.description),
+      image: new BookImage(plainData.image),
+      authorId: new BookAuthor(plainData.authorId),
+      price: new BookPrice(plainData.price),
+    });
   }
 
   toPrimitives(): Primitives<Book> {

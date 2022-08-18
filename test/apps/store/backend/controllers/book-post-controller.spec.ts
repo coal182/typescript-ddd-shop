@@ -1,20 +1,22 @@
 import 'reflect-metadata';
-import { expect, should } from 'chai';
+import { expect } from 'chai';
 import { Request, Response } from 'express';
 import sinon from 'sinon';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CommandBus } from '@infrastructure/command-bus';
+import { BookCreator } from '@storeback/book/application/book-creator';
 import { CreateBookCommand } from '@storeback/book/application/commands/create-book';
-import { BookController } from 'src/apps/store/backend/controllers/book-controller';
+import { BookPostController } from '@storebackapp/controllers/book-post-controller';
 
 import { BookReadModelFacadeMock } from '../../../../contexts/store/backend/book/__mocks__/read-model';
 
-describe(BookController.name, () => {
+describe(BookPostController.name, () => {
   const commandBus = new CommandBus();
   const readmodelMock = new BookReadModelFacadeMock();
   const commandBusMock = sinon.stub(commandBus);
-  const bookController = new BookController(commandBusMock, readmodelMock);
+  const bookCreator = new BookCreator(commandBusMock);
+  const bookController = new BookPostController(commandBusMock, readmodelMock, bookCreator);
   describe('when requested to create a book', () => {
     const sandbox = sinon.createSandbox();
 

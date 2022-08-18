@@ -18,6 +18,7 @@ import {
   AuthorReadModelFacade,
   IAuthorReadModelFacade,
 } from '@storeback/author/infrastructure/projection/authors/read-model';
+import { BookCreator } from '@storeback/book/application/book-creator';
 import { CreateBookCommandHandler } from '@storeback/book/application/command-handlers/create-book-command-handler';
 import { UpdateBookAuthorCommandHandler } from '@storeback/book/application/command-handlers/update-book-author-command-handler';
 import { UpdateBookDescriptionCommandHandler } from '@storeback/book/application/command-handlers/update-book-description-command-handler';
@@ -101,6 +102,9 @@ export const initialiseContainer = async () => {
   container.bind<Redis>(TYPES.RedisSubscriber).toConstantValue(redisSubscriber);
   container.bind<Redis>(TYPES.Redis).toConstantValue(redis);
   container.bind<IEventBus>(TYPES.EventBus).to(RedisEventBus);
+
+  // Use Cases
+  container.bind<BookCreator>(TYPES.BookCreator).to(BookCreator);
 
   // Read models for query
   container.bind<IBookReadModelFacade>(TYPES.BookReadModelFacade).to(BookReadModelFacade);
