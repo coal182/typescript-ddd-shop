@@ -1,9 +1,10 @@
 import { IEvent } from './i-event';
 
+type Prefix<K> = K extends string ? `apply${K}` : K;
 export abstract class AggregateRoot {
-  [x: string]: any;
+  [x: Prefix<string>]: (event: any) => void;
   private __version = -1;
-  private __changes: any[] = [];
+  private __changes: IEvent[] = [];
 
   get version() {
     return this.__version;

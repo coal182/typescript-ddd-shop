@@ -124,6 +124,7 @@ export class Book extends AggregateRoot {
       image: this.image.value,
       authorId: this.authorId.value,
       price: this.price.value,
+      version: this.version,
     };
   }
 }
