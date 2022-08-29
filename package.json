@@ -10,6 +10,7 @@
     "build": "tsc --project tsconfig.json",
     "start": "node ./dist/src/apps/store/backend/index.js",
     "dev": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/store/backend/index.ts",
+    "dev:importer": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/store/importer/index.ts",
     "lint": "eslint --fix .",
     "postinstall": "npm run build",
     "test": "mocha -r ts-node/register -r tsconfig-paths/register test/**/*.spec.ts --timeout 60000 --exit"
