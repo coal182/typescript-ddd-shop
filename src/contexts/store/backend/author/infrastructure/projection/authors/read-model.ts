@@ -2,8 +2,8 @@ import { inject, injectable } from 'inversify';
 import { Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
-import { NotFoundException } from '@core/application-error';
 import { IReadModelFacade } from '@core/i-read-model-facade';
+import { NotFoundException } from '@shared/errors/application-error';
 
 export class AuthorDTO {
   constructor(public readonly guid: string, public readonly firstname: string, public readonly lastname: string) {}

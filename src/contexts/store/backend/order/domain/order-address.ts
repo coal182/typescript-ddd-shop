@@ -1,4 +1,4 @@
-import { InvalidArgumentError } from '@shared/value-objects/invalid-argument-error';
+import { InvalidArgumentError } from '@shared/errors/invalid-argument-error';
 import { StringValueObject } from '@shared/value-objects/string-value-object';
 
 export class OrderAddress extends StringValueObject {

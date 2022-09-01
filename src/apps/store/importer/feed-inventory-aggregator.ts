@@ -1,16 +1,28 @@
+import { inject, injectable } from 'inversify';
+
+import { TYPES } from '@constants/types';
+import { ICommandBus } from '@core/i-command-bus';
 import { CommandBus } from '@infrastructure/command-bus';
 
 import { Feed } from './feed';
 import { FeedParser } from './feed-parser';
 
+@injectable()
 export class FeedInventoryAggregator {
-  constructor(private parser: FeedParser, private commandBus: CommandBus) {}
+  constructor(@inject(TYPES.CommandBus) private readonly commandBus: ICommandBus, private parser: FeedParser) {}
 
   run(feed: Feed): void {
-    const commands = this.parser.parse(feed);
-    for (const command of commands) {
-      //this.commandBus.send(command);
-      console.log(command);
-    }
+    this.parser
+      .parse(feed)
+      .then((commands) => {
+        for (const command of commands) {
+          this.commandBus.send(command);
+          console.log(this.commandBus);
+          //console.log(command);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 }

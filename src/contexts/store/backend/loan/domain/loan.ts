@@ -1,8 +1,10 @@
 import { AggregateRoot } from '@core/aggregate-root';
+import { Uuid } from '@shared/value-objects/uuid';
 
 import { LoanCreated } from './events/LoanCreated';
 
 export class Loan extends AggregateRoot {
+  public guid: Uuid;
   public bookId: string;
   public userId: string;
 
@@ -18,7 +20,7 @@ export class Loan extends AggregateRoot {
   }
 
   applyLoanCreated(event: LoanCreated) {
-    this.guid = event.guid;
+    this.guid = new Uuid(event.guid);
     this.userId = event.userId;
     this.bookId = event.bookId;
   }

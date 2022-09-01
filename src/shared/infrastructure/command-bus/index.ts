@@ -3,6 +3,8 @@ import { injectable } from 'inversify';
 import { ICommand } from '@core/i-command';
 import { ICommandHandler } from '@core/i-command-handler';
 
+import 'reflect-metadata';
+
 @injectable()
 export class CommandBus {
   public handlers: Map<string, ICommandHandler<ICommand>> = new Map();

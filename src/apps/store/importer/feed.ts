@@ -1,5 +1,5 @@
 import { ContentType } from './content-type';
 
 export class Feed {
-  constructor(readonly content: string, readonly contentType: ContentType) {}
+  constructor(readonly filePath: string, readonly contentType: ContentType) {}
 }

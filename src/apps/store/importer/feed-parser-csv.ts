@@ -1,20 +1,58 @@
-import { v4 as uuidv4 } from 'uuid';
+import { readFile, utils, WorkBook, WorkSheet } from 'xlsx';
 
+import { NotFoundError } from '@shared/errors/not-found-error';
+import { ParsingError } from '@shared/errors/parsing-error';
 import { CreateBookCommand } from '@storeback/book/application/commands/create-book';
 
 import { Feed } from './feed';
 import { FeedParser } from './feed-parser';
 
 export class FeedParserCsv implements FeedParser {
-  parse(feed: Feed): Array<CreateBookCommand> {
-    const rows = feed.content.split('\n').slice(1);
-    return rows.map((row) => {
-      const fields = row.split(',');
+  private feed: Feed;
 
-      const id = uuidv4();
+  async parse(feed: Feed): Promise<Array<CreateBookCommand>> {
+    this.feed = feed;
 
-      const command = new CreateBookCommand(id, fields[0], fields[1], fields[2], fields[3], parseFloat(fields[4]));
-      return command;
+    return this.getWorkBook()
+      .then((workBook) => this.getFirstSheet(workBook))
+      .then((workSheet) => this.getRawJson(workSheet))
+      .then((rawJson) => {
+        return rawJson.map((item: any) => {
+          const command = new CreateBookCommand(
+            item.id,
+            item.name,
+            item.description,
+            item.image,
+            item.author,
+            item.price
+          );
+          return command;
+        });
+      });
+  }
+
+  private getWorkBook(): Promise<WorkBook> {
+    return new Promise((resolve, reject) => {
+      try {
+        const workBook = readFile(this.feed.filePath, { raw: true });
+        resolve(workBook);
+      } catch (err) {
+        reject(this.translateFileReadError(err as Error));
+      }
     });
+  }
+
+  private getFirstSheet(workBook: WorkBook): WorkSheet {
+    return workBook.Sheets[workBook.SheetNames[0]];
+  }
+
+  private getRawJson(workSheet: WorkSheet): Array<object> {
+    return utils.sheet_to_json<object>(workSheet);
+  }
+
+  private translateFileReadError(err: NodeJS.ErrnoException): Error {
+    const message = `Failed to parse file ${this.feed.filePath}`;
+
+    return err.code === 'ENOENT' ? new NotFoundError(message) : new ParsingError(message);
   }
 }

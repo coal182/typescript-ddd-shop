@@ -27,6 +27,7 @@ export class CreateBookCommandHandler implements ICommandHandler<CreateBookComma
       authorId: new BookAuthor(command.authorId),
       price: new BookPrice(command.price),
     });
+    console.log('🚀 ~ file: create-book-command-handler.ts ~ line 30 ~ CreateBookCommandHandler ~ handle ~ book', book);
     this.repository.save(book, -1);
   }
 }

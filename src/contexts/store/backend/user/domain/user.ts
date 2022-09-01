@@ -6,16 +6,12 @@ import { UserUpdated } from './events/user-updated';
 import { UserId } from './user-id';
 
 export class User extends AggregateRoot {
-  private _guid: UserId;
+  public guid: UserId;
   private _email: string;
   private _firstname: string;
   private _lastname: string;
   private _dateOfBirth: Date;
   private _password: string;
-
-  get guid() {
-    return this._guid;
-  }
 
   get email() {
     return this._email;
@@ -60,7 +56,7 @@ export class User extends AggregateRoot {
     this._firstname = firstname;
     this._lastname = lastname;
     this._dateOfBirth = dateOfBirth;
-    this.applyChange(new UserUpdated(this._guid.value, email, firstname, lastname, dateOfBirth));
+    this.applyChange(new UserUpdated(this.guid.value, email, firstname, lastname, dateOfBirth));
   }
 
   public applyUserUpdated(event: UserUpdated): void {
@@ -80,7 +76,7 @@ export class User extends AggregateRoot {
   }
 
   public applyUserCreated(event: UserCreated): void {
-    this._guid = new UserId(event.guid); // Important for set changes to the right aggregate guid
+    this.guid = new UserId(event.guid); // Important for set changes to the right aggregate guid
     this._email = event.email;
     this._firstname = event.firstname;
     this._lastname = event.lastname;

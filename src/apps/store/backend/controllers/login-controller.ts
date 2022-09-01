@@ -5,7 +5,7 @@ import { controller, httpPost, request, response } from 'inversify-express-utils
 import { v4 as uuidv4 } from 'uuid';
 
 import { TYPES } from '@constants/types';
-import { NotFoundException, PasswordNotMatchException } from '@core/application-error';
+import { NotFoundException, PasswordNotMatchException } from '@shared/errors/application-error';
 import { CommandBus } from '@infrastructure/command-bus';
 import { CreateCartCommand } from '@storeback/cart/application/commands/create-cart';
 import { CartDTO } from '@storeback/cart/infrastructure/projection/carts/read-model';

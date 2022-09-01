@@ -1,4 +1,4 @@
-import { ConcurrencyException, NotFoundException } from '@core/application-error';
+import { ConcurrencyException, NotFoundException } from '@shared/errors/application-error';
 import { EventDescriptor } from '@core/event-descriptor';
 import { IEvent } from '@core/i-event';
 import { IEventStore } from '@core/i-event-store';

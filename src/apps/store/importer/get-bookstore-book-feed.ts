@@ -1,16 +1,20 @@
-import fs from 'fs';
-
 import { ContentType } from './content-type';
 import { Feed } from './feed';
 
-export function getBookstoreBookFeed(): Feed {
-  const enabledContentType = 'text/csv';
-
-  if (enabledContentType === ContentType.Csv) {
-    const content = fs.readFileSync(__dirname + '/data/bookstore-inventory.csv').toString();
-    return new Feed(content, ContentType.Csv);
-  } else {
-    const content = fs.readFileSync(__dirname + '/data/bookstore-inventory.json').toString();
-    return new Feed(content, ContentType.Json);
+export function getBookstoreBookFeed(enabledContentType: ContentType = ContentType.Json): Feed {
+  /*eslint indent: ["error", 2, {"SwitchCase": 1}]*/
+  switch (enabledContentType) {
+    case ContentType.Csv: {
+      const filePath = __dirname + '/data/bookstore-inventory.csv';
+      return new Feed(filePath, ContentType.Csv);
+    }
+    case ContentType.Json: {
+      const filePath = __dirname + '/data/bookstore-inventory.json';
+      return new Feed(filePath, ContentType.Json);
+    }
+    default: {
+      const _exhaustiveCheck: never = enabledContentType;
+      return _exhaustiveCheck;
+    }
   }
 }

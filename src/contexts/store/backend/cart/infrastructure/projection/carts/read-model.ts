@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
-import { NotFoundException } from '@core/application-error';
+import { NotFoundException } from '@shared/errors/application-error';
 import { IReadModelFacade } from '@core/i-read-model-facade';
 
 export class CartDTO {

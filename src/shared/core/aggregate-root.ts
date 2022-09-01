@@ -1,8 +1,11 @@
+import { Uuid } from '@shared/value-objects/uuid';
+
 import { IEvent } from './i-event';
 
 type Prefix<K> = K extends string ? `apply${K}` : K;
 export abstract class AggregateRoot {
   [x: Prefix<string>]: (event: any) => void;
+  public guid: Uuid;
   private __version = -1;
   private __changes: IEvent[] = [];
 

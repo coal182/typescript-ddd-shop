@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 import validate from 'uuid-validate';
 
-import { InvalidArgumentError } from './invalid-argument-error';
+import { InvalidArgumentError } from '../errors/invalid-argument-error';
 
 export class Uuid {
   public readonly value: string;

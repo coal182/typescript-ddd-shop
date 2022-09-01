@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
-import { NotFoundException } from '@core/application-error';
+import { NotFoundException } from '@shared/errors/application-error';
 import { EventDescriptor, IEventDescriptor } from '@core/event-descriptor';
 import { IEventHandler } from '@core/i-event-handler';
 import { OrderCreated } from '@storeback/order/domain/events/order-created';

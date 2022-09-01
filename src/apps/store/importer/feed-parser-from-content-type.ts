@@ -5,9 +5,16 @@ import { FeedParserJson } from './feed-parser-json';
 
 export class FeedParserFromContentType {
   get(contentType: ContentType): FeedParser {
-    if (contentType === ContentType.Csv) return new FeedParserCsv();
-    if (contentType === ContentType.Json) return new FeedParserJson();
-    const _exhaustiveCheck: never = contentType;
-    return _exhaustiveCheck;
+    /*eslint indent: ["error", 2, {"SwitchCase": 1}]*/
+    switch (contentType) {
+      case ContentType.Csv:
+        return new FeedParserCsv();
+      case ContentType.Json:
+        return new FeedParserJson();
+      default: {
+        const _exhaustiveCheck: never = contentType;
+        return _exhaustiveCheck;
+      }
+    }
   }
 }

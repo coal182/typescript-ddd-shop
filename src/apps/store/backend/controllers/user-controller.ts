@@ -5,7 +5,7 @@ import { controller, httpGet, httpPost, httpPut, request, response } from 'inver
 import { v4 as uuidv4 } from 'uuid';
 
 import { TYPES } from '@constants/types';
-import { PasswordNotMatchException, NotFoundException } from '@core/application-error';
+import { PasswordNotMatchException, NotFoundException } from '@shared/errors/application-error';
 import { CommandBus } from '@infrastructure/command-bus';
 import { IAuthorReadModelFacade } from '@storeback/author/infrastructure/projection/authors/read-model';
 import { CreateUserCommand } from '@storeback/user/application/commands/create-user';
