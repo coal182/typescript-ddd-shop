@@ -9,6 +9,8 @@ import {
 
 import { AddToCartParams, Cart, CartItem } from '../cart';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -33,7 +35,7 @@ export class HttpCartService extends CartService {
 
     const userId = localStorage.getItem('user_id');
     return this.http.get(
-      `https://ts-bookstore-api.herokuapp.com/api/v1/cart/user/${userId}`
+      `${environment.apiUrl}api/v1/cart/user/${userId}`
     ).pipe(
       map((data: GetCartResponse) => { return data.data; })
     );
@@ -51,7 +53,7 @@ export class HttpCartService extends CartService {
     }
     
     return this.http
-      .post<any>(`https://ts-bookstore-api.herokuapp.com/api/v1/cart/add`, params);
+      .post<any>(`${environment.apiUrl}api/v1/cart/add`, params);
 
   }
 
@@ -65,7 +67,7 @@ export class HttpCartService extends CartService {
     }
 
     return this.http
-      .delete<any>(`https://ts-bookstore-api.herokuapp.com/api/v1/cart/remove/${params.guid}/${params.bookId}/${params.qty}/${params.price}/${params.originalVersion}`);
+      .delete<any>(`${environment.apiUrl}api/v1/cart/remove/${params.guid}/${params.bookId}/${params.qty}/${params.price}/${params.originalVersion}`);
   }
 
   clearCart(): any[] {

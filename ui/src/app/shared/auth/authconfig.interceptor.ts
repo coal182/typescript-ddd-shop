@@ -13,6 +13,8 @@ import { catchError, map } from 'rxjs/operators';
 import { StatusCodes } from 'http-status-codes';
 
 import { AuthService } from './auth.service';
+
+import { environment } from '../../../environments/environment';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, public router: Router) {}
@@ -30,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         if (            
           error.status === StatusCodes.UNAUTHORIZED &&
-          error.url !== 'https://ts-bookstore-api.herokuapp.com/api/v1/login/signin'
+          error.url !== `${environment.apiUrl}api/v1/login/signin`
         ) {
           this.authService.doLogout();
           this.router.navigate(['/log-in']);

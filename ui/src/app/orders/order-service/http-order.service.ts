@@ -9,6 +9,8 @@ import {
 
 import { Order } from '../orders';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -24,14 +26,14 @@ export class HttpOrderService extends OrderService {
     const userId = localStorage.getItem('user_id');
 
     return this.http.get(
-      `https://ts-bookstore-api.herokuapp.com/api/v1/orders/user/${userId}`,
+      `${environment.apiUrl}api/v1/orders/user/${userId}`,
       { headers: headers, params: parameters }
     );
   }
 
   public getOrder(params: GetOrderParams): Observable<any> {
     return this.http.get(
-      `https://ts-bookstore-api.herokuapp.com/api/v1/orders/${params.id}`
+      `${environment.apiUrl}api/v1/orders/${params.id}`
     );
   }
 }

@@ -10,6 +10,8 @@ import {
 
 import { User } from '../user';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -24,20 +26,20 @@ export class HttpUserService extends UserService {
       .set('name', params?.name || '')
       .set('paramName2', 0); //Create new HttpParams
     return this.http.get(
-      'https://ts-bookstore-api.herokuapp.com/api/v1/books',
+      `${environment.apiUrl}api/v1/books`,
       { headers: headers, params: parameters }
     );
   }
 
   public getUser(params: GetUserParams): Observable<any> {
     return this.http.get(
-      `https://ts-bookstore-api.herokuapp.com/api/v1/users/${params.id}`
+      `${environment.apiUrl}api/v1/users/${params.id}`
     );
   }
 
   public putUser(params: PutUserParams): Observable<any> {
     return this.http.put(
-      `https://ts-bookstore-api.herokuapp.com/api/v1/users/${params.id}`,
+      `${environment.apiUrl}api/v1/users/${params.id}`,
       params
     );
   }

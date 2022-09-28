@@ -11,11 +11,13 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { StatusCodes } from 'http-status-codes';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  endpoint: string = 'https://ts-bookstore-api.herokuapp.com/api/v1';
+  endpoint: string = `${environment.apiUrl}api/v1`;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
   constructor(private http: HttpClient, public router: Router) {}

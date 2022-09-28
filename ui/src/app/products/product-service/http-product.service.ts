@@ -9,6 +9,8 @@ import {
 
 import { Product } from '../products';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,14 +24,14 @@ export class HttpProductService extends ProductService {
     let parameters = new HttpParams()
       .set('name', params?.name || '');
     return this.http.get(
-      'https://ts-bookstore-api.herokuapp.com/api/v1/books',
+      `${environment.apiUrl}api/v1/books`,
       { headers: headers, params: parameters }
     );
   }
 
   public getProduct(params: GetProductParams): Observable<any> {
     return this.http.get(
-      `https://ts-bookstore-api.herokuapp.com/api/v1/books/${params.id}`
+      `${environment.apiUrl}api/v1/books/${params.id}`
     );
   }
 }
