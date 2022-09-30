@@ -24,6 +24,10 @@ export class MemoryCartService extends CartService {
     return of(this.items);
   }
 
+  confirmCart(): Array<any> {
+    throw new Error('Method not implemented.');
+  }
+  
   clearCart() {
     this.items = [];
     return this.items;
@@ -34,4 +38,5 @@ export class MemoryCartService extends CartService {
       '/assets/shipping.json'
     );
   }
+
 }

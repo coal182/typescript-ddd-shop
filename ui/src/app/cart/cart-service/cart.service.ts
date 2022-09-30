@@ -13,6 +13,8 @@ export abstract class CartService {
 
   abstract getItems(): Observable<Object>;
 
+  abstract confirmCart(): Array<any>;
+
   abstract clearCart(): Array<any>;
 
   abstract getShippingPrices(): Observable<any>;
@@ -20,4 +22,9 @@ export abstract class CartService {
 
 export interface GetCartParams {
   userId: string;
+}
+
+export interface ConfirmCartParams {
+  name: string;
+  address: string;
 }

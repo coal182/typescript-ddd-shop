@@ -30,7 +30,13 @@ describe('UserProfileComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, FormsModule, ReactiveFormsModule],
       declarations: [ UserProfileComponent ],
-      providers: [{provide: ActivatedRoute, useValue: mockActivatedRoute},{ provide: Router, useValue: mockRouter }, { provide: HttpUserService, useValue: mockUserService }, AuthService, ValidationService]
+      providers: [
+        {provide: ActivatedRoute, useValue: mockActivatedRoute},
+        { provide: Router, useValue: mockRouter }, 
+        { provide: HttpUserService, useValue: mockUserService }, 
+        AuthService, 
+        ValidationService
+      ]
     })
     .compileComponents();
   });

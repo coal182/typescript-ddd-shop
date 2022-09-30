@@ -1,4 +1,5 @@
-import { MongoClientOptions, MongoClient, Db } from 'mongodb';
+import { MongoClient, Db } from 'mongodb';
+
 import config from '@config/main';
 
 export const createMongodbConnection = async (host: string): Promise<Db> => {

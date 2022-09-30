@@ -69,10 +69,15 @@ export class HttpCartService extends CartService {
     return this.http
       .delete<any>(`${environment.apiUrl}api/v1/cart/remove/${params.guid}/${params.bookId}/${params.qty}/${params.price}/${params.originalVersion}`);
   }
+  
+  confirmCart(): Array<any> {
+    throw new Error('Method not implemented.');
+  }
 
   clearCart(): any[] {
     throw new Error('Method not implemented.');
   }
+  
   getShippingPrices(): Observable<any> {
     throw new Error('Method not implemented.');
   }
