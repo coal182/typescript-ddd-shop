@@ -77,13 +77,17 @@ To deploy docker container
 docker-compose up
 ```
 
+### To test
+
+Backend:
+
 ```bash
-cd ui
-docker-compose up
+npm run test
 ```
 
-Do adjust the DB_NAME and MONGODB_URI to match your configuration then run
+UI:
 
 ```bash
-yarn dev
+cd ui/
+npm run test
 ```
