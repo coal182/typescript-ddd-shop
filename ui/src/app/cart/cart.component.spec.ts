@@ -1,11 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockRouter } from '../test/mock-router';
 
 import { CartComponent } from './cart.component';
-import { CartService, ConfirmCartParams } from './cart-service/cart.service';
+import { ConfirmCartParams } from './cart-service/cart.service';
 import { MockCartService } from '../test/mock-cart-service';
 import { By } from '@angular/platform-browser';
 import { HttpCartService } from './cart-service/http-cart.service';
@@ -18,18 +18,16 @@ fdescribe('CartComponent', () => {
   let mockCartService: MockCartService;
 
   beforeEach(async () => {
-    const formBuilderStub = () => ({group: object => ({})});
     const activatedRouteStub = () => ({});
 
     mockCartService = new MockCartService();
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, FormsModule, ReactiveFormsModule],
       declarations: [ CartComponent ],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: mockRouter },
-        { provide: FormBuilder, useFactory: formBuilderStub},  
         { provide: HttpCartService, useValue: mockCartService }
       ]
     })
@@ -55,10 +53,9 @@ fdescribe('CartComponent', () => {
       });
       
       it('should not allow submitting the form', async () => {
-          
           const testInvalidCheckoutForm = {
-            name: 'Jon',
-            address: 'C/ Doe 1',
+            name: 'Jon55657',
+            address: '',
           };
           component.checkoutForm.setValue(testInvalidCheckoutForm);
           fixture.detectChanges();
@@ -70,8 +67,6 @@ fdescribe('CartComponent', () => {
     }); 
 
     describe('and fields are valid', () => {
-
-      
         it('should call CartService with expected params', () => {
           const testqueryParams = {id: 'r9n16bJtQlpxxrTTThEKn'};
           const version = 1;
@@ -88,7 +83,6 @@ fdescribe('CartComponent', () => {
           expect(mockCartService.confirmCart).toHaveBeenCalledWith(expectedParams);
         
         });
-        
     });
   });
 

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../../products/products';
 import { firstValueFrom, map, Observable, of } from 'rxjs';
-import { CartService } from './cart.service';
+import { CartService, ConfirmCartParams } from './cart.service';
 import { CartItem } from '../cart';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class MemoryCartService extends CartService {
     return of(this.items);
   }
 
-  confirmCart(): Array<any> {
+  confirmCart(checkoutForm: ConfirmCartParams): Array<any> {
     throw new Error('Method not implemented.');
   }
   

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { catchError, Observable, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -17,17 +17,24 @@ export class CartComponent implements OnInit {
   items: CartItem[];
   columnsToDisplay = ['name', 'qty', 'price', 'actions'];
   @ViewChild(MatTable) table!: MatTable<CartItem>;
-  checkoutForm = this.formBuilder.group({
-    name: '',
-    address: '',
-  });
+  checkoutForm: FormGroup;
+  namesRegex = new RegExp(
+    /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+  );
 
   constructor(
     private cartService: HttpCartService,
-    private formBuilder: FormBuilder
+    private fb: FormBuilder
   ) {
     
     this.items = [];
+
+    this.checkoutForm = this.fb.group(
+      {
+        name: ['', [Validators.required, Validators.pattern(this.namesRegex)]],
+        address: ['', [Validators.required]]
+      }
+    );
     
   }
 
@@ -46,6 +53,7 @@ export class CartComponent implements OnInit {
     // Process checkout data here
     this.items = this.cartService.clearCart();
     console.warn('Your order has been submitted', this.checkoutForm.value);
+    this.cartService.confirmCart({name: this.checkoutForm.value.name, address: this.checkoutForm.value.address})
     this.checkoutForm.reset();
   }
 

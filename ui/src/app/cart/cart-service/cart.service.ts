@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CartItem } from '../../cart/cart';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { Product } from 'src/app/products/products';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export abstract class CartService {
 
   abstract getItems(): Observable<Object>;
 
-  abstract confirmCart(): Array<any>;
+  abstract confirmCart(checkoutForm: ConfirmCartParams): Array<any>;
 
   abstract clearCart(): Array<any>;
 

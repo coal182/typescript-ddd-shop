@@ -4,12 +4,14 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import * as uuid from 'uuid';
 import {
   CartService,
+  ConfirmCartParams,
   GetCartParams
 } from './cart.service';
 
 import { AddToCartParams, Cart, CartItem } from '../cart';
 
 import { environment } from '../../../environments/environment';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -70,7 +72,7 @@ export class HttpCartService extends CartService {
       .delete<any>(`${environment.apiUrl}api/v1/cart/remove/${params.guid}/${params.bookId}/${params.qty}/${params.price}/${params.originalVersion}`);
   }
   
-  confirmCart(): Array<any> {
+  confirmCart(checkoutForm: ConfirmCartParams): Array<any> {
     throw new Error('Method not implemented.');
   }
 
