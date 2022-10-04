@@ -9,6 +9,8 @@
 
 body {
   margin: 0;
+  color: #404040;
+  padding-top: 85px;
 }
 
 router-outlet + * {
@@ -26,7 +28,7 @@ h2 {
 }
 
 h1,
-h2 {
+h2, h3 {
   font-weight: lighter;
 }
 
@@ -37,14 +39,19 @@ p {
 /* Top Bar */
 
 app-top-bar {
+  position: absolute;
+  top: 0;
   width: 100%;
   min-height: 60px;
-  background-color: #f0f0f0;
+  background-color: #FBAB7E;
+  background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+
   border-bottom: 1px solid #e0e0e0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  color: #a53c00;
 }
 
 app-top-bar a {
@@ -52,7 +59,7 @@ app-top-bar a {
 }
 
 app-top-bar h1 {
-  color: #303030;
+  color: #a53c00;
   margin: 0;
 }
 

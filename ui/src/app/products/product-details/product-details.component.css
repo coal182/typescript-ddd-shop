@@ -7,13 +7,15 @@
   width: 50%;
 }
 
+.img-wrapper { text-align: center;padding-top: 25px;}
+
 img {
   width: 300px;
   margin: 0 auto;
 }
 
 .product-detail .add-to-cart {
-  width: 100%!important;
+  width: 50%!important;
   min-width: unset!important;
   flex: 1;
   margin-bottom: 20px;

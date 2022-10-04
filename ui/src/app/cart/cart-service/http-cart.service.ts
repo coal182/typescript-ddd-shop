@@ -53,6 +53,7 @@ export class HttpCartService extends CartService {
       price: item.price,
       originalVersion: this.cart.version
     }
+    console.log("🚀 ~ file: http-cart.service.ts ~ line 56 ~ HttpCartService ~ addToCart ~ params", params)
     
     return this.http
       .post<any>(`${environment.apiUrl}api/v1/cart/add`, params);

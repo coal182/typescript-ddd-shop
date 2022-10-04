@@ -17,22 +17,39 @@ can be found in the LICENSE file at https://angular.io/license
   max-width: 250px;
   border: 1px solid #f0f0f0;
   padding: 0px 20px;
-  margin: 0 10px;
+  margin: 10px 10px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
+  overflow: hidden;
+  height: 351px;
+  border-radius: 10px;
+  background-color: #303030;
+  outline: 1px solid rgba(255, 255, 255, .5);
+  outline-offset: -8px;
+  box-shadow: 1px 19px 11px -17px;
+
 }
 
 .product-list article h3 {
   flex: 1 1 auto;
 }
 .product-list article img {
-  width: 200px;
-  height: 304px;
-  margin: 5px auto;
-  float: left;
-  flex: 1 1 auto;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .9;
+  transition: transform .5s, opacity 0.5s;
 }
+
+.product-list article:hover img{
+  transform: scale(1.02);
+  opacity: 0.3;
+}
+
 .product-list article a {
   margin-top: 20px;
   color: #505050;
@@ -41,16 +58,60 @@ can be found in the LICENSE file at https://angular.io/license
   flex: 1 1 auto;
 }
 
-.product-list article p {
-  font-size: 17px;
-  color: #b90000;
+.product-list article h4 {
+  position: absolute;
+  font-size: 25px;
+  color: #fff;
+  text-shadow: 0 0 1px #000;
+  font-weight: lighter;
+  visibility:hidden;
+  opacity:0;
+  transition:opacity 0.5s linear;
+}
+.product-list article:hover h4{
+  visibility: visible;
+  opacity: 1;
 }
 
-.product-list article button {
+.product-list article .article-button {
+  position: absolute;
+  color:#fff;
+  display: block;
+  top: 50%;
+  left: 0%;
+  right: 25%;
+  width: 100%!important;
+  padding: 0 10px;  
+  opacity:0;
+  transition:opacity 0.5s linear;
+} 
+.product-list article:hover .article-button{
+  visibility: visible;
+  opacity: 1;
+}
+
+.product-list article .article-button .mat-icon {font-size: 50px;width: 50px;}
+
+.product-list article p {
+  position: absolute;
+  bottom:10px;
+  font-size: 17px;
+  color: #fff;
+  text-shadow: 0 0 1px #000;
+  opacity:0;
+  transition:opacity 0.5s linear;
+}
+.product-list article:hover p{
+  visibility: visible;
+  opacity: 1;
+}
+
+.product-list article button.add-to-cart-button {
   width: 100%!important;
   min-width: unset!important;
   flex: 1;
   margin-bottom: 20px;
+  display: none;
 }
 
 .custom-modalbox .mat-dialog-container {

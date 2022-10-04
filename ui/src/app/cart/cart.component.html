@@ -1,7 +1,7 @@
 <h3>Cart</h3>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-8">
     <table mat-table [dataSource]="items" class="cart-table" #table>
 
       <ng-container matColumnDef="name">
@@ -33,11 +33,9 @@
     <!--<p>
       <a routerLink="/shipping">Shipping Prices</a>
     </p>-->
-    
-    <br />
-    <br />
-    <br />
 
+  </div>
+  <div class="col-md-4">
     <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="form-signin text-center">
       <h3 class="h3 mb-3 font-weight-normal">
         Confirm your order

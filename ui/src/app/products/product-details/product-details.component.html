@@ -1,9 +1,7 @@
-<h2>Product Details</h2>
-
 <div class="product-detail" *ngIf="product$ | async">
 <div *ngIf="!isLoading">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6 img-wrapper">
         <img
           [src]="
             (product$ | async)?.image ||
@@ -12,13 +10,13 @@
         />
       </div>
       <div class="col-md-6">
-        <h3>{{ (product$ | async)?.name }}</h3>
+        <h1>{{ (product$ | async)?.name }}</h1>
         <h4>{{ (product$ | async)?.price | currency }}</h4>
      
         <button
           mat-flat-button
           type="button"
-          color="primary"
+          color="warn"
           (click)="addToCart()"
           class="add-to-cart"
         >
@@ -46,7 +44,7 @@
       <div class="col"><br /></div>
     </div>
     <div class="row">
-      <mat-tab-group animationDuration="0ms">
+      <mat-tab-group animationDuration="0ms" color="warn">
         <mat-tab label="Description"><br />{{ (product$ | async)?.description }}</mat-tab>
         <mat-tab label="Caracteristics"><br />Caracteristics</mat-tab>
         <mat-tab label="Reviews"><br />Reviews</mat-tab>

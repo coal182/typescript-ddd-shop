@@ -1,3 +1,6 @@
+:host {
+  height: 80px;
+}
 .finder-form-field {
   width: 400px;
   
@@ -24,11 +27,11 @@
 }
 
 ::ng-deep .mat-progress-spinner circle {
-  stroke: #3f51b5;
+  stroke: #a53c00;
 } 
 
 ::ng-deep .finder-form-field.mat-form-field .mat-form-field-wrapper {
-  padding: 0;
+  padding: 0.56em 0 1.34375em 0;
 }
 ::ng-deep .mat-form-field .mat-form-field-flex {
   display: flex;
