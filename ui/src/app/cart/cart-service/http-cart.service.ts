@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
 import { catchError, filter, firstValueFrom, map, Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import * as uuid from 'uuid';
@@ -21,24 +21,25 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 export class HttpCartService extends CartService {
   cart: Cart; 
 
-  public constructor(private http: HttpClient, private _localStorage: StorageService) {
+  public constructor(
+    private http: HttpClient, 
+    @Inject('StorageService') private storageService: StorageService
+  ) {
     super();
-    if (!this.cart && _localStorage.getItem('cart') !== null) {
-        const sessionCart = JSON.parse(_localStorage.getItem('cart'));
-        
-        this.cart = {
-          id : sessionCart.id,
-          userId : sessionCart.userId,
-          items : [],
-          version : sessionCart.version          
-        }
-            
+    if (!this.cart && storageService.getItem('cart') !== null) {
+      const sessionCart = JSON.parse(storageService.getItem('cart'));
+      
+      this.cart = {
+        id : sessionCart.id,
+        userId : sessionCart.userId,
+        items : [],
+        version : sessionCart.version          
+      }    
     }
   }
 
   public getItems(): Observable<Cart> {
-
-    const userId = this._localStorage.getItem('user_id');
+    const userId = this.storageService.getItem('user_id');
     return this.http.get(
       `${environment.apiUrl}api/v1/cart/user/${userId}`
     ).pipe(

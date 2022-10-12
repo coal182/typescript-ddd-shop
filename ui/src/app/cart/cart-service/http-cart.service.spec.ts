@@ -27,12 +27,9 @@ fdescribe('HttpCartService', () => {
   }
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [{provide: HttpClient, useValue: http}]
-    });
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
     localStorageMock = new MockLocalStorageService();
-    localStorageMock.setItem('cart', testCart);
+    localStorageMock.setItem('cart', JSON.stringify(testCart));
     cartService = new HttpCartService(httpClientSpy, localStorageMock);
   });
 
@@ -66,9 +63,11 @@ fdescribe('HttpCartService', () => {
 
     it('should call the api with expected params', async () => {
       await cartService.addToCart(testItem);
+      console.log(localStorageMock.getItem('cart'))
       expect(httpClientSpy.post).toHaveBeenCalledWith(`${environment.apiUrl}api/v1/cart/add`, expectedParams)
     });
   });
+  
   describe('when asked to checkout cart', () => {
     describe('and cart is empty', () => {
       it('should not call the api', () => {
@@ -85,4 +84,5 @@ fdescribe('HttpCartService', () => {
     });
       
   });
+  
 });
