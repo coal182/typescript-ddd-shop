@@ -10,7 +10,7 @@ import { MockCartService } from '../test/mock-cart-service';
 import { By } from '@angular/platform-browser';
 import { HttpCartService } from './cart-service/http-cart.service';
 
-fdescribe('CartComponent', () => {
+describe('CartComponent', () => {
   let component: CartComponent;
   let fixture: ComponentFixture<CartComponent>;
   let mockRouter: MockRouter;
@@ -68,16 +68,16 @@ fdescribe('CartComponent', () => {
 
     describe('and fields are valid', () => {
         it('should call CartService with expected params', () => {
-          const testqueryParams = {id: 'r9n16bJtQlpxxrTTThEKn'};
-          const version = 1;
           const testCheckoutForm = {
             name: 'Jon',
             address: 'C/ Doe 1',
           };
+
           const expectedParams: ConfirmCartParams = {
             name: testCheckoutForm.name,
             address: testCheckoutForm.address,
           };
+          
           component.checkoutForm.setValue(testCheckoutForm);
           component.onSubmit();
           expect(mockCartService.confirmCart).toHaveBeenCalledWith(expectedParams);

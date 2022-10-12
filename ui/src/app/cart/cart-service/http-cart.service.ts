@@ -12,6 +12,8 @@ import { AddToCartParams, Cart, CartItem } from '../cart';
 
 import { environment } from '../../../environments/environment';
 import { FormGroup } from '@angular/forms';
+import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,23 +21,24 @@ import { FormGroup } from '@angular/forms';
 export class HttpCartService extends CartService {
   cart: Cart; 
 
-  public constructor(private http: HttpClient) {
+  public constructor(private http: HttpClient, private _localStorage: StorageService) {
     super();
-    if (!this.cart && localStorage.getItem('cart') !== null) {
-        const sessionCart = JSON.parse(localStorage.getItem('cart'));
+    if (!this.cart && _localStorage.getItem('cart') !== null) {
+        const sessionCart = JSON.parse(_localStorage.getItem('cart'));
+        
         this.cart = {
           id : sessionCart.id,
           userId : sessionCart.userId,
           items : [],
           version : sessionCart.version          
         }
-    
+            
     }
   }
 
   public getItems(): Observable<Cart> {
 
-    const userId = localStorage.getItem('user_id');
+    const userId = this._localStorage.getItem('user_id');
     return this.http.get(
       `${environment.apiUrl}api/v1/cart/user/${userId}`
     ).pipe(
