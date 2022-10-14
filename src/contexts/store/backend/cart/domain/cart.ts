@@ -2,6 +2,7 @@ import { AggregateRoot } from '@core/aggregate-root';
 
 import { CartId } from './cart-id';
 import { CartItem } from './cart-item';
+import { CartCleared } from './events/cart-cleared';
 import { CartCreated } from './events/cart-created';
 import { CartItemAdded } from './events/cart-item-added';
 import { CartItemRemoved } from './events/cart-item-removed';
@@ -30,6 +31,10 @@ export class Cart extends AggregateRoot {
     this.applyChange(new CartItemRemoved(this.guid.value, item));
   }
 
+  public clear() {
+    this.applyChange(new CartCleared(this.guid.value));
+  }
+
   applyCartCreated(event: CartCreated) {
     this.guid = new CartId(event.guid);
     this.userId = event.userId;
@@ -42,5 +47,9 @@ export class Cart extends AggregateRoot {
 
   public applyCartItemRemoved(event: CartItemRemoved) {
     this.items = this.items.filter((item) => item.bookId != event.item.bookId);
+  }
+
+  public applyCartCleared(event: CartCleared) {
+    this.items = [];
   }
 }

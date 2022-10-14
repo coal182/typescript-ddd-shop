@@ -37,11 +37,14 @@ import { BookEventStore } from '@storeback/book/infrastructure/persistence/book-
 import { BookRepository } from '@storeback/book/infrastructure/persistence/book-repository';
 import { BookReadModelFacade, IBookReadModelFacade } from '@storeback/book/infrastructure/projection/books/read-model';
 import { AddItemToCartCommandHandler } from '@storeback/cart/application/command-handlers/add-item-to-cart-command-handler';
+import { ClearCartCommandHandler } from '@storeback/cart/application/command-handlers/clear-cart-command-handler';
 import { CreateCartCommandHandler } from '@storeback/cart/application/command-handlers/create-cart-command-handler';
 import { RemoveItemFromCartCommandHandler } from '@storeback/cart/application/command-handlers/remove-item-from-cart-command-handler';
+import { CartClearedEventHandler } from '@storeback/cart/application/event-handlers/cart-cleared-event-handler';
 import { CartCreatedEventHandler } from '@storeback/cart/application/event-handlers/cart-created-event-handler';
 import { CartItemAddedEventHandler } from '@storeback/cart/application/event-handlers/cart-item-added-event-handler';
 import { CartItemRemovedEventHandler } from '@storeback/cart/application/event-handlers/cart-item-removed-event-handler';
+import { CartCleared } from '@storeback/cart/domain/events/cart-cleared';
 import { CartCreated } from '@storeback/cart/domain/events/cart-created';
 import { CartItemAdded } from '@storeback/cart/domain/events/cart-item-added';
 import { CartItemRemoved } from '@storeback/cart/domain/events/cart-item-removed';
@@ -128,6 +131,7 @@ export const initialiseContainer = async () => {
   container.bind<IEventHandler<CartCreated>>(TYPES.Event).to(CartCreatedEventHandler);
   container.bind<IEventHandler<CartItemAdded>>(TYPES.Event).to(CartItemAddedEventHandler);
   container.bind<IEventHandler<CartItemRemoved>>(TYPES.Event).to(CartItemRemovedEventHandler);
+  container.bind<IEventHandler<CartCleared>>(TYPES.Event).to(CartClearedEventHandler);
 
   container.bind<IEventHandler<OrderInitiated>>(TYPES.Event).to(OrderInitiatedEventHandler);
   container.bind<IEventHandler<OrderLineAdded>>(TYPES.Event).to(OrderLineAddedEventHandler);
@@ -159,6 +163,7 @@ export const initialiseContainer = async () => {
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(AddItemToCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(RemoveItemFromCartCommandHandler);
+  container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(ClearCartCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(InitiateOrderCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(CreateOrderCommandHandler);
   container.bind<ICommandHandler<Command>>(TYPES.CommandHandler).to(AddLineToOrderCommandHandler);

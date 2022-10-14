@@ -5,6 +5,7 @@ import { controller, httpDelete, httpGet, httpPost, request, response } from 'in
 import { TYPES } from '@constants/types';
 import { ICommandBus } from '@core/i-command-bus';
 import { AddItemToCartCommand } from '@storeback/cart/application/commands/add-item-to-cart';
+import { ClearCartCommand } from '@storeback/cart/application/commands/clear-cart';
 import { CreateCartCommand } from '@storeback/cart/application/commands/create-cart';
 import { RemoveItemFromCartCommand } from '@storeback/cart/application/commands/remove-item-from-cart';
 import { ICartReadModelFacade } from '@storeback/cart/infrastructure/projection/carts/read-model';
@@ -35,7 +36,7 @@ export class CartController {
   }
 
   @httpDelete('/remove/:guid/:bookId/:qty/:price/:originalVersion')
-  async RemoveItemFromCart(@request() req: Request, @response() res: Response) {
+  async removeItemFromCart(@request() req: Request, @response() res: Response) {
     const command = new RemoveItemFromCartCommand(
       req.params.guid,
       req.params.bookId,
@@ -45,6 +46,13 @@ export class CartController {
     );
     await this.commandBus.send(command);
     return res.json(ok('Successfully removed item to cart', undefined));
+  }
+
+  @httpDelete('/clear/:guid/:originalVersion')
+  async clearCart(@request() req: Request, @response() res: Response) {
+    const command = new ClearCartCommand(req.params.guid, Number(req.params.originalVersion));
+    await this.commandBus.send(command);
+    return res.json(ok('Successfully cleared cart', undefined));
   }
 
   @httpGet('/:guid')
