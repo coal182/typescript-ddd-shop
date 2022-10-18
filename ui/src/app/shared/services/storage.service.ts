@@ -1,9 +1,9 @@
-export interface StorageService {
-    setItem(key: string, data: string): void;
+export abstract class StorageService {
+  abstract setItem(key: string, data: string): void;
 
-    getItem(key: string): string;
+  abstract getItem(key: string): string;
 
-    removeItem(key: string): void;
+  abstract removeItem(key: string): void;
 
-    clear(): void;
+  abstract clear(): void;
 }
