@@ -1,20 +1,19 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { MockCartService } from '../test/mock-cart-service';
 import { MockRouter } from '../test/mock-router';
 
-import { CartComponent } from './cart.component';
-import { ConfirmCartParams } from './cart-service/cart.service';
-import { MockCartService } from '../test/mock-cart-service';
-import { By } from '@angular/platform-browser';
 import { HttpCartService } from './cart-service/http-cart.service';
+import { CartComponent } from './cart.component';
 
 describe('CartComponent', () => {
   let component: CartComponent;
   let fixture: ComponentFixture<CartComponent>;
   let mockRouter: MockRouter;
-  let spyCartService: any;
   let mockCartService: MockCartService;
 
   beforeEach(async () => {
@@ -24,14 +23,13 @@ describe('CartComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, FormsModule, ReactiveFormsModule],
-      declarations: [ CartComponent ],
+      declarations: [CartComponent],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: mockRouter },
-        { provide: HttpCartService, useValue: mockCartService }
-      ]
-    })
-    .compileComponents();
+        { provide: HttpCartService, useValue: mockCartService },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -45,44 +43,36 @@ describe('CartComponent', () => {
   });
 
   describe('when user submit the form', () => {
-
     describe('and fields are not valid', () => {
-
       beforeEach(async () => {
         initializeComponent();
       });
-      
+
       it('should not allow submitting the form', async () => {
-          const testInvalidCheckoutForm = {
-            name: 'Jon55657',
-            address: '',
-          };
-          component.checkoutForm.setValue(testInvalidCheckoutForm);
-          fixture.detectChanges();
-          
-          fixture.debugElement.query(By.css('[data-testid=submit-button]')).nativeElement.click();
-          fixture.detectChanges();
-          expect(mockCartService.clearCart).not.toHaveBeenCalled();
+        const testInvalidCheckoutForm = {
+          name: 'Jon55657',
+          address: '',
+        };
+        component.checkoutForm.setValue(testInvalidCheckoutForm);
+        fixture.detectChanges();
+
+        fixture.debugElement.query(By.css('[data-testid=submit-button]')).nativeElement.click();
+        fixture.detectChanges();
+        expect(mockCartService.clearCart).not.toHaveBeenCalled();
       });
-    }); 
+    });
 
     describe('and fields are valid', () => {
-        it('should call CartService with expected params', () => {
-          const testCheckoutForm = {
-            name: 'Jon',
-            address: 'C/ Doe 1',
-          };
+      it('should call CartService with expected params', () => {
+        const testCheckoutForm = {
+          name: 'Jon',
+          address: 'C/ Doe 1',
+        };
 
-          const expectedParams: ConfirmCartParams = {
-            name: testCheckoutForm.name,
-            address: testCheckoutForm.address,
-          };
-          
-          component.checkoutForm.setValue(testCheckoutForm);
-          component.onSubmit();
-          expect(mockCartService.confirmCart).toHaveBeenCalledWith(expectedParams);
-        
-        });
+        component.checkoutForm.setValue(testCheckoutForm);
+        component.onSubmit();
+        expect(mockCartService.confirmCart).toHaveBeenCalledWith(component.checkoutForm);
+      });
     });
   });
 

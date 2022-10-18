@@ -4,8 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { catchError, Observable, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
-import { Cart, CartItem } from './cart';
+import { v4 as uuidv4 } from 'uuid';
 
+import { Cart, CartItem } from './cart';
 import { GetCartResponse, HttpCartService } from './cart-service/http-cart.service';
 
 @Component({
@@ -22,20 +23,13 @@ export class CartComponent implements OnInit {
     /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
   );
 
-  constructor(
-    private cartService: HttpCartService,
-    private fb: FormBuilder
-  ) {
-    
+  constructor(private cartService: HttpCartService, private fb: FormBuilder) {
     this.items = [];
 
-    this.checkoutForm = this.fb.group(
-      {
-        name: ['', [Validators.required, Validators.pattern(this.namesRegex)]],
-        address: ['', [Validators.required]]
-      }
-    );
-    
+    this.checkoutForm = this.fb.group({
+      name: ['', [Validators.required, Validators.pattern(this.namesRegex)]],
+      address: ['', [Validators.required]],
+    });
   }
 
   ngOnInit(): void {
@@ -46,44 +40,43 @@ export class CartComponent implements OnInit {
       });
       this.table.renderRows();
     });
-    
   }
 
   onSubmit(): void {
     // Process checkout data here
-    this.items = this.cartService.clearCart();
     console.warn('Your order has been submitted', this.checkoutForm.value);
-    this.cartService.confirmCart({name: this.checkoutForm.value.name, address: this.checkoutForm.value.address})
+    const orderId = uuidv4();
+    this.cartService.confirmCart(this.checkoutForm, orderId).subscribe(() => {
+      this.cartService.clearCart().subscribe(() => (this.items = []));
+    });
     this.checkoutForm.reset();
   }
 
   removeFromCart(item: CartItem): void {
-    this.cartService.removeFromCart(item).pipe(
-      catchError((error: HttpErrorResponse): Observable<Error> => {
-        return throwError(() => error);
-      })
-    )
-    .subscribe((res: any) => {
-      this.cartService.cart.version = this.cartService.cart.version+1;
-      this.items = this.items.filter(it => it.product.id !== item.product.id);
-      Swal.fire({
-        title: 'Product removed', 
-        html: 'Your product has been removed from cart!', 
-        icon: 'success', 
-        toast: true, 
-        position: 'top-right',
-        iconColor: '#286f00',
-        customClass: {
-          popup: 'colored-toast'
-        },
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true
-      });  
-      
-
-    });  
-
+    this.cartService
+      .removeFromCart(item)
+      .pipe(
+        catchError((error: HttpErrorResponse): Observable<Error> => {
+          return throwError(() => error);
+        })
+      )
+      .subscribe(() => {
+        this.cartService.cart.version = this.cartService.cart.version + 1;
+        this.items = this.items.filter((it) => it.product.id !== item.product.id);
+        Swal.fire({
+          title: 'Product removed',
+          html: 'Your product has been removed from cart!',
+          icon: 'success',
+          toast: true,
+          position: 'top-right',
+          iconColor: '#286f00',
+          customClass: {
+            popup: 'colored-toast',
+          },
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+        });
+      });
   }
-
 }

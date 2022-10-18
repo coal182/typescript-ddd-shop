@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CartItem } from '../../cart/cart';
-import { firstValueFrom, map, Observable } from 'rxjs';
-import { Product } from 'src/app/products/products';
 import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+
+import { CartItem } from '../../cart/cart';
 
 @Injectable({
   providedIn: 'root',
 })
 export abstract class CartService {
+  abstract addToCart(item: CartItem): void;
 
-  abstract addToCart(item: CartItem) : void;
+  abstract getItems(): Observable<unknown>;
 
-  abstract getItems(): Observable<Object>;
+  abstract confirmCart(checkoutForm: FormGroup, orderId: string): Observable<unknown>;
 
-  abstract confirmCart(checkoutForm: ConfirmCartParams): Array<any>;
-
-  abstract clearCart(): Array<any>;
+  abstract clearCart(): Observable<unknown>;
 
   abstract getShippingPrices(): Observable<any>;
 }
@@ -26,6 +24,10 @@ export interface GetCartParams {
 }
 
 export interface ConfirmCartParams {
+  guid: string;
+  userId: string;
   name: string;
   address: string;
+  total: number;
+  lines: Array<CartItem>;
 }

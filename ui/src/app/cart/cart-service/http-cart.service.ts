@@ -1,102 +1,111 @@
-import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
-import { catchError, filter, firstValueFrom, map, Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import * as uuid from 'uuid';
-import {
-  CartService,
-  ConfirmCartParams,
-  GetCartParams
-} from './cart.service';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { map, Observable } from 'rxjs';
 
-import { AddToCartParams, Cart, CartItem } from '../cart';
+import { StorageService } from 'src/app/shared/services/storage.service';
 
 import { environment } from '../../../environments/environment';
-import { FormGroup } from '@angular/forms';
-import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
-import { StorageService } from 'src/app/shared/services/storage.service';
+import { AddToCartParams, Cart, CartItem } from '../cart';
+
+import { CartService, ConfirmCartParams } from './cart.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpCartService extends CartService {
-  cart: Cart; 
+  cart: Cart;
 
-  public constructor(
-    private http: HttpClient, 
-    @Inject('StorageService') private storageService: StorageService
-  ) {
+  public constructor(private http: HttpClient, @Inject('StorageService') private storageService: StorageService) {
     super();
-    if (!this.cart && storageService.getItem('cart') !== null) {
-      const sessionCart = JSON.parse(storageService.getItem('cart'));
-      
+    this.initCart();
+  }
+
+  private initCart(): void {
+    if (!this.cart && this.storageService.getItem('cart') !== null) {
+      const sessionCart = JSON.parse(this.storageService.getItem('cart'));
+
       this.cart = {
-        id : sessionCart.id,
-        userId : sessionCart.userId,
-        items : [],
-        version : sessionCart.version          
-      }    
+        id: sessionCart.id,
+        userId: sessionCart.userId,
+        items: [],
+        version: sessionCart.version,
+      };
     }
   }
 
   public getItems(): Observable<Cart> {
     const userId = this.storageService.getItem('user_id');
-    return this.http.get(
-      `${environment.apiUrl}api/v1/cart/user/${userId}`
-    ).pipe(
-      map((data: GetCartResponse) => { return data.data; })
+    return this.http.get(`${environment.apiUrl}api/v1/cart/user/${userId}`).pipe(
+      map((data: GetCartResponse) => {
+        return data.data;
+      })
     );
-
   }
 
-  addToCart(item: CartItem): Observable<Object> {
-
+  public addToCart(item: CartItem): Observable<unknown> {
     const params: AddToCartParams = {
       guid: this.cart.id,
       bookId: item.product.id,
       qty: item.qty,
       price: item.price,
-      originalVersion: this.cart.version
-    }
-    console.log("🚀 ~ file: http-cart.service.ts ~ line 56 ~ HttpCartService ~ addToCart ~ params", params)
-    
-    return this.http
-      .post<any>(`${environment.apiUrl}api/v1/cart/add`, params);
+      originalVersion: this.cart.version,
+    };
+    console.log('🚀 ~ file: http-cart.service.ts ~ line 56 ~ HttpCartService ~ addToCart ~ params', params);
 
+    this.cart.items.push(item);
+    this.cart.version = this.cart.version + 1;
+
+    return this.http.post<any>(`${environment.apiUrl}api/v1/cart/add`, params);
   }
 
-  removeFromCart(item: CartItem): Observable<Object> {
+  public removeFromCart(item: CartItem): Observable<unknown> {
     const params: AddToCartParams = {
       guid: this.cart.id,
       bookId: item.product.id,
       qty: item.qty,
       price: item.price,
-      originalVersion: this.cart.version
-    }
+      originalVersion: this.cart.version,
+    };
 
-    return this.http
-      .delete<any>(`${environment.apiUrl}api/v1/cart/remove/${params.guid}/${params.bookId}/${params.qty}/${params.price}/${params.originalVersion}`);
-  }
-  
-  confirmCart(checkoutForm: ConfirmCartParams): Array<any> {
-    throw new Error('Method not implemented.');
+    return this.http.delete<any>(
+      `${environment.apiUrl}api/v1/cart/remove/${params.guid}/${params.bookId}/${params.qty}/${params.price}/${params.originalVersion}`
+    );
   }
 
-  clearCart(): any[] {
-    throw new Error('Method not implemented.');
+  public confirmCart(checkoutForm: FormGroup, orderId: string): Observable<unknown> {
+    const confirmCartParams: ConfirmCartParams = {
+      guid: orderId,
+      userId: this.cart.userId,
+      name: checkoutForm.value.name,
+      address: checkoutForm.value.address,
+      total: this.totalCart(),
+      lines: this.cart.items,
+    };
+
+    return this.http.post(`${environment.apiUrl}api/v1/orders`, confirmCartParams);
   }
-  
-  getShippingPrices(): Observable<any> {
+
+  private totalCart(): number {
+    return this.cart.items.reduce((acc, cur) => acc + cur.price * cur.qty, 0);
+  }
+
+  public clearCart(): Observable<unknown> {
+    return this.http.delete<any>(`${environment.apiUrl}api/v1/cart/clear/${this.cart.id}/${this.cart.version}`);
+  }
+
+  public getShippingPrices(): Observable<any> {
     throw new Error('Method not implemented.');
   }
 }
 
 export interface GetCartResponse {
   data: {
-    items: CartItem[],
-    userId: string,
-    version: number
-    id: string
-    message: string
-    status: number
+    items: CartItem[];
+    userId: string;
+    version: number;
+    id: string;
+    message: string;
+    status: number;
   };
 }
