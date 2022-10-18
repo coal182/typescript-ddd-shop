@@ -11,6 +11,7 @@ import {
   withLatestFrom,
   distinctUntilChanged,
 } from 'rxjs/operators';
+
 import { HttpProductService } from '../products/product-service/http-product.service';
 import { Product } from '../products/products';
 
@@ -30,24 +31,22 @@ export interface State {
 })
 export class FinderComponent {
   filteredProducts: Product[];
-  loading: boolean = false;
-  
+  loading = false;
+
   ngOnInit() {
-    const searchBoxElement = <HTMLInputElement>(
-      document.getElementById('search-box-input')
-    );
-    
+    const searchBoxElement = <HTMLInputElement>document.getElementById('search-box-input');
+
     // search composed observable
     const search$ = fromEvent(searchBoxElement, 'keyup').pipe(
       distinctUntilChanged(),
       debounceTime(300),
-      tap(() => this.loading = true),
+      tap(() => (this.loading = true)),
       switchMap((event) =>
         this.productService.getProducts({
           name: searchBoxElement.value,
         })
       ),
-      tap(() => this.loading = false),
+      tap(() => (this.loading = false))
     );
 
     // search subscription

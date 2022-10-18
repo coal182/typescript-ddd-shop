@@ -46,42 +46,6 @@ export class ProductListComponent implements OnInit {
     window.alert('You will be notified when the product goes on sale');
   }
 
-  addToCart(product: Product) {
-    const item = {product: product, qty: 1, price: product.price };
-
-      this.cartService.addToCart(item).pipe(
-        catchError((error: HttpErrorResponse): Observable<Error> => {
-          if (error.status === StatusCodes.UNAUTHORIZED) {
-            Swal.fire(
-              'Error!',
-              'There was an error adding this product!',
-              'error'
-            );
-          }
-          return throwError(() => error);
-        })
-      ).subscribe((res: any) => {
-
-        this.cartService.cart.version = this.cartService.cart.version+1;
-
-        Swal.fire({
-          title: 'Product added', 
-          html: 'Your product has been added to the cart!', 
-          icon: 'success', 
-          toast: true, 
-          position: 'top-right',
-          iconColor: '#286f00',
-          customClass: {
-            popup: 'colored-toast'
-          },
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true
-        }); 
-      
-      });
-        
-  }
 }
 
 /*

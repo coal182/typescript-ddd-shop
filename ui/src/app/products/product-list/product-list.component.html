@@ -25,15 +25,6 @@
 
     <p *ngIf="product.price">{{ product.price | currency }}</p>
     
-    <button
-      mat-flat-button
-      type="button"
-      color="warn"
-      (click)="addToCart(product)"  
-      class="add-to-cart-button"   
-    >
-      Buy <mat-icon>add_shopping_cart</mat-icon>
-    </button>
   </article>
 </div>
 <mat-progress-spinner *ngIf="isLoading"
