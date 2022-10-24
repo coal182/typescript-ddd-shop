@@ -41,7 +41,7 @@ export class FinderComponent {
       distinctUntilChanged(),
       debounceTime(300),
       tap(() => (this.loading = true)),
-      switchMap((event) =>
+      switchMap(() =>
         this.productService.getProducts({
           name: searchBoxElement.value,
         })

@@ -8,13 +8,14 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { StatusCodes } from 'http-status-codes';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { StatusCodes } from 'http-status-codes';
+
+import { environment } from '../../../environments/environment';
 
 import { AuthService } from './auth.service';
 
-import { environment } from '../../../environments/environment';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, public router: Router) {}
@@ -28,15 +29,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMsg = '';
+        const errorMsg = '';
 
-        if (            
-          error.status === StatusCodes.UNAUTHORIZED &&
-          error.url !== `${environment.apiUrl}api/v1/login/signin`
-        ) {
+        if (error.status === StatusCodes.UNAUTHORIZED && error.url !== `${environment.apiUrl}api/v1/login/signin`) {
           this.authService.doLogout();
           this.router.navigate(['/log-in']);
-        }        
+        }
 
         return throwError(() => error);
       }),

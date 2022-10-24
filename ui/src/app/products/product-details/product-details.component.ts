@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { StatusCodes } from 'http-status-codes';
-import { firstValueFrom, map, Observable, throwError } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 

@@ -11,9 +11,8 @@ describe('FinderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [ FinderComponent, MatAutocomplete ]
-    })
-    .compileComponents();
+      declarations: [FinderComponent, MatAutocomplete],
+    }).compileComponents();
   });
 
   beforeEach(() => {

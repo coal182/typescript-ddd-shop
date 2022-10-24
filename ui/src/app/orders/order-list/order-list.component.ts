@@ -30,5 +30,7 @@ export class OrderListComponent implements OnInit {
     );
   }
 
-  cancel(order: Order): void {}
+  cancel(order: Order): void {
+    // not implemented yet
+  }
 }

@@ -1,3 +1,3 @@
 export class MockRouter {
-    navigate = jasmine.createSpy('navigate');
+  navigate = jasmine.createSpy('navigate');
 }

@@ -10,15 +10,15 @@ import { CartModule } from './cart/cart.module';
 import { FinderComponent } from './finder/finder.component';
 import { SigninComponent } from './login/signin/signin.component';
 import { SignupComponent } from './login/signup/signup.component';
+import { OrderDetailsComponent } from './orders/order-details/order-details.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
+import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { AuthInterceptor } from './shared/auth/authconfig.interceptor';
 import { ValidationService } from './shared/services/validation.service';
 import { SharedModule } from './shared/shared.module';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
-import { OrderListComponent } from './orders/order-list/order-list.component';
-import { OrderDetailsComponent } from './orders/order-details/order-details.component';
-import { OrdersModule } from './orders/orders.module';
 
 @NgModule({
   imports: [HttpClientModule, AppRoutingModule, SharedModule, ProductsModule, CartModule, OrdersModule],
@@ -44,9 +44,3 @@ import { OrdersModule } from './orders/orders.module';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://angular.io/license
-*/

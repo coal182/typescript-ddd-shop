@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { AuthService } from '../shared/auth/auth.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { AuthService } from '../shared/auth/auth.service';
   styleUrls: ['./top-bar.component.css'],
 })
 export class TopBarComponent {
-  public user_id: string = '';
+  public user_id = '';
   constructor(public authService: AuthService) {}
   ngOnInit() {
     this.user_id = localStorage.getItem('user_id');
@@ -16,9 +17,3 @@ export class TopBarComponent {
     this.authService.doLogout();
   }
 }
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://angular.io/license
-*/

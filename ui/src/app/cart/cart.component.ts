@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
@@ -23,7 +24,7 @@ export class CartComponent implements OnInit {
     /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
   );
 
-  constructor(private cartService: HttpCartService, private fb: FormBuilder) {
+  constructor(private cartService: HttpCartService, private fb: FormBuilder, private router: Router) {
     this.items = [];
 
     this.checkoutForm = this.fb.group({
@@ -47,9 +48,12 @@ export class CartComponent implements OnInit {
     console.warn('Your order has been submitted', this.checkoutForm.value);
     const orderId = uuidv4();
     this.cartService.confirmCart(this.checkoutForm, orderId).subscribe(() => {
-      this.cartService.clearCart().subscribe(() => (this.items = []));
+      this.cartService.clearCart().subscribe(() => {
+        this.items = [];
+        this.checkoutForm.reset();
+        this.router.navigateByUrl('/orders');
+      });
     });
-    this.checkoutForm.reset();
   }
 
   removeFromCart(item: CartItem): void {

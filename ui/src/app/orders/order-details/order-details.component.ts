@@ -3,13 +3,14 @@ import { MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+
 import { HttpOrderService } from '../order-service/http-order.service';
 import { Order, OrderLine } from '../orders';
 
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
-  styleUrls: ['./order-details.component.css']
+  styleUrls: ['./order-details.component.css'],
 })
 export class OrderDetailsComponent implements OnInit {
   columnsToDisplay = ['name', 'qty', 'price'];
@@ -18,7 +19,7 @@ export class OrderDetailsComponent implements OnInit {
   order$: Observable<Order> | undefined;
   public isLoading = false;
 
-  constructor(private route: ActivatedRoute, public orderService: HttpOrderService) { }
+  constructor(private route: ActivatedRoute, public orderService: HttpOrderService) {}
 
   ngOnInit() {
     const routeParams = this.route.snapshot.paramMap;
@@ -28,14 +29,13 @@ export class OrderDetailsComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.order$ = this.orderService
-      .getOrder(params)
-      .pipe(
-        map((ord) => ord.data), 
-        tap((ord) => (this.isLoading = false))
-      );
+    this.order$ = this.orderService.getOrder(params).pipe(
+      map((ord) => ord.data),
+      tap((ord) => (this.isLoading = false))
+    );
   }
 
-  cancel(order: Order): void {}
-
+  cancel(order: Order): void {
+    // not implemented yet
+  }
 }

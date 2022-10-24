@@ -1,28 +1,30 @@
-import { Injectable } from "@angular/core"
-import { StorageService } from "../storage.service";
-import { LocalStorageRefService } from "./local-storage-ref.service";
+import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: "root" })
+import { StorageService } from '../storage.service';
+
+import { LocalStorageRefService } from './local-storage-ref.service';
+
+@Injectable({ providedIn: 'root' })
 export class LocalStorageService implements StorageService {
-    private _localStorage: Storage;
+  private _localStorage: Storage;
 
-    constructor(private _localStorageRefService: LocalStorageRefService) {
-        this._localStorage = this._localStorageRefService.localStorage;
-    }
+  constructor(private _localStorageRefService: LocalStorageRefService) {
+    this._localStorage = this._localStorageRefService.localStorage;
+  }
 
-    setItem(key, data) {
-        this._localStorage.setItem(key, data);
-    }
+  setItem(key, data) {
+    this._localStorage.setItem(key, data);
+  }
 
-    getItem(key) {
-        return this._localStorage.getItem(key);
-    }
+  getItem(key) {
+    return this._localStorage.getItem(key);
+  }
 
-    removeItem(key) {
-        this._localStorage.removeItem(key);
-    }
+  removeItem(key) {
+    this._localStorage.removeItem(key);
+  }
 
-    clear() {
-        this._localStorage.clear();
-    }
+  clear() {
+    this._localStorage.clear();
+  }
 }

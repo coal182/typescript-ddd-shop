@@ -1,24 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { StatusCodes } from 'http-status-codes';
 import { map, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { StatusCodes } from 'http-status-codes';
 import Swal from 'sweetalert2';
 
 import { ValidationService } from 'src/app/shared/services/validation.service';
+
 import { HttpUserService } from '../user-service/http-user.service';
 import { PutUserParams } from '../user-service/user.service';
+
 import { AuthService } from './../../shared/auth/auth.service';
 import { User } from './../../shared/user';
-
 
 @Component({
   selector: 'app-user-profile',
@@ -45,7 +39,6 @@ export class UserProfileComponent implements OnInit {
     public userService: HttpUserService,
     public readonly validateFormService: ValidationService
   ) {
-
     this.profileForm = this.fb.group(
       {
         firstname: ['', [Validators.required, Validators.pattern(this.namesRegex)]],
@@ -59,7 +52,7 @@ export class UserProfileComponent implements OnInit {
       { validators: this.mandatoryFieldsValidator('email') }
     );
   }
-  ngOnInit(): void {    
+  ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     this.userIdFromRoute = routeParams.get('id');
     const params = { id: this.userIdFromRoute };
@@ -69,14 +62,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   onChanges(): void {
-    this.profileForm.valueChanges.subscribe(val => {
-      this.formattedMessage =
-      `Hello,
+    this.profileForm.valueChanges.subscribe((val) => {
+      this.formattedMessage = `Hello,
   
       My name is <b>${val.firstname} ${val.lastname}</b>, my email is <b>${val.email}</b>,
   
-      and my date of birth is <b>${val.dateOfBirth.toLocaleDateString("en-US")}</b>.`;
-
+      and my date of birth is <b>${val.dateOfBirth.toLocaleDateString('en-US')}</b>.`;
     });
   }
 
@@ -85,7 +76,10 @@ export class UserProfileComponent implements OnInit {
   }
 
   get(params): void {
-    this.user$ = this.userService.getUser(params).pipe(map((data) => data.data),tap((pro) => (this.isLoading = false)));
+    this.user$ = this.userService.getUser(params).pipe(
+      map((data) => data.data),
+      tap((pro) => (this.isLoading = false))
+    );
 
     this.user$.subscribe((data) => {
       this.profileForm.reset({
@@ -111,6 +105,7 @@ export class UserProfileComponent implements OnInit {
 
     this.userService.putUser(params).subscribe({
       next: (data) => {
+        /*eslint indent: ["error", 2, {"SwitchCase": 1}]*/
         switch (data.status) {
           case StatusCodes.OK:
             this.version++;

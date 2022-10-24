@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
+import { Routes, RouterModule } from '@angular/router';
 
-import { ProductListComponent } from './products/product-list/product-list.component';
-import { ProductDetailsComponent } from './products/product-details/product-details.component';
 import { CartComponent } from './cart/cart.component';
-import { ShippingComponent } from './shipping/shipping.component';
 import { SigninComponent } from './login/signin/signin.component';
 import { SignupComponent } from './login/signup/signup.component';
-import { UserProfileComponent } from './user/user-profile/user-profile.component';
-import { AuthGuard } from './shared/auth/auth.guard';
-import { OrderListComponent } from './orders/order-list/order-list.component';
 import { OrderDetailsComponent } from './orders/order-details/order-details.component';
+import { OrderListComponent } from './orders/order-list/order-list.component';
+import { ProductDetailsComponent } from './products/product-details/product-details.component';
+import { ProductListComponent } from './products/product-list/product-list.component';
+import { AuthGuard } from './shared/auth/auth.guard';
+import { ShippingComponent } from './shipping/shipping.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/log-in', pathMatch: 'full' },

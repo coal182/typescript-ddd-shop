@@ -9,7 +9,7 @@ describe('CartService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{provide: HttpClient, useValue: http}]
+      providers: [{ provide: HttpClient, useValue: http }],
     });
     service = TestBed.inject(CartService);
   });
