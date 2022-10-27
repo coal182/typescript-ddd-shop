@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
 
-import { HttpCartService } from 'src/app/cart/cart-service/http-cart.service';
-
-import { HttpProductService } from '../product-service/http-product.service';
+import { fetchProducts } from 'src/app/store/products/products.actions';
+import { selectProducts } from 'src/app/store/products/products.selectors';
 
 @Component({
   selector: 'app-product-list',
@@ -14,19 +12,16 @@ import { HttpProductService } from '../product-service/http-product.service';
 export class ProductListComponent implements OnInit {
   public isLoading = false;
 
-  products$: Observable<any>;
+  products$ = this.store.pipe(select(selectProducts));
 
-  constructor(public productService: HttpProductService, private cartService: HttpCartService) {}
+  constructor(private store: Store) {}
 
   ngOnInit() {
-    const params = {};
+    const params = {}; // TODO: add params query to the store action
 
-    this.isLoading = true;
+    this.isLoading = false;
 
-    this.products$ = this.productService.getProducts(params).pipe(
-      map((pro) => pro.data),
-      tap(() => (this.isLoading = false))
-    );
+    this.store.dispatch(fetchProducts());
   }
 
   onNotify() {
