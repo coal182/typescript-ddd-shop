@@ -1,5 +1,7 @@
 import { createFeatureSelector } from '@ngrx/store';
 
-import { Product } from 'src/app/products/products';
+import { ProductsState } from './state/model';
 
-export const selectProducts = createFeatureSelector<Product[]>('products');
+export class ProductSelectors {
+  public static selectProducts = createFeatureSelector<ProductsState>('products');
+}

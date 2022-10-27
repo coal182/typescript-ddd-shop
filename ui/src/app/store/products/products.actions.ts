@@ -2,8 +2,13 @@ import { createAction, props } from '@ngrx/store';
 
 import { Product } from 'src/app/products/products';
 
-export const fetchProducts = createAction('[Products] Fetch products');
+export class ProductsActions {
+  public static fetchProducts = createAction('[Products] Fetch products');
 
-export const fetchProductsSuccess = createAction('[Products] Fetch products Success', props<{ products: Product[] }>());
+  public static fetchProductsSuccess = createAction(
+    '[Products] Fetch products Success',
+    props<{ products: ReadonlyArray<Product> }>()
+  );
 
-export const fetchProductsFailure = createAction('[Products] Fetch products Failure', props<{ error: Error }>());
+  public static fetchProductsFailure = createAction('[Products] Fetch products Failure', props<{ error: Error }>());
+}
