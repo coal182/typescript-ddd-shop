@@ -16,11 +16,11 @@
         <button
           mat-flat-button
           type="button"
-          color="warn"
+          color="primary"
           (click)="addToCart()"
           class="add-to-cart"
         >
-          Buy <mat-icon>add_shopping_cart</mat-icon>
+          Add to cart <mat-icon>add_shopping_cart</mat-icon>
         </button>
         <button
           mat-flat-button
@@ -44,7 +44,7 @@
       <div class="col"><br /></div>
     </div>
     <div class="row">
-      <mat-tab-group animationDuration="0ms" color="warn">
+      <mat-tab-group animationDuration="0ms" color="primary">
         <mat-tab label="Description"><br />{{ (product$ | async)?.description }}</mat-tab>
         <mat-tab label="Caracteristics"><br />Caracteristics</mat-tab>
         <mat-tab label="Reviews"><br />Reviews</mat-tab>

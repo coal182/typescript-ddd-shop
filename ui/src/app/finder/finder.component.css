@@ -26,17 +26,47 @@
   margin-left: 8px;
 }
 
-::ng-deep .mat-progress-spinner circle {
-  stroke: #a53c00;
+/* input color class */
+::ng-deep input.mat-input-element.finder-form-field {
+  color: #fff;
+}
+
+/* Change label color */
+::ng-deep .mat-form-field.finder-form-field .mat-form-field-label {
+  color: #fff !important;
+}
+
+/* underline border color */
+::ng-deep .finder-form-field .mat-form-field-underline .mat-form-field-ripple{
+  background-color: #fff !important;
+}
+
+/* Change label color on focused */
+::ng-deep .finder-form-field .mat-form-field.mat-focused .mat-form-field-label {
+  color: #fff !important;
+}
+
+/* underline border color on focused */
+::ng-deep .finder-form-field .mat-focused .mat-form-field-underline .mat-form-field-ripple{
+  background-color: #fff !important;
+}
+
+::ng-deep .finder-form-field .mat-progress-spinner circle {
+  stroke: #fff;
 } 
 
 ::ng-deep .finder-form-field.mat-form-field .mat-form-field-wrapper {
   padding: 0.56em 0 1.34375em 0;
 }
-::ng-deep .mat-form-field .mat-form-field-flex {
+::ng-deep .finder-form-field.mat-form-field .mat-form-field-flex {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  border-bottom: 1px solid #237dd1 !important;
+  border-radius: 4px;
+}
+::ng-deep .finder-form-field.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: rgb(255 255 255 / 19%);
 }
 ::ng-deep .mat-form-field .mat-form-field-outline {
   background-color: white;
