@@ -24,4 +24,17 @@ export class ProductsEffects {
       })
     )
   );
+
+  fetchSingleProducts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductsActions.fetchSingleProduct),
+      withLatestFrom(this.store.pipe(select(ProductSelectors.selectSingleProduct))),
+      mergeMap(([action, productFromStore]) => {
+        return this.productsService.getProduct({ id: action.id }).pipe(
+          map((response) => ProductsActions.fetchSingleProductSuccess({ product: response.data })),
+          catchError((error: Error) => of(ProductsActions.fetchSingleProductFailure({ error })))
+        );
+      })
+    )
+  );
 }

@@ -11,7 +11,19 @@ export const productsInitialState: ProductsState = {
   },
 };
 
+export const singleProductInitialState: SingleProductState = {
+  product: undefined,
+  metadata: {
+    loadingStatus: LoadingStatus.NotLoaded,
+  },
+};
+
 export interface ProductsState {
   products: ReadonlyArray<Product>;
+  metadata: { loadingStatus: LoadingStatus };
+}
+
+export interface SingleProductState {
+  product: Product;
   metadata: { loadingStatus: LoadingStatus };
 }

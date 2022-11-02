@@ -2,17 +2,20 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { StatusCodes } from 'http-status-codes';
 import { map, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { CartItem } from 'src/app/cart/cart';
+import { LoadingStatus } from 'src/app/store/metadata-types';
+import { ProductsActions } from 'src/app/store/products/products.actions';
+import { ProductSelectors } from 'src/app/store/products/products.selectors';
 
 import { AlertDialogComponent } from '../../alert-dialog/alert-dialog.component';
 import { HttpCartService } from '../../cart/cart-service/http-cart.service';
 import { HttpProductService } from '../product-service/http-product.service';
-import { Product } from '../products';
 
 @Component({
   selector: 'app-product-details',
@@ -20,14 +23,32 @@ import { Product } from '../products';
   styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit {
-  product$: Observable<Product> | undefined;
   public isLoading = false;
+
+  product$ = this.store.pipe(
+    select(ProductSelectors.selectSingleProduct),
+    tap((product) => {
+      /*eslint indent: ["error", 2, {"SwitchCase": 1}]*/
+      switch (product.metadata.loadingStatus) {
+        case LoadingStatus.Loaded:
+          this.isLoading = false;
+          break;
+        case LoadingStatus.Loading:
+          this.isLoading = true;
+          break;
+        case LoadingStatus.NotLoaded:
+          this.isLoading = false;
+      }
+    }),
+    map((product) => product.product)
+  );
 
   constructor(
     private route: ActivatedRoute,
     public productService: HttpProductService,
     private cartService: HttpCartService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -39,10 +60,12 @@ export class ProductDetailsComponent implements OnInit {
 
     this.isLoading = true;
 
+    this.store.dispatch(ProductsActions.fetchSingleProduct(params));
+    /*
     this.product$ = this.productService.getProduct(params).pipe(
       map((data) => data.data),
       tap((pro) => (this.isLoading = false))
-    );
+    );*/
   }
 
   addToCart() {

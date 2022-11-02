@@ -11,4 +11,16 @@ export class ProductsActions {
   );
 
   public static fetchProductsFailure = createAction('[Products] Fetch products Failure', props<{ error: Error }>());
+
+  public static fetchSingleProduct = createAction('[Products] Fetch single product', props<{ id: string }>());
+
+  public static fetchSingleProductSuccess = createAction(
+    '[Products] Fetch single product Success',
+    props<{ product: Product }>()
+  );
+
+  public static fetchSingleProductFailure = createAction(
+    '[Products] Fetch single product Failure',
+    props<{ error: Error }>()
+  );
 }

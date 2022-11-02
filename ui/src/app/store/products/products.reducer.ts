@@ -35,5 +35,34 @@ export const productReducer = createReducer<ProductsState>(
         loadingStatus: LoadingStatus.NotLoaded,
       },
     };
+  }),
+  on(ProductsActions.fetchSingleProduct, (state) => {
+    return {
+      ...state,
+      metadata: {
+        ...state.metadata,
+        loadingStatus: LoadingStatus.Loading,
+      },
+    };
+  }),
+  on(ProductsActions.fetchSingleProductSuccess, (state, { product }) => {
+    return {
+      ...state,
+      product,
+      metadata: {
+        ...state.metadata,
+        loadingStatus: LoadingStatus.Loaded,
+      },
+    };
+  }),
+  on(ProductsActions.fetchSingleProductFailure, (state, { error }) => {
+    return {
+      ...state,
+      metadata: {
+        ...state.metadata,
+        error,
+        loadingStatus: LoadingStatus.NotLoaded,
+      },
+    };
   })
 );
