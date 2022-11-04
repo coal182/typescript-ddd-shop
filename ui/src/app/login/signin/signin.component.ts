@@ -1,6 +1,10 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { LoginActions } from 'src/app/store/login/login.actions';
+import { Credentials } from 'src/app/store/login/state/model';
 
 import { AuthService } from './../../shared/auth/auth.service';
 @Component({
@@ -8,13 +12,16 @@ import { AuthService } from './../../shared/auth/auth.service';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css'],
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit, OnDestroy {
   signinForm: FormGroup;
+  public isLoading = false;
+
   constructor(
     public fb: FormBuilder,
     public authService: AuthService,
     public router: Router,
-    private renderer2: Renderer2
+    private renderer2: Renderer2,
+    private store: Store
   ) {
     this.signinForm = this.fb.group({
       email: [''],
@@ -29,7 +36,12 @@ export class SigninComponent implements OnInit {
     }
   }
   loginUser() {
-    this.authService.signIn(this.signinForm.value);
+    const credentials: Credentials = {
+      email: this.signinForm.value['email'].toString(),
+      password: this.signinForm.value['password'].toString(),
+    };
+
+    this.store.dispatch(LoginActions.signIn({ credentials }));
   }
 
   ngOnDestroy() {

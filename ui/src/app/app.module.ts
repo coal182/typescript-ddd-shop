@@ -17,6 +17,8 @@ import { ProductsModule } from './products/products.module';
 import { AuthInterceptor } from './shared/auth/authconfig.interceptor';
 import { ValidationService } from './shared/services/validation.service';
 import { SharedModule } from './shared/shared.module';
+import { LoginEffects } from './store/login/login.effects';
+import { loginReducer } from './store/login/login.reducer';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
@@ -30,6 +32,8 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     OrdersModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
+    StoreModule.forFeature('login', loginReducer),
+    EffectsModule.forFeature([LoginEffects]),
   ],
   declarations: [
     AppComponent,

@@ -2,7 +2,7 @@ import { Product } from 'src/app/products/products';
 
 import { LoadingStatus } from '../../metadata-types';
 
-export const productsFeatureKey = 'outOfHomeInventory';
+export const productsFeatureKey = 'products';
 
 export const productsInitialState: ProductsState = {
   products: [],
