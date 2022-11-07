@@ -10,7 +10,7 @@ export class BookCreated extends Event implements IEvent {
     public name: string,
     public description: string,
     public image: string,
-    public authorId: string,
+    public author: string,
     public price: number
   ) {
     super();

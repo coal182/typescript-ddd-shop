@@ -1,1 +1,3 @@
-export abstract class IQuery {}
+import { IMessage } from './i-message';
+
+export interface IQuery extends IMessage {}

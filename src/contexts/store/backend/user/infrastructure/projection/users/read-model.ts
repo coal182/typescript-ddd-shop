@@ -2,8 +2,9 @@ import { inject, injectable } from 'inversify';
 import { Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
-import { NotFoundException } from '@shared/errors/application-error';
 import { IReadModelFacade } from '@core/i-read-model-facade';
+import { Criteria } from '@shared/criteria/Criteria';
+import { NotFoundException } from '@shared/errors/application-error';
 
 export class UserDTO {
   constructor(public readonly guid: string, public readonly firstname: string, public readonly lastname: string) {}
@@ -14,6 +15,9 @@ export interface IUserReadModelFacade extends IReadModelFacade<any> {}
 @injectable()
 export class UserReadModelFacade implements IUserReadModelFacade {
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  matching(criteria: Criteria): Promise<readonly any[]> {
+    throw new Error('Method not implemented.');
+  }
 
   async getAll() {
     const users = [];

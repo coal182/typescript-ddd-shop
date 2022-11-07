@@ -24,7 +24,7 @@ describe(CreateBookCommandHandler.name, () => {
         expectedAggregateRoot.name.value,
         expectedAggregateRoot.description.value,
         expectedAggregateRoot.image.value,
-        expectedAggregateRoot.authorId.value,
+        expectedAggregateRoot.author.value,
         expectedAggregateRoot.price.value
       );
       commandHandler.handle(command);
@@ -37,20 +37,20 @@ describe(CreateBookCommandHandler.name, () => {
 
     it('should be capable to get the aggregate from the events on event store', async () => {
       const savedAggregate = await repository.getById(expectedAggregateRoot.guid.value);
-      const savedBook = (({ guid, name, description, image, authorId, price }) => ({
+      const savedBook = (({ guid, name, description, image, author, price }) => ({
         guid,
         name,
         description,
         image,
-        authorId,
+        author,
         price,
       }))(savedAggregate);
-      const expectedBook = (({ guid, name, description, image, authorId, price }) => ({
+      const expectedBook = (({ guid, name, description, image, author, price }) => ({
         guid,
         name,
         description,
         image,
-        authorId,
+        author,
         price,
       }))(expectedAggregateRoot);
       repository.assertSavedAggregate<Book>(savedAggregate, savedBook, expectedBook);

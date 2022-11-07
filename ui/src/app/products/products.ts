@@ -33,6 +33,39 @@ export interface Author {
   lastname: string;
 }
 
+export interface ProductsResponse {
+  status: number;
+  message: string;
+  data: ProductsResponseData[];
+}
+
+export interface ProductsResponseData {
+  _id: string;
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  author: AuthorProductsResponse;
+  price: number;
+  version: number;
+}
+
+export interface AuthorProductsResponse {
+  _id: string;
+  id: string;
+  firstname: string;
+  lastname: string;
+}
+
+export enum Operator {
+  EQUAL = '=',
+  NOT_EQUAL = '!=',
+  GT = '>',
+  LT = '<',
+  CONTAINS = 'CONTAINS',
+  NOT_CONTAINS = 'NOT_CONTAINS',
+}
+
 /*
 Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that

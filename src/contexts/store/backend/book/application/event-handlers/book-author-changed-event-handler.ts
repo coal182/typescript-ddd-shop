@@ -17,7 +17,7 @@ export class BookAuthorChangedEventHandler implements IEventHandler<BookAuthorCh
 
   async handle(event: BookAuthorChanged) {
     const cachedBook = await this.db.collection('books').findOne({ id: event.guid });
-    const authorData = await this.db.collection('authors').findOne({ id: event.authorId });
+    const authorData = await this.db.collection('authors').findOne({ id: event.author });
     if (cachedBook) {
       await this.db
         .collection('books')

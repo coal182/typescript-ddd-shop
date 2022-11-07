@@ -3,6 +3,6 @@ export type CreateBookRequest = {
   name: string;
   description: string;
   image: string;
-  authorId: string;
+  author: string;
   price: number;
 };

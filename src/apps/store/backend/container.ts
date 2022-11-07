@@ -9,9 +9,13 @@ import { ICommandHandler } from '@core/i-command-handler';
 import { IEventBus } from '@core/i-event-bus';
 import { IEventHandler } from '@core/i-event-handler';
 import { IEventStore } from '@core/i-event-store';
+import { IQueryHandler } from '@core/i-query-handler';
+import { IResponse } from '@core/i-response';
+import { Query } from '@core/query';
 import { CommandBus } from '@infrastructure/command-bus';
 import { createMongodbConnection } from '@infrastructure/db/mongodb';
 import { RedisEventBus } from '@infrastructure/event-bus/redis';
+import { QueryBus } from '@infrastructure/query-bus';
 import { getRedisClient } from '@infrastructure/redis';
 import { AuthorCreatedEventHandler } from '@storeback/author/application/event-handlers/author-created-event-handler';
 import {
@@ -19,6 +23,7 @@ import {
   IAuthorReadModelFacade,
 } from '@storeback/author/infrastructure/projection/authors/read-model';
 import { BookCreator } from '@storeback/book/application/book-creator';
+import { BooksByCriteriaSearcher } from '@storeback/book/application/books-by-criteria-searcher';
 import { CreateBookCommandHandler } from '@storeback/book/application/command-handlers/create-book-command-handler';
 import { UpdateBookAuthorCommandHandler } from '@storeback/book/application/command-handlers/update-book-author-command-handler';
 import { UpdateBookDescriptionCommandHandler } from '@storeback/book/application/command-handlers/update-book-description-command-handler';
@@ -28,6 +33,7 @@ import { BookCreatedEventHandler } from '@storeback/book/application/event-handl
 import { BookDescriptionChangedEventHandler } from '@storeback/book/application/event-handlers/book-description-changed-event-handler';
 import { BookImageChangedEventHandler } from '@storeback/book/application/event-handlers/book-image-changed-event-handler';
 import { FakeNotificationEventHandler } from '@storeback/book/application/event-handlers/fake-notification-event-handler';
+import { SearchBooksByCriteriaQueryHandler } from '@storeback/book/application/query-handlers/search-books-by-criteria-query-handler';
 import { BookAuthorChanged } from '@storeback/book/domain/events/book-author-changed';
 import { BookCreated } from '@storeback/book/domain/events/book-created';
 import { BookDescriptionChanged } from '@storeback/book/domain/events/book-description-changed';
@@ -108,6 +114,7 @@ export const initialiseContainer = async () => {
 
   // Use Cases
   container.bind<BookCreator>(TYPES.BookCreator).to(BookCreator);
+  container.bind<BooksByCriteriaSearcher>(TYPES.BooksByCriteriaSearcher).to(BooksByCriteriaSearcher);
 
   // Read models for query
   container.bind<IBookReadModelFacade>(TYPES.BookReadModelFacade).to(BookReadModelFacade);
@@ -178,6 +185,18 @@ export const initialiseContainer = async () => {
   });
 
   container.bind<CommandBus>(TYPES.CommandBus).toConstantValue(commandBus);
+
+  container.bind<IQueryHandler<Query, IResponse>>(TYPES.QueryHandler).to(SearchBooksByCriteriaQueryHandler);
+
+  // Create query bus
+  const queryBus = new QueryBus();
+
+  // Register all the query handler here
+  container.getAll<IQueryHandler<Query, IResponse>[]>(TYPES.QueryHandler).forEach((handler: any) => {
+    queryBus.subscribeHandler(handler.subscribedTo(), handler);
+  });
+
+  container.bind<QueryBus>(TYPES.QueryBus).toConstantValue(queryBus);
 
   // Event Handlers that depend on CommandBus
   container.bind<IEventHandler<LoanCreated>>(TYPES.Event).to(LoanCreatedEventHandler);

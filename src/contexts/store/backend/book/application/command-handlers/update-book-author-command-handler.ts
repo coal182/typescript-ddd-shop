@@ -14,7 +14,7 @@ export class UpdateBookAuthorCommandHandler implements ICommandHandler<UpdateBoo
 
   async handle(command: UpdateBookAuthorCommand) {
     const book = await this.repository.getById(command.guid);
-    book.changeAuthor(new BookAuthor(command.authorId));
+    book.changeAuthor(new BookAuthor(command.author));
     await this.repository.save(book, command.originalVersion);
   }
 }

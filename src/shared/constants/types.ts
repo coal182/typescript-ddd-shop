@@ -17,6 +17,7 @@ export const TYPES = {
 
   // Use Cases
   BookCreator: Symbol('BookCreator'),
+  BooksByCriteriaSearcher: Symbol('BooksByCriteriaSearcher'),
 
   // Read Model Facade (for book)
   BookReadModelFacade: Symbol('BookReadModelFacade'),
@@ -30,6 +31,12 @@ export const TYPES = {
 
   // Command Handlers
   CommandHandler: Symbol('CommandHandler'),
+
+  // Query Bus
+  QueryBus: Symbol('QueryBus'),
+
+  // Query Handlers
+  QueryHandler: Symbol('QueryHandler'),
 
   // Event
   Event: Symbol('Event'),

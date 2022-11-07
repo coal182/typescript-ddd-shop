@@ -3,6 +3,7 @@ import { Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
 import { IReadModelFacade } from '@core/i-read-model-facade';
+import { Criteria } from '@shared/criteria/Criteria';
 import { NotFoundException } from '@shared/errors/application-error';
 
 export class AuthorDTO {
@@ -14,6 +15,9 @@ export interface IAuthorReadModelFacade extends IReadModelFacade<any> {}
 @injectable()
 export class AuthorReadModelFacade implements IAuthorReadModelFacade {
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  matching(criteria: Criteria): Promise<readonly any[]> {
+    throw new Error('Method not implemented.');
+  }
 
   async getAll() {
     const authors = [];

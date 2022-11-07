@@ -16,7 +16,7 @@ export class BookCreator {
       request.name,
       request.description,
       request.image,
-      request.authorId,
+      request.author,
       request.price
     );
     await this.commandBus.send(command);

@@ -17,7 +17,7 @@ export class Book extends AggregateRoot {
   public name: BookName;
   public description: BookDescription;
   public image: BookImage;
-  public authorId: BookAuthor;
+  public author: BookAuthor;
   public price: BookPrice;
 
   constructor();
@@ -27,14 +27,14 @@ export class Book extends AggregateRoot {
     name,
     description,
     image,
-    authorId,
+    author,
     price,
   }: {
     guid: BookId;
     name: BookName;
     description: BookDescription;
     image: BookImage;
-    authorId: BookAuthor;
+    author: BookAuthor;
     price: BookPrice;
   });
 
@@ -43,28 +43,28 @@ export class Book extends AggregateRoot {
     name,
     description,
     image,
-    authorId,
+    author,
     price,
   }: {
     guid?: BookId;
     name?: BookName;
     description?: BookDescription;
     image?: BookImage;
-    authorId?: BookAuthor;
+    author?: BookAuthor;
     price?: BookPrice;
   } = {}) {
     super();
     // This if block is required as we instantiate the aggregate root in the repository
-    if (guid && name && description && image && authorId && price) {
+    if (guid && name && description && image && author && price) {
       this.applyChange(
-        new BookCreated(guid.value!, name.value!, description.value!, image.value!, authorId.value!, price.value!)
+        new BookCreated(guid.value!, name.value!, description.value!, image.value!, author.value!, price.value!)
       );
     }
   }
 
-  public changeAuthor(authorId: BookAuthor) {
-    this.authorId = authorId;
-    this.applyChange(new BookAuthorChanged(this.guid.value, authorId.value));
+  public changeAuthor(author: BookAuthor) {
+    this.author = author;
+    this.applyChange(new BookAuthorChanged(this.guid.value, author.value));
   }
 
   public changeDescription(description: BookDescription) {
@@ -82,12 +82,12 @@ export class Book extends AggregateRoot {
     this.name = new BookName(event.name);
     this.description = new BookDescription(event.description);
     this.image = new BookImage(event.image);
-    this.authorId = new BookAuthor(event.authorId);
+    this.author = new BookAuthor(event.author);
     this.price = new BookPrice(event.price);
   }
 
   public applyBookAuthorChanged(event: BookAuthorChanged): void {
-    this.authorId = new BookAuthor(event.authorId);
+    this.author = new BookAuthor(event.author);
   }
 
   public applyBookDescriptionChanged(event: BookDescriptionChanged): void {
@@ -103,7 +103,7 @@ export class Book extends AggregateRoot {
     name: string;
     description: string;
     image: string;
-    authorId: string;
+    author: string;
     price: number;
   }): Book {
     return new Book({
@@ -111,7 +111,7 @@ export class Book extends AggregateRoot {
       name: new BookName(plainData.name),
       description: new BookDescription(plainData.description),
       image: new BookImage(plainData.image),
-      authorId: new BookAuthor(plainData.authorId),
+      author: new BookAuthor(plainData.author),
       price: new BookPrice(plainData.price),
     });
   }
@@ -122,7 +122,7 @@ export class Book extends AggregateRoot {
       name: this.name.value,
       description: this.description.value,
       image: this.image.value,
-      authorId: this.authorId.value,
+      author: this.author.value,
       price: this.price.value,
       version: this.version,
     };

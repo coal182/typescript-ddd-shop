@@ -1,26 +1,61 @@
 import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
+import { Collection, Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
-import { NotFoundException } from '@shared/errors/application-error';
 import { IReadModelFacade } from '@core/i-read-model-facade';
+import { Criteria } from '@shared/criteria/Criteria';
+import { NotFoundException } from '@shared/errors/application-error';
+import { BookResponse } from '@storeback/book/application/books-response';
 
-export class BookListDTO {
-  constructor(
-    public readonly name: string,
-    public readonly description: string,
-    public readonly image: string,
-    public readonly author: string,
-    public readonly price: number,
-    public readonly version: number
-  ) {}
-}
+import { MongoCriteriaConverter } from './mongo-criteria-converter';
 
 export interface IBookReadModelFacade extends IReadModelFacade<any> {}
 
+export interface BookDocument {
+  _id: string;
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  author: Author;
+  price: number;
+  version: number;
+}
+
+export interface Author {
+  _id: string;
+  id: string;
+  firstname: string;
+  lastname: string;
+}
+
 @injectable()
 export class BookReadModelFacade implements IBookReadModelFacade {
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  private criteriaConverter: MongoCriteriaConverter;
+
+  constructor(@inject(TYPES.Db) private readonly db: Db) {
+    this.criteriaConverter = new MongoCriteriaConverter();
+  }
+
+  protected collectionName = 'books';
+
+  protected async collection(): Promise<Collection> {
+    return await this.db.collection(this.collectionName);
+  }
+
+  async matching(criteria: Criteria): Promise<BookResponse[]> {
+    const query = this.criteriaConverter.convert(criteria);
+    console.log('🚀 ~ file: read-model.ts ~ line 48 ~ BookReadModelFacade ~ matching ~ query', query);
+
+    const collection = await this.collection();
+
+    return await collection
+      .find<BookDocument>(query.filter, {})
+      .sort(query.sort)
+      .skip(query.skip)
+      .limit(query.limit)
+      .toArray();
+  }
 
   async getAll() {
     const books = [];

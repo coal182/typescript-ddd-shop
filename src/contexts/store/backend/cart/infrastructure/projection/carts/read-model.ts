@@ -2,8 +2,9 @@ import { inject, injectable } from 'inversify';
 import { Db } from 'mongodb';
 
 import { TYPES } from '@constants/types';
-import { NotFoundException } from '@shared/errors/application-error';
 import { IReadModelFacade } from '@core/i-read-model-facade';
+import { Criteria } from '@shared/criteria/Criteria';
+import { NotFoundException } from '@shared/errors/application-error';
 
 export class CartDTO {
   constructor(
@@ -19,6 +20,9 @@ export interface ICartReadModelFacade extends IReadModelFacade<any> {}
 @injectable()
 export class CartReadModelFacade implements ICartReadModelFacade {
   constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  matching(criteria: Criteria): Promise<readonly any[]> {
+    throw new Error('Method not implemented.');
+  }
 
   getAll(): Promise<any[]> {
     throw new Error('Method not implemented.');

@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { StatusCodes } from 'http-status-codes';
-import { map, Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { map, Observable, ReplaySubject, throwError } from 'rxjs';
+import { catchError, tap, takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { CartItem } from 'src/app/cart/cart';
@@ -22,7 +22,8 @@ import { HttpProductService } from '../product-service/http-product.service';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
+  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   public isLoading = false;
 
   product$ = this.store.pipe(
@@ -61,11 +62,11 @@ export class ProductDetailsComponent implements OnInit {
     this.isLoading = true;
 
     this.store.dispatch(ProductsActions.fetchSingleProduct(params));
-    /*
-    this.product$ = this.productService.getProduct(params).pipe(
-      map((data) => data.data),
-      tap((pro) => (this.isLoading = false))
-    );*/
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
   addToCart() {
@@ -75,6 +76,7 @@ export class ProductDetailsComponent implements OnInit {
         this.cartService
           .addToCart(item)
           .pipe(
+            takeUntil(this.destroyed$),
             catchError((error: HttpErrorResponse): Observable<Error> => {
               if (error.status === StatusCodes.UNAUTHORIZED) {
                 Swal.fire('Error!', 'There was an error adding this product!', 'error');

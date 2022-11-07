@@ -29,14 +29,14 @@ describe(UpdateBookAuthorCommandHandler.name, () => {
         expectedAggregateRoot.name.value,
         expectedAggregateRoot.description.value,
         expectedAggregateRoot.image.value,
-        expectedAggregateRoot.authorId.value,
+        expectedAggregateRoot.author.value,
         expectedAggregateRoot.price.value
       );
 
       commandHandler.handle(command);
     });
 
-    describe('and asked to update his authorId', () => {
+    describe('and asked to update his author', () => {
       before(() => {
         const updateCommand = new UpdateBookAuthorCommand(expectedAggregateRoot.guid.value, updatedAuthor.value, 0);
         updateCommandHandler.handle(updateCommand);
@@ -46,10 +46,10 @@ describe(UpdateBookAuthorCommandHandler.name, () => {
         repository.assertSaveHasBeenCalledTwice;
       });
 
-      it('should update the authorId', async () => {
+      it('should update the author', async () => {
         const savedAggregate = await repository.getById(expectedAggregateRoot.guid.value);
-        expect(savedAggregate.authorId.value).not.to.be.equal(expectedAggregateRoot.authorId);
-        expect(savedAggregate.authorId.value).to.be.equal(updatedAuthor.value);
+        expect(savedAggregate.author.value).not.to.be.equal(expectedAggregateRoot.author);
+        expect(savedAggregate.author.value).to.be.equal(updatedAuthor.value);
       });
     });
   });

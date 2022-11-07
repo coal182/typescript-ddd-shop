@@ -6,7 +6,7 @@ import { map, Observable } from 'rxjs';
 import { StorageService } from 'src/app/shared/services/storage.service';
 
 import { environment } from '../../../environments/environment';
-import { AddToCartParams, Cart, CartItem } from '../cart';
+import { AddToCartParams, Cart, CartItem, SessionCart } from '../cart';
 
 import { CartService, ConfirmCartParams } from './cart.service';
 
@@ -15,6 +15,7 @@ import { CartService, ConfirmCartParams } from './cart.service';
 })
 export class HttpCartService extends CartService {
   cart: Cart;
+  sessionCart: SessionCart;
 
   public constructor(private http: HttpClient, @Inject('StorageService') private storageService: StorageService) {
     super();
@@ -23,13 +24,13 @@ export class HttpCartService extends CartService {
 
   private initCart(): void {
     if (!this.cart && this.storageService.getItem('cart') !== null) {
-      const sessionCart = JSON.parse(this.storageService.getItem('cart'));
+      this.sessionCart = JSON.parse(this.storageService.getItem('cart'));
 
       this.cart = {
-        id: sessionCart.id,
-        userId: sessionCart.userId,
+        id: this.sessionCart.id,
+        userId: this.sessionCart.userId,
         items: [],
-        version: sessionCart.version,
+        version: this.sessionCart.version,
       };
     }
   }
@@ -55,6 +56,9 @@ export class HttpCartService extends CartService {
 
     this.cart.items.push(item);
     this.cart.version = this.cart.version + 1;
+    this.sessionCart.version = this.sessionCart.version + 1;
+    //TODO: Fix cart version problem
+    //localStorage.setItem('cart', JSON.stringify(this.sessionCart));
 
     return this.http.post<any>(`${environment.apiUrl}api/v1/cart/add`, params);
   }

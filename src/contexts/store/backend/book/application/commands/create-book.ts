@@ -6,18 +6,18 @@ export class CreateBookCommand extends Command {
   public name: string;
   public description: string;
   public image: string;
-  public authorId: string;
+  public author: string;
   public price: number;
   // Set static name so we can refer to them easily
   public static commandName = Commands.CREATE_BOOK;
 
-  constructor(guid: string, name: string, description: string, image: string, authorId: string, price: number) {
+  constructor(guid: string, name: string, description: string, image: string, author: string, price: number) {
     super(guid);
     this.guid = guid;
     this.name = name;
     this.description = description;
     this.image = image;
-    this.authorId = authorId;
+    this.author = author;
     this.price = price;
   }
 }

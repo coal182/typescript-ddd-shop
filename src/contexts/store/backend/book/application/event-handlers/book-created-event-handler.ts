@@ -19,7 +19,7 @@ export class BookCreatedEventHandler implements IEventHandler<BookCreated> {
 
   async handle(event: BookCreated) {
     console.log('🚀 ~ file: book-created-event-handler.ts ~ line 21 ~ BookCreatedEventHandler ~ handle ~ event', event);
-    const authorData = await this.db.collection('authors').findOne({ id: event.authorId });
+    const authorData = await this.db.collection('authors').findOne({ id: event.author });
 
     const bookToCollection = {
       id: event.guid,

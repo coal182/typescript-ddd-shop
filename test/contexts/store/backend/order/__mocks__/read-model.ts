@@ -1,8 +1,12 @@
+import { Criteria } from '@shared/criteria/Criteria';
 import { IOrderReadModelFacade } from '@storeback/order/infrastructure/projection/orders/read-model';
 
 export class OrderReadModelFacadeMock implements IOrderReadModelFacade {
   constructor() {
     //
+  }
+  matching(criteria: Criteria): Promise<readonly any[]> {
+    throw new Error('Method not implemented.');
   }
 
   async getAll(): Promise<any[]> {

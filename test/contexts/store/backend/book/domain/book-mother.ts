@@ -19,10 +19,10 @@ export class BookMother {
     name: BookName,
     description: BookDescription,
     image: BookImage,
-    authorId: BookAuthor,
+    author: BookAuthor,
     price: BookPrice
   ): Book {
-    return new Book({ guid, name, description, image, authorId, price });
+    return new Book({ guid, name, description, image, author, price });
   }
 
   static random(): Book {

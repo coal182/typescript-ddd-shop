@@ -7,6 +7,12 @@ export interface Cart {
   version: number;
 }
 
+export interface SessionCart {
+  id: string;
+  userId: string;
+  version: number;
+}
+
 export interface CartItem {
   product: Product;
   qty: number;

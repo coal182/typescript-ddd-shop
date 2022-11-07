@@ -29,7 +29,7 @@ describe(UpdateBookDescriptionCommandHandler.name, () => {
         expectedAggregateRoot.name.value,
         expectedAggregateRoot.description.value,
         expectedAggregateRoot.image.value,
-        expectedAggregateRoot.authorId.value,
+        expectedAggregateRoot.author.value,
         expectedAggregateRoot.price.value
       );
 

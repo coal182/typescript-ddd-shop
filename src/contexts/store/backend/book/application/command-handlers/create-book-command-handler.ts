@@ -24,7 +24,7 @@ export class CreateBookCommandHandler implements ICommandHandler<CreateBookComma
       name: new BookName(command.name),
       description: new BookDescription(command.description),
       image: new BookImage(command.image),
-      authorId: new BookAuthor(command.authorId),
+      author: new BookAuthor(command.author),
       price: new BookPrice(command.price),
     });
     console.log('🚀 ~ file: create-book-command-handler.ts ~ line 30 ~ CreateBookCommandHandler ~ handle ~ book', book);

@@ -19,7 +19,7 @@ type BookPostRequest = Request & {
     name: string;
     description: string;
     image: string;
-    authorId: string;
+    author: string;
     price: number;
   };
 };
@@ -34,9 +34,9 @@ export class BookPostController {
 
   @httpPost('/')
   async createBook(@request() req: BookPostRequest, @response() res: Response) {
-    const { id, name, description, image, authorId, price } = addIdIfNotExists(req.body);
+    const { id, name, description, image, author, price } = addIdIfNotExists(req.body);
 
-    await this.bookCreator.run({ id, name, description, image, authorId, price });
+    await this.bookCreator.run({ id, name, description, image, author, price });
     return res.json(ok('Successfully created the book', undefined));
   }
 
