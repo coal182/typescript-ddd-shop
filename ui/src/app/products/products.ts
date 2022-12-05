@@ -50,6 +50,23 @@ export interface ProductsResponseData {
   version: number;
 }
 
+export interface ProductResponse {
+  status: number;
+  message: string;
+  data: ProductsResponseData;
+}
+
+export interface ProductResponseData {
+  _id: string;
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  author: AuthorProductsResponse;
+  price: number;
+  version: number;
+}
+
 export interface AuthorProductsResponse {
   _id: string;
   id: string;

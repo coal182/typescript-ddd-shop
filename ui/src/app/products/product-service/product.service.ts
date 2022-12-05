@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { ProductResponse, ProductsResponse } from '../products';
+
 @Injectable({
   providedIn: 'root',
 })
 export abstract class ProductService {
-  abstract getProducts(params: GetProductsParams): Observable<any>;
-  abstract getProduct(params: GetProductParams): Observable<any>;
+  abstract getProducts(params: GetProductsParams): Observable<ProductsResponse>;
+  abstract getProduct(params: GetProductParams): Observable<ProductResponse>;
 }
 
 export interface GetProductsParams {

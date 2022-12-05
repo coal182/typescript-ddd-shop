@@ -46,7 +46,7 @@ export class FinderComponent {
         const paramsObj = {
           'filters[0][field]': 'name',
           'filters[0][operator]': Operator.CONTAINS,
-          'filters[0][value]': searchBoxElement.value ?? ' ',
+          'filters[0][value]': searchBoxElement.value != '' ? searchBoxElement.value : ' ',
           orderBy: 'name',
           order: 'asc',
           limit: '30',

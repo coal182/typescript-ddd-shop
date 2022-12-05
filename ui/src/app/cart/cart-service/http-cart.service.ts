@@ -52,7 +52,6 @@ export class HttpCartService extends CartService {
       price: item.price,
       originalVersion: this.cart.version,
     };
-    console.log('🚀 ~ file: http-cart.service.ts ~ line 56 ~ HttpCartService ~ addToCart ~ params', params);
 
     this.cart.items.push(item);
     this.cart.version = this.cart.version + 1;
