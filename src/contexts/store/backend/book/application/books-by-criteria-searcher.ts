@@ -16,7 +16,7 @@ export class BooksByCriteriaSearcher {
   async run(filters: Filters, order: Order, limit?: number, offset?: number): Promise<BooksResponse> {
     const criteria = new Criteria(filters, order, limit, offset);
 
-    const books = await await this.readmodel.matching(criteria);
+    const books = await this.readmodel.matching(criteria);
 
     return new BooksResponse(books);
   }
