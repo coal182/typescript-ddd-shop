@@ -1,9 +1,12 @@
+import { HttpParams, HttpUrlEncodingCodec } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { catchError, map, mergeMap, of, withLatestFrom } from 'rxjs';
 
 import { HttpProductService } from 'src/app/products/product-service/http-product.service';
+import { GetProductsParams } from 'src/app/products/product-service/product.service';
+import { Operator } from 'src/app/products/products';
 
 import { ProductsActions } from './products.actions';
 import { ProductSelectors } from './products.selectors';
@@ -17,7 +20,16 @@ export class ProductsEffects {
       ofType(ProductsActions.fetchProducts),
       withLatestFrom(this.store.pipe(select(ProductSelectors.selectProducts))),
       mergeMap(([actionType, productFromStore]) => {
-        return this.productsService.getProducts({ name: '' }).pipe(
+        const paramsObj: GetProductsParams = {
+          'filters[0][field]': 'name',
+          'filters[0][operator]': Operator.CONTAINS,
+          'filters[0][value]': ' ',
+          orderBy: 'name',
+          order: 'asc',
+          limit: '30',
+          offset: '0',
+        };
+        return this.productsService.getProducts(paramsObj).pipe(
           map((response) => ProductsActions.fetchProductsSuccess({ products: response.data })),
           catchError((error: Error) => of(ProductsActions.fetchProductsFailure({ error })))
         );

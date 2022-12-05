@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, fromEvent, Subject } from 'rxjs';
@@ -13,7 +14,7 @@ import {
 } from 'rxjs/operators';
 
 import { HttpProductService } from '../products/product-service/http-product.service';
-import { Product } from '../products/products';
+import { Operator, Product } from '../products/products';
 
 export interface State {
   flag: string;
@@ -41,11 +42,18 @@ export class FinderComponent {
       distinctUntilChanged(),
       debounceTime(300),
       tap(() => (this.loading = true)),
-      switchMap(() =>
-        this.productService.getProducts({
-          name: searchBoxElement.value,
-        })
-      ),
+      switchMap(() => {
+        const paramsObj = {
+          'filters[0][field]': 'name',
+          'filters[0][operator]': Operator.CONTAINS,
+          'filters[0][value]': searchBoxElement.value ?? ' ',
+          orderBy: 'name',
+          order: 'asc',
+          limit: '30',
+          offset: '0',
+        };
+        return this.productService.getProducts(paramsObj);
+      }),
       tap(() => (this.loading = false))
     );
 

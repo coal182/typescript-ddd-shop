@@ -10,7 +10,11 @@ export abstract class ProductService {
 }
 
 export interface GetProductsParams {
-  name: string;
+  [key: `filters${string}`]: string;
+  orderBy: string;
+  order: string;
+  limit: string;
+  offset: string;
 }
 export interface GetProductParams {
   id: string;
