@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, httpPost, request, response } from 'inversify-express-utils';
 
-import { TYPES } from '@constants/types';
+import { TYPES } from '@storeback/shared/constants/types';
 import { ICommandBus } from '@core/i-command-bus';
 import { CreateLoanCommand } from '@storeback/loan/application/commands/create-loan';
 

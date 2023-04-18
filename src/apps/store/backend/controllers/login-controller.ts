@@ -4,9 +4,9 @@ import { inject } from 'inversify';
 import { controller, httpPost, request, response } from 'inversify-express-utils';
 import { v4 as uuidv4 } from 'uuid';
 
-import { TYPES } from '@constants/types';
+import { TYPES } from '@storeback/shared/constants/types';
 import { CommandBus } from '@infrastructure/command-bus';
-import { NotFoundException, PasswordNotMatchException } from '@shared/errors/application-error';
+import { PasswordNotMatchException } from '@shared/errors/application-error';
 import { CreateCartCommand } from '@storeback/cart/application/commands/create-cart';
 import { CartDTO } from '@storeback/cart/infrastructure/projection/carts/read-model';
 import { IUserReadModelFacade } from '@storeback/user/infrastructure/projection/users/read-model';

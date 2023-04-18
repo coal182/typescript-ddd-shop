@@ -1,0 +1,20 @@
+services:
+  Apps.Store.Backend.controllers.BookPostController:
+    class: ../../controllers/book-post-controller
+    main: BookPostController
+    arguments: ['@Store.Shared.domain.CommandBus']
+
+  Apps.Store.Backend.controllers.BookGetAllController:
+    class: ../../controllers/book-get-all-controller
+    main: BookGetAllController
+    arguments: ['@Store.Shared.domain.QueryBus']
+
+  Apps.Store.Backend.controllers.BookGetByIdController:
+    class: ../../controllers/book-get-by-id-controller
+    main: BookGetByIdController
+    arguments: ['@Store.Shared.domain.QueryBus']
+
+  Apps.Store.Backend.controllers.BookGetByCriteriaController:
+    class: ../../controllers/book-get-by-criteria-controller
+    main: BookGetByCriteriaController
+    arguments: ['@Store.Shared.domain.QueryBus']

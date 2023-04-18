@@ -1,37 +1,55 @@
-version: '3.5'
+version: '2.1'
 
 services:
 
   api:
-    image: node:17.6-alpine
+    image: node:18.13-alpine
     container_name: tba-api
+    environment:
+      - HOSTNAMERABBIT=rabbitmq
+      - CLOUDAMQP_URL=amqp://rabbitmq:5672
     depends_on:
-      - redis
+      rabbitmq:
+        condition: service_healthy
     working_dir: /app
     volumes:
       - ./:/app
       - ./node_modules/:/node_modules
     ports:
       - "3000:3000"
-    command: sh -c "yarn && yarn dev"
+    command: sh -c "npm run dev"
 
-  ui:
-    image: node:17.6-alpine
-    container_name: tba-ui
-    working_dir: /app
-    volumes:
-      - ./ui/:/app
-      - ./ui/node_modules/:/node_modules
+  rabbitmq:
+    image: 'rabbitmq:3.8-management'
+    container_name: tba-rabbitmq
     ports:
-      - "4200:4200"
-      - "9876:9876"
-    command: sh -c "npm install && npm run start"
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+        test: rabbitmq-diagnostics -q ping
+        interval: 10s
+        timeout: 10s
+        retries: 5
+
   
-  redis:
-    image: redis:5-alpine
-    container_name: tba-redis
-    ports:
-      - "6379:6379"
-    env_file:
-    - .env
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+
+  # ui:
+  #   image: node:17.6-alpine
+  #   container_name: tba-ui
+  #   working_dir: /app
+  #   volumes:
+  #     - ./ui/:/app
+  #     - ./ui/node_modules/:/node_modules
+  #   ports:
+  #     - "4200:4200"
+  #     - "9876:9876"
+  #   command: sh -c "npm install && npm run start"
+  
+  # redis:
+  #   image: redis:5-alpine
+  #   container_name: tba-redis
+  #   ports:
+  #     - "6379:6379"
+  #   env_file:
+  #   - .env
+  #   command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, request, response, httpPut } from 'inversify-express-utils';
 
-import { TYPES } from '@constants/types';
+import { TYPES } from '@storeback/shared/constants/types';
 import { CommandBus } from '@infrastructure/command-bus';
 import { UpdateBookAuthorCommand } from '@storeback/book/application/commands/update-book-author';
 import { UpdateBookDescriptionCommand } from '@storeback/book/application/commands/update-book-description';

@@ -1,8 +1,7 @@
 import { inject, injectable } from 'inversify';
 
-import { TYPES } from '@constants/types';
+import { TYPES } from '@storeback/shared/constants/types';
 import { ICommandBus } from '@core/i-command-bus';
-import { CommandBus } from '@infrastructure/command-bus';
 
 import { Feed } from './feed';
 import { FeedParser } from './feed-parser';

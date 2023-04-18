@@ -1,22 +1,11 @@
-import { Container } from 'inversify';
-import { Redis } from 'ioredis';
-import { Db } from 'mongodb';
-
-import config from '@config/main';
-import { EVENT_STREAM_NAMES, TYPES } from '@constants/types';
 import { Command } from '@core/command';
+import { EventBus } from '@core/event-bus';
 import { ICommandHandler } from '@core/i-command-handler';
-import { IEventBus } from '@core/i-event-bus';
 import { IEventHandler } from '@core/i-event-handler';
 import { IEventStore } from '@core/i-event-store';
 import { CommandBus } from '@infrastructure/command-bus';
-import { createMongodbConnection } from '@infrastructure/db/mongodb';
 import { RedisEventBus } from '@infrastructure/event-bus/redis';
 import { getRedisClient } from '@infrastructure/redis';
-import {
-  AuthorReadModelFacade,
-  IAuthorReadModelFacade,
-} from '@storeback/author/infrastructure/projection/authors/read-model';
 import { BookCreator } from '@storeback/book/application/book-creator';
 import { CreateBookCommandHandler } from '@storeback/book/application/command-handlers/create-book-command-handler';
 import { UpdateBookAuthorCommandHandler } from '@storeback/book/application/command-handlers/update-book-author-command-handler';
@@ -35,6 +24,17 @@ import { IBookRepository } from '@storeback/book/domain/i-book-repository';
 import { BookEventStore } from '@storeback/book/infrastructure/persistence/book-event-store';
 import { BookRepository } from '@storeback/book/infrastructure/persistence/book-repository';
 import { BookReadModelFacade, IBookReadModelFacade } from '@storeback/book/infrastructure/projection/books/read-model';
+import { EVENT_STREAM_NAMES, TYPES } from '@storeback/shared/constants/types';
+import { createMongodbConnection } from '@storeback/shared/db/mongodb';
+import { Container } from 'inversify';
+import { Redis } from 'ioredis';
+import { Db } from 'mongodb';
+
+import config from '@config/main';
+import {
+  AuthorReadModelFacade,
+  IAuthorReadModelFacade,
+} from 'src/contexts/store/author/infrastructure/projection/authors/read-model';
 
 export const initialiseContainer = async () => {
   const container = new Container();
@@ -49,7 +49,7 @@ export const initialiseContainer = async () => {
 
   container.bind<Redis>(TYPES.RedisSubscriber).toConstantValue(redisSubscriber);
   container.bind<Redis>(TYPES.Redis).toConstantValue(redis);
-  container.bind<IEventBus>(TYPES.EventBus).to(RedisEventBus);
+  container.bind<EventBus>(TYPES.EventBus).to(RedisEventBus);
 
   // Use Cases
   container.bind<BookCreator>(TYPES.BookCreator).to(BookCreator);

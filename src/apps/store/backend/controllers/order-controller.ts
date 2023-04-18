@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, httpDelete, httpGet, httpPost, request, response } from 'inversify-express-utils';
 
-import { TYPES } from '@constants/types';
+import { TYPES } from '@storeback/shared/constants/types';
 import { ICommandBus } from '@core/i-command-bus';
 import { AddLineToOrderCommand } from '@storeback/order/application/commands/add-line-to-order';
 import { CancelOrderCommand } from '@storeback/order/application/commands/cancel-order';

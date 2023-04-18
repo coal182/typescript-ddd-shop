@@ -1,6 +1,6 @@
 import { inject, injectable, named } from 'inversify';
 
-import { EVENT_STREAM_NAMES, TYPES } from '@constants/types';
+import { EVENT_STREAM_NAMES, TYPES } from '@storeback/shared/constants/types';
 import { IEventStore } from '@core/i-event-store';
 import { IOrderRepository } from '@storeback/order/domain/i-order-repository';
 import { Order } from '@storeback/order/domain/order';

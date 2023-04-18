@@ -1,27 +1,15 @@
-import { Container } from 'inversify';
-import { Redis } from 'ioredis';
-import { Db } from 'mongodb';
-
-import config from '@config/main';
-import { EVENT_STREAM_NAMES, TYPES } from '@constants/types';
 import { Command } from '@core/command';
+import { EventBus } from '@core/event-bus';
 import { ICommandHandler } from '@core/i-command-handler';
-import { IEventBus } from '@core/i-event-bus';
 import { IEventHandler } from '@core/i-event-handler';
 import { IEventStore } from '@core/i-event-store';
 import { IQueryHandler } from '@core/i-query-handler';
 import { IResponse } from '@core/i-response';
 import { Query } from '@core/query';
 import { CommandBus } from '@infrastructure/command-bus';
-import { createMongodbConnection } from '@infrastructure/db/mongodb';
 import { RedisEventBus } from '@infrastructure/event-bus/redis';
 import { QueryBus } from '@infrastructure/query-bus';
 import { getRedisClient } from '@infrastructure/redis';
-import { AuthorCreatedEventHandler } from '@storeback/author/application/event-handlers/author-created-event-handler';
-import {
-  AuthorReadModelFacade,
-  IAuthorReadModelFacade,
-} from '@storeback/author/infrastructure/projection/authors/read-model';
 import { BookCreator } from '@storeback/book/application/book-creator';
 import { BooksByCriteriaSearcher } from '@storeback/book/application/books-by-criteria-searcher';
 import { CreateBookCommandHandler } from '@storeback/book/application/command-handlers/create-book-command-handler';
@@ -83,6 +71,8 @@ import {
   OrderReadModelFacade,
   IOrderReadModelFacade,
 } from '@storeback/order/infrastructure/projection/orders/read-model';
+import { EVENT_STREAM_NAMES, TYPES } from '@storeback/shared/constants/types';
+import { createMongodbConnection } from '@storeback/shared/db/mongodb';
 import { CreateUserCommandHandler } from '@storeback/user/application/command-handlers/create-user-command-handler';
 import { UpdateUserCommandHandler } from '@storeback/user/application/command-handlers/update-user-command-handler';
 import { UpdateUserPasswordCommandHandler } from '@storeback/user/application/command-handlers/update-user-password-command-handler';
@@ -96,6 +86,16 @@ import { IUserRepository } from '@storeback/user/domain/i-user-repository';
 import { UserEventStore } from '@storeback/user/infrastructure/persistence/user-event-store';
 import { UserRepository } from '@storeback/user/infrastructure/persistence/user-repository';
 import { UserReadModelFacade, IUserReadModelFacade } from '@storeback/user/infrastructure/projection/users/read-model';
+import { Container } from 'inversify';
+import { Redis } from 'ioredis';
+import { Db } from 'mongodb';
+
+import config from '@config/main';
+import { AuthorCreatedEventHandler } from 'src/contexts/store/author/application/event-handlers/author-created-event-handler';
+import {
+  AuthorReadModelFacade,
+  IAuthorReadModelFacade,
+} from 'src/contexts/store/author/infrastructure/projection/authors/read-model';
 
 export const initialiseContainer = async () => {
   const container = new Container();
@@ -110,7 +110,7 @@ export const initialiseContainer = async () => {
 
   container.bind<Redis>(TYPES.RedisSubscriber).toConstantValue(redisSubscriber);
   container.bind<Redis>(TYPES.Redis).toConstantValue(redis);
-  container.bind<IEventBus>(TYPES.EventBus).to(RedisEventBus);
+  container.bind<EventBus>(TYPES.EventBus).to(RedisEventBus);
 
   // Use Cases
   container.bind<BookCreator>(TYPES.BookCreator).to(BookCreator);

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
-import { NotFoundError } from '@shared/errors/not-found-error';
-import { ParsingError } from '@shared/errors/parsing-error';
+import { NotFoundError } from '@shared/domain/errors/not-found-error';
+import { ParsingError } from '@shared/domain/errors/parsing-error';
 import { CreateBookCommand } from '@storeback/book/application/commands/create-book';
 
 import { Feed } from './feed';

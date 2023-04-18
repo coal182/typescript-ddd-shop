@@ -1,17 +1,17 @@
+import { CommandBus } from '@infrastructure/command-bus';
+import { PasswordNotMatchException, NotFoundException } from '@shared/errors/application-error';
+import { TYPES } from '@storeback/shared/constants/types';
+import { CreateUserCommand } from '@storeback/user/application/commands/create-user';
+import { UpdateUserCommand } from '@storeback/user/application/commands/update-user';
+import { UpdateUserPasswordCommand } from '@storeback/user/application/commands/update-user-password';
+import { IUserReadModelFacade } from '@storeback/user/infrastructure/projection/users/read-model';
 import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, httpGet, httpPost, httpPut, request, response } from 'inversify-express-utils';
 import { v4 as uuidv4 } from 'uuid';
 
-import { TYPES } from '@constants/types';
-import { PasswordNotMatchException, NotFoundException } from '@shared/errors/application-error';
-import { CommandBus } from '@infrastructure/command-bus';
-import { IAuthorReadModelFacade } from '@storeback/author/infrastructure/projection/authors/read-model';
-import { CreateUserCommand } from '@storeback/user/application/commands/create-user';
-import { UpdateUserCommand } from '@storeback/user/application/commands/update-user';
-import { UpdateUserPasswordCommand } from '@storeback/user/application/commands/update-user-password';
-import { IUserReadModelFacade } from '@storeback/user/infrastructure/projection/users/read-model';
+import { IAuthorReadModelFacade } from 'src/contexts/store/author/infrastructure/projection/authors/read-model';
 
 import { verifyJWT_MW } from '../middlewares/auth';
 import { ok } from '../processors/response';
