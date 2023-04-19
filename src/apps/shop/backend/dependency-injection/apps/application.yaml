@@ -1,0 +1,30 @@
+services:
+  Apps.Shop.Backend.controllers.ProductPostController:
+    class: ../../controllers/product-post-controller
+    main: ProductPostController
+    arguments: ['@Shop.Shared.domain.CommandBus']
+
+  Apps.Shop.Backend.controllers.ProductGetAllController:
+    class: ../../controllers/product-get-all-controller
+    main: ProductGetAllController
+    arguments: ['@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.ProductGetByIdController:
+    class: ../../controllers/product-get-by-id-controller
+    main: ProductGetByIdController
+    arguments: ['@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.ProductGetByCriteriaController:
+    class: ../../controllers/product-get-by-criteria-controller
+    main: ProductGetByCriteriaController
+    arguments: ['@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.ProductPutDescriptionController:
+    class: ../../controllers/product-put-description-controller
+    main: ProductPutDescriptionController
+    arguments: ['@Shop.Shared.domain.CommandBus']
+
+  Apps.Shop.Backend.controllers.ProductPutImageController:
+    class: ../../controllers/product-put-image-controller
+    main: ProductPutImageController
+    arguments: ['@Shop.Shared.domain.CommandBus']

@@ -8,13 +8,13 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "start": "node ./dist/src/apps/store/backend/index.js",
-    "dev": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/store/backend/start.ts",
-    "dev:importer": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/store/importer/index.ts",
+    "start": "node ./dist/src/apps/shop/backend/index.js",
+    "dev": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/shop/backend/start.ts",
+    "dev:importer": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/shop/importer/index.ts",
     "lint": "eslint --fix .",
     "postinstall": "npm run build",
     "test": "mocha -r ts-node/register -r tsconfig-paths/register test/**/*.spec.ts --timeout 60000 --exit",
-    "command:store:rabbitmq": "NODE_ENV=production ts-node src/apps/store/backend/command/runConfigureRabbitMQCommand"
+    "command:store:rabbitmq": "NODE_ENV=production ts-node src/apps/shop/backend/command/runConfigureRabbitMQCommand"
   },
   "_moduleAliases": {
     "@core": "dist/src/shared/core",
@@ -22,8 +22,8 @@
     "@constants": "dist/src/shared/constants",
     "@infrastructure": "dist/src/shared/infrastructure",
     "@interfaces": "dist/src/interfaces",
-    "@storeback": "dist/src/contexts/store/backend",
-    "@storebackapp": "dist/src/apps/store/backend",
+    "@storeback": "dist/src/contexts/shop/backend",
+    "@storebackapp": "dist/src/apps/shop/backend",
     "@shared": "dist/src/shared"
   },
   "dependencies": {

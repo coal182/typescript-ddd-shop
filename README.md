@@ -1,4 +1,4 @@
-# TypeScript DDD API Boilerplate
+# TypeScript DDD, CQRS, Event Sourcing and Angular Shop
 
 ### Architecture
 
