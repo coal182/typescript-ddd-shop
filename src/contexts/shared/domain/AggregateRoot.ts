@@ -25,14 +25,10 @@ export abstract class AggregateRoot {
   loadFromHistory(events: DomainEvent[]) {
     for (const event of events) {
       this.applyEvent(event);
-      this.__version++;
     }
   }
 
-  private applyEvent(event: DomainEvent, isNew = false) {
-    this[`apply${event.eventName}`](event);
-    if (isNew) this.domainEvents.push(event);
-  }
+  abstract applyEvent(event: DomainEvent): void;
 
   abstract toPrimitives(): any;
 }

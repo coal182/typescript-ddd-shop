@@ -5,7 +5,7 @@ import { DomainEventSubscribers } from './DomainEventSubscribers';
 type DomainEventJSON = {
   type: string;
   aggregateId: string;
-  attributes: string;
+  data: string;
   id: string;
   occurred_on: string;
 };
@@ -26,8 +26,9 @@ export class DomainEventDeserializer extends Map<string, DomainEventClass> {
   }
 
   deserialize(event: string) {
+    console.log('📌 ~ deserialize event:', event);
     const eventData = JSON.parse(event).data as DomainEventJSON;
-    const { type, aggregateId, attributes, id, occurred_on } = eventData;
+    const { type, aggregateId, data, id, occurred_on } = eventData;
     const eventClass = super.get(type);
 
     if (!eventClass) {
@@ -36,7 +37,7 @@ export class DomainEventDeserializer extends Map<string, DomainEventClass> {
 
     return eventClass.fromPrimitives({
       aggregateId,
-      attributes,
+      data,
       occurredOn: new Date(occurred_on),
       eventId: id,
     });

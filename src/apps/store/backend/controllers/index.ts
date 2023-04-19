@@ -1,11 +1,11 @@
 //export * from './common-controller';
-export { BookGetByCriteriaController } from './book-get-by-criteria-controller';
-export { BookGetAllController } from './book-get-all-controller';
-export { BookGetByIdController } from './book-get-by-id-controller';
-export { BookPostController } from './book-post-controller';
-//export * from './book-put-controller';
+export { ProductGetByCriteriaController } from './product-get-by-criteria-controller';
+export { ProductGetAllController } from './product-get-all-controller';
+export { ProductGetByIdController } from './product-get-by-id-controller';
+export { ProductPostController } from './product-post-controller';
+export { ProductPutDescriptionController } from './product-put-description-controller';
+export { ProductPutImageController } from './product-put-image-controller';
 //export * from './user-controller';
-//export * from './loan-controller';
 //export * from './login-controller';
 //export * from './cart-controller';
 //export * from './order-controller';

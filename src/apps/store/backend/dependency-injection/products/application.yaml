@@ -1,0 +1,77 @@
+services:
+  Store.Products.domain.ProductRepository:
+    class: ../../../../../contexts/store/product/infrastructure/persistence/MongoProductRepository
+    arguments: ['@Store.Shared.ConnectionManager']
+
+  Store.Products.domain.ProductEventStore:
+    class: ../../../../../contexts/store/product/infrastructure/persistence/MongoProductEventStore
+    arguments: ['@Store.Shared.ConnectionManager']
+
+  Store.Products.application.ProductCreator:
+    class: ../../../../../contexts/store/product/application/create/product-creator
+    main: ProductCreator
+    arguments: ['@Store.Shared.domain.EventBus', '@Store.Products.domain.ProductEventStore']
+
+  Store.Products.CreateProductCommandHandler:
+    class: ../../../../../contexts/store/product/application/command-handlers/create-product-command-handler
+    main: CreateProductCommandHandler
+    arguments: ['@Store.Products.application.ProductCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Store.Products.UpdateProductDescriptionCommandHandler:
+    class: ../../../../../contexts/store/product/application/command-handlers/update-product-description-command-handler
+    main: UpdateProductDescriptionCommandHandler
+    arguments: ['@Store.Shared.domain.EventBus', '@Store.Products.domain.ProductEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
+  Store.Products.UpdateProductImageCommandHandler:
+    class: ../../../../../contexts/store/product/application/command-handlers/update-product-image-command-handler
+    main: UpdateProductImageCommandHandler
+    arguments: ['@Store.Shared.domain.EventBus', '@Store.Products.domain.ProductEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
+  Store.Products.application.ProductsFinder:
+    class: ../../../../../contexts/store/product/application/SearchAll/ProductsFinder
+    arguments: ['@Store.Products.domain.ProductRepository']
+
+  Store.Products.SearchAllProductsQueryHandler:
+    class: ../../../../../contexts/store/product/application/SearchAll/SearchAllProductsQueryHandler
+    arguments: ['@Store.Products.application.ProductsFinder']
+    tags:
+      - { name: 'queryHandler' }
+
+  Store.Products.CreateProductOnProductCreated:
+    class: ../../../../../contexts/store/product/application/event-handlers/product-created-event-handler
+    main: ProductCreatedEventHandler
+    arguments: ['@Store.Products.domain.ProductRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Store.Products.ProductDescriptionChanged:
+    class: ../../../../../contexts/store/product/application/event-handlers/product-description-changed-event-handler
+    main: ProductDescriptionChangedEventHandler
+    arguments: ['@Store.Products.domain.ProductEventStore', '@Store.Products.domain.ProductRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Store.Products.ProductImageChanged:
+    class: ../../../../../contexts/store/product/application/event-handlers/product-image-changed-event-handler
+    main: ProductImageChangedEventHandler
+    arguments: ['@Store.Products.domain.ProductEventStore', '@Store.Products.domain.ProductRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Store.Products.application.ProductsByCriteriaSearcher:
+    class: ../../../../../contexts/store/product/application/SearchByCriteria/products-by-criteria-searcher
+    main: ProductsByCriteriaSearcher
+    arguments: ['@Store.Products.domain.ProductRepository']
+
+  Store.Products.SearchProductsByCriteriaQueryHandler:
+    class: ../../../../../contexts/store/product/application/SearchByCriteria/search-products-by-criteria-query-handler
+    main: SearchProductsByCriteriaQueryHandler
+    arguments: ['@Store.Products.application.ProductsByCriteriaSearcher']
+    tags:
+      - { name: 'queryHandler' }

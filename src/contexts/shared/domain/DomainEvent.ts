@@ -6,7 +6,7 @@ export abstract class DomainEvent {
     aggregateId: string;
     eventId: string;
     occurredOn: Date;
-    attributes: DomainEventAttributes;
+    data: DomainEventData;
   }) => DomainEvent;
 
   readonly aggregateId: string;
@@ -22,7 +22,7 @@ export abstract class DomainEvent {
     this.eventName = eventName;
   }
 
-  abstract toPrimitives(): DomainEventAttributes;
+  abstract toPrimitives(): DomainEventData;
 }
 
 export type DomainEventClass = {
@@ -31,8 +31,8 @@ export type DomainEventClass = {
     aggregateId: string;
     eventId: string;
     occurredOn: Date;
-    attributes: DomainEventAttributes;
+    data: DomainEventData;
   }): DomainEvent;
 };
 
-type DomainEventAttributes = any;
+type DomainEventData = any;

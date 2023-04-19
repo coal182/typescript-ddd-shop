@@ -1,17 +1,13 @@
 import { Collection, MongoClient } from 'mongodb';
 
-import { DomainEventDeserializer } from '@infrastructure/EventBus/DomainEventDeserializer';
-import { DomainEvent } from '@shared/domain/DomainEvent';
+import { DomainEvent, DomainEventClass } from '@shared/domain/DomainEvent';
 import { Uuid } from '@shared/value-objects/uuid';
 
 export abstract class MongoEventStore {
-  constructor(private _client: Promise<MongoClient>, private deserializer?: DomainEventDeserializer) {}
-
-  setDeserializer(deserializer: DomainEventDeserializer) {
-    this.deserializer = deserializer;
-  }
+  constructor(private _client: Promise<MongoClient>) {}
 
   protected abstract collectionName(): string;
+  protected abstract eventsMap(): Map<string, DomainEventClass>;
 
   protected client(): Promise<MongoClient> {
     return this._client;
@@ -25,8 +21,7 @@ export abstract class MongoEventStore {
     const collection = await this.collection();
 
     for (const event of events) {
-      //const eventSerialized = DomainEventJsonSerializer.serialize(event);
-      const eventSerialized = {
+      const eventPrimitives = {
         ...event.toPrimitives(),
       };
       const options = { upsert: true };
@@ -36,7 +31,7 @@ export abstract class MongoEventStore {
           eventId: event.eventId,
           aggregateId: event.aggregateId,
           eventName: event.eventName,
-          data: eventSerialized,
+          data: eventPrimitives,
           occurredOn: event.occurredOn,
         },
       };
@@ -47,14 +42,25 @@ export abstract class MongoEventStore {
 
   async findByAggregateId(aggregateId: Uuid): Promise<DomainEvent[]> {
     const collection = await this.collection();
+    const documents = await collection.find({ aggregateId: aggregateId.value }).sort({ occurredOn: 1 }).toArray();
 
-    const documents = await collection.find({ aggregateId }).sort({ occurredOn: 1 }).toArray();
-    if (!this.deserializer) {
-      throw new Error('Deserializer has not been set yet');
-    }
+    const events = documents.map<DomainEvent>((document) => {
+      const { aggregateId, eventId, eventName, data, occurredOn } = document;
 
-    const events = documents.map((document) => this.deserializer!.deserialize(document.event));
+      const eventClass = this.eventsMap().get(eventName);
+      if (!eventClass) {
+        console.log('📌 ~ `DomainEvent mapping not found for event`:', eventName);
+        throw Error(`DomainEvent mapping not found for event ${eventName}`);
+      }
 
-    return events.filter(Boolean) as Array<DomainEvent>;
+      return eventClass.fromPrimitives({
+        aggregateId,
+        eventId,
+        occurredOn,
+        data,
+      });
+    });
+
+    return events;
   }
 }

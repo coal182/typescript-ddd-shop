@@ -1,20 +1,30 @@
 services:
-  Apps.Store.Backend.controllers.BookPostController:
-    class: ../../controllers/book-post-controller
-    main: BookPostController
+  Apps.Store.Backend.controllers.ProductPostController:
+    class: ../../controllers/product-post-controller
+    main: ProductPostController
     arguments: ['@Store.Shared.domain.CommandBus']
 
-  Apps.Store.Backend.controllers.BookGetAllController:
-    class: ../../controllers/book-get-all-controller
-    main: BookGetAllController
+  Apps.Store.Backend.controllers.ProductGetAllController:
+    class: ../../controllers/product-get-all-controller
+    main: ProductGetAllController
     arguments: ['@Store.Shared.domain.QueryBus']
 
-  Apps.Store.Backend.controllers.BookGetByIdController:
-    class: ../../controllers/book-get-by-id-controller
-    main: BookGetByIdController
+  Apps.Store.Backend.controllers.ProductGetByIdController:
+    class: ../../controllers/product-get-by-id-controller
+    main: ProductGetByIdController
     arguments: ['@Store.Shared.domain.QueryBus']
 
-  Apps.Store.Backend.controllers.BookGetByCriteriaController:
-    class: ../../controllers/book-get-by-criteria-controller
-    main: BookGetByCriteriaController
+  Apps.Store.Backend.controllers.ProductGetByCriteriaController:
+    class: ../../controllers/product-get-by-criteria-controller
+    main: ProductGetByCriteriaController
     arguments: ['@Store.Shared.domain.QueryBus']
+
+  Apps.Store.Backend.controllers.ProductPutDescriptionController:
+    class: ../../controllers/product-put-description-controller
+    main: ProductPutDescriptionController
+    arguments: ['@Store.Shared.domain.CommandBus']
+
+  Apps.Store.Backend.controllers.ProductPutImageController:
+    class: ../../controllers/product-put-image-controller
+    main: ProductPutImageController
+    arguments: ['@Store.Shared.domain.CommandBus']
