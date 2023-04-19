@@ -7,7 +7,7 @@ export class InMemoryCommandBus implements CommandBus {
   constructor(private commandHandlers: CommandHandlers) {}
 
   async dispatch(command: Command): Promise<void> {
-    console.log('📌 ~ command:', command);
+    console.log('📌 ~ InMemoryCommandBus - command:', command);
     const handler = this.commandHandlers.get(command);
 
     await handler.handle(command);

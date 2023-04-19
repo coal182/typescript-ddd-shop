@@ -46,7 +46,6 @@ export class Book extends AggregateRoot {
   ): Book {
     const book = new Book(id, name, description, image, author, price);
 
-    console.log('📌 ~ record:');
     book.record(
       new BookCreated({
         aggregateId: book.id.value,

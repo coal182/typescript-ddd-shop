@@ -3,15 +3,14 @@ services:
     class: ../../../../../contexts/store/book/infrastructure/persistence/MongoBookRepository
     arguments: ['@Store.Shared.ConnectionManager']
 
-  Store.Books.domain.BookEventRepository:
-    class: ../../../../../contexts/store/book/infrastructure/persistence/MongoBookEventRepository
+  Store.Books.domain.BookEventStore:
+    class: ../../../../../contexts/store/book/infrastructure/persistence/MongoBookEventStore
     arguments: ['@Store.Shared.ConnectionManager']
 
   Store.Books.application.BookCreator:
     class: ../../../../../contexts/store/book/application/create/book-creator
     main: BookCreator
-    arguments:
-      ['@Store.Books.domain.BookRepository', '@Store.Shared.domain.EventBus', '@Store.Books.domain.BookEventRepository']
+    arguments: ['@Store.Shared.domain.EventBus', '@Store.Books.domain.BookEventStore']
 
   Store.Books.CreateBookCommandHandler:
     class: ../../../../../contexts/store/book/application/command-handlers/create-book-command-handler

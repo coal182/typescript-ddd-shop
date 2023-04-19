@@ -1,20 +1,18 @@
-import { Command } from '@core/command';
+import { v4 as uuidv4 } from 'uuid';
 
-import { Commands } from '@storeback/shared/constants/commands';
+import { Command } from '@shared/domain/Command';
 
 export class CreateBookCommand extends Command {
-  public guid: string;
+  public id: string;
   public name: string;
   public description: string;
   public image: string;
   public author: string;
   public price: number;
-  // Set static name so we can refer to them easily
-  public static commandName = Commands.CREATE_BOOK;
 
-  constructor(guid: string, name: string, description: string, image: string, author: string, price: number) {
-    super(guid);
-    this.guid = guid;
+  constructor(id: string, name: string, description: string, image: string, author: string, price: number) {
+    super();
+    this.id = id || uuidv4();
     this.name = name;
     this.description = description;
     this.image = image;

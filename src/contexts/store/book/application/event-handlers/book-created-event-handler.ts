@@ -20,7 +20,6 @@ export class BookCreatedEventHandler implements DomainEventSubscriber<BookCreate
   }
 
   async on(domainEvent: BookCreated): Promise<void> {
-    console.log('📌 ~ domainEvent:', domainEvent);
     const id = new BookId(domainEvent.aggregateId);
     const name = new BookName(domainEvent.name);
     const description = new BookDescription(domainEvent.description);
@@ -28,7 +27,7 @@ export class BookCreatedEventHandler implements DomainEventSubscriber<BookCreate
     const author = new BookAuthor(domainEvent.author);
     const price = new BookPrice(domainEvent.price);
 
-    const book = Book.create(id, name, description, image, author, price);
+    const book = new Book(id, name, description, image, author, price);
     await this.repository.save(book);
   }
 }

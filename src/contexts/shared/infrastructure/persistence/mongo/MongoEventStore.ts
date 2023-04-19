@@ -4,7 +4,7 @@ import { DomainEventDeserializer } from '@infrastructure/EventBus/DomainEventDes
 import { DomainEvent } from '@shared/domain/DomainEvent';
 import { Uuid } from '@shared/value-objects/uuid';
 
-export abstract class MongoEventRepository {
+export abstract class MongoEventStore {
   constructor(private _client: Promise<MongoClient>, private deserializer?: DomainEventDeserializer) {}
 
   setDeserializer(deserializer: DomainEventDeserializer) {

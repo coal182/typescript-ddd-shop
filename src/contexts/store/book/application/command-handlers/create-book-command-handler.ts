@@ -18,8 +18,7 @@ export class CreateBookCommandHandler implements CommandHandler<CreateBookComman
   }
 
   async handle(command: CreateBookCommand): Promise<void> {
-    console.log('📌 ~ command:', command);
-    const id = new BookId(command.guid);
+    const id = new BookId(command.id);
     const name = new BookName(command.name);
     const description = new BookDescription(command.description);
     const image = new BookImage(command.image);

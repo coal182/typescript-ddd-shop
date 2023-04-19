@@ -22,8 +22,8 @@ export class BookPostController {
     try {
       const { id, name, description, image, authorId: author, price } = req.body;
       console.log('📌 ~ req.body:', req.body);
-      const createCourseCommand = new CreateBookCommand(id, name, description, image, author, price);
-      await this.commandBus.dispatch(createCourseCommand);
+      const createBookCommand = new CreateBookCommand(id, name, description, image, author, price);
+      await this.commandBus.dispatch(createBookCommand);
 
       res.status(httpStatus.CREATED).send();
     } catch (error) {

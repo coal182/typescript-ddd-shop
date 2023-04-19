@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { ICommand } from './i-command';
 
 export abstract class Command implements ICommand {
-  public guid: string;
+  public id: string;
 
-  constructor(guid?: string) {
-    this.guid = guid || uuidv4();
+  constructor(id?: string) {
+    this.id = id || uuidv4();
   }
 }
