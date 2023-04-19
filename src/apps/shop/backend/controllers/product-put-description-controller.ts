@@ -8,12 +8,10 @@ export class ProductPutDescriptionController {
   constructor(private commandBus: CommandBus) {}
 
   async run(req: Request, res: Response) {
-    console.log('📌 ~ req:', req);
     try {
       const { id } = req.params;
       const { description } = req.body;
 
-      console.log('📌 ~ req.body:', req.body);
       const command = new UpdateProductDescriptionCommand(id, description);
       await this.commandBus.dispatch(command);
 

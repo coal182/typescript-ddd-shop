@@ -26,7 +26,6 @@ export class DomainEventDeserializer extends Map<string, DomainEventClass> {
   }
 
   deserialize(event: string) {
-    console.log('📌 ~ deserialize event:', event);
     const eventData = JSON.parse(event).data as DomainEventJSON;
     const { type, aggregateId, data, id, occurred_on } = eventData;
     const eventClass = super.get(type);

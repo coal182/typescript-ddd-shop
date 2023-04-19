@@ -5,7 +5,6 @@ export class ProductsFinder {
 
   async run() {
     const products = await this.productRepository.searchAll();
-    console.log('📌 ~ products:', products);
 
     return products;
   }

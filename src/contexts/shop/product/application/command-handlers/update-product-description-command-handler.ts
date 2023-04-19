@@ -16,12 +16,10 @@ export class UpdateProductDescriptionCommandHandler implements CommandHandler<Up
   }
 
   async handle(command: UpdateProductDescriptionCommand) {
-    console.log('📌 ~ handle command:', command);
     const id = new ProductId(command.id);
     const description = new ProductDescription(command.description);
 
     const events = await this.eventStore.findByAggregateId(id);
-    console.log('📌 ~ UpdateProductDescriptionCommandHandler events:', events);
     if (!events) {
       throw new NotFoundException('Product not found by its id');
     }
@@ -30,7 +28,6 @@ export class UpdateProductDescriptionCommandHandler implements CommandHandler<Up
     product.loadFromHistory(events);
     product.changeDescription(description);
     const newDomainEvents = product.pullDomainEvents();
-    console.log('📌 ~ newDomainEvents:', newDomainEvents);
     await this.eventStore.save(newDomainEvents);
     await this.eventBus.publish(newDomainEvents);
   }

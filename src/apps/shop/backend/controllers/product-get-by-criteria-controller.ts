@@ -13,7 +13,6 @@ export class ProductGetByCriteriaController {
   async run(_req: Request, res: Response) {
     const { query: queryParams } = _req;
     const { filters, orderBy, order, limit, offset } = queryParams;
-    console.log('📌 ~ queryParams:', queryParams);
 
     const query = new SearchProductsByCriteriaQuery(
       this.parseFilters(filters as Array<FilterType>),

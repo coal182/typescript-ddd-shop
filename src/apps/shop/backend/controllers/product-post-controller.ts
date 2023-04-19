@@ -20,7 +20,6 @@ export class ProductPostController {
   async run(req: Request<ProductPostRequest>, res: Response) {
     try {
       const { id, name, description, image, price } = req.body;
-      console.log('📌 ~ req.body:', req.body);
       const createProductCommand = new CreateProductCommand(id, name, description, image, price);
       await this.commandBus.dispatch(createProductCommand);
 

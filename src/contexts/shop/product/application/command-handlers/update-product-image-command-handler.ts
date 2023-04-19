@@ -16,12 +16,10 @@ export class UpdateProductImageCommandHandler implements CommandHandler<UpdatePr
   }
 
   async handle(command: UpdateProductImageCommand) {
-    console.log('📌 ~ handle command:', command);
     const id = new ProductId(command.id);
     const image = new ProductImage(command.image);
 
     const events = await this.eventStore.findByAggregateId(id);
-    console.log('📌 ~ UpdateProductImageCommandHandler events:', events);
     if (!events) {
       throw new NotFoundException('Product not found by its id');
     }
@@ -30,7 +28,6 @@ export class UpdateProductImageCommandHandler implements CommandHandler<UpdatePr
     product.loadFromHistory(events);
     product.changeImage(image);
     const newDomainEvents = product.pullDomainEvents();
-    console.log('📌 ~ newDomainEvents:', newDomainEvents);
     await this.eventStore.save(newDomainEvents);
     await this.eventBus.publish(newDomainEvents);
   }

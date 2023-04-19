@@ -40,7 +40,7 @@ export abstract class MongoEventStore {
     }
   }
 
-  async findByAggregateId(aggregateId: Uuid): Promise<DomainEvent[]> {
+  protected async findByAggregateId(aggregateId: Uuid): Promise<DomainEvent[]> {
     const collection = await this.collection();
     const documents = await collection.find({ aggregateId: aggregateId.value }).sort({ occurredOn: 1 }).toArray();
 

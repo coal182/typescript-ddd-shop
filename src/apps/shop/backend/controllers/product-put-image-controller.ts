@@ -12,7 +12,6 @@ export class ProductPutImageController {
       const { id } = req.params;
       const { image } = req.body;
 
-      console.log('📌 ~ req.body:', req.body);
       const command = new UpdateProductImageCommand(id, image);
       await this.commandBus.dispatch(command);
 

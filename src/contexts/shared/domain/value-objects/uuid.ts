@@ -17,7 +17,6 @@ export class Uuid {
   }
 
   private ensureIsValidUuid(id: string): void {
-    console.log('📌 ~ id:', id);
     if (!validate(id)) {
       throw new InvalidArgumentError(`<${this.constructor.name}> does not allow the value <${id}>`);
     }

@@ -18,7 +18,6 @@ export class ProductImageChangedEventHandler implements DomainEventSubscriber<Pr
   }
 
   async on(domainEvent: ProductImageChanged): Promise<void> {
-    console.log('📌 ~ ProductImageChangedEventHandler domainEvent:', domainEvent);
     const id = new ProductId(domainEvent.aggregateId);
     const image = new ProductImage(domainEvent.image);
 
