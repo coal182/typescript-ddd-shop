@@ -1,7 +1,7 @@
 import { Collection, MongoClient } from 'mongodb';
 
 import { DomainEvent, DomainEventClass } from '@shared/domain/DomainEvent';
-import { Uuid } from '@shared/value-objects/uuid';
+import { Uuid } from '@shared/domain/value-objects/uuid';
 
 export abstract class MongoEventStore {
   constructor(private _client: Promise<MongoClient>) {}

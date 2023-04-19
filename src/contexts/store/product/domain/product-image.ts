@@ -1,5 +1,5 @@
 import { InvalidArgumentError } from '@shared/domain/errors/invalid-argument-error';
-import { StringValueObject } from '@shared/value-objects/string-value-object';
+import { StringValueObject } from '@shared/domain/value-objects/string-value-object';
 
 export class ProductImage extends StringValueObject {
   public constructor(value: string) {

@@ -1,5 +1,5 @@
 import { InvalidArgumentError } from '@shared/domain/errors/invalid-argument-error';
-import { StringValueObject } from '@storeback/shared/value-objects/string-value-object';
+import { StringValueObject } from '@shared/domain/value-objects/string-value-object';
 
 export class OrderName extends StringValueObject {
   public constructor(value: string) {
