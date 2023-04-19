@@ -3,7 +3,6 @@ import { DomainEvent } from './DomainEvent';
 type Prefix<K> = K extends string ? `apply${K}` : K;
 export abstract class AggregateRoot {
   [x: Prefix<string>]: (event: any) => void;
-  private __version = -1;
   private domainEvents: Array<DomainEvent>;
 
   constructor() {
