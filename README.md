@@ -8,7 +8,7 @@ The workflow is that the write side sends the `commands` to the `command handler
 
 The only source of truth of Event Sourcing systems is the `event store` while the data in the read store is simply a derivative of the events generated from the write side. This means we can use totally different data structure between the read and the write sides and we can replay the events from the event store from the whenever we want the regenerate the denormalised data in whatever shapes we want.
 
-In this example, we use `MongoDB` for both event store and read store, for example, having the collection product_events to store the events and the collection products to project the last state of the aggregates as the read store model.
+In this example, we use `MongoDB` for both event store and read store, for example, having the collection `product_events` to store the events and th`collection`product` to project the last state of the aggregates as the read store model.
 
 The commands are sent by the frontend to the `commandBus` which then selects appropriate `command handlers` for the commands. The command handlers then prepare the `Aggregate Root` and apply the business logic suitable for them. If the commands succeed, they result in events which will then be sent to the `eventBus` to the `event handlers`. In this example, the eventBus is implemented using `RabbitMq`.
 
