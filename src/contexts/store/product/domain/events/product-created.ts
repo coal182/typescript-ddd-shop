@@ -1,4 +1,4 @@
-import { DomainEvent } from '@core/domain-event';
+import { DomainEvent } from '@shared/domain/DomainEvent';
 
 type CreateProductDomainEventData = {
   readonly name: string;

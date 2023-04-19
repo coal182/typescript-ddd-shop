@@ -1,5 +1,5 @@
-import { DomainEventClass } from '@core/domain-event';
-import { DomainEventSubscriber } from '@core/domain-event-subscriber';
+import { DomainEventClass } from '@shared/domain/DomainEvent';
+import { DomainEventSubscriber } from '@shared/domain/DomainEventSubscriber';
 import { NotFoundException } from '@shared/domain/errors/application-error';
 import { ProductDescriptionChanged } from '@storeback/product/domain/events/product-description-changed';
 import { Product } from '@storeback/product/domain/product';
