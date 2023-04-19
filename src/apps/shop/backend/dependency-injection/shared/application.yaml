@@ -1,12 +1,14 @@
 services:
   Shop.Shared.MongoConfig:
     factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/persistence/mongo/MongoConfigFactory
+      class: ../../../../../contexts/shop/shared/infrastructure/persistence/mongo/mongo-config-factory
+      main: MongoConfigFactory
       method: 'createConfig'
 
   Shop.Shared.ConnectionManager:
     factory:
-      class: ../../../../../contexts/shared/infrastructure/persistence/mongo/MongoClientFactory
+      class: ../../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
+      main: MongoClientFactory
       method: 'createClient'
     arguments: ['backoffice', '@Shop.Shared.MongoConfig']
 
@@ -22,12 +24,14 @@ services:
 
   Shop.Shared.RabbitMQConfig:
     factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/RabbitMQConfigFactory
+      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-config-factory
+      main: RabbitMQConfigFactory
       method: 'createConfig'
 
   Shop.Shared.domain.EventBus:
     factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/RabbitMQEventBusFactory
+      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
+      main: RabbitMQEventBusFactory
       method: 'create'
     arguments:
       [

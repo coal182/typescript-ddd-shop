@@ -3,7 +3,7 @@ import { RabbitMqConnection } from '@infrastructure/event-bus/rabbitmq/rabbitmq-
 import { RabbitMQEventBus } from '@infrastructure/event-bus/rabbitmq/rabbitmq-event-bus';
 import { RabbitMQqueueFormatter } from '@infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter';
 
-import { RabbitMQConfig } from './RabbitMQConfigFactory';
+import { RabbitMQConfig } from './rabbitmq-config-factory';
 
 export class RabbitMQEventBusFactory {
   static create(

@@ -3,7 +3,7 @@ import { ContainerBuilder } from 'node-dependency-injection';
 import { DomainEventSubscribers } from '../../../../contexts/shared/infrastructure/event-bus/domain-event-subscribers';
 import { RabbitMQConfigurer } from '../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer';
 import { RabbitMqConnection } from '../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-connection';
-import { RabbitMQConfig } from '../../../../contexts/shop/shared/infrastructure/rabbitmq/RabbitMQConfigFactory';
+import { RabbitMQConfig } from '../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-config-factory';
 
 export class ConfigureRabbitMQCommand {
   static async run(container: ContainerBuilder) {
