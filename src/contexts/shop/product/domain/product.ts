@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AggregateRoot } from '@shared/domain/AggregateRoot';
-import { DomainEvent } from '@shared/domain/DomainEvent';
+import { AggregateRoot } from '@shared/domain/aggregate-root';
+import { DomainEvent } from '@shared/domain/domain-event';
 
 import { ProductCreated } from './events/product-created';
 import { ProductDescriptionChanged } from './events/product-description-changed';

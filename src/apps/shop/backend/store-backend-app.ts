@@ -1,11 +1,11 @@
 import * as dotenv from 'dotenv';
 import { ContainerBuilder } from 'node-dependency-injection';
 
-import { DomainEventSubscribers } from '@infrastructure/EventBus/DomainEventSubscribers';
-import { RabbitMqConnection } from '@infrastructure/EventBus/RabbitMQ/RabbitMqConnection';
-import { EventBus } from '@shared/domain/EventBus';
+import { DomainEventSubscribers } from '@infrastructure/event-bus/domain-event-subscribers';
+import { RabbitMqConnection } from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
+import { EventBus } from '@shared/domain/event-bus';
 
-import { ConfigureRabbitMQCommand } from './command/ConfigureRabbitMQCommand';
+import { ConfigureRabbitMQCommand } from './command/configure-rabbitmq-command';
 import { containerFactory } from './dependency-injection';
 import { Server } from './server';
 

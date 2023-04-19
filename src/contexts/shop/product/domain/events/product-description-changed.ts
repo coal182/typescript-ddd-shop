@@ -1,4 +1,4 @@
-import { DomainEvent } from '@shared/domain/DomainEvent';
+import { DomainEvent } from '@shared/domain/domain-event';
 
 type ChangeProductDescriptionDomainEventData = {
   readonly description: string;

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { Command } from '@shared/domain/Command';
+import { Command } from '@shared/domain/command';
 
 export class CreateProductCommand extends Command {
   public id: string;

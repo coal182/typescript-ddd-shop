@@ -1,10 +1,12 @@
 services:
   Shop.Products.domain.ProductRepository:
-    class: ../../../../../contexts/shop/product/infrastructure/persistence/MongoProductRepository
+    class: ../../../../../contexts/shop/product/infrastructure/persistence/mongo-product-repository
+    main: MongoProductRepository
     arguments: ['@Shop.Shared.ConnectionManager']
 
   Shop.Products.domain.ProductEventStore:
-    class: ../../../../../contexts/shop/product/infrastructure/persistence/MongoProductEventStore
+    class: ../../../../../contexts/shop/product/infrastructure/persistence/mongo-product-event-store
+    main: MongoProductEventStore
     arguments: ['@Shop.Shared.ConnectionManager']
 
   Shop.Products.application.ProductCreator:
@@ -34,11 +36,13 @@ services:
       - { name: 'commandHandler' }
 
   Shop.Products.application.ProductsFinder:
-    class: ../../../../../contexts/shop/product/application/SearchAll/ProductsFinder
+    class: ../../../../../contexts/shop/product/application/search-all/products-finder
+    main: ProductsFinder
     arguments: ['@Shop.Products.domain.ProductRepository']
 
   Shop.Products.SearchAllProductsQueryHandler:
-    class: ../../../../../contexts/shop/product/application/SearchAll/SearchAllProductsQueryHandler
+    class: ../../../../../contexts/shop/product/application/search-all/search-all-products-query-handler
+    main: SearchAllProductsQueryHandler
     arguments: ['@Shop.Products.application.ProductsFinder']
     tags:
       - { name: 'queryHandler' }
@@ -65,12 +69,12 @@ services:
       - { name: 'domainEventSubscriber' }
 
   Shop.Products.application.ProductsByCriteriaSearcher:
-    class: ../../../../../contexts/shop/product/application/SearchByCriteria/products-by-criteria-searcher
+    class: ../../../../../contexts/shop/product/application/search-by-criteria/products-by-criteria-searcher
     main: ProductsByCriteriaSearcher
     arguments: ['@Shop.Products.domain.ProductRepository']
 
   Shop.Products.SearchProductsByCriteriaQueryHandler:
-    class: ../../../../../contexts/shop/product/application/SearchByCriteria/search-products-by-criteria-query-handler
+    class: ../../../../../contexts/shop/product/application/search-by-criteria/search-products-by-criteria-query-handler
     main: SearchProductsByCriteriaQueryHandler
     arguments: ['@Shop.Products.application.ProductsByCriteriaSearcher']
     tags:

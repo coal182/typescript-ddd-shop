@@ -9,22 +9,25 @@ services:
       class: ../../../../../contexts/shared/infrastructure/persistence/mongo/MongoClientFactory
       method: 'createClient'
     arguments: ['backoffice', '@Shop.Shared.MongoConfig']
+
   Shop.Shared.CommandHandlers:
-    class: ../../../../../contexts/shared/infrastructure/CommandBus/CommandHandlers
+    class: ../../../../../contexts/shared/infrastructure/command-bus/command-handlers
+    main: CommandHandlers
     arguments: ['!tagged commandHandler']
 
   Shop.Shared.domain.CommandBus:
-    class: ../../../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus
+    class: ../../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
+    main: InMemoryCommandBus
     arguments: ['@Shop.Shared.CommandHandlers']
 
   Shop.Shared.RabbitMQConfig:
     factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/RabbitMQ/RabbitMQConfigFactory
+      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/RabbitMQConfigFactory
       method: 'createConfig'
 
   Shop.Shared.domain.EventBus:
     factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/RabbitMQ/RabbitMQEventBusFactory
+      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/RabbitMQEventBusFactory
       method: 'create'
     arguments:
       [
@@ -35,29 +38,36 @@ services:
       ]
 
   Shop.Shared.RabbitMQQueueFormatter:
-    class: ../../../../../contexts/shared/infrastructure/EventBus/RabbitMQ/RabbitMQqueueFormatter
+    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
+    main: RabbitMQqueueFormatter
     arguments: ['store']
 
   Shop.Shared.RabbitMQConnection:
-    class: ../../../../../contexts/shared/infrastructure/EventBus/RabbitMQ/RabbitMqConnection
+    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-connection
+    main: RabbitMqConnection
     arguments: ['@Shop.Shared.RabbitMQConfig']
 
   Shop.Shared.RabbitMQqueueFormatter:
-    class: ../../../../../contexts/shared/infrastructure/EventBus/RabbitMQ/RabbitMQqueueFormatter
+    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
+    main: RabbitMQqueueFormatter
     arguments: ['store']
 
   Shop.Shared.RabbitMQConfigurer:
-    class: ../../../../../contexts/shared/infrastructure/EventBus/RabbitMQ/RabbitMQConfigurer
+    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
+    main: RabbitMQConfigurer
     arguments: ['@Shop.Shared.RabbitMQConnection', '@Shop.Shared.RabbitMQQueueFormatter']
 
   Shop.Shared.DomainEventFailoverPublisher:
-    class: ../../../../../contexts/shared/infrastructure/EventBus/DomainEventFailoverPublisher/DomainEventFailoverPublisher
+    class: ../../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
+    main: DomainEventFailoverPublisher
     arguments: ['@Shop.Shared.ConnectionManager']
 
   Shop.Shared.QueryHandlers:
-    class: ../../../../../contexts/shared/infrastructure/QueryBus/QueryHandlers
+    class: ../../../../../contexts/shared/infrastructure/query-bus/query-handlers
+    main: QueryHandlers
     arguments: ['!tagged queryHandler']
 
   Shop.Shared.domain.QueryBus:
-    class: ../../../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus
+    class: ../../../../../contexts/shared/infrastructure/query-bus/in-memory-query-bus
+    main: InMemoryQueryBus
     arguments: ['@Shop.Shared.QueryHandlers']

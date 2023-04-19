@@ -1,11 +1,11 @@
-import { EventBus } from '@shared/domain/EventBus';
+import { EventBus } from '@shared/domain/event-bus';
 import { Product } from 'src/contexts/shop/product/domain/product';
 import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
+import { ProductEventStore } from 'src/contexts/shop/product/domain/product-event-store';
 import { ProductId } from 'src/contexts/shop/product/domain/product-id';
 import { ProductImage } from 'src/contexts/shop/product/domain/product-image';
 import { ProductName } from 'src/contexts/shop/product/domain/product-name';
 import { ProductPrice } from 'src/contexts/shop/product/domain/product-price';
-import { ProductEventStore } from 'src/contexts/shop/product/domain/ProductEventStore';
 
 export class ProductCreator {
   constructor(private eventBus: EventBus, private eventStore: ProductEventStore) {}

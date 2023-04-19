@@ -1,4 +1,4 @@
-import MongoConfig from '@shared/infrastructure/persistence/mongo/MongoConfig';
+import MongoConfig from '@shared/infrastructure/persistence/mongo/mongo-config';
 
 import config from '../../config';
 

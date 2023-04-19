@@ -1,5 +1,5 @@
-import { Command } from '@shared/domain/Command';
-import { CommandHandler } from '@shared/domain/CommandHandler';
+import { Command } from '@shared/domain/command';
+import { CommandHandler } from '@shared/domain/command-handler';
 import { CreateProductCommand } from 'src/contexts/shop/product/application/commands/create-product';
 import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
 import { ProductId } from 'src/contexts/shop/product/domain/product-id';

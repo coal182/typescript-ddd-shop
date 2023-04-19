@@ -1,12 +1,12 @@
-import { Command } from '@shared/domain/Command';
-import { CommandHandler } from '@shared/domain/CommandHandler';
+import { Command } from '@shared/domain/command';
+import { CommandHandler } from '@shared/domain/command-handler';
 import { NotFoundException } from '@shared/domain/errors/application-error';
-import { EventBus } from '@shared/domain/EventBus';
+import { EventBus } from '@shared/domain/event-bus';
 import { UpdateProductDescriptionCommand } from 'src/contexts/shop/product/application/commands/update-product-description';
 import { Product } from 'src/contexts/shop/product/domain/product';
 import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
+import { ProductEventStore } from 'src/contexts/shop/product/domain/product-event-store';
 import { ProductId } from 'src/contexts/shop/product/domain/product-id';
-import { ProductEventStore } from 'src/contexts/shop/product/domain/ProductEventStore';
 
 export class UpdateProductDescriptionCommandHandler implements CommandHandler<UpdateProductDescriptionCommand> {
   constructor(private eventBus: EventBus, private eventStore: ProductEventStore) {}

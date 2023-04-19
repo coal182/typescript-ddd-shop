@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
-import { CommandBus } from '@shared/domain/CommandBus';
+import { CommandBus } from '@shared/domain/command-bus';
 import { UpdateProductImageCommand } from 'src/contexts/shop/product/application/commands/update-product-image';
 
 export class ProductPutImageController {

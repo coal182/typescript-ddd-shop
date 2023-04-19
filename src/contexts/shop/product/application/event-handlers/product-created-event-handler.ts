@@ -1,5 +1,5 @@
-import { DomainEventClass } from '@shared/domain/DomainEvent';
-import { DomainEventSubscriber } from '@shared/domain/DomainEventSubscriber';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
 import { ProductCreated } from 'src/contexts/shop/product/domain/events/product-created';
 import { Product } from 'src/contexts/shop/product/domain/product';
 import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
@@ -7,7 +7,7 @@ import { ProductId } from 'src/contexts/shop/product/domain/product-id';
 import { ProductImage } from 'src/contexts/shop/product/domain/product-image';
 import { ProductName } from 'src/contexts/shop/product/domain/product-name';
 import { ProductPrice } from 'src/contexts/shop/product/domain/product-price';
-import { ProductRepository } from 'src/contexts/shop/product/domain/ProductRepository';
+import { ProductRepository } from 'src/contexts/shop/product/domain/product-repository';
 
 export class ProductCreatedEventHandler implements DomainEventSubscriber<ProductCreated> {
   public event = ProductCreated.name;
