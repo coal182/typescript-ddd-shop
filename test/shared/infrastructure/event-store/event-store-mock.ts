@@ -1,7 +1,4 @@
-import { ConcurrencyException, NotFoundException } from '@shared/errors/application-error';
-import { EventDescriptor } from '@core/event-descriptor';
-import { IEvent } from '@core/i-event';
-import { IEventStore } from '@core/i-event-store';
+import { ConcurrencyException, NotFoundException } from '@shared/domain/errors/application-error';
 
 export abstract class EventStoreMock implements IEventStore {
   private eventCollection: Array<EventDescriptor>;

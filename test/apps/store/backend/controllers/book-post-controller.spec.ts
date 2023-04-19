@@ -8,7 +8,7 @@ import { Request, Response } from 'express';
 import sinon from 'sinon';
 import { v4 as uuidv4 } from 'uuid';
 
-import { BookReadModelFacadeMock } from '../../../../contexts/store/backend/product/__mocks__/read-model';
+import { BookReadModelFacadeMock } from '../../../../contexts/shop/backend/product/__mocks__/read-model';
 
 describe(ProductPostController.name, () => {
   const commandBus = new CommandBus();
