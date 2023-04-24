@@ -63,3 +63,8 @@ services:
     class: ../../controllers/login-post-controller
     main: LoginPostController
     arguments: ['@Shop.Shared.domain.CommandBus', '@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.LoginRenewGetController:
+    class: ../../controllers/login-renew-get-controller
+    main: LoginRenewGetController
+    arguments: ['@Shop.Shared.domain.QueryBus']

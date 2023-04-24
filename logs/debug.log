@@ -138,3 +138,28 @@
 [32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
 [32minfo[39m:   Press CTRL-C to stop
 
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: The filter is invalid {"stack":"Error: The filter is invalid\n    at fromValues (/app/src/contexts/shared/domain/criteria/filter.ts:24:13)\n    at Array.map (<anonymous>)\n    at Function.fromValues (/app/src/contexts/shared/domain/criteria/filters.ts:11:32)\n    at SearchUsersByCriteriaQueryHandler.handle (/app/src/contexts/shop/user/application/search-by-criteria/search-users-by-criteria-query-handler.ts:19:29)\n    at InMemoryQueryBus.<anonymous> (/app/src/contexts/shared/infrastructure/query-bus/in-memory-query-bus.ts:13:27)\n    at Generator.next (<anonymous>)\n    at /app/src/contexts/shared/infrastructure/query-bus/in-memory-query-bus.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (/app/src/contexts/shared/infrastructure/query-bus/in-memory-query-bus.ts:4:12)\n    at InMemoryQueryBus.ask (/app/src/contexts/shared/infrastructure/query-bus/in-memory-query-bus.ts:18:16)"}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
