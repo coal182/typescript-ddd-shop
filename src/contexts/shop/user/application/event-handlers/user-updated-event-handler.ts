@@ -1,31 +1,40 @@
-import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { UserUpdated } from '@storeback/user/domain/events/user-updated';
+import { User } from '@storeback/user/domain/user';
+import { UserBirthdate } from '@storeback/user/domain/user-birthdate';
+import { UserEmail } from '@storeback/user/domain/user-email';
+import { UserEventStore } from '@storeback/user/domain/user-event-store';
+import { UserFirstname } from '@storeback/user/domain/user-firstname';
+import { UserId } from '@storeback/user/domain/user-id';
+import { UserLastname } from '@storeback/user/domain/user-lastname';
+import { UserRepository } from '@storeback/user/domain/user-repository';
 
-import { TYPES } from '@storeback/shared/constants/types';
-import { IEventHandler } from '@core/i-event-handler';
-import { UserUpdated } from 'src/contexts/shop/user/domain/events/user-updated';
-
-@injectable()
-export class UserUpdatedEventHandler implements IEventHandler<UserUpdated> {
+export class UserUpdatedEventHandler implements DomainEventSubscriber<UserUpdated> {
   public event = UserUpdated.name;
 
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  constructor(private eventStore: UserEventStore, private repository: UserRepository) {}
 
-  async handle(event: UserUpdated) {
-    const cachedUser = await this.db.collection('users').findOne({ id: event.guid });
-    if (cachedUser) {
-      await this.db.collection('users').updateOne(
-        { id: event.guid },
-        {
-          $set: {
-            email: event.email,
-            firstname: event.firstname,
-            lastname: event.lastname,
-            dateOfBirth: event.dateOfBirth,
-            version: event.version,
-          },
-        }
-      );
+  subscribedTo(): DomainEventClass[] {
+    return [UserUpdated];
+  }
+
+  async on(domainEvent: UserUpdated): Promise<void> {
+    const id = new UserId(domainEvent.aggregateId);
+    const email = new UserEmail(domainEvent.email);
+    const firstname = new UserFirstname(domainEvent.firstname);
+    const lastname = new UserLastname(domainEvent.lastname);
+    const dateOfBirth = new UserBirthdate(new Date(domainEvent.dateOfBirth));
+
+    const events = await this.eventStore.findByAggregateId(id);
+    if (!events) {
+      throw new NotFoundException('User not found by its id');
     }
+
+    const user = User.createEmptyUser(id);
+    user.loadFromHistory(events);
+    user.updateUser(email, firstname, lastname, dateOfBirth);
+    await this.repository.save(user);
   }
 }

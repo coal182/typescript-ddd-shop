@@ -18,10 +18,10 @@ export class MongoProductEventStore extends MongoEventStore implements ProductEv
   }
 
   protected eventsMap(): Map<string, DomainEventClass> {
-    const map = new Map();
-    map.set('product.created', ProductCreated);
-    map.set('product.description_changed', ProductDescriptionChanged);
-    map.set('product.image_changed', ProductImageChanged);
-    return map;
+    return new Map<string, DomainEventClass>([
+      ['product.created', ProductCreated],
+      ['product.description_changed', ProductDescriptionChanged],
+      ['product.image_changed', ProductImageChanged],
+    ]);
   }
 }

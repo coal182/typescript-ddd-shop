@@ -1,19 +1,35 @@
-import { inject, injectable } from 'inversify';
+import { Command } from '@shared/domain/command';
+import { CommandHandler } from '@shared/domain/command-handler';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { EventBus } from '@shared/domain/event-bus';
+import { User } from '@storeback/user/domain/user';
+import { UserEventStore } from '@storeback/user/domain/user-event-store';
+import { UserId } from '@storeback/user/domain/user-id';
+import { UserPassword } from '@storeback/user/domain/user-password';
 
-import { TYPES } from '@storeback/shared/constants/types';
-import { ICommandHandler } from '@core/i-command-handler';
-import { UpdateUserPasswordCommand } from 'src/contexts/shop/user/application/commands/update-user-password';
-import { IUserRepository } from 'src/contexts/shop/user/domain/i-user-repository';
+import { UpdateUserPasswordCommand } from '../commands/update-user-password';
 
-@injectable()
-export class UpdateUserPasswordCommandHandler implements ICommandHandler<UpdateUserPasswordCommand> {
-  public static commandToHandle: string = UpdateUserPasswordCommand.name;
+export class UpdateUserPasswordCommandHandler implements CommandHandler<UpdateUserPasswordCommand> {
+  constructor(private eventBus: EventBus, private eventStore: UserEventStore) {}
 
-  constructor(@inject(TYPES.UserRepository) private readonly repository: IUserRepository) {}
+  subscribedTo(): Command {
+    return UpdateUserPasswordCommand;
+  }
 
   async handle(command: UpdateUserPasswordCommand) {
-    const user = await this.repository.getById(command.guid);
-    user.changePassword(command.password);
-    await this.repository.save(user, command.originalVersion);
+    const id = new UserId(command.id);
+    const password = new UserPassword(command.password);
+
+    const events = await this.eventStore.findByAggregateId(id);
+    if (!events) {
+      throw new NotFoundException('User not found by its id');
+    }
+
+    const user = User.createEmptyUser(id);
+    user.loadFromHistory(events);
+    user.changePassword(password);
+    const newDomainEvents = user.pullDomainEvents();
+    await this.eventStore.save(newDomainEvents);
+    await this.eventBus.publish(newDomainEvents);
   }
 }

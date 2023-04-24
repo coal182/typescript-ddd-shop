@@ -1,27 +1,28 @@
-import { inject, injectable } from 'inversify';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { ICommandHandler } from '@core/i-command-handler';
+import { Command } from '@shared/domain/command';
+import { CommandHandler } from '@shared/domain/command-handler';
+import { UserBirthdate } from '@storeback/user/domain/user-birthdate';
+import { UserEmail } from '@storeback/user/domain/user-email';
+import { UserFirstname } from '@storeback/user/domain/user-firstname';
+import { UserLastname } from '@storeback/user/domain/user-lastname';
+import { UserPassword } from '@storeback/user/domain/user-password';
 import { CreateUserCommand } from 'src/contexts/shop/user/application/commands/create-user';
-import { IUserRepository } from 'src/contexts/shop/user/domain/i-user-repository';
-import { User } from 'src/contexts/shop/user/domain/user';
 import { UserId } from 'src/contexts/shop/user/domain/user-id';
 
-@injectable()
-export class CreateUserCommandHandler implements ICommandHandler<CreateUserCommand> {
-  public static commandToHandle: string = CreateUserCommand.name;
+import { UserCreator } from '../create/user-creator';
 
-  constructor(@inject(TYPES.UserRepository) private readonly repository: IUserRepository) {}
+export class CreateUserCommandHandler implements CommandHandler<CreateUserCommand> {
+  constructor(private userCreator: UserCreator) {}
 
-  async handle(command: CreateUserCommand) {
-    const user = new User(
-      new UserId(command.guid),
-      command.email,
-      command.firstname,
-      command.lastname,
-      command.dateOfBirth,
-      command.password
-    );
-    this.repository.save(user, -1);
+  subscribedTo(): Command {
+    return CreateUserCommand;
+  }
+  async handle(command: CreateUserCommand): Promise<void> {
+    const id = new UserId(command.id);
+    const email = new UserEmail(command.email);
+    const firstname = new UserFirstname(command.firstname);
+    const lastname = new UserLastname(command.lastname);
+    const dateOfBirth = new UserBirthdate(command.dateOfBirth);
+    const password = new UserPassword(command.password);
+    await this.userCreator.run({ id, email, firstname, lastname, dateOfBirth, password });
   }
 }

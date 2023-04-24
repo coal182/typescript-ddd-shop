@@ -1,25 +1,33 @@
-import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { IEventHandler } from '@core/i-event-handler';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
+import { User } from '@storeback/user/domain/user';
+import { UserBirthdate } from '@storeback/user/domain/user-birthdate';
+import { UserEmail } from '@storeback/user/domain/user-email';
+import { UserFirstname } from '@storeback/user/domain/user-firstname';
+import { UserId } from '@storeback/user/domain/user-id';
+import { UserLastname } from '@storeback/user/domain/user-lastname';
+import { UserPassword } from '@storeback/user/domain/user-password';
+import { UserRepository } from '@storeback/user/domain/user-repository';
 import { UserCreated } from 'src/contexts/shop/user/domain/events/user-created';
 
-@injectable()
-export class UserCreatedEventHandler implements IEventHandler<UserCreated> {
-  event = UserCreated.name;
+export class UserCreatedEventHandler implements DomainEventSubscriber<UserCreated> {
+  public event = UserCreated.name;
 
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  constructor(private repository: UserRepository) {}
 
-  async handle(event: UserCreated) {
-    await this.db.collection('users').insertOne({
-      id: event.guid,
-      email: event.email,
-      firstname: event.firstname,
-      lastname: event.lastname,
-      dateOfBirth: event.dateOfBirth.toString(),
-      password: event.password,
-      cersion: event.version,
-    });
+  subscribedTo(): DomainEventClass[] {
+    return [UserCreated];
+  }
+
+  async on(domainEvent: UserCreated): Promise<void> {
+    const id = new UserId(domainEvent.aggregateId);
+    const email = new UserEmail(domainEvent.email);
+    const firstname = new UserFirstname(domainEvent.firstname);
+    const lastname = new UserLastname(domainEvent.lastname);
+    const dateOfBirth = new UserBirthdate(new Date(domainEvent.dateOfBirth));
+    const password = new UserPassword(domainEvent.password);
+
+    const product = new User(id, email, firstname, lastname, dateOfBirth, password);
+    await this.repository.save(product);
   }
 }

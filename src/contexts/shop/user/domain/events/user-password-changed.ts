@@ -1,11 +1,48 @@
-import { Event } from '@core/event';
-import { IEvent } from '@core/i-event';
+import { DomainEvent } from '@shared/domain/domain-event';
 
-export class UserPasswordChanged extends Event implements IEvent {
-  eventName = UserPasswordChanged.name;
-  aggregateName = 'user';
+type ChangeUserPasswordDomainEventData = {
+  readonly password: string;
+};
 
-  constructor(public guid: string, public password: string) {
-    super();
+export class UserPasswordChanged extends DomainEvent {
+  static readonly EVENT_NAME = 'user.password_changed';
+
+  readonly password: string;
+
+  constructor({
+    aggregateId,
+    password,
+    eventId,
+    occurredOn,
+  }: {
+    aggregateId: string;
+    password: string;
+    eventId?: string;
+    occurredOn?: Date;
+  }) {
+    super({ eventName: UserPasswordChanged.EVENT_NAME, aggregateId, eventId, occurredOn });
+    this.password = password;
+  }
+
+  toPrimitives(): ChangeUserPasswordDomainEventData {
+    const { password } = this;
+    return {
+      password,
+    };
+  }
+
+  static fromPrimitives(params: {
+    aggregateId: string;
+    data: ChangeUserPasswordDomainEventData;
+    eventId: string;
+    occurredOn: Date;
+  }): DomainEvent {
+    const { aggregateId, data, occurredOn, eventId } = params;
+    return new UserPasswordChanged({
+      aggregateId,
+      password: data.password,
+      eventId,
+      occurredOn,
+    });
   }
 }

@@ -28,3 +28,33 @@ services:
     class: ../../controllers/product-put-image-controller
     main: ProductPutImageController
     arguments: ['@Shop.Shared.domain.CommandBus']
+
+  Apps.Shop.Backend.controllers.UserPostController:
+    class: ../../controllers/user-post-controller
+    main: UserPostController
+    arguments: ['@Shop.Shared.domain.CommandBus']
+
+  Apps.Shop.Backend.controllers.UserGetAllController:
+    class: ../../controllers/user-get-all-controller
+    main: UserGetAllController
+    arguments: ['@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.UserGetByIdController:
+    class: ../../controllers/user-get-by-id-controller
+    main: UserGetByIdController
+    arguments: ['@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.UserGetByCriteriaController:
+    class: ../../controllers/user-get-by-criteria-controller
+    main: UserGetByCriteriaController
+    arguments: ['@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.UserPutController:
+    class: ../../controllers/user-put-controller
+    main: UserPutController
+    arguments: ['@Shop.Shared.domain.CommandBus']
+
+  Apps.Shop.Backend.controllers.UserPutPasswordController:
+    class: ../../controllers/user-put-password-controller
+    main: UserPutPasswordController
+    arguments: ['@Shop.Shared.domain.CommandBus']
