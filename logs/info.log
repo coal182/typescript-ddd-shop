@@ -70,3 +70,71 @@
 [32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
 [32minfo[39m:   Press CTRL-C to stop
 
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Email or password is incorrect {"httpCode":401,"stack":"Error: Email or password is incorrect\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:37:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Email or password is incorrect {"httpCode":401,"stack":"Error: Email or password is incorrect\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:38:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[31merror[39m: Email or password is incorrect {"httpCode":401,"stack":"Error: Email or password is incorrect\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:38:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Email or password is incorrect {"httpCode":401,"stack":"Error: Email or password is incorrect\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:39:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[31merror[39m: Email or password is incorrect {"httpCode":401,"stack":"Error: Email or password is incorrect\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:39:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Email not found {"httpCode":401,"stack":"Error: Email not found\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:39:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[31merror[39m: Email not found {"httpCode":401,"stack":"Error: Email not found\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:39:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Cannot read properties of undefined (reading 'password') {"stack":"TypeError: Cannot read properties of undefined (reading 'password')\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:44:37)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Cannot read properties of undefined (reading 'password') {"stack":"TypeError: Cannot read properties of undefined (reading 'password')\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:43:36)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Cannot read properties of undefined (reading 'password') {"stack":"TypeError: Cannot read properties of undefined (reading 'password')\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:45:37)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Cannot read properties of undefined (reading 'password') {"stack":"TypeError: Cannot read properties of undefined (reading 'password')\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:45:37)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Email or password is incorrect {"httpCode":401,"stack":"Error: Email or password is incorrect\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:44:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Email or password is incorrect {"httpCode":401,"stack":"Error: Email or password is incorrect\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:45:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+
+[31merror[39m: Email or password is incorrect {"httpCode":401,"stack":"Error: Email or password is incorrect\n    at LoginPostController.<anonymous> (/app/src/apps/shop/backend/controllers/login-post-controller.ts:45:13)\n    at Generator.next (<anonymous>)\n    at fulfilled (/app/src/apps/shop/backend/controllers/login-post-controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","statusCode":401}
+[32minfo[39m:   Backoffice Backend App is running at http://localhost:3000 in dev mode
+[32minfo[39m:   Press CTRL-C to stop
+

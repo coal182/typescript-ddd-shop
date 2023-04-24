@@ -9,6 +9,7 @@ import {
   UserPutPasswordController,
   UserPutController,
 } from '../controllers';
+import { verifyJWT_MW } from '../middlewares/auth';
 
 export const register = async (app: Express, container: ContainerBuilder) => {
   const userPostController: UserPostController = container.get('Apps.Shop.Backend.controllers.UserPostController');
@@ -30,7 +31,7 @@ export const register = async (app: Express, container: ContainerBuilder) => {
 
   app.post('/user', userPostController.run.bind(userPostController));
 
-  app.get('/user', userGetAllController.run.bind(userGetAllController));
+  app.get('/user', [verifyJWT_MW, userGetAllController.run.bind(userGetAllController)]);
   app.get('/user/criteria', userGetByCriteriaController.run.bind(userGetByCriteriaController));
   app.get('/user/:id', userGetByIdController.run.bind(userGetByIdController));
   app.put('/user/:id/update', userPutController.run.bind(userPutController));

@@ -58,3 +58,8 @@ services:
     class: ../../controllers/user-put-password-controller
     main: UserPutPasswordController
     arguments: ['@Shop.Shared.domain.CommandBus']
+
+  Apps.Shop.Backend.controllers.LoginPostController:
+    class: ../../controllers/login-post-controller
+    main: LoginPostController
+    arguments: ['@Shop.Shared.domain.CommandBus', '@Shop.Shared.domain.QueryBus']

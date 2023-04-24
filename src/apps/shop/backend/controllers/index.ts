@@ -10,6 +10,7 @@ export { UserGetByIdController } from './user-get-by-id-controller';
 export { UserPostController } from './user-post-controller';
 export { UserPutController } from './user-put-controller';
 export { UserPutPasswordController } from './user-put-password-controller';
+export { LoginPostController } from './login-post-controller';
 //export * from './user-controller';
 //export * from './login-controller';
 //export * from './cart-controller';

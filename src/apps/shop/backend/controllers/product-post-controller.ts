@@ -18,12 +18,11 @@ export class ProductPostController {
   constructor(private commandBus: CommandBus) {}
 
   async run(req: Request<ProductPostRequest>, res: Response) {
-    try {
-      const { id, name, description, image, price } = req.body;
-      const createProductCommand = new CreateProductCommand(id, name, description, image, price);
-      await this.commandBus.dispatch(createProductCommand);
+    const { id, name, description, image, price } = req.body;
+    const createProductCommand = new CreateProductCommand(id, name, description, image, price);
+    await this.commandBus.dispatch(createProductCommand);
 
-      res.status(httpStatus.CREATED).send();
+    res.status(httpStatus.CREATED).send();
   }
 
   // async getBatch(req: Request, res: Response) {
