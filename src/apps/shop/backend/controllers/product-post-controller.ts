@@ -24,9 +24,6 @@ export class ProductPostController {
       await this.commandBus.dispatch(createProductCommand);
 
       res.status(httpStatus.CREATED).send();
-    } catch (error) {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send();
-    }
   }
 
   // async getBatch(req: Request, res: Response) {

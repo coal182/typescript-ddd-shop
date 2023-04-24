@@ -19,14 +19,10 @@ export class UserPostController {
   constructor(private commandBus: CommandBus) {}
 
   async run(req: Request<UserPostRequest>, res: Response) {
-    try {
-      const { id, email, firstname, lastname, dateOfBirth, password } = req.body;
-      const createUserCommand = new CreateUserCommand(id, email, firstname, lastname, new Date(dateOfBirth), password);
-      await this.commandBus.dispatch(createUserCommand);
+    const { id, email, firstname, lastname, dateOfBirth, password } = req.body;
+    const createUserCommand = new CreateUserCommand(id, email, firstname, lastname, new Date(dateOfBirth), password);
+    await this.commandBus.dispatch(createUserCommand);
 
-      res.status(httpStatus.CREATED).send();
-    } catch (error) {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send();
-    }
+    res.status(httpStatus.CREATED).send();
   }
 }

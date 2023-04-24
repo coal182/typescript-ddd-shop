@@ -8,16 +8,12 @@ export class UserPutPasswordController {
   constructor(private commandBus: CommandBus) {}
 
   async run(req: Request, res: Response) {
-    try {
-      const { id } = req.params;
-      const { currentPassword, newPassword, newPasswordConfirm } = req.body;
+    const { id } = req.params;
+    const { currentPassword, newPassword, newPasswordConfirm } = req.body;
 
-      const command = new UpdateUserPasswordCommand(id, newPassword);
-      await this.commandBus.dispatch(command);
+    const command = new UpdateUserPasswordCommand(id, newPassword);
+    await this.commandBus.dispatch(command);
 
-      res.status(httpStatus.CREATED).send();
-    } catch (error) {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send();
-    }
+    res.status(httpStatus.CREATED).send();
   }
 }

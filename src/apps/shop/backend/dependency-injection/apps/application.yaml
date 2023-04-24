@@ -52,7 +52,7 @@ services:
   Apps.Shop.Backend.controllers.UserPutController:
     class: ../../controllers/user-put-controller
     main: UserPutController
-    arguments: ['@Shop.Shared.domain.CommandBus', '@Shared.Logger']
+    arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.UserPutPasswordController:
     class: ../../controllers/user-put-password-controller
