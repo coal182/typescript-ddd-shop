@@ -2,10 +2,11 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { CommandBus } from '@shared/domain/command-bus';
+import Logger from '@shared/domain/logger';
 import { UpdateUserCommand } from 'src/contexts/shop/user/application/commands/update-user';
 
 export class UserPutController {
-  constructor(private commandBus: CommandBus) {}
+  constructor(private commandBus: CommandBus, private logger: Logger) {}
 
   async run(req: Request, res: Response) {
     try {
@@ -16,8 +17,10 @@ export class UserPutController {
       await this.commandBus.dispatch(command);
 
       res.status(httpStatus.CREATED).send();
-    } catch (error) {
-      console.log('📌 ~ error:', error);
+    } catch (e) {
+      if (e instanceof Error) {
+        this.logger.error(e);
+      }
       res.status(httpStatus.INTERNAL_SERVER_ERROR).send();
     }
   }

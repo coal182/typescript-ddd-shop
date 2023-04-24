@@ -11,7 +11,6 @@ export class MongoUserEventStore extends MongoEventStore implements UserEventSto
     return this.persist(events);
   }
   public async findByAggregateId(aggregateId: Uuid): Promise<DomainEvent[]> {
-    console.log('📌 ~ aggregateId:', aggregateId);
     return super.findByAggregateId(aggregateId);
   }
   protected collectionName(): string {

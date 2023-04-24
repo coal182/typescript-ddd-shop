@@ -19,24 +19,20 @@ export class UpdateUserCommandHandler implements CommandHandler<UpdateUserComman
   }
 
   async handle(command: UpdateUserCommand) {
-    console.log('📌 ~ command:', command);
     const id = new UserId(command.id);
     const email = new UserEmail(command.email);
     const firstname = new UserFirstname(command.firstname);
     const lastname = new UserLastname(command.lastname);
     const dateOfBirth = new UserBirthdate(command.dateOfBirth);
-    console.log('📌 ~ dateOfBirth:', dateOfBirth);
 
     const events = await this.eventStore.findByAggregateId(id);
     if (!events) {
-      console.log('📌 ~ User not found by its id');
       throw new NotFoundException('User not found by its id');
     }
 
     const user = User.createEmptyUser(id);
     user.loadFromHistory(events);
     user.updateUser(email, firstname, lastname, dateOfBirth);
-    console.log('📌 ~ user:', user);
     const newDomainEvents = user.pullDomainEvents();
     await this.eventStore.save(newDomainEvents);
     await this.eventBus.publish(newDomainEvents);

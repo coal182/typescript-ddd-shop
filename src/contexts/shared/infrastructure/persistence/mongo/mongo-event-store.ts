@@ -49,7 +49,6 @@ export abstract class MongoEventStore {
 
       const eventClass = this.eventsMap().get(eventName);
       if (!eventClass) {
-        console.log('📌 ~ `DomainEvent mapping not found for event`:', eventName);
         throw Error(`DomainEvent mapping not found for event ${eventName}`);
       }
 

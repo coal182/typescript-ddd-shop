@@ -1,4 +1,8 @@
 services:
+  Shared.Logger:
+    class: ../../../../../contexts/shared/infrastructure/winston-logger
+    main: WinstonLogger
+    arguments: []
   Shop.Shared.MongoConfig:
     factory:
       class: ../../../../../contexts/shop/shared/infrastructure/persistence/mongo/mongo-config-factory
