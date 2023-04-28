@@ -1,57 +1,49 @@
-import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { NotFoundException } from '@shared/errors/application-error';
-import { EventDescriptor, IEventDescriptor } from '@core/event-descriptor';
-import { IEventHandler } from '@core/i-event-handler';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { OrderEventStore } from '@storeback/order/domain/order-event-store';
+import { OrderId } from '@storeback/order/domain/order-id';
+import { OrderRepository } from '@storeback/order/domain/order-repository';
+import { ProductId } from '@storeback/product/domain/product-id';
+import { ProductRepository } from '@storeback/product/domain/product-repository';
 import { OrderCreated } from 'src/contexts/shop/order/domain/events/order-created';
 import { Order } from 'src/contexts/shop/order/domain/order';
 
-@injectable()
-export class OrderCreatedEventHandler implements IEventHandler<OrderCreated> {
-  public event: string = OrderCreated.name;
-  Type: any;
+export class OrderCreatedEventHandler implements DomainEventSubscriber<OrderCreated> {
+  public event = OrderCreated.name;
 
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  constructor(
+    private repository: OrderRepository,
+    private productRepository: ProductRepository,
+    private eventStore: OrderEventStore
+  ) {}
 
-  // Circular Dependency OrderRepository: OrderCreatedEventHandler -> OrderRepository -> OrderEventStore -> EventBus -> EventHandlers[] -> OrderCreatedEventHandler
+  subscribedTo(): DomainEventClass[] {
+    return [OrderCreated];
+  }
 
-  async handle(event: OrderCreated) {
-    const order = new Order();
-    const events = (await this.db
-      .collection('order-events')
-      .find({ aggregateGuid: event.guid })
-      .toArray()) as IEventDescriptor[];
-    if (!events.length) {
-      throw new NotFoundException('Aggregate with the requested Guid does not exist');
+  async on(domainEvent: OrderCreated): Promise<void> {
+    console.log('📌 ~ domainEvent:', domainEvent);
+    const id = new OrderId(domainEvent.aggregateId);
+    console.log('📌 ~ OrderId:', id);
+    const events = await this.eventStore.findByAggregateId(id);
+    console.log('📌 ~ events:', events);
+    if (!events) {
+      throw new NotFoundException('Product not found by its id');
     }
-    const history = events.map((eventDescriptor: EventDescriptor) => {
-      return eventDescriptor.data;
-    });
-    order.loadFromHistory(history);
+    const order = Order.createEmptyOrder(id);
+    order.loadFromHistory(events);
+    console.log('📌 ~ order:', order);
 
     const lines = await Promise.all(
       order.lines.map(async (line) => {
-        const book = await this.db.collection('books').findOne({ id: line.bookId });
-        return { ...line, product: book };
+        const product = await this.productRepository.search(new ProductId(line.productId));
+        return { ...line, product: product?.toPrimitives() };
       })
     );
 
-    console.log(
-      '🚀 ~ file: order-created-event-handler.ts ~ line 38 ~ OrderCreatedEventHandler ~ lines ~ lines',
-      lines
-    );
+    order.lines = lines;
 
-    await this.db.collection('orders').insertOne({
-      id: order.guid.value,
-      userId: order.userId.value,
-      status: order.status.value,
-      name: order.name.value,
-      address: order.address.value,
-      total: order.total.value,
-      lines,
-      version: order.version,
-    });
+    await this.repository.save(order);
   }
 }

@@ -7,6 +7,7 @@ import Router from 'express-promise-router';
 import helmet from 'helmet';
 import httpStatus from 'http-status';
 import { ContainerBuilder } from 'node-dependency-injection';
+import { ZodError } from 'zod';
 
 import Logger from '@shared/domain/logger';
 
@@ -35,7 +36,10 @@ export class Server {
 
     router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
       this.logger.error(err);
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
+      if (err instanceof ZodError) {
+        res.status(httpStatus.BAD_REQUEST).json(err);
+      }
+      res.status(httpStatus.INTERNAL_SERVER_ERROR).json(err);
     });
   }
 

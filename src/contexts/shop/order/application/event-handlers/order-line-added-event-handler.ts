@@ -1,17 +1,15 @@
-import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { IEventHandler } from '@core/i-event-handler';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
 import { OrderLineAdded } from 'src/contexts/shop/order/domain/events/order-line-added';
 
-@injectable()
-export class OrderLineAddedEventHandler implements IEventHandler<OrderLineAdded> {
+export class OrderLineAddedEventHandler implements DomainEventSubscriber<OrderLineAdded> {
   public event = OrderLineAdded.name;
 
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  subscribedTo(): DomainEventClass[] {
+    return [OrderLineAdded];
+  }
 
-  async handle(event: OrderLineAdded) {
-    // nothing to do in this step
+  async on(domainEvent: OrderLineAdded): Promise<void> {
+    // no need to do anything here we'll handle the created event
   }
 }

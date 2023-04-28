@@ -41,6 +41,7 @@ export abstract class MongoEventStore {
   }
 
   protected async findByAggregateId(aggregateId: Uuid): Promise<DomainEvent[]> {
+    console.log('📌 ~ aggregateId:', aggregateId);
     const collection = await this.collection();
     const documents = await collection.find({ aggregateId: aggregateId.value }).sort({ occurredOn: 1 }).toArray();
 
@@ -48,7 +49,9 @@ export abstract class MongoEventStore {
       const { aggregateId, eventId, eventName, data, occurredOn } = document;
 
       const eventClass = this.eventsMap().get(eventName);
+      console.log('📌 ~ eventClass:', eventClass);
       if (!eventClass) {
+        console.log('📌 ~ ERROR eventClass:', eventClass);
         throw Error(`DomainEvent mapping not found for event ${eventName}`);
       }
 

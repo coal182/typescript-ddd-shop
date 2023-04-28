@@ -1,18 +1,16 @@
-import { Command } from '@core/command';
+import { v4 as uuidv4 } from 'uuid';
+
+import { Command } from '@shared/domain/command';
 
 export class InitiateOrderCommand extends Command {
-  public guid: string;
-  public userId: string;
-  public name: string;
-  public address: string;
-  public total: number;
-  public static commandName = InitiateOrderCommand.name;
-
-  constructor(guid: string, userId: string, name: string, address: string, total: number) {
-    super(guid);
-    this.userId = userId;
-    this.name = name;
-    this.address = address;
-    this.total = total;
+  constructor(
+    public id: string,
+    public userId: string,
+    public name: string,
+    public address: string,
+    public total: number
+  ) {
+    super();
+    this.id = id || uuidv4();
   }
 }

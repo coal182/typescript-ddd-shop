@@ -1,0 +1,93 @@
+services:
+  Shop.Orders.domain.OrderRepository:
+    class: ../../../../../contexts/shop/order/infrastructure/persistence/mongo-order-repository
+    main: MongoOrderRepository
+    arguments: ['@Shop.Shared.ConnectionManager']
+
+  Shop.Orders.domain.OrderEventStore:
+    class: ../../../../../contexts/shop/order/infrastructure/persistence/mongo-order-event-store
+    main: MongoOrderEventStore
+    arguments: ['@Shop.Shared.ConnectionManager']
+
+  Shop.Orders.application.OrderCreator:
+    class: ../../../../../contexts/shop/order/application/create/order-creator
+    main: OrderCreator
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Orders.domain.OrderEventStore']
+
+  Shop.Orders.InitiateOrderCommandHandler:
+    class: ../../../../../contexts/shop/order/application/command-handlers/initiate-order-command-handler
+    main: InitiateOrderCommandHandler
+    arguments: ['@Shop.Orders.application.OrderCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Shop.Orders.CreateOrderCommandHandler:
+    class: ../../../../../contexts/shop/order/application/command-handlers/create-order-command-handler
+    main: CreateOrderCommandHandler
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Orders.domain.OrderEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
+  Shop.Orders.CancelOrderCommandHandler:
+    class: ../../../../../contexts/shop/order/application/command-handlers/cancel-order-command-handler
+    main: CancelOrderCommandHandler
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Orders.domain.OrderEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
+  Shop.Orders.AddLineToOrderCommandHandler:
+    class: ../../../../../contexts/shop/order/application/command-handlers/add-line-to-order-command-handler
+    main: AddLineToOrderCommandHandler
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Orders.domain.OrderEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
+  Shop.Orders.application.OrdersFinder:
+    class: ../../../../../contexts/shop/order/application/search-all/orders-finder
+    main: OrdersFinder
+    arguments: ['@Shop.Orders.domain.OrderRepository']
+
+  Shop.Orders.SearchAllOrdersQueryHandler:
+    class: ../../../../../contexts/shop/order/application/search-all/search-all-orders-query-handler
+    main: SearchAllOrdersQueryHandler
+    arguments: ['@Shop.Orders.application.OrdersFinder']
+    tags:
+      - { name: 'queryHandler' }
+
+  Shop.Orders.CreateOrderOnOrderCreated:
+    class: ../../../../../contexts/shop/order/application/event-handlers/order-created-event-handler
+    main: OrderCreatedEventHandler
+    arguments: ['@Shop.Orders.domain.OrderRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Shop.Orders.OrderCreated:
+    class: ../../../../../contexts/shop/order/application/event-handlers/order-created-event-handler
+    main: OrderCreatedEventHandler
+    arguments:
+      [
+        '@Shop.Orders.domain.OrderRepository',
+        '@Shop.Products.domain.ProductRepository',
+        '@Shop.Orders.domain.OrderEventStore',
+      ]
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Shop.Orders.OrderCancelled:
+    class: ../../../../../contexts/shop/order/application/event-handlers/order-cancelled-event-handler
+    main: OrderCancelledEventHandler
+    arguments: ['@Shop.Orders.domain.OrderEventStore', '@Shop.Orders.domain.OrderRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Shop.Orders.application.OrdersByCriteriaSearcher:
+    class: ../../../../../contexts/shop/order/application/search-by-criteria/orders-by-criteria-searcher
+    main: OrdersByCriteriaSearcher
+    arguments: ['@Shop.Orders.domain.OrderRepository']
+
+  Shop.Orders.SearchOrdersByCriteriaQueryHandler:
+    class: ../../../../../contexts/shop/order/application/search-by-criteria/search-orders-by-criteria-query-handler
+    main: SearchOrdersByCriteriaQueryHandler
+    arguments: ['@Shop.Orders.application.OrdersByCriteriaSearcher']
+    tags:
+      - { name: 'queryHandler' }

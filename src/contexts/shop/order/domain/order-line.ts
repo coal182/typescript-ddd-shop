@@ -1,10 +1,10 @@
 export class OrderLine {
-  public bookId: string;
+  public productId: string;
   public qty: number;
   public price: number;
 
-  constructor(bookId: string, qty: number, price: number) {
-    this.bookId = bookId;
+  constructor(productId: string, qty: number, price: number) {
+    this.productId = productId;
     this.qty = qty;
     this.price = price;
   }

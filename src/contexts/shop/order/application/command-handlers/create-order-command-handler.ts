@@ -1,18 +1,34 @@
-import { inject, injectable } from 'inversify';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { ICommandHandler } from '@core/i-command-handler';
-import { CreateOrderCommand } from 'src/contexts/shop/order/application/commands/create-order';
-import { IOrderRepository } from 'src/contexts/shop/order/domain/i-order-repository';
+import { Command } from '@shared/domain/command';
+import { CommandHandler } from '@shared/domain/command-handler';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { EventBus } from '@shared/domain/event-bus';
+import { OrderEventStore } from '@storeback/order/domain/order-event-store';
+import { OrderId } from '@storeback/order/domain/order-id';
 import { Order } from 'src/contexts/shop/order/domain/order';
 
-@injectable()
-export class CreateOrderCommandHandler implements ICommandHandler<CreateOrderCommand> {
-  constructor(@inject(TYPES.OrderRepository) private readonly repository: IOrderRepository) {}
-  public static commandToHandle: string = CreateOrderCommand.name;
+import { CreateOrderCommand } from '../commands/create-order';
+
+export class CreateOrderCommandHandler implements CommandHandler<CreateOrderCommand> {
+  constructor(private eventBus: EventBus, private readonly eventStore: OrderEventStore) {}
+
+  subscribedTo(): Command {
+    return CreateOrderCommand;
+  }
+
   async handle(command: CreateOrderCommand) {
-    const order: Order = await this.repository.getById(command.guid);
+    console.log('📌 ~ command:', command);
+    const id = new OrderId(command.id);
+
+    const events = await this.eventStore.findByAggregateId(id);
+    if (!events) {
+      throw new NotFoundException('Order not found by its id');
+    }
+
+    const order = Order.createEmptyOrder(id);
+    order.loadFromHistory(events);
     order.create();
-    await this.repository.save(order, command.originalVersion);
+    const newDomainEvents = order.pullDomainEvents();
+    await this.eventStore.save(newDomainEvents);
+    await this.eventBus.publish(newDomainEvents);
   }
 }

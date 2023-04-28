@@ -1,23 +1,30 @@
-import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { IEventHandler } from '@core/i-event-handler';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { OrderEventStore } from '@storeback/order/domain/order-event-store';
+import { OrderId } from '@storeback/order/domain/order-id';
+import { OrderRepository } from '@storeback/order/domain/order-repository';
 import { OrderCancelled } from 'src/contexts/shop/order/domain/events/order-cancelled';
+import { Order } from 'src/contexts/shop/order/domain/order';
 
-@injectable()
-export class OrderCancelledEventHandler implements IEventHandler<OrderCancelled> {
+export class OrderCancelledEventHandler implements DomainEventSubscriber<OrderCancelled> {
   public event = OrderCancelled.name;
 
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  constructor(private repository: OrderRepository, private eventStore: OrderEventStore) {}
 
-  async handle(event: OrderCancelled) {
-    const order = await this.db.collection('orders').findOne({ id: event.guid });
+  subscribedTo(): DomainEventClass[] {
+    return [OrderCancelled];
+  }
 
-    if (order) {
-      await this.db
-        .collection('orders')
-        .updateOne({ id: event.guid }, { $set: { status: event.status, version: event.version } });
+  async on(domainEvent: OrderCancelled): Promise<void> {
+    const id = new OrderId(domainEvent.aggregateId);
+    const events = await this.eventStore.findByAggregateId(id);
+    if (!events) {
+      throw new NotFoundException('Order not found by its id');
     }
+    const order = Order.createEmptyOrder(id);
+    order.loadFromHistory(events);
+
+    await this.repository.save(order);
   }
 }

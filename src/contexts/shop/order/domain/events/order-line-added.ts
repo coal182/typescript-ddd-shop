@@ -1,14 +1,50 @@
-import { Event } from '@core/event';
-import { IEvent } from '@core/i-event';
+import { DomainEvent } from '@shared/domain/domain-event';
 
-import { OrderId } from '../order-id';
 import { OrderLine } from '../order-line';
 
-export class OrderLineAdded extends Event implements IEvent {
-  eventName = OrderLineAdded.name;
-  aggregateName = 'order';
+type OrderLineAddedDomainEventData = {
+  readonly line: OrderLine;
+};
 
-  constructor(public guid: string, public line: OrderLine) {
-    super();
+export class OrderLineAdded extends DomainEvent {
+  static readonly EVENT_NAME = 'order.line_added';
+
+  readonly line: OrderLine;
+
+  constructor({
+    aggregateId,
+    line,
+    eventId,
+    occurredOn,
+  }: {
+    aggregateId: string;
+    line: OrderLine;
+    eventId?: string;
+    occurredOn?: Date;
+  }) {
+    super({ eventName: OrderLineAdded.EVENT_NAME, aggregateId, eventId, occurredOn });
+    this.line = line;
+  }
+
+  toPrimitives(): OrderLineAddedDomainEventData {
+    const { line } = this;
+    return {
+      line,
+    };
+  }
+
+  static fromPrimitives(params: {
+    aggregateId: string;
+    data: OrderLineAddedDomainEventData;
+    eventId: string;
+    occurredOn: Date;
+  }): DomainEvent {
+    const { aggregateId, data, occurredOn, eventId } = params;
+    return new OrderLineAdded({
+      aggregateId,
+      line: data.line,
+      eventId,
+      occurredOn,
+    });
   }
 }

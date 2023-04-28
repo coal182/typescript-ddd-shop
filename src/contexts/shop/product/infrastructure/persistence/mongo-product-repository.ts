@@ -20,7 +20,7 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
 
   public async search(id: ProductId): Promise<Nullable<Product>> {
     const collection = await this.collection();
-    const document = await collection.findOne<ProductDocument>({ _id: id.value });
+    const document = await collection.findOne<ProductDocument>({ id: id.value });
 
     if (document) {
       const primitivesFromDocument = {

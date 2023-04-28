@@ -68,3 +68,23 @@ services:
     class: ../../controllers/login-renew-get-controller
     main: LoginRenewGetController
     arguments: ['@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.OrderPostController:
+    class: ../../controllers/order-post-controller
+    main: OrderPostController
+    arguments: ['@Shop.Shared.domain.CommandBus']
+
+  Apps.Shop.Backend.controllers.OrderGetByUserController:
+    class: ../../controllers/order-get-by-user-controller
+    main: OrderGetByUserController
+    arguments: ['@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.OrderGetByIdController:
+    class: ../../controllers/order-get-by-id-controller
+    main: OrderGetByIdController
+    arguments: ['@Shop.Shared.domain.QueryBus']
+
+  Apps.Shop.Backend.controllers.OrderDeleteController:
+    class: ../../controllers/order-delete-controller
+    main: OrderDeleteController
+    arguments: ['@Shop.Shared.domain.CommandBus']

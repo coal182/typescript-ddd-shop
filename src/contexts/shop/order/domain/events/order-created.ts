@@ -1,11 +1,29 @@
-import { Event } from '@core/event';
-import { IEvent } from '@core/i-event';
+import { DomainEvent } from '@shared/domain/domain-event';
 
-export class OrderCreated extends Event implements IEvent {
-  eventName = OrderCreated.name;
-  aggregateName = 'order';
+type OrderCreatedDomainEventData = object;
 
-  constructor(public guid: string) {
-    super();
+export class OrderCreated extends DomainEvent {
+  static readonly EVENT_NAME = 'order.created';
+
+  constructor({ aggregateId, eventId, occurredOn }: { aggregateId: string; eventId?: string; occurredOn?: Date }) {
+    super({ eventName: OrderCreated.EVENT_NAME, aggregateId, eventId, occurredOn });
+  }
+
+  toPrimitives(): OrderCreatedDomainEventData {
+    return {};
+  }
+
+  static fromPrimitives(params: {
+    aggregateId: string;
+    data: OrderCreatedDomainEventData;
+    eventId: string;
+    occurredOn: Date;
+  }): DomainEvent {
+    const { aggregateId, occurredOn, eventId } = params;
+    return new OrderCreated({
+      aggregateId,
+      eventId,
+      occurredOn,
+    });
   }
 }

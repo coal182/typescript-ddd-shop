@@ -5,3 +5,6 @@ dist
 yarn-error.log
 data
 logs
+logs/debug.log
+logs/error.log
+logs/info.log
