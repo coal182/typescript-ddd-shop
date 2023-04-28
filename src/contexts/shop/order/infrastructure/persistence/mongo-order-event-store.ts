@@ -12,7 +12,6 @@ export class MongoOrderEventStore extends MongoEventStore implements OrderEventS
     return this.persist(events);
   }
   public async findByAggregateId(aggregateId: Uuid): Promise<DomainEvent[]> {
-    console.log('📌 ~ MongoOrderEventStore aggregateId:', aggregateId);
     return super.findByAggregateId(aggregateId);
   }
   protected collectionName(): string {

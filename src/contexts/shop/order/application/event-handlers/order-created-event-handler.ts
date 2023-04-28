@@ -23,17 +23,13 @@ export class OrderCreatedEventHandler implements DomainEventSubscriber<OrderCrea
   }
 
   async on(domainEvent: OrderCreated): Promise<void> {
-    console.log('📌 ~ domainEvent:', domainEvent);
     const id = new OrderId(domainEvent.aggregateId);
-    console.log('📌 ~ OrderId:', id);
     const events = await this.eventStore.findByAggregateId(id);
-    console.log('📌 ~ events:', events);
     if (!events) {
       throw new NotFoundException('Product not found by its id');
     }
     const order = Order.createEmptyOrder(id);
     order.loadFromHistory(events);
-    console.log('📌 ~ order:', order);
 
     const lines = await Promise.all(
       order.lines.map(async (line) => {

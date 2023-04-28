@@ -16,7 +16,6 @@ export class CreateOrderCommandHandler implements CommandHandler<CreateOrderComm
   }
 
   async handle(command: CreateOrderCommand) {
-    console.log('📌 ~ command:', command);
     const id = new OrderId(command.id);
 
     const events = await this.eventStore.findByAggregateId(id);

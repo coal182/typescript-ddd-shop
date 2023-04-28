@@ -18,7 +18,6 @@ export class LoginPostController {
 
   async run(req: Request, res: Response) {
     const { email, password } = req.body;
-    console.log('📌 ~ { email, password }:', { email, password });
 
     const filters: Array<FilterType> = [{ field: 'email', operator: '=', value: email }];
     const orderBy = 'email';
