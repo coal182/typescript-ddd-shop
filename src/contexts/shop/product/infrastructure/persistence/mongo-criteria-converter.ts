@@ -4,7 +4,7 @@ import { Operator } from '@shared/domain/criteria/filter-operator';
 import { Filters } from '@shared/domain/criteria/filters';
 import { Order } from '@shared/domain/criteria/order';
 
-type MongoFilterOperator = '$eq' | '$ne' | '$gt' | '$lt' | '$regex';
+type MongoFilterOperator = '$eq' | '$ne' | '$gt' | '$lt' | '$regex' | '$options';
 type MongoFilterValue = boolean | string | number;
 type MongoFilterOperation = { [operator in MongoFilterOperator]?: MongoFilterValue };
 type MongoFilter = { [field: string]: MongoFilterOperation } | { [field: string]: { $not: MongoFilterOperation } };
@@ -82,10 +82,10 @@ export class MongoCriteriaConverter {
   }
 
   private containsFilter(filter: Filter): MongoFilter {
-    return { [filter.field.value]: { $regex: filter.value.value } };
+    return { [filter.field.value]: { $regex: filter.value.value, $options: 'i' } };
   }
 
   private notContainsFilter(filter: Filter): MongoFilter {
-    return { [filter.field.value]: { $not: { $regex: filter.value.value } } };
+    return { [filter.field.value]: { $not: { $regex: filter.value.value, $options: 'i' } } };
   }
 }
