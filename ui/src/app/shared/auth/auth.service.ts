@@ -13,7 +13,7 @@ import { User } from '../user';
   providedIn: 'root',
 })
 export class AuthService {
-  endpoint = `${environment.apiUrl}api/v1`;
+  endpoint = `${environment.apiUrl}`;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
 
@@ -25,12 +25,12 @@ export class AuthService {
   }
 
   signUp(user: User): Observable<any> {
-    const api = `${this.endpoint}/login/register-user`;
+    const api = `${this.endpoint}login/register-user`;
     return this.http.post(api, user).pipe(catchError(this.handleError));
   }
 
   signIn(credentials: Credentials) {
-    return this.http.post<any>(`${this.endpoint}/login/signin`, credentials);
+    return this.http.post<any>(`${this.endpoint}login/signin`, credentials);
   }
 
   getToken() {
@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   getUserProfile(id: any): Observable<any> {
-    const api = `${this.endpoint}/users/${id}`;
+    const api = `${this.endpoint}users/${id}`;
     return this.http.get(api, { headers: this.headers }).pipe(
       map((res) => {
         return res || {};
@@ -63,6 +63,6 @@ export class AuthService {
       msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
 
-    return throwError(msg);
+    return throwError(() => msg);
   }
 }

@@ -11,7 +11,7 @@ import { MockUserService } from 'src/app/test/mock-user-service';
 
 import { MockRouter } from '../../test/mock-router';
 import { HttpUserService } from '../user-service/http-user.service';
-import { PutUserParams, UserService } from '../user-service/user.service';
+import { PutUserParams } from '../user-service/user.service';
 
 import { UserProfileComponent } from './user-profile.component';
 
@@ -48,7 +48,6 @@ describe('UserProfileComponent', () => {
       HttpTestingController as Type<HttpTestingController>
     );
     component.userIdFromRoute = 'r9n16bJtQlpxxrTTThEKn';
-    component.version = 1;
     fixture.detectChanges();
   });
 
@@ -84,7 +83,6 @@ describe('UserProfileComponent', () => {
     describe('and fields are valid', () => {
       it('should call UserService with expected params', () => {
         const testqueryParams = { id: 'r9n16bJtQlpxxrTTThEKn' };
-        const version = 1;
         const testProfileForm = {
           firstname: 'John',
           lastname: 'Doe',
@@ -97,7 +95,6 @@ describe('UserProfileComponent', () => {
           lastname: testProfileForm.lastname,
           email: testProfileForm.email,
           dateOfBirth: testProfileForm.dateOfBirth.toISOString().split('T')[0],
-          version,
         };
         component.profileForm.setValue(testProfileForm);
         component.onSubmit();

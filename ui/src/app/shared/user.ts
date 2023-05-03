@@ -5,5 +5,4 @@ export interface User {
   email?: string;
   password?: string;
   dateOfBirth?: Date;
-  version?: number;
 }

@@ -18,7 +18,7 @@ export class HttpProductService extends ProductService {
   public getProducts(paramsObj: GetProductsParams): Observable<ProductsResponse> {
     const headers = { 'Content-Type': 'application/json' };
     const params = new HttpParams({ fromObject: { ...paramsObj }, encoder: new HttpUrlEncodingCodec() });
-    return this.http.get<ProductsResponse>(`${environment.apiUrl}products`, {
+    return this.http.get<ProductsResponse>(`${environment.apiUrl}product`, {
       headers: headers,
       params,
     });

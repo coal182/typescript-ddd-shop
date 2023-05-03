@@ -22,5 +22,4 @@ export interface PutUserParams {
   lastname: string;
   email: string;
   dateOfBirth: string;
-  version: number;
 }

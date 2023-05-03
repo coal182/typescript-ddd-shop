@@ -13,6 +13,8 @@ export class ProductGetAllController {
 
     const response = await this.queryBus.ask<ProductsResponse>(query);
 
-    res.status(httpStatus.OK).send(response.products);
+    res
+      .status(httpStatus.OK)
+      .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: response.products });
   }
 }

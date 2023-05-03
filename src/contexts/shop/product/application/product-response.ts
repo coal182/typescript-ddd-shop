@@ -6,7 +6,6 @@ export interface ProductResponse {
   description: string;
   image: string;
   price: number;
-  version: number;
 }
 
 export class ProductsResponse {
@@ -21,7 +20,6 @@ export class ProductsResponse {
         description: primitives.description,
         image: primitives.image,
         price: primitives.price,
-        version: 0,
       };
     });
   }

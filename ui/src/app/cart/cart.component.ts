@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Cart, CartItem } from './cart';
-import { GetCartResponse, HttpCartService } from './cart-service/http-cart.service';
+import { HttpCartService } from './cart-service/http-cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -65,7 +65,6 @@ export class CartComponent implements OnInit {
         })
       )
       .subscribe(() => {
-        this.cartService.cart.version = this.cartService.cart.version + 1;
         this.items = this.items.filter((it) => it.product.id !== item.product.id);
         Swal.fire({
           title: 'Product removed',

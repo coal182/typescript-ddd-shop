@@ -26,20 +26,15 @@ fdescribe('HttpCartService', () => {
     id: cartId,
     userId: userId,
     items: [],
-    version: 0,
   };
 
   const testItem: CartItem = {
     product: {
       id: productId,
       name: 'product-name',
-      author: {
-        id: 'author-guid',
-        firstname: 'Pablo',
-        lastname: 'Neruda',
-      },
+      description: 'product-description',
+      image: 'product-image',
       price: 5.45,
-      version: 0,
     },
     qty: 5,
     price: 5.45,
@@ -49,13 +44,9 @@ fdescribe('HttpCartService', () => {
     product: {
       id: 'product-guid-2',
       name: 'product-name-2',
-      author: {
-        id: 'author-guid-2',
-        firstname: 'Carlos',
-        lastname: 'Sisi',
-      },
+      description: 'product-description',
+      image: 'product-image',
       price: 6,
-      version: 0,
     },
     qty: 2,
     price: 6,
@@ -143,11 +134,8 @@ fdescribe('HttpCartService', () => {
 
     describe('and cart is not empty', async () => {
       it('should call the api with expected parameters', () => {
-        const expectedOriginalVersion = 0;
         service.clearCart();
-        expect(httpClientSpy.delete).toHaveBeenCalledWith(
-          `${environment.apiUrl}cart/clear/${cartId}/${expectedOriginalVersion}`
-        );
+        expect(httpClientSpy.delete).toHaveBeenCalledWith(`${environment.apiUrl}cart/clear/${cartId}`);
       });
     });
   });

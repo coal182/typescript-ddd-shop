@@ -24,7 +24,6 @@ export class UserProfileComponent implements OnInit {
   user$: Observable<User> | undefined;
   userIdFromRoute: string;
   profileForm: FormGroup;
-  version: number;
   public isLoading = false;
   public subscribedValidity = 'Unkwown';
   namesRegex = new RegExp(
@@ -88,7 +87,6 @@ export class UserProfileComponent implements OnInit {
         email: data.email,
         dateOfBirth: new Date(data.dateOfBirth),
       });
-      this.version = data.version;
     });
   }
 
@@ -100,7 +98,6 @@ export class UserProfileComponent implements OnInit {
       lastname: this.profileForm.value.lastname,
       email: this.profileForm.value.email,
       dateOfBirth: this.profileForm.value.dateOfBirth.toISOString().split('T')[0],
-      version: this.version,
     };
 
     this.userService.putUser(params).subscribe({
@@ -108,19 +105,10 @@ export class UserProfileComponent implements OnInit {
         /*eslint indent: ["error", 2, {"SwitchCase": 1}]*/
         switch (data.status) {
           case StatusCodes.OK:
-            this.version++;
             Swal.fire({
               title: 'Success',
               text: 'User updated successfully',
               icon: 'success',
-              confirmButtonText: 'OK',
-            });
-            break;
-          case StatusCodes.CONFLICT:
-            Swal.fire({
-              title: 'Error',
-              text: 'There was a version conflict!',
-              icon: 'error',
               confirmButtonText: 'OK',
             });
             break;

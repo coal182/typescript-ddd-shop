@@ -1,9 +1,9 @@
 export interface Product {
   id: string;
   name: string;
-  author: Author;
+  description: string;
+  image: string;
   price: number;
-  version: number;
 }
 
 export const products = [
@@ -47,7 +47,6 @@ export interface ProductsResponseData {
   image: string;
   author: AuthorProductsResponse;
   price: number;
-  version: number;
 }
 
 export interface ProductResponse {
@@ -64,7 +63,6 @@ export interface ProductResponseData {
   image: string;
   author: AuthorProductsResponse;
   price: number;
-  version: number;
 }
 
 export interface AuthorProductsResponse {

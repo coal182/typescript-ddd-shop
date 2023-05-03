@@ -7,7 +7,6 @@ export interface Order {
   address: string;
   total: number;
   items: Array<OrderLine>;
-  version: number;
 }
 
 export interface OrderLine {

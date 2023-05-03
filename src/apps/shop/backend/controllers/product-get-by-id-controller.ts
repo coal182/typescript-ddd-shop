@@ -27,7 +27,9 @@ export class ProductGetByIdController {
 
     const response = await this.queryBus.ask<ProductsResponse>(query);
 
-    res.status(httpStatus.OK).send(response.products);
+    res
+      .status(httpStatus.OK)
+      .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: response.products[0] });
   }
 
   private parseFilters(params: Array<FilterType>): Array<Map<string, string>> {

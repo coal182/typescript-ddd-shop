@@ -4,13 +4,11 @@ export interface Cart {
   id: string;
   userId: string;
   items: CartItem[];
-  version: number;
 }
 
 export interface SessionCart {
   id: string;
   userId: string;
-  version: number;
 }
 
 export interface CartItem {

@@ -30,7 +30,6 @@ export class HttpCartService extends CartService {
         id: this.sessionCart.id,
         userId: this.sessionCart.userId,
         items: [],
-        version: this.sessionCart.version,
       };
     }
   }
@@ -53,9 +52,6 @@ export class HttpCartService extends CartService {
     };
 
     this.cart.items.push(item);
-    this.cart.version = this.cart.version + 1;
-    this.sessionCart.version = this.sessionCart.version + 1;
-    //TODO: Fix cart version problem
     //localStorage.setItem('cart', JSON.stringify(this.sessionCart));
 
     return this.http.post<any>(`${environment.apiUrl}cart/add`, params);
@@ -92,7 +88,7 @@ export class HttpCartService extends CartService {
   }
 
   public clearCart(): Observable<unknown> {
-    return this.http.delete<any>(`${environment.apiUrl}cart/clear/${this.cart.id}/${this.cart.version}`);
+    return this.http.delete<any>(`${environment.apiUrl}cart/clear/${this.cart.id}`);
   }
 
   public getShippingPrices(): Observable<any> {
@@ -104,7 +100,6 @@ export interface GetCartResponse {
   data: {
     items: CartItem[];
     userId: string;
-    version: number;
     id: string;
     message: string;
     status: number;

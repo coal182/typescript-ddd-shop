@@ -91,7 +91,6 @@ fdescribe('HttpProductService', () => {
             lastname: 'Martin Niclife',
           },
           price: 18.17,
-          version: 0,
         },
         {
           _id: '631095b312fcdc9e23a17331',
@@ -106,7 +105,6 @@ fdescribe('HttpProductService', () => {
             lastname: 'Martin Niclife',
           },
           price: 21.59,
-          version: 0,
         },
         {
           _id: '631095b312fcdc9e23a17322',
@@ -121,7 +119,6 @@ fdescribe('HttpProductService', () => {
             lastname: 'Martin Niclife',
           },
           price: 15.32,
-          version: 0,
         },
       ],
     };
@@ -145,7 +142,6 @@ fdescribe('HttpProductService', () => {
           lastname: 'Martin Niclife',
         },
         price: 18.17,
-        version: 0,
       },
     };
   }
