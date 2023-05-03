@@ -1,5 +1,7 @@
 import { ConsumeMessage } from 'amqplib';
 
+import WinstonLogger from '@infrastructure/winston-logger';
+
 import { DomainEvent } from '../../../domain/domain-event';
 import { DomainEventSubscriber } from '../../../domain/domain-event-subscriber';
 import { DomainEventDeserializer } from '../domain-event-deserializer';
@@ -14,14 +16,17 @@ export class RabbitMQConsumer {
   private queueName: string;
   private exchange: string;
 
-  constructor(params: {
-    subscriber: DomainEventSubscriber<DomainEvent>;
-    deserializer: DomainEventDeserializer;
-    connection: RabbitMqConnection;
-    queueName: string;
-    exchange: string;
-    maxRetries: number;
-  }) {
+  constructor(
+    params: {
+      subscriber: DomainEventSubscriber<DomainEvent>;
+      deserializer: DomainEventDeserializer;
+      connection: RabbitMqConnection;
+      queueName: string;
+      exchange: string;
+      maxRetries: number;
+    },
+    private logger: WinstonLogger
+  ) {
     this.subscriber = params.subscriber;
     this.deserializer = params.deserializer;
     this.connection = params.connection;
@@ -37,6 +42,7 @@ export class RabbitMQConsumer {
     try {
       await this.subscriber.on(domainEvent);
     } catch (error) {
+      this.logger.error(error as Error);
       await this.handleError(message);
     } finally {
       this.connection.ack(message);

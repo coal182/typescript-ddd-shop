@@ -1,26 +1,31 @@
-import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { IEventHandler } from '@core/i-event-handler';
-import { CartItem } from 'src/contexts/shop/cart/domain/cart-item';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { Cart } from '@storeback/cart/domain/cart';
+import { CartEventStore } from '@storeback/cart/domain/cart-event-store';
+import { CartId } from '@storeback/cart/domain/cart-id';
+import { CartRepository } from '@storeback/cart/domain/cart-repository';
 import { CartCleared } from 'src/contexts/shop/cart/domain/events/cart-cleared';
 
-@injectable()
-export class CartClearedEventHandler implements IEventHandler<CartCleared> {
-  public event = CartCleared.name;
+export class CartClearedEventHandler implements DomainEventSubscriber<CartCleared> {
+  public event: string = CartCleared.name;
 
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  constructor(private repository: CartRepository, private eventStore: CartEventStore) {}
 
-  async handle(event: CartCleared) {
-    const cart = await this.db.collection('carts').findOne({ id: event.guid });
+  subscribedTo(): DomainEventClass[] {
+    return [CartCleared];
+  }
 
-    if (cart) {
-      const newItems: Array<CartItem> = [];
+  async on(domainEvent: CartCleared): Promise<void> {
+    const id = new CartId(domainEvent.aggregateId);
 
-      await this.db
-        .collection('carts')
-        .updateOne({ id: event.guid }, { $set: { items: newItems, version: event.version } });
+    const events = await this.eventStore.findByAggregateId(id);
+    if (!events) {
+      throw new NotFoundException('Cart not found by its id');
     }
+
+    const cart = Cart.createEmptyCart(id);
+    cart.loadFromHistory(events);
+    await this.repository.save(cart);
   }
 }

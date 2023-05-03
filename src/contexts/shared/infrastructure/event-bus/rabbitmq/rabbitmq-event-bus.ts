@@ -1,3 +1,5 @@
+import WinstonLogger from '@infrastructure/winston-logger';
+
 import { DomainEvent } from '../../../domain/domain-event';
 import { EventBus } from '../../../domain/event-bus';
 import { DomainEventDeserializer } from '../domain-event-deserializer';
@@ -16,13 +18,16 @@ export class RabbitMQEventBus implements EventBus {
   private queueNameFormatter: RabbitMQqueueFormatter;
   private maxRetries: number;
 
-  constructor(params: {
-    failoverPublisher: DomainEventFailoverPublisher;
-    connection: RabbitMqConnection;
-    exchange: string;
-    queueNameFormatter: RabbitMQqueueFormatter;
-    maxRetries: number;
-  }) {
+  constructor(
+    params: {
+      failoverPublisher: DomainEventFailoverPublisher;
+      connection: RabbitMqConnection;
+      exchange: string;
+      queueNameFormatter: RabbitMQqueueFormatter;
+      maxRetries: number;
+    },
+    private logger: WinstonLogger
+  ) {
     const { failoverPublisher, connection, exchange } = params;
     this.failoverPublisher = failoverPublisher;
     this.connection = connection;
@@ -33,7 +38,7 @@ export class RabbitMQEventBus implements EventBus {
 
   async addSubscribers(subscribers: DomainEventSubscribers): Promise<void> {
     const deserializer = DomainEventDeserializer.configure(subscribers);
-    const consumerFactory = new RabbitMQConsumerFactory(deserializer, this.connection, this.maxRetries);
+    const consumerFactory = new RabbitMQConsumerFactory(deserializer, this.connection, this.maxRetries, this.logger);
 
     for (const subscriber of subscribers.items) {
       const queueName = this.queueNameFormatter.format(subscriber);

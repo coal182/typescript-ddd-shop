@@ -26,7 +26,7 @@ export class OrderCreatedEventHandler implements DomainEventSubscriber<OrderCrea
     const id = new OrderId(domainEvent.aggregateId);
     const events = await this.eventStore.findByAggregateId(id);
     if (!events) {
-      throw new NotFoundException('Product not found by its id');
+      throw new NotFoundException('Order not found by its id');
     }
     const order = Order.createEmptyOrder(id);
     order.loadFromHistory(events);

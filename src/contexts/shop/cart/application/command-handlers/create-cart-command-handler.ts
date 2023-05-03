@@ -1,18 +1,19 @@
-import { inject, injectable } from 'inversify';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { ICommandHandler } from '@core/i-command-handler';
+import { Command } from '@shared/domain/command';
+import { CommandHandler } from '@shared/domain/command-handler';
+import { CartUser } from '@storeback/cart/domain/cart-user';
 import { CreateCartCommand } from 'src/contexts/shop/cart/application/commands/create-cart';
-import { Cart } from 'src/contexts/shop/cart/domain/cart';
 import { CartId } from 'src/contexts/shop/cart/domain/cart-id';
-import { ICartRepository } from 'src/contexts/shop/cart/domain/i-cart-repository';
 
-@injectable()
-export class CreateCartCommandHandler implements ICommandHandler<CreateCartCommand> {
-  constructor(@inject(TYPES.CartRepository) private readonly repository: ICartRepository) {}
-  public static commandToHandle: string = CreateCartCommand.name;
+import { CartCreator } from '../create/cart-creator';
+
+export class CreateCartCommandHandler implements CommandHandler<CreateCartCommand> {
+  constructor(private cartCreator: CartCreator) {}
+  subscribedTo(): Command {
+    return CreateCartCommand;
+  }
   async handle(command: CreateCartCommand) {
-    const cart: Cart = new Cart(new CartId(command.guid), command.userId);
-    await this.repository.save(cart, -1);
+    const id = new CartId(command.id);
+    const userId = new CartUser(command.userId);
+    await this.cartCreator.run({ id, userId });
   }
 }

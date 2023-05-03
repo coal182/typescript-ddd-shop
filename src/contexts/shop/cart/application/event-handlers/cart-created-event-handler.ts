@@ -1,22 +1,25 @@
-import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { IEventHandler } from '@core/i-event-handler';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
+import { Cart } from '@storeback/cart/domain/cart';
+import { CartId } from '@storeback/cart/domain/cart-id';
+import { CartRepository } from '@storeback/cart/domain/cart-repository';
+import { CartUser } from '@storeback/cart/domain/cart-user';
 import { CartCreated } from 'src/contexts/shop/cart/domain/events/cart-created';
 
-@injectable()
-export class CartCreatedEventHandler implements IEventHandler<CartCreated> {
+export class CartCreatedEventHandler implements DomainEventSubscriber<CartCreated> {
   public event: string = CartCreated.name;
 
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  constructor(private repository: CartRepository) {}
 
-  async handle(event: CartCreated) {
-    await this.db.collection('carts').insertOne({
-      id: event.guid,
-      userId: event.userId,
-      items: [],
-      version: event.version,
-    });
+  subscribedTo(): DomainEventClass[] {
+    return [CartCreated];
+  }
+
+  async on(domainEvent: CartCreated): Promise<void> {
+    const id = new CartId(domainEvent.aggregateId);
+    const userId = new CartUser(domainEvent.userId);
+
+    const cart = new Cart(id, userId);
+    await this.repository.save(cart);
   }
 }

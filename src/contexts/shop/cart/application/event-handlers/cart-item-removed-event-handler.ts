@@ -1,26 +1,32 @@
-import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { IEventHandler } from '@core/i-event-handler';
-import { CartItem } from 'src/contexts/shop/cart/domain/cart-item';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { Cart } from '@storeback/cart/domain/cart';
+import { CartEventStore } from '@storeback/cart/domain/cart-event-store';
+import { CartId } from '@storeback/cart/domain/cart-id';
+import { CartRepository } from '@storeback/cart/domain/cart-repository';
 import { CartItemRemoved } from 'src/contexts/shop/cart/domain/events/cart-item-removed';
 
-@injectable()
-export class CartItemRemovedEventHandler implements IEventHandler<CartItemRemoved> {
-  public event = CartItemRemoved.name;
+export class CartItemRemovedEventHandler implements DomainEventSubscriber<CartItemRemoved> {
+  public event: string = CartItemRemoved.name;
 
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  constructor(private repository: CartRepository, private eventStore: CartEventStore) {}
 
-  async handle(event: CartItemRemoved) {
-    const cart = await this.db.collection('carts').findOne({ id: event.guid });
+  subscribedTo(): DomainEventClass[] {
+    return [CartItemRemoved];
+  }
 
-    if (cart) {
-      const newItems = cart.items.filter((item: CartItem) => item.bookId != event.item.bookId);
+  async on(domainEvent: CartItemRemoved): Promise<void> {
+    const id = new CartId(domainEvent.aggregateId);
 
-      await this.db
-        .collection('carts')
-        .updateOne({ id: event.guid }, { $set: { items: newItems, version: event.version } });
+    const events = await this.eventStore.findByAggregateId(id);
+    if (!events) {
+      throw new NotFoundException('Cart not found by its id');
     }
+
+    const cart = Cart.createEmptyCart(id);
+    cart.loadFromHistory(events);
+    cart.removeItem(domainEvent.item);
+    await this.repository.save(cart);
   }
 }

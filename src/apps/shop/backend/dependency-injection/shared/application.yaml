@@ -43,6 +43,7 @@ services:
         '@Shop.Shared.RabbitMQConnection',
         '@Shop.Shared.RabbitMQqueueFormatter',
         '@Shop.Shared.RabbitMQConfig',
+        '@Shared.Logger',
       ]
 
   Shop.Shared.RabbitMQQueueFormatter:

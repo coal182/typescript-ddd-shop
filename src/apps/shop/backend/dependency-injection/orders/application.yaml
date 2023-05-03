@@ -54,13 +54,6 @@ services:
     tags:
       - { name: 'queryHandler' }
 
-  Shop.Orders.CreateOrderOnOrderCreated:
-    class: ../../../../../contexts/shop/order/application/event-handlers/order-created-event-handler
-    main: OrderCreatedEventHandler
-    arguments: ['@Shop.Orders.domain.OrderRepository']
-    tags:
-      - { name: 'domainEventSubscriber' }
-
   Shop.Orders.OrderCreated:
     class: ../../../../../contexts/shop/order/application/event-handlers/order-created-event-handler
     main: OrderCreatedEventHandler

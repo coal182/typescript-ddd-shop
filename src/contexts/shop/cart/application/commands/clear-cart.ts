@@ -1,10 +1,7 @@
-import { Command } from '@core/command';
+import { Command } from '@shared/domain/command';
 
 export class ClearCartCommand extends Command {
-  public static commandName = ClearCartCommand.name;
-
-  constructor(guid: string, public readonly originalVersion: number) {
-    super(guid);
-    this.originalVersion = originalVersion;
+  constructor(public readonly id: string) {
+    super();
   }
 }

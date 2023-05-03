@@ -1,19 +1,33 @@
-import { inject, injectable } from 'inversify';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { ICommandHandler } from '@core/i-command-handler';
+import { Command } from '@shared/domain/command';
+import { CommandHandler } from '@shared/domain/command-handler';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { EventBus } from '@shared/domain/event-bus';
+import { CartEventStore } from '@storeback/cart/domain/cart-event-store';
+import { CartId } from '@storeback/cart/domain/cart-id';
 import { Cart } from 'src/contexts/shop/cart/domain/cart';
-import { ICartRepository } from 'src/contexts/shop/cart/domain/i-cart-repository';
 
 import { ClearCartCommand } from '../commands/clear-cart';
 
-@injectable()
-export class ClearCartCommandHandler implements ICommandHandler<ClearCartCommand> {
-  constructor(@inject(TYPES.CartRepository) private readonly repository: ICartRepository) {}
-  public static commandToHandle: string = ClearCartCommand.name;
+export class ClearCartCommandHandler implements CommandHandler<ClearCartCommand> {
+  constructor(private eventBus: EventBus, private readonly eventStore: CartEventStore) {}
+
+  subscribedTo(): Command {
+    return ClearCartCommand;
+  }
+
   async handle(command: ClearCartCommand) {
-    const cart: Cart = await this.repository.getById(command.guid);
-    cart.clear();
-    await this.repository.save(cart, command.originalVersion);
+    const id = new CartId(command.id);
+
+    const events = await this.eventStore.findByAggregateId(id);
+    if (!events) {
+      throw new NotFoundException('Cart not found by its id');
+    }
+
+    const order = Cart.createEmptyCart(id);
+    order.loadFromHistory(events);
+    order.clear();
+    const newDomainEvents = order.pullDomainEvents();
+    await this.eventStore.save(newDomainEvents);
+    await this.eventBus.publish(newDomainEvents);
   }
 }

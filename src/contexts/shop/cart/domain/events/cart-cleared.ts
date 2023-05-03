@@ -1,11 +1,29 @@
-import { Event } from '@core/event';
-import { IEvent } from '@core/i-event';
+import { DomainEvent } from '@shared/domain/domain-event';
 
-export class CartCleared extends Event implements IEvent {
-  eventName = CartCleared.name;
-  aggregateName = 'cart';
+type CartClearedDomainEventData = object;
 
-  constructor(public guid: string) {
-    super();
+export class CartCleared extends DomainEvent {
+  static readonly EVENT_NAME = 'cart.cleared';
+
+  constructor({ aggregateId, eventId, occurredOn }: { aggregateId: string; eventId?: string; occurredOn?: Date }) {
+    super({ eventName: CartCleared.EVENT_NAME, aggregateId, eventId, occurredOn });
+  }
+
+  toPrimitives(): CartClearedDomainEventData {
+    return {};
+  }
+
+  static fromPrimitives(params: {
+    aggregateId: string;
+    data: CartClearedDomainEventData;
+    eventId: string;
+    occurredOn: Date;
+  }): DomainEvent {
+    const { aggregateId, occurredOn, eventId } = params;
+    return new CartCleared({
+      aggregateId,
+      eventId,
+      occurredOn,
+    });
   }
 }

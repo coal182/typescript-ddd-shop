@@ -1,0 +1,83 @@
+services:
+  Shop.Carts.domain.CartRepository:
+    class: ../../../../../contexts/shop/cart/infrastructure/persistence/mongo-cart-repository
+    main: MongoCartRepository
+    arguments: ['@Shop.Shared.ConnectionManager']
+
+  Shop.Carts.domain.CartEventStore:
+    class: ../../../../../contexts/shop/cart/infrastructure/persistence/mongo-cart-event-store
+    main: MongoCartEventStore
+    arguments: ['@Shop.Shared.ConnectionManager']
+
+  Shop.Carts.application.CartCreator:
+    class: ../../../../../contexts/shop/cart/application/create/cart-creator
+    main: CartCreator
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Carts.domain.CartEventStore']
+
+  Shop.Carts.CreateCartCommandHandler:
+    class: ../../../../../contexts/shop/cart/application/command-handlers/create-cart-command-handler
+    main: CreateCartCommandHandler
+    arguments: ['@Shop.Carts.application.CartCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Shop.Carts.ClearCartCommandHandler:
+    class: ../../../../../contexts/shop/cart/application/command-handlers/clear-cart-command-handler
+    main: ClearCartCommandHandler
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Carts.domain.CartEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
+  Shop.Carts.AddItemToCartCommandHandler:
+    class: ../../../../../contexts/shop/cart/application/command-handlers/add-item-to-cart-command-handler
+    main: AddItemToCartCommandHandler
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Carts.domain.CartEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
+  Shop.Carts.RemoveItemFromCartCommandHandler:
+    class: ../../../../../contexts/shop/cart/application/command-handlers/remove-item-from-cart-command-handler
+    main: RemoveItemFromCartCommandHandler
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Carts.domain.CartEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
+  Shop.Carts.CartCreated:
+    class: ../../../../../contexts/shop/cart/application/event-handlers/cart-created-event-handler
+    main: CartCreatedEventHandler
+    arguments: ['@Shop.Carts.domain.CartRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Shop.Carts.CartCleared:
+    class: ../../../../../contexts/shop/cart/application/event-handlers/cart-cleared-event-handler
+    main: CartClearedEventHandler
+    arguments: ['@Shop.Carts.domain.CartRepository', '@Shop.Carts.domain.CartEventStore']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Shop.Carts.CartItemAdded:
+    class: ../../../../../contexts/shop/cart/application/event-handlers/cart-item-added-event-handler
+    main: CartItemAddedEventHandler
+    arguments: ['@Shop.Carts.domain.CartRepository', '@Shop.Carts.domain.CartEventStore']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Shop.Carts.CartItemRemoved:
+    class: ../../../../../contexts/shop/cart/application/event-handlers/cart-item-removed-event-handler
+    main: CartItemRemovedEventHandler
+    arguments: ['@Shop.Carts.domain.CartRepository', '@Shop.Carts.domain.CartEventStore']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Shop.Carts.application.CartsByCriteriaSearcher:
+    class: ../../../../../contexts/shop/cart/application/search-by-criteria/carts-by-criteria-searcher
+    main: CartsByCriteriaSearcher
+    arguments: ['@Shop.Carts.domain.CartRepository']
+
+  Shop.Carts.SearchCartsByCriteriaQueryHandler:
+    class: ../../../../../contexts/shop/cart/application/search-by-criteria/search-carts-by-criteria-query-handler
+    main: SearchCartsByCriteriaQueryHandler
+    arguments: ['@Shop.Carts.application.CartsByCriteriaSearcher']
+    tags:
+      - { name: 'queryHandler' }

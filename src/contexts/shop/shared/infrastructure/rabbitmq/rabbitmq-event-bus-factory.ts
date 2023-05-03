@@ -2,6 +2,7 @@ import { DomainEventFailoverPublisher } from '@infrastructure/event-bus/domain-e
 import { RabbitMqConnection } from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
 import { RabbitMQEventBus } from '@infrastructure/event-bus/rabbitmq/rabbitmq-event-bus';
 import { RabbitMQqueueFormatter } from '@infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter';
+import WinstonLogger from '@infrastructure/winston-logger';
 
 import { RabbitMQConfig } from './rabbitmq-config-factory';
 
@@ -10,14 +11,18 @@ export class RabbitMQEventBusFactory {
     failoverPublisher: DomainEventFailoverPublisher,
     connection: RabbitMqConnection,
     queueNameFormatter: RabbitMQqueueFormatter,
-    config: RabbitMQConfig
+    config: RabbitMQConfig,
+    logger: WinstonLogger
   ): RabbitMQEventBus {
-    return new RabbitMQEventBus({
-      failoverPublisher,
-      connection,
-      exchange: config.exchangeSettings.name,
-      queueNameFormatter: queueNameFormatter,
-      maxRetries: config.maxRetries,
-    });
+    return new RabbitMQEventBus(
+      {
+        failoverPublisher,
+        connection,
+        exchange: config.exchangeSettings.name,
+        queueNameFormatter: queueNameFormatter,
+        maxRetries: config.maxRetries,
+      },
+      logger
+    );
   }
 }

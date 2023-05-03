@@ -1,20 +1,34 @@
-import { inject, injectable } from 'inversify';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { ICommandHandler } from '@core/i-command-handler';
+import { Command } from '@shared/domain/command';
+import { CommandHandler } from '@shared/domain/command-handler';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { EventBus } from '@shared/domain/event-bus';
+import { CartEventStore } from '@storeback/cart/domain/cart-event-store';
+import { CartId } from '@storeback/cart/domain/cart-id';
 import { AddItemToCartCommand } from 'src/contexts/shop/cart/application/commands/add-item-to-cart';
 import { Cart } from 'src/contexts/shop/cart/domain/cart';
 import { CartItem } from 'src/contexts/shop/cart/domain/cart-item';
-import { ICartRepository } from 'src/contexts/shop/cart/domain/i-cart-repository';
 
-@injectable()
-export class AddItemToCartCommandHandler implements ICommandHandler<AddItemToCartCommand> {
-  constructor(@inject(TYPES.CartRepository) private readonly repository: ICartRepository) {}
-  public static commandToHandle: string = AddItemToCartCommand.name;
+export class AddItemToCartCommandHandler implements CommandHandler<AddItemToCartCommand> {
+  constructor(private eventBus: EventBus, private readonly eventStore: CartEventStore) {}
+
+  subscribedTo(): Command {
+    return AddItemToCartCommand;
+  }
+
   async handle(command: AddItemToCartCommand) {
-    const cart: Cart = await this.repository.getById(command.guid);
-    const item = new CartItem(command.bookId, command.qty, command.price);
+    const id = new CartId(command.id);
+    const item = new CartItem(command.productId, command.qty, command.price);
+
+    const events = await this.eventStore.findByAggregateId(id);
+    if (!events) {
+      throw new NotFoundException('Cart not found by its id');
+    }
+
+    const cart = Cart.createEmptyCart(id);
+    cart.loadFromHistory(events);
     cart.addItem(item);
-    await this.repository.save(cart, command.originalVersion);
+    const newDomainEvents = cart.pullDomainEvents();
+    await this.eventStore.save(newDomainEvents);
+    await this.eventBus.publish(newDomainEvents);
   }
 }

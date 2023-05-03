@@ -1,11 +1,7 @@
-import { Command } from '@core/command';
+import { Command } from '@shared/domain/command';
 
 export class CreateCartCommand extends Command {
-  public userId: string;
-  public static commandName = CreateCartCommand.name;
-
-  constructor(userId: string, guid?: string) {
-    super(guid);
-    this.userId = userId;
+  constructor(public readonly id: string, public readonly userId: string) {
+    super();
   }
 }

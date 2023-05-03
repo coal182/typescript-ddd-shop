@@ -4,3 +4,4 @@ imports:
   - { resource: ./products/application.yaml }
   - { resource: ./orders/application.yaml }
   - { resource: ./users/application.yaml }
+  - { resource: ./carts/application.yaml }

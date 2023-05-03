@@ -1,35 +1,31 @@
-import { inject, injectable } from 'inversify';
-import { Db } from 'mongodb';
-
-import { TYPES } from '@storeback/shared/constants/types';
-import { IEventHandler } from '@core/i-event-handler';
+import { DomainEventClass } from '@shared/domain/domain-event';
+import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
+import { NotFoundException } from '@shared/domain/errors/application-error';
+import { Cart } from '@storeback/cart/domain/cart';
+import { CartEventStore } from '@storeback/cart/domain/cart-event-store';
+import { CartId } from '@storeback/cart/domain/cart-id';
+import { CartRepository } from '@storeback/cart/domain/cart-repository';
 import { CartItemAdded } from 'src/contexts/shop/cart/domain/events/cart-item-added';
 
-@injectable()
-export class CartItemAddedEventHandler implements IEventHandler<CartItemAdded> {
-  public event = CartItemAdded.name;
+export class CartItemAddedEventHandler implements DomainEventSubscriber<CartItemAdded> {
+  public event: string = CartItemAdded.name;
 
-  constructor(@inject(TYPES.Db) private readonly db: Db) {}
+  constructor(private repository: CartRepository, private eventStore: CartEventStore) {}
 
-  async handle(event: CartItemAdded) {
-    const cart = await this.db.collection('carts').findOne({ id: event.guid });
-    if (cart) {
-      let newItems = [...cart.items];
-      if (newItems.find((item) => item.bookId == event.item.bookId)) {
-        newItems = newItems.map((item) => {
-          if (item.bookId == event.item.bookId) {
-            item.qty += event.item.qty;
-            item.price = event.item.price;
-          }
-          return item;
-        });
-      } else {
-        const book = await this.db.collection('books').findOne({ id: event.item.bookId });
-        newItems.push({ ...event.item, product: book });
-      }
-      await this.db
-        .collection('carts')
-        .updateOne({ id: event.guid }, { $set: { items: newItems, version: event.version } });
+  subscribedTo(): DomainEventClass[] {
+    return [CartItemAdded];
+  }
+
+  async on(domainEvent: CartItemAdded): Promise<void> {
+    const id = new CartId(domainEvent.aggregateId);
+
+    const events = await this.eventStore.findByAggregateId(id);
+    if (!events) {
+      throw new NotFoundException('Cart not found by its id');
     }
+
+    const cart = Cart.createEmptyCart(id);
+    cart.loadFromHistory(events);
+    await this.repository.save(cart);
   }
 }
