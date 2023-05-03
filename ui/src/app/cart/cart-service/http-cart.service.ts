@@ -37,7 +37,7 @@ export class HttpCartService extends CartService {
 
   public getItems(): Observable<Cart> {
     const userId = this.storageService.getItem('user_id');
-    return this.http.get(`${environment.apiUrl}api/v1/cart/user/${userId}`).pipe(
+    return this.http.get(`${environment.apiUrl}cart/user/${userId}`).pipe(
       map((data: GetCartResponse) => {
         return data.data;
       })
@@ -47,10 +47,9 @@ export class HttpCartService extends CartService {
   public addToCart(item: CartItem): Observable<unknown> {
     const params: AddToCartParams = {
       guid: this.cart.id,
-      bookId: item.product.id,
+      productId: item.product.id,
       qty: item.qty,
       price: item.price,
-      originalVersion: this.cart.version,
     };
 
     this.cart.items.push(item);
@@ -59,20 +58,19 @@ export class HttpCartService extends CartService {
     //TODO: Fix cart version problem
     //localStorage.setItem('cart', JSON.stringify(this.sessionCart));
 
-    return this.http.post<any>(`${environment.apiUrl}api/v1/cart/add`, params);
+    return this.http.post<any>(`${environment.apiUrl}cart/add`, params);
   }
 
   public removeFromCart(item: CartItem): Observable<unknown> {
     const params: AddToCartParams = {
       guid: this.cart.id,
-      bookId: item.product.id,
+      productId: item.product.id,
       qty: item.qty,
       price: item.price,
-      originalVersion: this.cart.version,
     };
 
     return this.http.delete<any>(
-      `${environment.apiUrl}api/v1/cart/remove/${params.guid}/${params.bookId}/${params.qty}/${params.price}/${params.originalVersion}`
+      `${environment.apiUrl}cart/remove/${params.guid}/${params.productId}/${params.qty}/${params.price}`
     );
   }
 
@@ -86,7 +84,7 @@ export class HttpCartService extends CartService {
       lines: this.cart.items,
     };
 
-    return this.http.post(`${environment.apiUrl}api/v1/orders`, confirmCartParams);
+    return this.http.post(`${environment.apiUrl}orders`, confirmCartParams);
   }
 
   private totalCart(): number {
@@ -94,7 +92,7 @@ export class HttpCartService extends CartService {
   }
 
   public clearCart(): Observable<unknown> {
-    return this.http.delete<any>(`${environment.apiUrl}api/v1/cart/clear/${this.cart.id}/${this.cart.version}`);
+    return this.http.delete<any>(`${environment.apiUrl}cart/clear/${this.cart.id}/${this.cart.version}`);
   }
 
   public getShippingPrices(): Observable<any> {

@@ -17,14 +17,14 @@ export class HttpUserService extends UserService {
   public getUsers(params): Observable<any> {
     const headers = { 'Content-Type': 'application/json' };
     const parameters = new HttpParams().set('name', params?.name || '').set('paramName2', 0); //Create new HttpParams
-    return this.http.get(`${environment.apiUrl}api/v1/books`, { headers: headers, params: parameters });
+    return this.http.get(`${environment.apiUrl}product`, { headers: headers, params: parameters });
   }
 
   public getUser(params: GetUserParams): Observable<any> {
-    return this.http.get(`${environment.apiUrl}api/v1/users/${params.id}`);
+    return this.http.get(`${environment.apiUrl}user/${params.id}`);
   }
 
   public putUser(params: PutUserParams): Observable<any> {
-    return this.http.put(`${environment.apiUrl}api/v1/users/${params.id}`, params);
+    return this.http.put(`${environment.apiUrl}user/${params.id}`, params);
   }
 }

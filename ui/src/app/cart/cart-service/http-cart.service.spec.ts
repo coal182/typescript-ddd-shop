@@ -78,16 +78,15 @@ fdescribe('HttpCartService', () => {
   describe('when asked to add a product to the cart', () => {
     const expectedParams: AddToCartParams = {
       guid: cartId,
-      bookId: productId,
+      productId: productId,
       qty: 5,
       price: 5.45,
-      originalVersion: 0,
     };
 
     it('should call the api with expected params', async () => {
       await service.addToCart(testItem);
 
-      expect(httpClientSpy.post).toHaveBeenCalledWith(`${environment.apiUrl}api/v1/cart/add`, expectedParams);
+      expect(httpClientSpy.post).toHaveBeenCalledWith(`${environment.apiUrl}cart/add`, expectedParams);
     });
   });
 
@@ -107,17 +106,15 @@ fdescribe('HttpCartService', () => {
 
         const expectedParamsFirstCall: AddToCartParams = {
           guid: cartId,
-          bookId: productId,
+          productId: productId,
           qty: 5,
           price: 5.45,
-          originalVersion: 0,
         };
         const expectedParamsSecondCall: AddToCartParams = {
           guid: cartId,
-          bookId: testItem2.product.id,
+          productId: testItem2.product.id,
           qty: testItem2.qty,
           price: testItem2.price,
-          originalVersion: 1,
         };
         const expectedParamsThirdCall: ConfirmCartParams = {
           guid: orderId,
@@ -129,9 +126,9 @@ fdescribe('HttpCartService', () => {
         };
 
         expect(httpClientSpy.post.calls.allArgs()).toEqual([
-          [`${environment.apiUrl}api/v1/cart/add`, expectedParamsFirstCall],
-          [`${environment.apiUrl}api/v1/cart/add`, expectedParamsSecondCall],
-          [`${environment.apiUrl}api/v1/orders`, expectedParamsThirdCall],
+          [`${environment.apiUrl}cart/add`, expectedParamsFirstCall],
+          [`${environment.apiUrl}cart/add`, expectedParamsSecondCall],
+          [`${environment.apiUrl}orders`, expectedParamsThirdCall],
         ]);
       }));
     });
@@ -149,7 +146,7 @@ fdescribe('HttpCartService', () => {
         const expectedOriginalVersion = 0;
         service.clearCart();
         expect(httpClientSpy.delete).toHaveBeenCalledWith(
-          `${environment.apiUrl}api/v1/cart/clear/${cartId}/${expectedOriginalVersion}`
+          `${environment.apiUrl}cart/clear/${cartId}/${expectedOriginalVersion}`
         );
       });
     });

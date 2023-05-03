@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         const errorMsg = '';
 
-        if (error.status === StatusCodes.UNAUTHORIZED && error.url !== `${environment.apiUrl}api/v1/login/signin`) {
+        if (error.status === StatusCodes.UNAUTHORIZED && error.url !== `${environment.apiUrl}login/signin`) {
           this.authService.doLogout();
           this.router.navigate(['/log-in']);
         }

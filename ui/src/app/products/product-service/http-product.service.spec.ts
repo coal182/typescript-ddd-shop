@@ -47,7 +47,7 @@ fdescribe('HttpProductService', () => {
         expect(products.data.length).toBe(3);
         expect(products).toEqual(dummyProducts);
       });
-      const req = httpMock.expectOne((request) => request.url === `${environment.apiUrl}api/v1/books`);
+      const req = httpMock.expectOne((request) => request.url === `${environment.apiUrl}products`);
       expect(req.request.method).toBe('GET');
       expect(req.request.params.get('orderBy')).toBe('name');
       expect(req.request.params.get('limit')).toBe('30');
@@ -67,7 +67,7 @@ fdescribe('HttpProductService', () => {
         expect(product).toEqual(dummySingleProduct);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}api/v1/books/${dummySingleProductParams.id}`);
+      const req = httpMock.expectOne(`${environment.apiUrl}product/${dummySingleProductParams.id}`);
       expect(req.request.method).toBe('GET');
       req.flush(dummySingleProduct);
     });
@@ -76,7 +76,7 @@ fdescribe('HttpProductService', () => {
   function getDummyProductsResponse(): ProductsResponse {
     return {
       status: 200,
-      message: 'Successfully retrieve the books',
+      message: 'Successfully retrieve the products',
       data: [
         {
           _id: '631095b312fcdc9e23a17337',
@@ -130,7 +130,7 @@ fdescribe('HttpProductService', () => {
   function getDummyProductResponse(): ProductResponse {
     return {
       status: 200,
-      message: 'Successfully retrieve the book',
+      message: 'Successfully retrieve the product',
       data: {
         _id: '631095b312fcdc9e23a17337',
         id: '7cc271a4-14cc-434d-8c23-8d936a0e4d46',

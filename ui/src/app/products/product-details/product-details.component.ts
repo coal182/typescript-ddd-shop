@@ -108,7 +108,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {
       const dialogRef = this.dialog.open(AlertDialogComponent, {
-        data: { title: 'Sharing Book', msg: 'The product has been shared!' },
+        data: { title: 'Sharing Product', msg: 'The product has been shared!' },
       });
 
       this.isLoading = false;
