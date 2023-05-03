@@ -21,7 +21,3 @@ export { CartRemoveItemDeleteController } from './cart-remove-item-delete-contro
 export { CartDeleteController } from './cart-delete-controller';
 export { CartGetByIdController } from './cart-get-by-id-controller';
 export { CartGetByUserController } from './cart-get-by-user-controller';
-//export * from './user-controller';
-//export * from './login-controller';
-//export * from './cart-controller';
-//export * from './order-controller';
