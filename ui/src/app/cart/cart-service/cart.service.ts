@@ -24,7 +24,7 @@ export interface GetCartParams {
 }
 
 export interface ConfirmCartParams {
-  guid: string;
+  id: string;
   userId: string;
   name: string;
   address: string;

@@ -5,12 +5,18 @@ import { Cart } from '@storeback/cart/domain/cart';
 import { CartEventStore } from '@storeback/cart/domain/cart-event-store';
 import { CartId } from '@storeback/cart/domain/cart-id';
 import { CartRepository } from '@storeback/cart/domain/cart-repository';
+import { ProductId } from '@storeback/product/domain/product-id';
+import { ProductRepository } from '@storeback/product/domain/product-repository';
 import { CartItemRemoved } from 'src/contexts/shop/cart/domain/events/cart-item-removed';
 
 export class CartItemRemovedEventHandler implements DomainEventSubscriber<CartItemRemoved> {
   public event: string = CartItemRemoved.name;
 
-  constructor(private repository: CartRepository, private eventStore: CartEventStore) {}
+  constructor(
+    private repository: CartRepository,
+    private productRepository: ProductRepository,
+    private eventStore: CartEventStore
+  ) {}
 
   subscribedTo(): DomainEventClass[] {
     return [CartItemRemoved];
@@ -26,7 +32,14 @@ export class CartItemRemovedEventHandler implements DomainEventSubscriber<CartIt
 
     const cart = Cart.createEmptyCart(id);
     cart.loadFromHistory(events);
-    cart.removeItem(domainEvent.item);
+    const items = await Promise.all(
+      cart.items.map(async (item) => {
+        const product = await this.productRepository.search(new ProductId(item.productId));
+        return { ...item, product: product?.toPrimitives() };
+      })
+    );
+
+    cart.items = items;
     await this.repository.save(cart);
   }
 }

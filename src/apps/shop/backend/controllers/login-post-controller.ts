@@ -1,10 +1,14 @@
 import { compareSync } from 'bcryptjs';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { v4 as uuidv4 } from 'uuid';
 
 import { CommandBus } from '@shared/domain/command-bus';
 import { PasswordNotMatchException } from '@shared/domain/errors/application-error';
 import { QueryBus } from '@shared/domain/query-bus';
+import { CartResponse, CartsResponse } from '@storeback/cart/application/cart-response';
+import { CreateCartCommand } from '@storeback/cart/application/commands/create-cart';
+import { SearchCartsByCriteriaQuery } from '@storeback/cart/application/search-by-criteria/search-carts-by-criteria-query';
 import { SearchUsersByCriteriaQuery } from '@storeback/user/application/search-by-criteria/search-users-by-criteria-query';
 import { UsersResponse } from '@storeback/user/application/user-response';
 
@@ -43,27 +47,7 @@ export class LoginPostController {
       throw new PasswordNotMatchException('Email or password is incorrect');
     }
 
-    /*
-    let cart: CartDTO;
-
-    try {
-      cart = await this.cartReadModel.getByField('userId', user.id);
-    } catch (error) {
-      if (isError(error) && error.message === 'The requested cart does not exist') {
-        const id = uuidv4();
-        const command = new CreateCartCommand(user.id, id);
-        await this.commandBus.send(command);
-        cart = {
-          id,
-          userId: user.id,
-          items: [],
-          version: 0,
-        };
-      }
-
-      throw error;
-    }
-    */
+    const cart = await this.buildCart(user.id);
 
     const data: any = {
       success: true,
@@ -72,7 +56,7 @@ export class LoginPostController {
         maxAge: 3600,
       }),
       id: user.id,
-      //cart: { id: cart.id, userId: cart.userId, version: cart.version },
+      cart: { id: cart.id, userId: cart.userId },
     };
 
     res.status(httpStatus.OK).send(ok('Successfully logged in', data));
@@ -104,6 +88,36 @@ export class LoginPostController {
         ['value', value],
       ]);
     });
+  }
+
+  private async buildCart(userId: string): Promise<CartResponse> {
+    const cartFilters: Array<FilterType> = [{ field: 'userId', operator: '=', value: userId }];
+    const cartOrderBy = 'id';
+    const cartOrder = 'asc';
+
+    const cartQuery = new SearchCartsByCriteriaQuery(
+      this.parseFilters(cartFilters as Array<FilterType>),
+      cartOrderBy as string,
+      cartOrder as string,
+      undefined,
+      undefined
+    );
+
+    const cartsResponse = await this.queryBus.ask<CartsResponse>(cartQuery);
+
+    if (cartsResponse.carts) {
+      return cartsResponse.carts[0];
+    }
+
+    const id = uuidv4();
+
+    const createCommand = new CreateCartCommand(id, userId);
+    await this.commandBus.dispatch(createCommand);
+    return {
+      id,
+      userId,
+      items: [],
+    };
   }
 }
 

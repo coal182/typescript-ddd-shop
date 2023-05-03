@@ -29,7 +29,6 @@ export class ProductListComponent implements OnInit {
           this.isLoading = false;
       }
     }),
-    tap((data) => console.log('📌 console.log', data)),
     map((products) => products.products)
   );
 

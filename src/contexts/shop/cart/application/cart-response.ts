@@ -1,9 +1,11 @@
+import { ProductResponse } from '@storeback/product/application/product-response';
+
 import { Cart } from '../domain/cart';
 
 export interface CartResponse {
   id: string;
   userId: string;
-  items: Array<{ productId: string; qty: number; price: number }>;
+  items: Array<{ productId: string; qty: number; price: number; product?: ProductResponse }>;
 }
 
 export class CartsResponse {

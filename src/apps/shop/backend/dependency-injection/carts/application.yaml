@@ -59,14 +59,24 @@ services:
   Shop.Carts.CartItemAdded:
     class: ../../../../../contexts/shop/cart/application/event-handlers/cart-item-added-event-handler
     main: CartItemAddedEventHandler
-    arguments: ['@Shop.Carts.domain.CartRepository', '@Shop.Carts.domain.CartEventStore']
+    arguments:
+      [
+        '@Shop.Carts.domain.CartRepository',
+        '@Shop.Products.domain.ProductRepository',
+        '@Shop.Carts.domain.CartEventStore',
+      ]
     tags:
       - { name: 'domainEventSubscriber' }
 
   Shop.Carts.CartItemRemoved:
     class: ../../../../../contexts/shop/cart/application/event-handlers/cart-item-removed-event-handler
     main: CartItemRemovedEventHandler
-    arguments: ['@Shop.Carts.domain.CartRepository', '@Shop.Carts.domain.CartEventStore']
+    arguments:
+      [
+        '@Shop.Carts.domain.CartRepository',
+        '@Shop.Products.domain.ProductRepository',
+        '@Shop.Carts.domain.CartEventStore',
+      ]
     tags:
       - { name: 'domainEventSubscriber' }
 

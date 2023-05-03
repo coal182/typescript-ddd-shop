@@ -27,7 +27,9 @@ export class CartGetByUserController {
 
     const response = await this.queryBus.ask<CartsResponse>(query);
 
-    res.status(httpStatus.OK).send(response.carts);
+    res
+      .status(httpStatus.OK)
+      .send({ status: httpStatus.OK, message: 'Sucessfully retrieved cart', data: response.carts[0] });
   }
 
   private parseFilters(params: Array<FilterType>): Array<Map<string, string>> {

@@ -45,7 +45,7 @@ export class HttpCartService extends CartService {
 
   public addToCart(item: CartItem): Observable<unknown> {
     const params: AddToCartParams = {
-      guid: this.cart.id,
+      id: this.cart.id,
       productId: item.product.id,
       qty: item.qty,
       price: item.price,
@@ -59,20 +59,20 @@ export class HttpCartService extends CartService {
 
   public removeFromCart(item: CartItem): Observable<unknown> {
     const params: AddToCartParams = {
-      guid: this.cart.id,
+      id: this.cart.id,
       productId: item.product.id,
       qty: item.qty,
       price: item.price,
     };
 
     return this.http.delete<any>(
-      `${environment.apiUrl}cart/remove/${params.guid}/${params.productId}/${params.qty}/${params.price}`
+      `${environment.apiUrl}cart/remove/${params.id}/${params.productId}/${params.qty}/${params.price}`
     );
   }
 
   public confirmCart(checkoutForm: FormGroup, orderId: string): Observable<unknown> {
     const confirmCartParams: ConfirmCartParams = {
-      guid: orderId,
+      id: orderId,
       userId: this.cart.userId,
       name: checkoutForm.value.name,
       address: checkoutForm.value.address,

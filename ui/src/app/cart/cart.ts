@@ -18,7 +18,7 @@ export interface CartItem {
 }
 
 export interface AddToCartParams {
-  guid: string;
+  id: string;
   productId: string;
   qty: number;
   price: number;

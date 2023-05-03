@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
+import { ProductResponse } from '@storeback/product/application/product-response';
 
 import { CartId } from './cart-id';
 import { CartItem } from './cart-item';
@@ -14,7 +15,7 @@ import { CartItemRemoved } from './events/cart-item-removed';
 export class Cart extends AggregateRoot {
   public id: CartId;
   public userId: CartUser;
-  private items: Array<CartItem>;
+  public items: Array<CartItem>;
 
   constructor(id: CartId, userId: CartUser, items: CartItem[] = []) {
     super();
@@ -78,12 +79,12 @@ export class Cart extends AggregateRoot {
   static fromPrimitives(plainData: {
     id: string;
     userId: string;
-    items: Array<{ productId: string; qty: number; price: number }>;
+    items: Array<{ productId: string; qty: number; price: number; product?: ProductResponse }>;
   }): Cart {
     return new Cart(
       new CartId(plainData.id),
       new CartUser(plainData.userId),
-      plainData.items.map((item) => new CartItem(item.productId, item.qty, item.price))
+      plainData.items.map((item) => new CartItem(item.productId, item.qty, item.price, item.product))
     );
   }
 

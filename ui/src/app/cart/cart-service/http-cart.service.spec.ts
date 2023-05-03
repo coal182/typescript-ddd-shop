@@ -18,9 +18,9 @@ fdescribe('HttpCartService', () => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
   let localStorageMock: MockLocalStorageService;
 
-  const cartId = 'cart-guid';
-  const userId = 'user-guid';
-  const productId = 'product-guid';
+  const cartId = 'cart-id';
+  const userId = 'user-id';
+  const productId = 'product-id';
 
   const testCart = {
     id: cartId,
@@ -42,7 +42,7 @@ fdescribe('HttpCartService', () => {
 
   const testItem2: CartItem = {
     product: {
-      id: 'product-guid-2',
+      id: 'product-id-2',
       name: 'product-name-2',
       description: 'product-description',
       image: 'product-image',
@@ -68,7 +68,7 @@ fdescribe('HttpCartService', () => {
 
   describe('when asked to add a product to the cart', () => {
     const expectedParams: AddToCartParams = {
-      guid: cartId,
+      id: cartId,
       productId: productId,
       qty: 5,
       price: 5.45,
@@ -96,19 +96,19 @@ fdescribe('HttpCartService', () => {
         service.confirmCart(checkoutForm, orderId);
 
         const expectedParamsFirstCall: AddToCartParams = {
-          guid: cartId,
+          id: cartId,
           productId: productId,
           qty: 5,
           price: 5.45,
         };
         const expectedParamsSecondCall: AddToCartParams = {
-          guid: cartId,
+          id: cartId,
           productId: testItem2.product.id,
           qty: testItem2.qty,
           price: testItem2.price,
         };
         const expectedParamsThirdCall: ConfirmCartParams = {
-          guid: orderId,
+          id: orderId,
           userId,
           name: 'Cristian',
           address: 'C/ Barca',
