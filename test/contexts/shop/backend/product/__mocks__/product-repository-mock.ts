@@ -1,13 +1,68 @@
-import { inject, injectable, named } from 'inversify';
+import { expect } from 'chai';
+import { SinonStub, stub } from 'sinon';
 
-import { IEventStore } from '@core/i-event-store';
-import { Product } from 'src/contexts/shop/product/domain/product';
-import { EVENT_STREAM_NAMES, TYPES } from '@storeback/shared/constants/types';
-import { RepositoryMock } from 'test/shared/infrastructure/repositories/repository-mock';
+import { Criteria } from '@shared/domain/criteria/criteria';
+import { Product } from '@storeback/product/domain/product';
+import { ProductRepository } from '@storeback/product/domain/product-repository';
 
-@injectable()
-export class ProductRepositoryMock extends RepositoryMock<Product> {
-  constructor(@inject(TYPES.EventStore) @named(EVENT_STREAM_NAMES.Product) private readonly eventstore: IEventStore) {
-    super(eventstore, Product);
+export class ProductRepositoryMock implements ProductRepository {
+  private saveMock: SinonStub;
+  private searchMock: SinonStub;
+  private searchAllMock: SinonStub;
+  private matchingMock: SinonStub;
+  private products: Array<Product> = [];
+
+  constructor() {
+    this.saveMock = stub();
+    this.searchMock = stub();
+    this.searchAllMock = stub();
+    this.matchingMock = stub();
+  }
+
+  returnOnSearch(products: Array<Product>) {
+    this.products = products;
+  }
+
+  returnOnSearchAll(products: Array<Product>) {
+    this.products = products;
+  }
+
+  returnMatching(products: Array<Product>) {
+    this.products = products;
+  }
+
+  async save(product: Product): Promise<void> {
+    this.saveMock(product);
+  }
+
+  assertSaveHaveBeenCalledWith(expected: Product): void {
+    expect(this.saveMock).to.have.been.calledWith(expected);
+  }
+
+  async search(): Promise<Product> {
+    this.searchMock();
+    return this.products[0];
+  }
+
+  assertSearch() {
+    expect(this.searchAllMock).to.have.been.called;
+  }
+
+  async searchAll(): Promise<Product[]> {
+    this.searchAllMock();
+    return this.products;
+  }
+
+  assertSearchAll() {
+    expect(this.searchAllMock).to.have.been.called;
+  }
+
+  async matching(criteria: Criteria): Promise<Product[]> {
+    this.matchingMock(criteria);
+    return this.products;
+  }
+
+  assertMatchingHasBeenCalledWith(criteria: Criteria) {
+    expect(this.matchingMock).to.have.been.calledWith(criteria);
   }
 }

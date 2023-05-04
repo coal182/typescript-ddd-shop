@@ -2,26 +2,49 @@ import 'reflect-metadata';
 
 import { expect } from 'chai';
 
-import { IEventStore } from '@core/i-event-store';
+import { ProductCreator } from '@storeback/product/application/create/product-creator';
+import { ProductCreated } from '@storeback/product/domain/events/product-created';
+import { ProductImageChanged } from '@storeback/product/domain/events/product-image-changed';
 import { CreateProductCommandHandler } from 'src/contexts/shop/product/application/command-handlers/create-product-command-handler';
 import { UpdateProductImageCommandHandler } from 'src/contexts/shop/product/application/command-handlers/update-product-image-command-handler';
 import { CreateProductCommand } from 'src/contexts/shop/product/application/commands/create-product';
 import { UpdateProductImageCommand } from 'src/contexts/shop/product/application/commands/update-product-image';
+import EventBusMock from 'test/contexts/shared/domain/event-bus-mock';
 
 import { ProductEventStoreMock } from '../../__mocks__/product-event-store-mock';
-import { ProductRepositoryMock } from '../../__mocks__/product-repository-mock';
 import { ProductImageMother } from '../../domain/product-image-mother';
 import { ProductMother } from '../../domain/product-mother';
 
 describe(UpdateProductImageCommandHandler.name, () => {
-  const eventStoreMock: IEventStore = new ProductEventStoreMock();
-  const repository = new ProductRepositoryMock(eventStoreMock);
-  const commandHandler = new CreateProductCommandHandler(repository);
-  const updateCommandHandler = new UpdateProductImageCommandHandler(repository);
+  let eventStore: ProductEventStoreMock;
+  let creator: ProductCreator;
+  let eventBus: EventBusMock;
+  let handler: CreateProductCommandHandler;
+  let updateHandler: UpdateProductImageCommandHandler;
 
+  beforeEach(() => {
+    eventStore = new ProductEventStoreMock();
+    eventBus = new EventBusMock();
+    creator = new ProductCreator(eventBus, eventStore);
+    handler = new CreateProductCommandHandler(creator);
+    updateHandler = new UpdateProductImageCommandHandler(eventBus, eventStore);
+  });
   describe('when a product exists', () => {
     const expectedAggregateRoot = ProductMother.random();
     const updatedImage = ProductImageMother.random();
+    const expectedNewDomainEvents = [
+      new ProductCreated({
+        aggregateId: expectedAggregateRoot.id.value,
+        name: expectedAggregateRoot.name.value,
+        description: expectedAggregateRoot.description.value,
+        image: expectedAggregateRoot.image.value,
+        price: expectedAggregateRoot.price.value,
+      }),
+      new ProductImageChanged({
+        aggregateId: expectedAggregateRoot.id.value,
+        image: expectedAggregateRoot.image.value,
+      }),
+    ];
 
     before(() => {
       const command = new CreateProductCommand(
@@ -32,23 +55,22 @@ describe(UpdateProductImageCommandHandler.name, () => {
         expectedAggregateRoot.price.value
       );
 
-      commandHandler.handle(command);
+      handler.handle(command);
     });
 
     describe('and asked to update his image', () => {
       before(() => {
         const updateCommand = new UpdateProductImageCommand(expectedAggregateRoot.id.value, updatedImage.value);
-        updateCommandHandler.handle(updateCommand);
+        updateHandler.handle(updateCommand);
       });
 
-      it('should save the two events on repository', () => {
-        repository.assertSaveHasBeenCalledTwice;
+      it('should save the two events on event store', () => {
+        eventStore.assertSaveHaveBeenCalledWith(expectedNewDomainEvents);
       });
 
-      it('should update the image', async () => {
-        const savedAggregate = await repository.getById(expectedAggregateRoot.id.value);
-        expect(savedAggregate.image.value).not.to.be.equal(expectedAggregateRoot.image);
-        expect(savedAggregate.image.value).to.be.equal(updatedImage.value);
+      it('should be capable to get the aggregate from the events on event store', async () => {
+        const savedAggregateDomainEvents = await eventStore.findByAggregateId(expectedAggregateRoot.id);
+        expect(savedAggregateDomainEvents).to.deep.equal(expectedNewDomainEvents);
       });
     });
   });

@@ -99,7 +99,6 @@ export class UserProfileComponent implements OnInit {
       email: this.profileForm.value.email,
       dateOfBirth: this.profileForm.get('dateOfBirth').value.toISOString().split('T')[0],
     };
-    console.log('📌 ~ params:', params);
 
     this.userService.putUser(params).subscribe({
       next: (data) => {

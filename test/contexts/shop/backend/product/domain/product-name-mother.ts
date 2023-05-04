@@ -9,4 +9,8 @@ export class ProductNameMother {
   static random(): ProductName {
     return this.create(WordMother.random());
   }
+
+  static invalidName(): string {
+    return 'a'.repeat(201);
+  }
 }

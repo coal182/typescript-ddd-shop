@@ -1,22 +1,16 @@
 import 'reflect-metadata';
-import { CommandBus } from '@infrastructure/command-bus';
-import { BookCreator } from '@storeback/book/application/book-creator';
-import { CreateBookCommand } from '@storeback/book/application/commands/create-book';
-import { ProductPostController } from '@storebackapp/controllers/book-post-controller';
-import { expect } from 'chai';
 import { Request, Response } from 'express';
 import sinon from 'sinon';
 import { v4 as uuidv4 } from 'uuid';
 
-import { BookReadModelFacadeMock } from '../../../../contexts/shop/backend/product/__mocks__/read-model';
+import { CreateProductCommand } from '@storeback/product/application/commands/create-product';
+import { ProductPostController, ProductPostRequest } from '@storebackapp/controllers/product-post-controller';
+import CommandBusMock from 'test/contexts/shared/domain/command-bus-mock';
 
 describe(ProductPostController.name, () => {
-  const commandBus = new CommandBus();
-  const readmodelMock = new BookReadModelFacadeMock();
-  const commandBusMock = sinon.stub(commandBus);
-  const bookCreator = new BookCreator(commandBusMock);
-  const bookController = new ProductPostController(commandBusMock, readmodelMock, bookCreator);
-  describe('when requested to create a book', () => {
+  const commandBusMock = new CommandBusMock();
+  const productController = new ProductPostController(commandBusMock);
+  describe('when requested to create a product', () => {
     const sandbox = sinon.createSandbox();
 
     const status = sandbox.stub();
@@ -34,24 +28,22 @@ describe(ProductPostController.name, () => {
     const req = {
       body: {
         id,
-        name: 'Test Book',
-        description: 'Test Book Description',
-        image: 'Test Book Image',
+        name: 'Test Product',
+        description: 'Test Product Description',
+        image: 'Test Product Image',
         authorId: 'Test Author Id',
-        price: 'Test Book Price',
+        price: 'Test Product Price',
       },
-    } as Request;
+    } as Request<ProductPostRequest>;
 
-    bookController.createBook(req as Request, res);
+    productController.run(req, res);
 
-    const { name, description, image, authorId, price } = req.body;
+    const { name, description, image, price } = req.body;
 
-    const expectedCommand = new CreateBookCommand(id, name, description, image, authorId, price);
+    const expectedCommand = new CreateProductCommand(id, name, description, image, price);
 
-    it('should send a command to the command bus', async () => {
-      await expect(commandBusMock.send.calledOnce).to.be.true;
-      await expect(commandBusMock.send.calledWith(expectedCommand)).to.be.true;
-      await expect(commandBusMock.send.getCall(0).args[0]).to.be.deep.equal(expectedCommand);
+    it('should send a CreateProductCommand to the command bus', async () => {
+      commandBusMock.assertLastDispatchedCommandIs(expectedCommand);
     });
   });
 });

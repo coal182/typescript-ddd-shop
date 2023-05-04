@@ -1,3 +1,4 @@
+import { CreateProductCommand } from '@storeback/product/application/commands/create-product';
 import { Product } from 'src/contexts/shop/product/domain/product';
 import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
 import { ProductId } from 'src/contexts/shop/product/domain/product-id';
@@ -20,6 +21,16 @@ export class ProductMother {
     price: ProductPrice
   ): Product {
     return new Product(id, name, description, image, price);
+  }
+
+  static from(command: CreateProductCommand): Product {
+    return this.create(
+      ProductIdMother.create(command.id),
+      ProductNameMother.create(command.name),
+      ProductDescriptionMother.create(command.description),
+      ProductImageMother.create(command.image),
+      ProductPriceMother.create(command.price)
+    );
   }
 
   static random(): Product {

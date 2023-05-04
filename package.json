@@ -14,6 +14,7 @@
     "lint": "eslint --fix .",
     "postinstall": "npm run build",
     "test": "mocha -r ts-node/register -r tsconfig-paths/register test/**/*.spec.ts --timeout 60000 --exit",
+    "test-watch": "mocha -r ts-node/register -r tsconfig-paths/register test/**/*.spec.ts --watch --extensions ts",
     "command:store:rabbitmq": "NODE_ENV=production ts-node src/apps/shop/backend/command/run-configure-rabbitmq-command"
   },
   "_moduleAliases": {
