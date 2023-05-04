@@ -27,7 +27,9 @@ export class UserGetByIdController {
 
     const response = await this.queryBus.ask<UsersResponse>(query);
 
-    res.status(httpStatus.OK).send(response.users);
+    res
+      .status(httpStatus.OK)
+      .send({ status: httpStatus.OK, message: 'Sucessfully retrieved user', data: response.users[0] });
   }
 
   private parseFilters(params: Array<FilterType>): Array<Map<string, string>> {

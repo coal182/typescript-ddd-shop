@@ -66,7 +66,7 @@ export class UserProfileComponent implements OnInit {
   
       My name is <b>${val.firstname} ${val.lastname}</b>, my email is <b>${val.email}</b>,
   
-      and my date of birth is <b>${val.dateOfBirth.toLocaleDateString('en-US')}</b>.`;
+      and my date of birth is <b>${val.dateOfBirth}</b>.`;
     });
   }
 
@@ -77,7 +77,7 @@ export class UserProfileComponent implements OnInit {
   get(params): void {
     this.user$ = this.userService.getUser(params).pipe(
       map((data) => data.data),
-      tap((pro) => (this.isLoading = false))
+      tap(() => (this.isLoading = false))
     );
 
     this.user$.subscribe((data) => {
@@ -97,8 +97,9 @@ export class UserProfileComponent implements OnInit {
       firstname: this.profileForm.value.firstname,
       lastname: this.profileForm.value.lastname,
       email: this.profileForm.value.email,
-      dateOfBirth: this.profileForm.value.dateOfBirth.toISOString().split('T')[0],
+      dateOfBirth: this.profileForm.get('dateOfBirth').value.toISOString().split('T')[0],
     };
+    console.log('📌 ~ params:', params);
 
     this.userService.putUser(params).subscribe({
       next: (data) => {

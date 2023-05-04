@@ -25,6 +25,6 @@ export class HttpUserService extends UserService {
   }
 
   public putUser(params: PutUserParams): Observable<any> {
-    return this.http.put(`${environment.apiUrl}user/${params.id}`, params);
+    return this.http.put(`${environment.apiUrl}user/${params.id}/update`, params);
   }
 }

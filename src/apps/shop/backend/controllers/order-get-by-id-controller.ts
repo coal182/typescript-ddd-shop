@@ -27,7 +27,9 @@ export class OrderGetByIdController {
 
     const response = await this.queryBus.ask<OrdersResponse>(query);
 
-    res.status(httpStatus.OK).send(response.orders);
+    res
+      .status(httpStatus.OK)
+      .send({ status: httpStatus.OK, message: 'Sucessfully retrieved cart', data: response.orders[0] });
   }
 
   private parseFilters(params: Array<FilterType>): Array<Map<string, string>> {

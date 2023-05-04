@@ -78,6 +78,7 @@
           </mat-error>
         </mat-form-field>
         <p>Form Status: {{ profileForm.status }}</p>
+        <p>Form Value: {{ profileForm.value | json }}</p>
         <p [innerHTML]="formattedMessage"></p>
         <br />
         <button type="submit" mat-flat-button color="primary" data-testid="submit-button" [disabled]="!profileForm.valid">Update</button>

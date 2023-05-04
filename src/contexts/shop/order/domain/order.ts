@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
+import { ProductResponse } from '@storeback/product/application/product-response';
 
 import { OrderCancelled } from './events/order-cancelled';
 import { OrderCreated } from './events/order-created';
@@ -123,7 +124,7 @@ export class Order extends AggregateRoot {
     name: string;
     address: string;
     total: number;
-    lines: Array<{ productId: string; qty: number; price: number }>;
+    lines: Array<{ productId: string; qty: number; price: number; product?: ProductResponse }>;
   }): Order {
     return new Order(
       new OrderId(plainData.id),
@@ -132,7 +133,7 @@ export class Order extends AggregateRoot {
       new OrderName(plainData.name),
       new OrderAddress(plainData.address),
       new OrderTotal(plainData.total),
-      plainData.lines.map((line) => new OrderLine(line.productId, line.qty, line.price))
+      plainData.lines.map((line) => new OrderLine(line.productId, line.qty, line.price, line.product))
     );
   }
 

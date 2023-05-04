@@ -1,3 +1,5 @@
+import { ProductResponse } from '@storeback/product/application/product-response';
+
 import { Order } from '../domain/order';
 
 export interface OrderResponse {
@@ -7,7 +9,7 @@ export interface OrderResponse {
   name: string;
   address: string;
   total: number;
-  lines: Array<{ productId: string; qty: number; price: number }>;
+  lines: Array<{ productId: string; qty: number; price: number; product?: ProductResponse }>;
 }
 
 export class OrdersResponse {

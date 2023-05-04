@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { HttpOrderService } from '../order-service/http-order.service';
 import { Order, OrderLine } from '../orders';
@@ -31,7 +31,8 @@ export class OrderDetailsComponent implements OnInit {
 
     this.order$ = this.orderService.getOrder(params).pipe(
       map((ord) => ord.data),
-      tap((ord) => (this.isLoading = false))
+      tap((data) => console.log(data)),
+      tap(() => (this.isLoading = false))
     );
   }
 

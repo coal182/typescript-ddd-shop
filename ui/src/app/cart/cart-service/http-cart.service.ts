@@ -80,7 +80,7 @@ export class HttpCartService extends CartService {
       lines: this.cart.items,
     };
 
-    return this.http.post(`${environment.apiUrl}orders`, confirmCartParams);
+    return this.http.post(`${environment.apiUrl}order`, confirmCartParams);
   }
 
   private totalCart(): number {

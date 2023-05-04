@@ -11,9 +11,9 @@ export class UserPutController {
     const { id } = req.params;
     const { email, firstname, lastname, dateOfBirth } = req.body;
 
-    const command = new UpdateUserCommand(id, email, firstname, lastname, dateOfBirth);
+    const command = new UpdateUserCommand(id, email, firstname, lastname, new Date(dateOfBirth));
     await this.commandBus.dispatch(command);
 
-    res.status(httpStatus.CREATED).send();
+    res.status(httpStatus.CREATED).send({ status: httpStatus.OK, message: 'Sucessfully updated user' });
   }
 }
