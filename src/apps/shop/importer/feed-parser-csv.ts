@@ -2,7 +2,7 @@ import { readFile, utils, WorkBook, WorkSheet } from 'xlsx';
 
 import { NotFoundError } from '@shared/domain/errors/not-found-error';
 import { ParsingError } from '@shared/domain/errors/parsing-error';
-import { CreateBookCommand } from '@storeback/book/application/commands/create-book';
+import { CreateProductCommand } from '@storeback/product/application/commands/create-product';
 
 import { Feed } from './feed';
 import { FeedParser } from './feed-parser';
@@ -10,7 +10,7 @@ import { FeedParser } from './feed-parser';
 export class FeedParserCsv implements FeedParser {
   private feed: Feed;
 
-  async parse(feed: Feed): Promise<Array<CreateBookCommand>> {
+  async parse(feed: Feed): Promise<Array<CreateProductCommand>> {
     this.feed = feed;
 
     return this.getWorkBook()
@@ -18,14 +18,7 @@ export class FeedParserCsv implements FeedParser {
       .then((workSheet) => this.getRawJson(workSheet))
       .then((rawJson) => {
         return rawJson.map((item: any) => {
-          const command = new CreateBookCommand(
-            item.id,
-            item.name,
-            item.description,
-            item.image,
-            item.author,
-            item.price
-          );
+          const command = new CreateProductCommand(item.id, item.name, item.description, item.image, item.price);
           return command;
         });
       });
