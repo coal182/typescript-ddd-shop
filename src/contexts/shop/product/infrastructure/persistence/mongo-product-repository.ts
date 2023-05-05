@@ -11,6 +11,9 @@ interface ProductDocument {
   description: string;
   image: string;
   price: number;
+  brand: string;
+  category: string;
+  ean: string;
 }
 
 export class MongoProductRepository extends MongoRepository<Product> implements ProductRepository {
@@ -29,6 +32,9 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
         description: document.description,
         image: document.image,
         price: document.price,
+        brand: document.brand,
+        category: document.category,
+        ean: document.ean,
       };
       return document ? Product.fromPrimitives(primitivesFromDocument) : null;
     }
@@ -50,6 +56,9 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
         description: document.description,
         image: document.image,
         price: document.price,
+        brand: document.brand,
+        category: document.category,
+        ean: document.ean,
       };
       return Product.fromPrimitives(primitivesFromDocument);
     });
@@ -64,6 +73,9 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
         description: document.description,
         image: document.image,
         price: document.price,
+        brand: document.brand,
+        category: document.category,
+        ean: document.ean,
       };
       return Product.fromPrimitives(primitivesFromDocument);
     });

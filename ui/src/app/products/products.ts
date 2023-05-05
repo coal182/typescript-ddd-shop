@@ -4,6 +4,9 @@ export interface Product {
   description: string;
   image: string;
   price: number;
+  brand: string;
+  category: string;
+  ean: string;
 }
 
 export const products = [
@@ -47,6 +50,9 @@ export interface ProductsResponseData {
   image: string;
   author: AuthorProductsResponse;
   price: number;
+  brand: string;
+  category: string;
+  ean: string;
 }
 
 export interface ProductResponse {
@@ -63,6 +69,9 @@ export interface ProductResponseData {
   image: string;
   author: AuthorProductsResponse;
   price: number;
+  brand: string;
+  category: string;
+  ean: string;
 }
 
 export interface AuthorProductsResponse {

@@ -6,6 +6,9 @@ export interface ProductResponse {
   description: string;
   image: string;
   price: number;
+  brand: string;
+  category: string;
+  ean: string;
 }
 
 export class ProductsResponse {
@@ -20,6 +23,9 @@ export class ProductsResponse {
         description: primitives.description,
         image: primitives.image,
         price: primitives.price,
+        brand: primitives.brand,
+        category: primitives.category,
+        ean: primitives.ean,
       };
     });
   }

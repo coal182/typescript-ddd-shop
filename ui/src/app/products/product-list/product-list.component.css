@@ -9,12 +9,12 @@ can be found in the LICENSE file at https://angular.io/license
 .product-list {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   grid-gap: 10px;
 }
 
 .product-list article {
-  max-width: 250px;
+  max-width: 400px;
   border: 1px solid #f0f0f0;
   padding: 0px 20px;
   margin: 20px 10px;
@@ -23,7 +23,7 @@ can be found in the LICENSE file at https://angular.io/license
   flex: 1;
   position: relative;
   overflow: hidden;
-  height: 351px;
+  height: 400px;
   border-radius: 10px;
   background-color: #303030;
   outline: 1px solid rgba(255, 255, 255, .5);

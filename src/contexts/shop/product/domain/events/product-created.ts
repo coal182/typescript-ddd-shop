@@ -5,6 +5,9 @@ type CreateProductDomainEventData = {
   readonly description: string;
   readonly image: string;
   readonly price: number;
+  readonly brand: string;
+  readonly category: string;
+  readonly ean: string;
 };
 
 export class ProductCreated extends DomainEvent {
@@ -14,6 +17,9 @@ export class ProductCreated extends DomainEvent {
   readonly description: string;
   readonly image: string;
   readonly price: number;
+  readonly brand: string;
+  readonly category: string;
+  readonly ean: string;
 
   constructor({
     aggregateId,
@@ -21,6 +27,9 @@ export class ProductCreated extends DomainEvent {
     description,
     image,
     price,
+    brand,
+    category,
+    ean,
     eventId,
     occurredOn,
   }: {
@@ -29,6 +38,9 @@ export class ProductCreated extends DomainEvent {
     description: string;
     image: string;
     price: number;
+    brand: string;
+    category: string;
+    ean: string;
     eventId?: string;
     occurredOn?: Date;
   }) {
@@ -37,15 +49,21 @@ export class ProductCreated extends DomainEvent {
     this.description = description;
     this.image = image;
     this.price = price;
+    this.brand = brand;
+    this.category = category;
+    this.ean = ean;
   }
 
   toPrimitives(): CreateProductDomainEventData {
-    const { name, description, image, price } = this;
+    const { name, description, image, price, brand, category, ean } = this;
     return {
       name,
       description,
       image,
       price,
+      brand,
+      category,
+      ean,
     };
   }
 
@@ -62,6 +80,9 @@ export class ProductCreated extends DomainEvent {
       description: data.description,
       image: data.image,
       price: data.price,
+      brand: data.brand,
+      category: data.category,
+      ean: data.ean,
       eventId,
       occurredOn,
     });

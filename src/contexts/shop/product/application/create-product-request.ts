@@ -4,4 +4,7 @@ export type CreateProductRequest = {
   description: string;
   image: string;
   price: number;
+  brand: string;
+  category: string;
+  ean: string;
 };

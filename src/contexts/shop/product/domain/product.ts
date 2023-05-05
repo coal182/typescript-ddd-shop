@@ -5,7 +5,10 @@ import { DomainEvent } from '@shared/domain/domain-event';
 import { ProductCreated } from './events/product-created';
 import { ProductDescriptionChanged } from './events/product-description-changed';
 import { ProductImageChanged } from './events/product-image-changed';
+import { ProductBrand } from './product-brand';
+import { ProductCategory } from './product-category';
 import { ProductDescription } from './product-description';
+import { ProductEan } from './product-ean';
 import { ProductId } from './product-id';
 import { ProductImage } from './product-image';
 import { ProductName } from './product-name';
@@ -16,13 +19,19 @@ export class Product extends AggregateRoot {
   public description: ProductDescription;
   public image: ProductImage;
   public price: ProductPrice;
+  public brand: ProductBrand;
+  public category: ProductCategory;
+  public ean: ProductEan;
 
   constructor(
     id: ProductId,
     name: ProductName,
     description: ProductDescription,
     image: ProductImage,
-    price: ProductPrice
+    price: ProductPrice,
+    brand: ProductBrand,
+    category: ProductCategory,
+    ean: ProductEan
   ) {
     super();
     this.id = id;
@@ -30,6 +39,9 @@ export class Product extends AggregateRoot {
     this.description = description;
     this.image = image;
     this.price = price;
+    this.brand = brand;
+    this.category = category;
+    this.ean = ean;
   }
 
   static create(
@@ -37,9 +49,12 @@ export class Product extends AggregateRoot {
     name: ProductName,
     description: ProductDescription,
     image: ProductImage,
-    price: ProductPrice
+    price: ProductPrice,
+    brand: ProductBrand,
+    category: ProductCategory,
+    ean: ProductEan
   ): Product {
-    const product = new Product(id, name, description, image, price);
+    const product = new Product(id, name, description, image, price, brand, category, ean);
 
     product.record(
       new ProductCreated({
@@ -48,6 +63,9 @@ export class Product extends AggregateRoot {
         description: product.description.value,
         image: product.image.value,
         price: product.price.value,
+        brand: product.brand.value,
+        category: product.category.value,
+        ean: product.ean.value,
       })
     );
 
@@ -59,8 +77,11 @@ export class Product extends AggregateRoot {
     const description = new ProductDescription('');
     const image = new ProductImage('');
     const price = new ProductPrice(0);
+    const brand = new ProductBrand('');
+    const category = new ProductCategory('');
+    const ean = new ProductEan('');
 
-    return new Product(id, name, description, image, price);
+    return new Product(id, name, description, image, price, brand, category, ean);
   }
 
   public changeDescription(description: ProductDescription) {
@@ -100,13 +121,19 @@ export class Product extends AggregateRoot {
     description: string;
     image: string;
     price: number;
+    brand: string;
+    category: string;
+    ean: string;
   }): Product {
     return new Product(
       new ProductId(plainData.id),
       new ProductName(plainData.name),
       new ProductDescription(plainData.description),
       new ProductImage(plainData.image),
-      new ProductPrice(plainData.price)
+      new ProductPrice(plainData.price),
+      new ProductBrand(plainData.brand),
+      new ProductCategory(plainData.category),
+      new ProductEan(plainData.ean)
     );
   }
 
@@ -117,6 +144,9 @@ export class Product extends AggregateRoot {
       description: this.description.value,
       image: this.image.value,
       price: this.price.value,
+      brand: this.brand.value,
+      category: this.category.value,
+      ean: this.ean.value,
     };
   }
 

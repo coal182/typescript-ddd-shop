@@ -57,3 +57,6 @@ baseline.json
 
 # Husky
 .husky/_
+
+# Assets products
+src/assets/images/products

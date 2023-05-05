@@ -18,7 +18,16 @@ export class FeedParserCsv implements FeedParser {
       .then((workSheet) => this.getRawJson(workSheet))
       .then((rawJson) => {
         return rawJson.map((item: any) => {
-          const command = new CreateProductCommand(item.id, item.name, item.description, item.image, item.price);
+          const command = new CreateProductCommand(
+            item.id,
+            item.name,
+            item.description,
+            item.image,
+            item.price,
+            item.brand,
+            item.category,
+            item.ean
+          );
           return command;
         });
       });

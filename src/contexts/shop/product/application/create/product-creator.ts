@@ -1,4 +1,7 @@
 import { EventBus } from '@shared/domain/event-bus';
+import { ProductBrand } from '@storeback/product/domain/product-brand';
+import { ProductCategory } from '@storeback/product/domain/product-category';
+import { ProductEan } from '@storeback/product/domain/product-ean';
 import { Product } from 'src/contexts/shop/product/domain/product';
 import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
 import { ProductEventStore } from 'src/contexts/shop/product/domain/product-event-store';
@@ -16,8 +19,20 @@ export class ProductCreator {
     description: ProductDescription;
     image: ProductImage;
     price: ProductPrice;
+    brand: ProductBrand;
+    category: ProductCategory;
+    ean: ProductEan;
   }): Promise<void> {
-    const product = Product.create(params.id, params.name, params.description, params.image, params.price);
+    const product = Product.create(
+      params.id,
+      params.name,
+      params.description,
+      params.image,
+      params.price,
+      params.brand,
+      params.category,
+      params.ean
+    );
 
     const newDomainEvents = product.pullDomainEvents();
     await this.eventStore.save(newDomainEvents);

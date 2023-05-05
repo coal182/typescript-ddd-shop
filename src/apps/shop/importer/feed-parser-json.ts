@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { NotFoundError } from '@shared/domain/errors/not-found-error';
 import { ParsingError } from '@shared/domain/errors/parsing-error';
 import { CreateProductCommand } from '@storeback/product/application/commands/create-product';
@@ -18,7 +20,17 @@ export class FeedParserJson implements FeedParser {
         const content = fs.readFileSync(this.feed.filePath).toString();
         const items = JSON.parse(content);
         const commands = items.map((item: any) => {
-          const command = new CreateProductCommand(item.id, item.name, item.description, item.image, item.price);
+          item.id = uuidv4();
+          const command = new CreateProductCommand(
+            item.id,
+            item.name,
+            item.description,
+            item.image,
+            item.price,
+            item.brand,
+            item.category,
+            item.ean
+          );
           return command;
         });
         resolve(commands);
