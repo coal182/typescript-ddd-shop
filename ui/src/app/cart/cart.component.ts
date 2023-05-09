@@ -17,7 +17,7 @@ import { HttpCartService } from './cart-service/http-cart.service';
 })
 export class CartComponent implements OnInit {
   items: CartItem[];
-  columnsToDisplay = ['name', 'qty', 'price', 'actions'];
+  columnsToDisplay = ['image', 'name', 'qty', 'price', 'actions'];
   @ViewChild(MatTable) table!: MatTable<CartItem>;
   checkoutForm: FormGroup;
   namesRegex = new RegExp(

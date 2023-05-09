@@ -20,3 +20,8 @@ font-style: italic;
 .mat-column-qty {
     font-style: italic;
 }
+
+.cart-image{
+    width: 100px;
+    cursor: pointer;
+}

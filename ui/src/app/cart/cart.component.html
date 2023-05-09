@@ -3,7 +3,10 @@
 <div class="row animate__animated animate__fadeIn">
   <div class="col-md-8">
     <table mat-table [dataSource]="items" class="cart-table" #table>
-
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef> Image </th>
+        <td mat-cell *matCellDef="let item"> <img [src]="item.product | image" class="cart-image" [routerLink]="['/products', item.product.id]" /> </td>
+      </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let item"> {{item.product.name}} </td>
