@@ -11,10 +11,7 @@
         [routerLink]="['/products', product.id]"
       >
         <img
-          [src]="
-            'assets/images/products/'+product.image ||
-            'https://upload.wikimedia.org/wikipedia/commons/1/14/Product_sample_icon_picture.png'
-          "
+          [src]="product | image"
         />        
       </a>      
     </h3>

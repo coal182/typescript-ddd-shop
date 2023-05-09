@@ -1,20 +1,9 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable, fromEvent, Subject } from 'rxjs';
-import {
-  map,
-  startWith,
-  filter,
-  tap,
-  switchMap,
-  debounceTime,
-  withLatestFrom,
-  distinctUntilChanged,
-} from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { tap, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import { HttpProductService } from '../products/product-service/http-product.service';
-import { Operator, Product } from '../products/products';
+import { Operator, Product } from '../products/interfaces/products.interface';
+import { HttpProductService } from '../products/services/http-product.service';
 
 export interface State {
   flag: string;

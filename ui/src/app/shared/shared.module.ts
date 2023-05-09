@@ -5,10 +5,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialModule } from './material/material.module';
+import { ImagePipe } from './pipes/image.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [ImagePipe],
   imports: [CommonModule, BrowserModule, MaterialModule, BrowserAnimationsModule],
-  exports: [FormsModule, MaterialModule, FormsModule, ReactiveFormsModule, CommonModule],
+  exports: [FormsModule, MaterialModule, FormsModule, ReactiveFormsModule, CommonModule, ImagePipe],
 })
 export class SharedModule {}

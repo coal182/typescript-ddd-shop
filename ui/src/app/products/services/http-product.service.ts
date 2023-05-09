@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { ProductResponse, ProductsResponse } from '../products';
+import { ProductResponse, ProductsResponse } from '../interfaces/products.interface';
 
 import { ProductService, GetProductParams, GetProductsParams } from './product.service';
 

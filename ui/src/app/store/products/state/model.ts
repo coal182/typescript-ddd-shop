@@ -1,4 +1,4 @@
-import { Product } from 'src/app/products/products';
+import { Product } from 'src/app/products/interfaces/products.interface';
 
 import { LoadingStatus } from '../../metadata-types';
 

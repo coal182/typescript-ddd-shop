@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Product } from 'src/app/products/products';
+import { Product } from 'src/app/products/interfaces/products.interface';
 
 export class ProductsActions {
   public static fetchProducts = createAction('[Products] Fetch products');

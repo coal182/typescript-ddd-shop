@@ -7,9 +7,9 @@ import { SharedModule } from '../shared/shared.module';
 import { ProductsEffects } from '../store/products/products.effects';
 import { productReducer } from '../store/products/products.reducer';
 
-import { ProductAlertsComponent } from './product-alerts/product-alerts.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { ProductListComponent } from './product-list/product-list.component';
+import { ProductAlertsComponent } from './components/product-alerts/product-alerts.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
+import { ProductListComponent } from './pages/product-list/product-list.component';
 
 @NgModule({
   declarations: [ProductListComponent, ProductAlertsComponent, ProductDetailsComponent],

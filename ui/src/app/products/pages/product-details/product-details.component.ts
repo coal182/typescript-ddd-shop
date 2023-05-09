@@ -13,9 +13,9 @@ import { LoadingStatus } from 'src/app/store/metadata-types';
 import { ProductsActions } from 'src/app/store/products/products.actions';
 import { ProductSelectors } from 'src/app/store/products/products.selectors';
 
-import { AlertDialogComponent } from '../../alert-dialog/alert-dialog.component';
-import { HttpCartService } from '../../cart/cart-service/http-cart.service';
-import { HttpProductService } from '../product-service/http-product.service';
+import { AlertDialogComponent } from '../../../alert-dialog/alert-dialog.component';
+import { HttpCartService } from '../../../cart/cart-service/http-cart.service';
+import { HttpProductService } from '../../services/http-product.service';
 
 @Component({
   selector: 'app-product-details',

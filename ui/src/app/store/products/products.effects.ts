@@ -3,9 +3,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { catchError, map, mergeMap, of, withLatestFrom } from 'rxjs';
 
-import { HttpProductService } from 'src/app/products/product-service/http-product.service';
-import { GetProductsParams } from 'src/app/products/product-service/product.service';
-import { Operator } from 'src/app/products/products';
+import { Operator } from 'src/app/products/interfaces/products.interface';
+import { HttpProductService } from 'src/app/products/services/http-product.service';
+import { GetProductsParams } from 'src/app/products/services/product.service';
 
 import { ProductsActions } from './products.actions';
 import { ProductSelectors } from './products.selectors';
