@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, Subject, switchMap, takeUntil, tap, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,8 +15,11 @@ import { HttpCartService } from '../../services/http-cart.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
+  private onDestroy$: Subject<void> = new Subject();
+
   items: CartItem[];
+  total: number;
   columnsToDisplay = ['image', 'name', 'qty', 'price', 'actions'];
   @ViewChild(MatTable) table!: MatTable<CartItem>;
   checkoutForm: FormGroup;
@@ -34,13 +37,28 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cartService.getItems().subscribe((cart: Cart) => {
-      this.cartService.cart = cart;
-      cart.items.map((item: CartItem) => {
-        this.items.push(item);
+    this.cartService
+      .getItems()
+      .pipe(
+        takeUntil(this.onDestroy$),
+        tap((cart) => {
+          cart.items.map((item: CartItem) => {
+            this.items.push(item);
+          });
+          this.table.renderRows();
+        }),
+        switchMap(() => {
+          return this.cartService.getCart().pipe(takeUntil(this.onDestroy$));
+        })
+      )
+      .subscribe((cart: Cart) => {
+        this.total = cart.total;
       });
-      this.table.renderRows();
-    });
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   onSubmit(): void {

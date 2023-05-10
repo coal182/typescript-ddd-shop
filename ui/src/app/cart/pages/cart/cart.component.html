@@ -32,6 +32,9 @@
       <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
     
     </table>
+
+    <h1>Total:</h1>
+    <h3>{{ total | currency }}</h3>
     
     <!--<p>
       <a routerLink="/shipping">Shipping Prices</a>
