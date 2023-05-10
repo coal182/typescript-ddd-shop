@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HttpCartService } from '../cart/cart-service/http-cart.service';
+import { HttpCartService } from '../cart/services/http-cart.service';
 
 @Component({
   selector: 'app-shipping',

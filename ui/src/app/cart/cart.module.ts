@@ -8,7 +8,7 @@ import { LocalStorageService } from '../shared/services/local-storage/local-stor
 import { SharedModule } from '../shared/shared.module';
 import { ShippingComponent } from '../shipping/shipping.component';
 
-import { CartComponent } from './cart.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [CartComponent, ShippingComponent],

@@ -6,7 +6,7 @@ import { map, Observable } from 'rxjs';
 import { StorageService } from 'src/app/shared/services/storage.service';
 
 import { environment } from '../../../environments/environment';
-import { AddToCartParams, Cart, CartItem, SessionCart } from '../cart';
+import { AddToCartParams, Cart, CartItem, SessionCart } from '../interfaces/cart';
 
 import { CartService, ConfirmCartParams } from './cart.service';
 

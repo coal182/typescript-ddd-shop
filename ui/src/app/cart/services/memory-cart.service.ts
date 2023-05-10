@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
-import { CartItem } from '../cart';
+import { CartItem } from '../interfaces/cart';
 
 import { CartService } from './cart.service';
 

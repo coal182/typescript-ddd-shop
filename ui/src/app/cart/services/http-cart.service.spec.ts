@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { MockLocalStorageService } from 'src/app/test/mock-local-storage-service';
 import { environment } from 'src/environments/environment';
 
-import { AddToCartParams, CartItem } from '../cart';
+import { AddToCartParams, CartItem } from '../interfaces/cart';
 
 import { CartService, ConfirmCartParams } from './cart.service';
 import { HttpCartService } from './http-cart.service';

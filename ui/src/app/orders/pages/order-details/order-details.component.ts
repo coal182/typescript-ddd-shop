@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { HttpOrderService } from '../order-service/http-order.service';
-import { Order, OrderLine } from '../orders';
+import { Order, OrderLine } from '../../interfaces/orders';
+import { HttpOrderService } from '../../services/http-order.service';
 
 @Component({
   selector: 'app-order-details',

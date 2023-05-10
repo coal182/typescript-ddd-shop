@@ -7,8 +7,8 @@ import { catchError, Observable, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Cart, CartItem } from './cart';
-import { HttpCartService } from './cart-service/http-cart.service';
+import { Cart, CartItem } from '../../interfaces/cart';
+import { HttpCartService } from '../../services/http-cart.service';
 
 @Component({
   selector: 'app-cart',

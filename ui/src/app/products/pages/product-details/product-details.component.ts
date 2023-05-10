@@ -4,17 +4,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { StatusCodes } from 'http-status-codes';
-import { map, Observable, ReplaySubject, throwError } from 'rxjs';
+import { map, Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap, takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-import { CartItem } from 'src/app/cart/cart';
+import { CartItem } from 'src/app/cart/interfaces/cart';
 import { LoadingStatus } from 'src/app/store/metadata-types';
 import { ProductsActions } from 'src/app/store/products/products.actions';
 import { ProductSelectors } from 'src/app/store/products/products.selectors';
 
 import { AlertDialogComponent } from '../../../alert-dialog/alert-dialog.component';
-import { HttpCartService } from '../../../cart/cart-service/http-cart.service';
+import { HttpCartService } from '../../../cart/services/http-cart.service';
 import { HttpProductService } from '../../services/http-product.service';
 
 @Component({
@@ -23,7 +23,7 @@ import { HttpProductService } from '../../services/http-product.service';
   styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
+  private onDestroy$: Subject<void> = new Subject();
   public isLoading = false;
 
   product$ = this.store.pipe(
@@ -65,18 +65,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   addToCart() {
     this.product$
-      .pipe(map((pro): CartItem => ({ product: pro, qty: 1, price: pro.price })))
+      .pipe(
+        takeUntil(this.onDestroy$),
+        map((pro): CartItem => ({ product: pro, qty: 1, price: pro.price }))
+      )
       .subscribe((item: CartItem) => {
         this.cartService
           .addToCart(item)
           .pipe(
-            takeUntil(this.destroyed$),
             catchError((error: HttpErrorResponse): Observable<Error> => {
               if (error.status === StatusCodes.UNAUTHORIZED) {
                 Swal.fire('Error!', 'There was an error adding this product!', 'error');

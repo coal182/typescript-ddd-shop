@@ -1,4 +1,4 @@
-import { Cart } from 'src/app/cart/cart';
+import { Cart } from 'src/app/cart/interfaces/cart';
 
 import { LoadingStatus } from '../../metadata-types';
 

@@ -25,7 +25,7 @@ can be found in the LICENSE file at https://angular.io/license
   overflow: hidden;
   height: 400px;
   border-radius: 10px;
-  background-color: #303030;
+  background-color: #fff;
   outline: 1px solid rgba(255, 255, 255, .5);
   outline-offset: -8px;
   box-shadow: 1px 19px 11px -17px;
@@ -61,16 +61,9 @@ can be found in the LICENSE file at https://angular.io/license
 .product-list article h4 {
   position: absolute;
   font-size: 25px;
-  color: #fff;
+  color: #303030;
   text-shadow: 0 0 1px #000;
   font-weight: lighter;
-  visibility:hidden;
-  opacity:0;
-  transition:opacity 0.5s linear;
-}
-.product-list article:hover h4{
-  visibility: visible;
-  opacity: 1;
 }
 
 .product-list article .article-button {
@@ -96,14 +89,8 @@ can be found in the LICENSE file at https://angular.io/license
   position: absolute;
   bottom:10px;
   font-size: 17px;
-  color: #fff;
+  color: #303030;
   text-shadow: 0 0 1px #000;
-  opacity:0;
-  transition:opacity 0.5s linear;
-}
-.product-list article:hover p{
-  visibility: visible;
-  opacity: 1;
 }
 
 .product-list article button.add-to-cart-button {

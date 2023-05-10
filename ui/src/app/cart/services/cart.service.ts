@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { CartItem } from '../../cart/cart';
+import { CartItem } from '../interfaces/cart';
 
 @Injectable({
   providedIn: 'root',

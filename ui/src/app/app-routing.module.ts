@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CartComponent } from './cart/cart.component';
+import { CartComponent } from './cart/pages/cart/cart.component';
 import { SigninComponent } from './login/signin/signin.component';
 import { SignupComponent } from './login/signup/signup.component';
-import { OrderDetailsComponent } from './orders/order-details/order-details.component';
-import { OrderListComponent } from './orders/order-list/order-list.component';
+import { OrderDetailsComponent } from './orders/pages/order-details/order-details.component';
+import { OrderListComponent } from './orders/pages/order-list/order-list.component';
 import { ProductDetailsComponent } from './products/pages/product-details/product-details.component';
 import { ProductListComponent } from './products/pages/product-list/product-list.component';
 import { AuthGuard } from './shared/auth/auth.guard';

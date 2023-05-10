@@ -15,7 +15,7 @@ import { LoadingStatus } from '../store/metadata-types';
   styleUrls: ['./top-bar.component.css'],
 })
 export class TopBarComponent implements OnDestroy {
-  private destroyed$ = new Subject<boolean>();
+  private onDestroy$ = new Subject<void>();
 
   public user_id = '';
 
@@ -24,7 +24,7 @@ export class TopBarComponent implements OnDestroy {
     this.user_id = localStorage.getItem('user_id');
     this.store.select((state) => state).subscribe((data) => console.log('store:', data));
 
-    this.store.pipe(select(LoginSelectors.selectLogin), takeUntil(this.destroyed$)).subscribe((login) => {
+    this.store.pipe(select(LoginSelectors.selectLogin), takeUntil(this.onDestroy$)).subscribe((login) => {
       if (login.metadata.loadingStatus === LoadingStatus.Loaded) {
         if (login.access_token) {
           localStorage.setItem('access_token', login.access_token);
@@ -53,7 +53,7 @@ export class TopBarComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 }
