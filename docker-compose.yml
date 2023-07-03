@@ -3,7 +3,7 @@ version: '2.1'
 services:
 
   api:
-    image: node:18.13-alpine
+    image: node:lts-alpine3.18
     container_name: tba-api
     environment:
       - HOSTNAMERABBIT=rabbitmq
@@ -17,7 +17,7 @@ services:
       - ./node_modules/:/node_modules
     ports:
       - "3000:3000"
-    command: sh -c "npm run dev"
+    command: sh -c "npm install && npm run dev"
 
   rabbitmq:
     image: 'rabbitmq:3.8-management'

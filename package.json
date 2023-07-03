@@ -2,7 +2,7 @@
   "name": "ts-bookstore-api",
   "version": "1.0.0",
   "engines": {
-    "node": "18.13"
+    "node": "^18.16"
   },
   "main": "index.js",
   "license": "MIT",
@@ -52,7 +52,7 @@
     "lodash": "^4.17.21",
     "module-alias": "^2.2.2",
     "mongodb": "^4.8.0",
-    "node-dependency-injection": "^3.0.5",
+    "node-dependency-injection": "^3.1.0",
     "nodemon": "^2.0.19",
     "reflect-metadata": "^0.1.13",
     "uuid": "^8.3.2",
