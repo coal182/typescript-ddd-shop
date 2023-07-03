@@ -39,6 +39,9 @@ describe(UpdateProductImageCommandHandler.name, () => {
         description: expectedAggregateRoot.description.value,
         image: expectedAggregateRoot.image.value,
         price: expectedAggregateRoot.price.value,
+        brand: expectedAggregateRoot.brand.value,
+        category: expectedAggregateRoot.category.value,
+        ean: expectedAggregateRoot.ean.value,
       }),
       new ProductImageChanged({
         aggregateId: expectedAggregateRoot.id.value,
@@ -52,7 +55,10 @@ describe(UpdateProductImageCommandHandler.name, () => {
         expectedAggregateRoot.name.value,
         expectedAggregateRoot.description.value,
         expectedAggregateRoot.image.value,
-        expectedAggregateRoot.price.value
+        expectedAggregateRoot.price.value,
+        expectedAggregateRoot.brand.value,
+        expectedAggregateRoot.category.value,
+        expectedAggregateRoot.ean.value
       );
 
       handler.handle(command);

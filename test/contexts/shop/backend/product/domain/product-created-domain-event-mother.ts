@@ -9,6 +9,9 @@ export class ProductCreatedDomainEventMother {
     description,
     image,
     price,
+    brand,
+    category,
+    ean,
     occurredOn,
   }: {
     aggregateId: string;
@@ -17,6 +20,9 @@ export class ProductCreatedDomainEventMother {
     description: string;
     image: string;
     price: number;
+    brand: string;
+    category: string;
+    ean: string;
     occurredOn?: Date;
   }): ProductCreatedDomainEventMother {
     return new ProductCreated({
@@ -26,6 +32,9 @@ export class ProductCreatedDomainEventMother {
       description,
       image,
       price,
+      brand,
+      category,
+      ean,
       occurredOn,
     });
   }
@@ -37,6 +46,9 @@ export class ProductCreatedDomainEventMother {
       description: product.description.value,
       image: product.image.value,
       price: product.price.value,
+      brand: product.brand.value,
+      category: product.category.value,
+      ean: product.ean.value,
     });
   }
 }

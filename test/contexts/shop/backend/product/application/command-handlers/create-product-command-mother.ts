@@ -1,11 +1,17 @@
 import { CreateProductCommand } from '@storeback/product/application/commands/create-product';
+import { ProductBrand } from '@storeback/product/domain/product-brand';
+import { ProductCategory } from '@storeback/product/domain/product-category';
 import { ProductDescription } from '@storeback/product/domain/product-description';
+import { ProductEan } from '@storeback/product/domain/product-ean';
 import { ProductId } from '@storeback/product/domain/product-id';
 import { ProductImage } from '@storeback/product/domain/product-image';
 import { ProductName } from '@storeback/product/domain/product-name';
 import { ProductPrice } from '@storeback/product/domain/product-price';
 
+import { ProductBrandMother } from '../../domain/product-brand-mother';
+import { ProductCategoryMother } from '../../domain/product-category-mother';
 import { ProductDescriptionMother } from '../../domain/product-description-mother';
+import { ProductEanMother } from '../../domain/product-ean-mother';
 import { ProductIdMother } from '../../domain/product-id-mother';
 import { ProductImageMother } from '../../domain/product-image-mother';
 import { ProductNameMother } from '../../domain/product-name-mother';
@@ -17,9 +23,21 @@ export class CreateProductCommandMother {
     name: ProductName,
     description: ProductDescription,
     image: ProductImage,
-    price: ProductPrice
+    price: ProductPrice,
+    brand: ProductBrand,
+    category: ProductCategory,
+    ean: ProductEan
   ): CreateProductCommand {
-    return { id: id.value, name: name.value, description: description.value, image: image.value, price: price.value };
+    return {
+      id: id.value,
+      name: name.value,
+      description: description.value,
+      image: image.value,
+      price: price.value,
+      brand: brand.value,
+      category: category.value,
+      ean: ean.value,
+    };
   }
 
   static random(): CreateProductCommand {
@@ -28,7 +46,10 @@ export class CreateProductCommandMother {
       ProductNameMother.random(),
       ProductDescriptionMother.random(),
       ProductImageMother.random(),
-      ProductPriceMother.random()
+      ProductPriceMother.random(),
+      ProductBrandMother.random(),
+      ProductCategoryMother.random(),
+      ProductEanMother.random()
     );
   }
 
@@ -39,6 +60,9 @@ export class CreateProductCommandMother {
       description: ProductDescriptionMother.random().value,
       image: ProductImageMother.random().value,
       price: ProductPriceMother.random().value,
+      brand: ProductBrandMother.random().value,
+      category: ProductCategoryMother.random().value,
+      ean: ProductEanMother.random().value,
     };
   }
 }

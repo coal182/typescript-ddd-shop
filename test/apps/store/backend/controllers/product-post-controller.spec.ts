@@ -33,14 +33,17 @@ describe(ProductPostController.name, () => {
         image: 'Test Product Image',
         authorId: 'Test Author Id',
         price: 'Test Product Price',
+        brand: 'Test Product Brand',
+        category: 'Test Product Category',
+        ean: 'Test Product EAN',
       },
     } as Request<ProductPostRequest>;
 
     productController.run(req, res);
 
-    const { name, description, image, price } = req.body;
+    const { name, description, image, price, brand, category, ean } = req.body;
 
-    const expectedCommand = new CreateProductCommand(id, name, description, image, price);
+    const expectedCommand = new CreateProductCommand(id, name, description, image, price, brand, category, ean);
 
     it('should send a CreateProductCommand to the command bus', async () => {
       commandBusMock.assertLastDispatchedCommandIs(expectedCommand);
