@@ -20,7 +20,11 @@ export class ProductEventStoreMock implements ProductEventStore {
 
   assertSaveHaveBeenCalledWith(expectedEvents: DomainEvent[]): void {
     const expected = this.getDataFromDomainEvent(expectedEvents);
-    const saved = this.getDataFromDomainEvent(this.saveMock.getCall(0).args[0]);
+    const calls = this.saveMock
+      .getCalls()
+      .map((call) => call.args[0])
+      .flat();
+    const saved = this.getDataFromDomainEvent(calls);
     expect(saved).to.deep.equal(expected);
   }
 

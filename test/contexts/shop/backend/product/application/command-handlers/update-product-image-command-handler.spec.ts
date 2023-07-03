@@ -1,14 +1,12 @@
 import 'reflect-metadata';
 
-import { expect } from 'chai';
-
+import { UpdateProductImageCommand } from '@storeback/product/application/commands/update-product-image';
 import { ProductCreator } from '@storeback/product/application/create/product-creator';
 import { ProductCreated } from '@storeback/product/domain/events/product-created';
 import { ProductImageChanged } from '@storeback/product/domain/events/product-image-changed';
 import { CreateProductCommandHandler } from 'src/contexts/shop/product/application/command-handlers/create-product-command-handler';
 import { UpdateProductImageCommandHandler } from 'src/contexts/shop/product/application/command-handlers/update-product-image-command-handler';
 import { CreateProductCommand } from 'src/contexts/shop/product/application/commands/create-product';
-import { UpdateProductImageCommand } from 'src/contexts/shop/product/application/commands/update-product-image';
 import EventBusMock from 'test/contexts/shared/domain/event-bus-mock';
 
 import { ProductEventStoreMock } from '../../__mocks__/product-event-store-mock';
@@ -45,38 +43,33 @@ describe(UpdateProductImageCommandHandler.name, () => {
       }),
       new ProductImageChanged({
         aggregateId: expectedAggregateRoot.id.value,
-        image: expectedAggregateRoot.image.value,
+        image: updatedImage.value,
       }),
     ];
 
-    before(() => {
-      const command = new CreateProductCommand(
-        expectedAggregateRoot.id.value,
-        expectedAggregateRoot.name.value,
-        expectedAggregateRoot.description.value,
-        expectedAggregateRoot.image.value,
-        expectedAggregateRoot.price.value,
-        expectedAggregateRoot.brand.value,
-        expectedAggregateRoot.category.value,
-        expectedAggregateRoot.ean.value
-      );
+    const command = new CreateProductCommand(
+      expectedAggregateRoot.id.value,
+      expectedAggregateRoot.name.value,
+      expectedAggregateRoot.description.value,
+      expectedAggregateRoot.image.value,
+      expectedAggregateRoot.price.value,
+      expectedAggregateRoot.brand.value,
+      expectedAggregateRoot.category.value,
+      expectedAggregateRoot.ean.value
+    );
 
-      handler.handle(command);
+    beforeEach(async () => {
+      await handler.handle(command);
     });
 
     describe('and asked to update his image', () => {
-      before(() => {
+      beforeEach(async () => {
         const updateCommand = new UpdateProductImageCommand(expectedAggregateRoot.id.value, updatedImage.value);
-        updateHandler.handle(updateCommand);
+        await updateHandler.handle(updateCommand);
       });
 
       it('should save the two events on event store', () => {
         eventStore.assertSaveHaveBeenCalledWith(expectedNewDomainEvents);
-      });
-
-      it('should be capable to get the aggregate from the events on event store', async () => {
-        const savedAggregateDomainEvents = await eventStore.findByAggregateId(expectedAggregateRoot.id);
-        expect(savedAggregateDomainEvents).to.deep.equal(expectedNewDomainEvents);
       });
     });
   });

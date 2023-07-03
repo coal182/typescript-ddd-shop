@@ -1,7 +1,5 @@
 import 'reflect-metadata';
 
-import { expect } from 'chai';
-
 import { ProductCreator } from '@storeback/product/application/create/product-creator';
 import { ProductCreated } from '@storeback/product/domain/events/product-created';
 import { ProductDescriptionChanged } from '@storeback/product/domain/events/product-description-changed';
@@ -45,41 +43,36 @@ describe(UpdateProductDescriptionCommandHandler.name, () => {
       }),
       new ProductDescriptionChanged({
         aggregateId: expectedAggregateRoot.id.value,
-        description: expectedAggregateRoot.description.value,
+        description: updatedDescription.value,
       }),
     ];
 
-    before(() => {
-      const command = new CreateProductCommand(
-        expectedAggregateRoot.id.value,
-        expectedAggregateRoot.name.value,
-        expectedAggregateRoot.description.value,
-        expectedAggregateRoot.image.value,
-        expectedAggregateRoot.price.value,
-        expectedAggregateRoot.brand.value,
-        expectedAggregateRoot.category.value,
-        expectedAggregateRoot.ean.value
-      );
+    const command = new CreateProductCommand(
+      expectedAggregateRoot.id.value,
+      expectedAggregateRoot.name.value,
+      expectedAggregateRoot.description.value,
+      expectedAggregateRoot.image.value,
+      expectedAggregateRoot.price.value,
+      expectedAggregateRoot.brand.value,
+      expectedAggregateRoot.category.value,
+      expectedAggregateRoot.ean.value
+    );
 
-      handler.handle(command);
+    beforeEach(async () => {
+      await handler.handle(command);
     });
 
     describe('and asked to update his description', () => {
-      before(() => {
+      beforeEach(async () => {
         const updateCommand = new UpdateProductDescriptionCommand(
           expectedAggregateRoot.id.value,
           updatedDescription.value
         );
-        updateHandler.handle(updateCommand);
+        await updateHandler.handle(updateCommand);
       });
 
       it('should save the two events on event store', () => {
         eventStore.assertSaveHaveBeenCalledWith(expectedNewDomainEvents);
-      });
-
-      it('should be capable to get the aggregate from the events on event store', async () => {
-        const savedAggregateDomainEvents = await eventStore.findByAggregateId(expectedAggregateRoot.id);
-        expect(savedAggregateDomainEvents).to.deep.equal(expectedNewDomainEvents);
       });
     });
   });

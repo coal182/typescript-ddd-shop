@@ -11,7 +11,7 @@ import { ProductMother } from '../../domain/product-mother';
 
 import { CreateProductCommandMother } from './create-product-command-mother';
 
-describe.only(CreateProductCommandHandler.name, () => {
+describe(CreateProductCommandHandler.name, () => {
   let eventStore: ProductEventStoreMock;
   let creator: ProductCreator;
   let eventBus: EventBusMock;
