@@ -28,34 +28,34 @@ describe(UpdateProductDescriptionCommandHandler.name, () => {
     updateHandler = new UpdateProductDescriptionCommandHandler(eventBus, eventStore);
   });
   describe('when a product exists', () => {
-    const expectedAggregateRoot = ProductMother.random();
+    const product = ProductMother.random();
     const updatedDescription = ProductDescriptionMother.random();
-    const expectedNewDomainEvents = [
+    const domainEvents = [
       new ProductCreated({
-        aggregateId: expectedAggregateRoot.id.value,
-        name: expectedAggregateRoot.name.value,
-        description: expectedAggregateRoot.description.value,
-        image: expectedAggregateRoot.image.value,
-        price: expectedAggregateRoot.price.value,
-        brand: expectedAggregateRoot.brand.value,
-        category: expectedAggregateRoot.category.value,
-        ean: expectedAggregateRoot.ean.value,
+        aggregateId: product.id.value,
+        name: product.name.value,
+        description: product.description.value,
+        image: product.image.value,
+        price: product.price.value,
+        brand: product.brand.value,
+        category: product.category.value,
+        ean: product.ean.value,
       }),
       new ProductDescriptionChanged({
-        aggregateId: expectedAggregateRoot.id.value,
+        aggregateId: product.id.value,
         description: updatedDescription.value,
       }),
     ];
 
     const command = new CreateProductCommand(
-      expectedAggregateRoot.id.value,
-      expectedAggregateRoot.name.value,
-      expectedAggregateRoot.description.value,
-      expectedAggregateRoot.image.value,
-      expectedAggregateRoot.price.value,
-      expectedAggregateRoot.brand.value,
-      expectedAggregateRoot.category.value,
-      expectedAggregateRoot.ean.value
+      product.id.value,
+      product.name.value,
+      product.description.value,
+      product.image.value,
+      product.price.value,
+      product.brand.value,
+      product.category.value,
+      product.ean.value
     );
 
     beforeEach(async () => {
@@ -64,15 +64,12 @@ describe(UpdateProductDescriptionCommandHandler.name, () => {
 
     describe('and asked to update his description', () => {
       beforeEach(async () => {
-        const updateCommand = new UpdateProductDescriptionCommand(
-          expectedAggregateRoot.id.value,
-          updatedDescription.value
-        );
+        const updateCommand = new UpdateProductDescriptionCommand(product.id.value, updatedDescription.value);
         await updateHandler.handle(updateCommand);
       });
 
       it('should save the two events on event store', () => {
-        eventStore.assertSaveHaveBeenCalledWith(expectedNewDomainEvents);
+        eventStore.assertSaveHaveBeenCalledWith(domainEvents);
       });
     });
   });

@@ -18,8 +18,14 @@ export class OrderEventStoreMock implements OrderEventStore {
     this.saveMock(domainEvent);
   }
 
-  assertSaveHaveBeenCalledWith(expected: DomainEvent[]): void {
-    expect(this.saveMock.calledWith(expected)).to.true;
+  assertSaveHaveBeenCalledWith(expectedEvents: DomainEvent[]): void {
+    const expected = this.getDataFromDomainEvent(expectedEvents);
+    const calls = this.saveMock
+      .getCalls()
+      .map((call) => call.args[0])
+      .flat();
+    const saved = this.getDataFromDomainEvent(calls);
+    expect(saved).to.deep.equal(expected);
   }
 
   returnFindByAggregateId(domainEvents: Array<DomainEvent>) {
@@ -29,5 +35,13 @@ export class OrderEventStoreMock implements OrderEventStore {
   async findByAggregateId(aggregateId: Uuid): Promise<DomainEvent[]> {
     this.findByAggregateIdMock(aggregateId);
     return this.domainEvents;
+  }
+
+  private getDataFromDomainEvent(events: DomainEvent[]) {
+    return events.map((event) => {
+      const { eventId, occurredOn, ...attributes } = event; // we get rid of eventId, occurredOn because its variability
+
+      return attributes;
+    });
   }
 }
