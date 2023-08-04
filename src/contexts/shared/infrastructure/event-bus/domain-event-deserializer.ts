@@ -34,11 +34,13 @@ export class DomainEventDeserializer extends Map<string, DomainEventClass> {
       throw Error(`DomainEvent mapping not found for event ${type}`);
     }
 
-    return eventClass.fromPrimitives({
+    const eventFromPrimitives = eventClass.fromPrimitives({
       aggregateId,
       data,
       occurredOn: new Date(occurred_on),
       eventId: id,
     });
+
+    return eventFromPrimitives;
   }
 }

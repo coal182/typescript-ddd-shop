@@ -1,6 +1,6 @@
 import convict from 'convict';
 
-const moocConfig = convict({
+const config = convict({
   env: {
     doc: 'The application environment.',
     format: ['production', 'development', 'staging', 'test'],
@@ -60,7 +60,6 @@ const moocConfig = convict({
       name: {
         doc: 'RabbitMQ exchange name',
         format: String,
-        env: 'RABBITMQ_EXCHANGE_NAME',
         default: 'domain_events',
       },
     },
@@ -79,6 +78,6 @@ const moocConfig = convict({
   },
 });
 
-moocConfig.loadFile([__dirname + '/default.json', __dirname + '/' + moocConfig.get('env') + '.json']);
+config.loadFile([__dirname + '/default.json', __dirname + '/' + config.get('env') + '.json']);
 
-export default moocConfig;
+export default config;

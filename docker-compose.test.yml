@@ -1,0 +1,46 @@
+version: '2.1'
+
+services:
+
+  api_test:
+    image: node:lts-alpine3.18
+    container_name: tba-api
+    environment:
+      - HOSTNAMERABBIT=rabbitmq
+      - CLOUDAMQP_URL=amqp://rabbitmq:5672
+    depends_on:
+      rabbitmq_test:
+        condition: service_healthy
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - ./node_modules/:/node_modules
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run test-features"
+
+  rabbitmq_test:
+    image: 'rabbitmq:3.8-management'
+    container_name: tba-rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+        test: rabbitmq-diagnostics -q ping
+        interval: 10s
+        timeout: 10s
+        retries: 5
+
+  
+
+  # ui_test:
+  #   image: node:17.6-alpine
+  #   container_name: tba-ui
+  #   working_dir: /app
+  #   volumes:
+  #     - ./ui/:/app
+  #     - ./ui/node_modules/:/node_modules
+  #   ports:
+  #     - "4200:4200"
+  #     - "9876:9876"
+  #   command: sh -c "npm install && npm run start"

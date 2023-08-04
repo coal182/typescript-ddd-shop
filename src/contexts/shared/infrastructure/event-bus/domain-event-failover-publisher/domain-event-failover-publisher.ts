@@ -5,7 +5,7 @@ import { DomainEventDeserializer } from '../domain-event-deserializer';
 import { DomainEventJsonSerializer } from '../domain-event-json-serializer';
 
 export class DomainEventFailoverPublisher {
-  static collectionName = 'DomainEvents';
+  static collectionName = 'domain_events';
 
   constructor(private client: Promise<MongoClient>, private deserializer?: DomainEventDeserializer) {}
 

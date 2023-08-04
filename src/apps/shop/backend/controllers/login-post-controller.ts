@@ -105,13 +105,14 @@ export class LoginPostController {
 
     const cartsResponse = await this.queryBus.ask<CartsResponse>(cartQuery);
 
-    if (cartsResponse.carts) {
+    if (cartsResponse.carts.length > 0) {
       return cartsResponse.carts[0];
     }
 
     const id = uuidv4();
 
     const createCommand = new CreateCartCommand(id, userId);
+    console.log('📌 ~ id:', id);
     await this.commandBus.dispatch(createCommand);
     return {
       id,

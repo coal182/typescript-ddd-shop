@@ -1,17 +1,16 @@
 import convict from 'convict';
 
-const shopConfig = convict({
+const config = convict({
   env: {
     doc: 'The application environment.',
-    format: ['production', 'development', 'staging', 'test'],
-    default: 'default',
+    format: ['production', 'dev', 'staging', 'test'],
+    default: 'dev',
     env: 'NODE_ENV',
   },
   mongo: {
     url: {
       doc: 'The Mongo connection URL',
       format: String,
-      env: 'MONGO_URL',
       default: 'mongodb://localhost:27017/mooc-backend-dev',
     },
   },
@@ -46,7 +45,7 @@ const shopConfig = convict({
           doc: 'RabbitMQ hostname',
           format: String,
           env: 'RABBITMQ_HOSTNAME',
-          default: 'tba-rabbitmq',
+          default: 'rabbitmq',
         },
         port: {
           doc: 'RabbitMQ amqp port',
@@ -60,7 +59,6 @@ const shopConfig = convict({
       name: {
         doc: 'RabbitMQ exchange name',
         format: String,
-        env: 'RABBITMQ_EXCHANGE_NAME',
         default: 'domain_events',
       },
     },
@@ -79,6 +77,6 @@ const shopConfig = convict({
   },
 });
 
-shopConfig.loadFile([__dirname + '/default.json', __dirname + '/' + shopConfig.get('env') + '.json']);
+config.loadFile([__dirname + '/default.json', __dirname + '/' + config.get('env') + '.json']);
 
-export default shopConfig;
+export default config;

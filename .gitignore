@@ -8,3 +8,7 @@ logs
 logs/debug.log
 logs/error.log
 logs/info.log
+src/contexts/shop/shared/infrastructure/config/default.json
+src/contexts/shop/shared/infrastructure/config/test.json
+src/contexts/shared/infrastructure/config/default.json
+src/contexts/shared/infrastructure/config/test.json

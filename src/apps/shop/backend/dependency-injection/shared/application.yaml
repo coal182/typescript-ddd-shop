@@ -14,7 +14,7 @@ services:
       class: ../../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
       main: MongoClientFactory
       method: 'createClient'
-    arguments: ['backoffice', '@Shop.Shared.MongoConfig']
+    arguments: ['shop', '@Shop.Shared.MongoConfig']
 
   Shop.Shared.CommandHandlers:
     class: ../../../../../contexts/shared/infrastructure/command-bus/command-handlers

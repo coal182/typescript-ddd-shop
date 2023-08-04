@@ -1,7 +1,7 @@
-import { StoreBackendApp } from './store-backend-app';
+import { ShopBackendApp } from './shop-backend-app';
 
 try {
-  new StoreBackendApp().start();
+  new ShopBackendApp().start();
 } catch (e) {
   console.log(e);
   process.exit(1);
