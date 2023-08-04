@@ -3,8 +3,8 @@ import convict from 'convict';
 const config = convict({
   env: {
     doc: 'The application environment.',
-    format: ['production', 'development', 'staging', 'test'],
-    default: 'default',
+    format: ['production', 'dev', 'staging', 'test'],
+    default: 'dev',
     env: 'NODE_ENV',
   },
   mongo: {
@@ -13,6 +13,14 @@ const config = convict({
       format: String,
       env: 'MONGO_URL',
       default: 'mongodb://localhost:27017/mooc-backend-dev',
+    },
+  },
+  auth: {
+    secret: {
+      doc: 'The JWT Secret for auth',
+      format: String,
+      env: 'JWT_SECRET',
+      default: 'jwtsecret',
     },
   },
   rabbitmq: {

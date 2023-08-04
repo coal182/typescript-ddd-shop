@@ -3,11 +3,11 @@ import { StatusCodes } from 'http-status-codes';
 import { JwtPayload, verify, sign } from 'jsonwebtoken';
 import _ from 'lodash';
 
-import config from '@config/main';
+import config from '@storeback/shared/infrastructure/config';
 
 export function verifyJWTToken(token: string): Promise<JwtPayload> {
   return new Promise((resolve, reject) => {
-    verify(token, config.JWT_SECRET, (err, decodedToken) => {
+    verify(token, config.get('auth.secret'), (err, decodedToken) => {
       if (err || !decodedToken) {
         return reject(err);
       }
@@ -40,7 +40,7 @@ export function createJWToken(details: JwtPayload): string {
     {
       data: details.sessionData,
     },
-    config.JWT_SECRET,
+    config.get('auth.secret'),
     {
       expiresIn: details.maxAge,
       algorithm: 'HS256',

@@ -14,6 +14,14 @@ const config = convict({
       default: 'mongodb://localhost:27017/mooc-backend-dev',
     },
   },
+  auth: {
+    secret: {
+      doc: 'The JWT Secret for auth',
+      format: String,
+      env: 'JWT_SECRET',
+      default: 'jwtsecret',
+    },
+  },
   rabbitmq: {
     connectionSettings: {
       username: {
