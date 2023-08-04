@@ -4,7 +4,7 @@ services:
 
   api_test:
     image: node:lts-alpine3.18
-    container_name: tba-api
+    container_name: tba-api-test
     environment:
       - HOSTNAMERABBIT=rabbitmq
       - CLOUDAMQP_URL=amqp://rabbitmq:5672
@@ -21,7 +21,7 @@ services:
 
   rabbitmq_test:
     image: 'rabbitmq:3.8-management'
-    container_name: tba-rabbitmq
+    container_name: tba-rabbitmq-test
     ports:
       - 5672:5672
       - 15672:15672
