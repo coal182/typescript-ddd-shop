@@ -1,5 +1,5 @@
 import { ProductPrice } from 'src/contexts/shop/product/domain/product-price';
-import { IntegerMother } from 'tests/contexts/shared/intenger-mother';
+import { IntegerMother } from 'tests/contexts/shared/integer-mother';
 
 export class ProductPriceMother {
   static create(value: number): ProductPrice {
