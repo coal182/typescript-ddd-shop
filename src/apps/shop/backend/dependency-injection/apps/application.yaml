@@ -29,6 +29,11 @@ services:
     main: ProductPutImageController
     arguments: ['@Shop.Shared.domain.CommandBus']
 
+  Apps.Shop.Backend.controllers.ProductsCounterGetController:
+    class: ../../controllers/products-counter-get-controller
+    main: ProductsCounterGetController
+    arguments: ['@Shop.Shared.domain.QueryBus']
+
   Apps.Shop.Backend.controllers.UserPostController:
     class: ../../controllers/user-post-controller
     main: UserPostController

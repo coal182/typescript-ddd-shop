@@ -39,4 +39,5 @@ export const register = async (app: Express, container: ContainerBuilder) => {
   app.get('/product/:id', productGetByIdController.run.bind(productGetByIdController));
   app.put('/product/:id/description', productPutDescriptionController.run.bind(productPutDescriptionController));
   app.put('/product/:id/image', productPutImageController.run.bind(productPutImageController));
+  app.get('/product', productGetAllController.run.bind(productGetAllController));
 };

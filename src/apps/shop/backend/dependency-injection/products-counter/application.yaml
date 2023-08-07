@@ -1,0 +1,29 @@
+services:
+  Shop.ProductsCounter.ProductsCounterRepository:
+    class: ../../../../../contexts/shop/products-counter/infrastructure/persistence/mongo/mongo-products-counter-repository
+    main: MongoProductsCounterRepository
+    arguments: ['@Shop.Shared.ConnectionManager']
+
+  Shop.ProductsCounter.ProductsCounterIncrementer:
+    class: ../../../../../contexts/shop/products-counter/application/increment/products-counter-incrementer
+    main: ProductsCounterIncrementer
+    arguments: ['@Shop.ProductsCounter.ProductsCounterRepository', '@Shop.Shared.domain.EventBus']
+
+  Shop.ProductsCounter.IncrementProductsCounterOnProductCreated:
+    class: ../../../../../contexts/shop/products-counter/application/increment/increment-products-counter-on-product-created
+    main: IncrementProductsCounterOnProductCreated
+    arguments: ['@Shop.ProductsCounter.ProductsCounterIncrementer']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Shop.ProductsCounter.ProductsCounterFinder:
+    class: ../../../../../contexts/shop/products-counter/application/find/products-counter-finder
+    main: ProductsCounterFinder
+    arguments: ['@Shop.ProductsCounter.ProductsCounterRepository']
+
+  Shop.ProductsCounter.FindProductsCounterQueryHandler:
+    class: ../../../../../contexts/shop/products-counter/application/find/find-products-counter-query-handler
+    main: FindProductsCounterQueryHandler
+    arguments: ['@Shop.ProductsCounter.ProductsCounterFinder']
+    tags:
+      - { name: 'queryHandler' }
