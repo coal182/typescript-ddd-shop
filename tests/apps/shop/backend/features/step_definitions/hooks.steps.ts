@@ -1,4 +1,4 @@
-import { AfterAll, BeforeAll } from '@cucumber/cucumber';
+import { AfterAll, Before, BeforeAll } from '@cucumber/cucumber';
 import { ContainerBuilder } from 'node-dependency-injection';
 
 import { EventBus } from '@shared/domain/event-bus';
@@ -27,5 +27,11 @@ AfterAll(async () => {
 
   await application.stop();
 });
+
+Before(beforeScenario);
+
+async function beforeScenario() {
+  await environmentArranger.arrange();
+}
 
 export { application, environmentArranger, eventBus };
