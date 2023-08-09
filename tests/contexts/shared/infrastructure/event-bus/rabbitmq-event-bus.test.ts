@@ -22,8 +22,9 @@ import { RabbitMQMongoClientMother } from './__mother__/rabbitmq-mongo-client-mo
 describe('RabbitMQEventBus test', () => {
   const exchange = 'test_domain_events';
   let arranger: MongoEnvironmentArranger;
-  const queueNameFormatter = new RabbitMQqueueFormatter('mooc');
+  const queueNameFormatter = new RabbitMQqueueFormatter('shop');
   const retryTtl = 50;
+  const maxRetries = 3;
   const logger = createStubInstance(WinstonLogger);
 
   beforeEach(async () => {
@@ -64,7 +65,7 @@ describe('RabbitMQEventBus test', () => {
           connection,
           exchange,
           queueNameFormatter,
-          maxRetries: 3,
+          maxRetries,
         },
         logger
       );
@@ -86,7 +87,7 @@ describe('RabbitMQEventBus test', () => {
           connection,
           exchange,
           queueNameFormatter,
-          maxRetries: 3,
+          maxRetries,
         },
         logger
       );
@@ -108,7 +109,7 @@ describe('RabbitMQEventBus test', () => {
           connection,
           exchange,
           queueNameFormatter,
-          maxRetries: 3,
+          maxRetries,
         },
         logger
       );
@@ -137,7 +138,7 @@ describe('RabbitMQEventBus test', () => {
           subscriber: deadLetterSubscriber,
           deserializer,
           connection,
-          maxRetries: 3,
+          maxRetries,
           queueName: deadLetterQueue,
           exchange,
         },
