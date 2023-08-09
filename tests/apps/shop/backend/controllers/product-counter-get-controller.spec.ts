@@ -5,7 +5,7 @@ import { SinonStub, assert, stub } from 'sinon';
 import { QueryBus } from '@shared/domain/query-bus';
 import { ProductsCounterGetController } from '@storebackapp/controllers/products-counter-get-controller';
 
-describe.only('ProductCounterGetController', () => {
+describe('ProductCounterGetController', () => {
   let queryBus: QueryBus;
   let controller: ProductsCounterGetController;
   let req: Partial<Request>;
