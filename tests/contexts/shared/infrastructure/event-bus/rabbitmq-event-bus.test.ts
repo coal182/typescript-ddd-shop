@@ -23,6 +23,7 @@ describe('RabbitMQEventBus test', () => {
   const exchange = 'test_domain_events';
   let arranger: MongoEnvironmentArranger;
   const queueNameFormatter = new RabbitMQqueueFormatter('mooc');
+  const retryTtl = 50;
   const logger = createStubInstance(WinstonLogger);
 
   beforeEach(async () => {
@@ -44,7 +45,7 @@ describe('RabbitMQEventBus test', () => {
     beforeEach(async () => {
       connection = await RabbitMQConnectionMother.create();
       failoverPublisher = DomainEventFailoverPublisherMother.create();
-      configurer = new RabbitMQConfigurer(connection, queueNameFormatter, 50);
+      configurer = new RabbitMQConfigurer(connection, queueNameFormatter);
       await arranger.arrange();
       dummySubscriber = new DomainEventSubscriberDummy();
       subscribers = new DomainEventSubscribers([dummySubscriber]);
@@ -56,7 +57,7 @@ describe('RabbitMQEventBus test', () => {
     });
 
     it('should consume the events published to RabbitMQ', async () => {
-      await configurer.configure({ exchange, subscribers: [dummySubscriber] });
+      await configurer.configure({ exchange, subscribers: [dummySubscriber], retryTtl });
       const eventBus = new RabbitMQEventBus(
         {
           failoverPublisher,
@@ -78,7 +79,7 @@ describe('RabbitMQEventBus test', () => {
     it('should retry failed domain events', async () => {
       dummySubscriber = DomainEventSubscriberDummy.failsFirstTime();
       subscribers = new DomainEventSubscribers([dummySubscriber]);
-      await configurer.configure({ exchange, subscribers: [dummySubscriber] });
+      await configurer.configure({ exchange, subscribers: [dummySubscriber], retryTtl });
       const eventBus = new RabbitMQEventBus(
         {
           failoverPublisher,
@@ -100,7 +101,7 @@ describe('RabbitMQEventBus test', () => {
     it('it should send events to dead letter after retry failed', async () => {
       dummySubscriber = DomainEventSubscriberDummy.alwaysFails();
       subscribers = new DomainEventSubscribers([dummySubscriber]);
-      await configurer.configure({ exchange, subscribers: [dummySubscriber] });
+      await configurer.configure({ exchange, subscribers: [dummySubscriber], retryTtl });
       const eventBus = new RabbitMQEventBus(
         {
           failoverPublisher,

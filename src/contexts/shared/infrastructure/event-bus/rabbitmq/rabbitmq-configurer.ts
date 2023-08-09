@@ -6,15 +6,19 @@ import { RabbitMQExchangeNameFormatter } from './rabbitmq-exchange-name-formatte
 import { RabbitMQqueueFormatter } from './rabbitmq-queue-formatter';
 
 export class RabbitMQConfigurer {
-  constructor(
-    private connection: RabbitMqConnection,
-    private queueNameFormatter: RabbitMQqueueFormatter,
-    private messageRetryTtl: number
-  ) {}
+  private retryTtl: number;
 
-  async configure(params: { exchange: string; subscribers: Array<DomainEventSubscriber<DomainEvent>> }): Promise<void> {
+  constructor(private connection: RabbitMqConnection, private queueNameFormatter: RabbitMQqueueFormatter) {}
+
+  async configure(params: {
+    exchange: string;
+    subscribers: Array<DomainEventSubscriber<DomainEvent>>;
+    retryTtl: number;
+  }): Promise<void> {
     const retryExchange = RabbitMQExchangeNameFormatter.retry(params.exchange);
     const deadLetterExchange = RabbitMQExchangeNameFormatter.deadLetter(params.exchange);
+
+    this.retryTtl = params.retryTtl;
 
     await this.connection.exchange({ name: params.exchange });
 
@@ -42,7 +46,7 @@ export class RabbitMQConfigurer {
       routingKeys: [queue],
       name: retryQueue,
       exchange: retryExchange,
-      messageTtl: this.messageRetryTtl,
+      messageTtl: this.retryTtl,
       deadLetterExchange: exchange,
       deadLetterQueue: queue,
     });
