@@ -1,0 +1,22 @@
+{
+  "inline-diffs": true,
+  "exit": true,
+  "require": ["ts-node/register", "tsconfig-paths/register"],
+  "extension": [
+    "ts"
+  ],
+  "opts": false,
+  "ui": "bdd",
+  "file": [
+    "./tests/setup-chai.ts"
+  ],
+  "watch-files": [
+    "./src/**/*.ts",
+    "./tests/**/*.ts"
+  ],
+  "spec": [
+    "./tests/**/*.spec.ts"
+  ],
+  "reporter": "nyan",
+  "timeout": 60000
+}
