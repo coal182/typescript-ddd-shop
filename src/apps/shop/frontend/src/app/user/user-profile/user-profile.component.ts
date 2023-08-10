@@ -4,15 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { StatusCodes } from 'http-status-codes';
 import { map, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { ValidationService } from 'src/app/shared/services/validation.service';
 import Swal from 'sweetalert2';
 
-import { ValidationService } from 'src/app/shared/services/validation.service';
-
+import { AuthService } from '../../shared/auth/auth.service';
+import { User } from '../../shared/user';
 import { HttpUserService } from '../user-service/http-user.service';
 import { PutUserParams } from '../user-service/user.service';
-
-import { AuthService } from './../../shared/auth/auth.service';
-import { User } from './../../shared/user';
 
 @Component({
   selector: 'app-user-profile',

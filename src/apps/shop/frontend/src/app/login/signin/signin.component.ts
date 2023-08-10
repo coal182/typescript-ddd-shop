@@ -2,11 +2,10 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
 import { LoginActions } from 'src/app/store/login/login.actions';
 import { Credentials } from 'src/app/store/login/state/model';
 
-import { AuthService } from './../../shared/auth/auth.service';
+import { AuthService } from '../../shared/auth/auth.service';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',

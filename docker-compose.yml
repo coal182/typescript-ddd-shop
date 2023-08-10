@@ -2,9 +2,9 @@ version: '2.1'
 
 services:
 
-  api:
+  shop_backend:
     image: node:lts-alpine3.18
-    container_name: tba-api
+    container_name: shop-backend
     environment:
       - HOSTNAMERABBIT=rabbitmq
       - CLOUDAMQP_URL=amqp://rabbitmq:5672
@@ -21,7 +21,7 @@ services:
 
   rabbitmq:
     image: 'rabbitmq:3.8-management'
-    container_name: tba-rabbitmq
+    container_name: shop-rabbitmq
     ports:
       - 5672:5672
       - 15672:15672
@@ -33,14 +33,14 @@ services:
 
   
 
-  ui:
+  shop_frontend:
     image: node:17.6-alpine
-    container_name: tba-ui
+    container_name: shop-frontend
     working_dir: /app
     volumes:
-      - ./ui/:/app
-      - ./ui/node_modules/:/node_modules
+      - ./src/apps/shop/frontend/:/app
+      - ./src/apps/shop/frontend/node_modules/:/node_modules
     ports:
       - "4200:4200"
       - "9876:9876"
-    command: sh -c "npm install && npm run start"
+    command: sh -c "npm update && npm install && npm run start"

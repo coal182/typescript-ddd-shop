@@ -74,6 +74,6 @@ docker-compose -f docker-compose.test.yml up
 UI:
 
 ```bash
-cd ui/
+cd src/apps/shop/frontend
 npm run test
 ```
