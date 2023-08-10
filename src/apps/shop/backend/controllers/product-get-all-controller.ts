@@ -9,12 +9,19 @@ export class ProductGetAllController {
   constructor(private readonly queryBus: QueryBus) {}
 
   async run(req: Request, res: Response) {
-    const query = new SearchAllProductsQuery();
+    try {
+      const query = new SearchAllProductsQuery();
+      const response = await this.queryBus.ask<ProductsResponse>(query);
 
-    const response = await this.queryBus.ask<ProductsResponse>(query);
-
-    res
-      .status(httpStatus.OK)
-      .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: response.products });
+      res
+        .status(httpStatus.OK)
+        .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: response.products });
+    } catch (error) {
+      res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        message: 'There has been an error retrieving all products',
+        data: null,
+      });
+    }
   }
 }

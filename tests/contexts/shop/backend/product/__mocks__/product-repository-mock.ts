@@ -36,7 +36,7 @@ export class ProductRepositoryMock implements ProductRepository {
   }
 
   assertSaveHaveBeenCalledWith(expected: Product): void {
-    expect(this.saveMock.calledWith(expected)).to.be.true;
+    expect(this.saveMock).to.have.been.calledWith(expected);
   }
 
   async search(): Promise<Product> {
@@ -45,7 +45,7 @@ export class ProductRepositoryMock implements ProductRepository {
   }
 
   assertSearch() {
-    expect(this.searchAllMock.called).to.be.true;
+    expect(this.searchAllMock).to.have.been.called;
   }
 
   async searchAll(): Promise<Product[]> {
@@ -54,7 +54,7 @@ export class ProductRepositoryMock implements ProductRepository {
   }
 
   assertSearchAll() {
-    expect(this.searchAllMock.called).to.be.true;
+    expect(this.searchAllMock).to.have.been.called;
   }
 
   async matching(criteria: Criteria): Promise<Product[]> {
@@ -63,6 +63,6 @@ export class ProductRepositoryMock implements ProductRepository {
   }
 
   assertMatchingHasBeenCalledWith(criteria: Criteria) {
-    expect(this.matchingMock.calledWith(criteria)).to.be.true;
+    expect(this.matchingMock).to.have.been.calledWith(criteria);
   }
 }
