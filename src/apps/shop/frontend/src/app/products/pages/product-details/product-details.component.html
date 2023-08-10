@@ -11,32 +11,39 @@
         <h4>{{ (product$ | async)?.price | currency }}</h4>
         <p>{{ (product$ | async)?.brand }}</p>
         <p>{{ (product$ | async)?.category }}</p>
-     
-        <button
-          mat-flat-button
-          type="button"
-          color="primary"
-          (click)="addToCart()"
-          class="add-to-cart"
-        >
-          Add to cart <mat-icon>add_shopping_cart</mat-icon>
-        </button>
-        <button
-          mat-flat-button
-          type="button"
-          color="basic"
-          (click)="share()"
-          [disabled]="isLoading"
-        >
-          Share <mat-icon>share</mat-icon>
-          <mat-icon *ngIf="isLoading">
-            <mat-progress-spinner
-              mode="indeterminate"
-              diameter="24"
-              data-test="progress-spinner"
-            ></mat-progress-spinner>
-          </mat-icon>
-        </button>
+        <div class="row">
+          <div class="col-9">
+            <button
+              mat-flat-button
+              type="button"
+              color="primary"
+              (click)="addToCart()"
+              class="add-to-cart"
+            >
+              Add to cart <mat-icon>add_shopping_cart</mat-icon>
+            </button>
+          </div>
+          <div class="col-3">
+            <button
+              mat-flat-button
+              type="button"
+              color="basic"
+              (click)="share()"
+              [disabled]="isLoading"
+            >
+              Share <mat-icon>share</mat-icon>
+              <mat-icon *ngIf="isLoading">
+                <mat-progress-spinner
+                  mode="indeterminate"
+                  diameter="24"
+                  data-test="progress-spinner"
+                ></mat-progress-spinner>
+              </mat-icon>
+            </button>
+          </div>
+        </div>
+        
+        
       </div>
     </div>
     <div class="row">

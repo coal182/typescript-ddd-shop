@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { catchError, Observable, Subject, switchMap, takeUntil, tap, throwError } from 'rxjs';
@@ -22,12 +22,12 @@ export class CartComponent implements OnInit, OnDestroy {
   total: number;
   columnsToDisplay = ['image', 'name', 'qty', 'price', 'actions'];
   @ViewChild(MatTable) table!: MatTable<CartItem>;
-  checkoutForm: FormGroup;
+  checkoutForm: UntypedFormGroup;
   namesRegex = new RegExp(
     /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
   );
 
-  constructor(private cartService: HttpCartService, private fb: FormBuilder, private router: Router) {
+  constructor(private cartService: HttpCartService, private fb: UntypedFormBuilder, private router: Router) {
     this.items = [];
 
     this.checkoutForm = this.fb.group({

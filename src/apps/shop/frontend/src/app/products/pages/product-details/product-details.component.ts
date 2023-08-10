@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { StatusCodes } from 'http-status-codes';
@@ -16,6 +15,7 @@ import { ProductSelectors } from 'src/app/store/products/products.selectors';
 import { AlertDialogComponent } from '../../../alert-dialog/alert-dialog.component';
 import { HttpCartService } from '../../../cart/services/http-cart.service';
 import { HttpProductService } from '../../services/http-product.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product-details',

@@ -1,9 +1,15 @@
 :host {
   height: 80px;
 }
+.finder-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .finder-form-field {
   width: 400px;
-  
+  flex:0;
+  align-self: center;
 }
 
 .example-form {

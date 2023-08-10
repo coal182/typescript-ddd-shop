@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { MockRouter } from 'src/app/test/mock-router';
@@ -20,7 +20,7 @@ describe('SignupComponent', () => {
       imports: [HttpClientTestingModule],
       declarations: [SignupComponent],
       providers: [
-        { provide: FormBuilder, useFactory: formBuilderStub },
+        { provide: UntypedFormBuilder, useFactory: formBuilderStub },
         { provide: Router, useValue: mockRouter },
       ],
     }).compileComponents();

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LoginActions } from 'src/app/store/login/login.actions';
@@ -12,11 +12,11 @@ import { AuthService } from '../../shared/auth/auth.service';
   styleUrls: ['./signin.component.css'],
 })
 export class SigninComponent implements OnInit, OnDestroy {
-  signinForm: FormGroup;
+  signinForm: UntypedFormGroup;
   public isLoading = false;
 
   constructor(
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     public authService: AuthService,
     public router: Router,
     private renderer2: Renderer2,

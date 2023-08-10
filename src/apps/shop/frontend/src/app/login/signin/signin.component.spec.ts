@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { MockRouter } from 'src/app/test/mock-router';
@@ -18,7 +18,7 @@ describe('SigninComponent', () => {
       imports: [HttpClientTestingModule],
       declarations: [SigninComponent],
       providers: [
-        { provide: FormBuilder, useFactory: formBuilderStub },
+        { provide: UntypedFormBuilder, useFactory: formBuilderStub },
         { provide: Router, useValue: mockRouter },
       ],
     }).compileComponents();

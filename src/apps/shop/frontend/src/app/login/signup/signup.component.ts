@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../shared/auth/auth.service';
@@ -9,8 +9,8 @@ import { AuthService } from '../../shared/auth/auth.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent {
-  signupForm: FormGroup;
-  constructor(public fb: FormBuilder, public authService: AuthService, public router: Router) {
+  signupForm: UntypedFormGroup;
+  constructor(public fb: UntypedFormBuilder, public authService: AuthService, public router: Router) {
     this.signupForm = this.fb.group({
       name: [''],
       email: [''],

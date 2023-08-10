@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { CartItem } from '../interfaces/cart';
@@ -12,7 +12,7 @@ export abstract class CartService {
 
   abstract getItems(): Observable<unknown>;
 
-  abstract confirmCart(checkoutForm: FormGroup, orderId: string): Observable<unknown>;
+  abstract confirmCart(checkoutForm: UntypedFormGroup, orderId: string): Observable<unknown>;
 
   abstract clearCart(): Observable<unknown>;
 

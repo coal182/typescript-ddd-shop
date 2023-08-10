@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { StatusCodes } from 'http-status-codes';
 import { map, Observable } from 'rxjs';
@@ -21,7 +21,7 @@ export class UserProfileComponent implements OnInit {
   currentUser: User;
   user$: Observable<User> | undefined;
   userIdFromRoute: string;
-  profileForm: FormGroup;
+  profileForm: UntypedFormGroup;
   public isLoading = false;
   public subscribedValidity = 'Unkwown';
   namesRegex = new RegExp(
@@ -30,7 +30,7 @@ export class UserProfileComponent implements OnInit {
   formattedMessage: string;
 
   constructor(
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     public authService: AuthService,
     public userService: HttpUserService,

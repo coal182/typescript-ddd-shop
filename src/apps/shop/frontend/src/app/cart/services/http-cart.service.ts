@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -89,7 +89,7 @@ export class HttpCartService extends CartService {
       );
   }
 
-  public confirmCart(checkoutForm: FormGroup, orderId: string): Observable<unknown> {
+  public confirmCart(checkoutForm: UntypedFormGroup, orderId: string): Observable<unknown> {
     const confirmCartParams: ConfirmCartParams = {
       id: orderId,
       userId: this.cart.userId,
