@@ -1,0 +1,63 @@
+services:
+  Shop.Products.domain.ProductRepository:
+    class: ../../../../../contexts/shop/product/infrastructure/persistence/mongo-product-repository
+    main: MongoProductRepository
+    arguments: ['@Backoffice.Shared.ConnectionManager']
+
+  Shop.Products.domain.ProductEventStore:
+    class: ../../../../../contexts/shop/product/infrastructure/persistence/mongo-product-event-store
+    main: MongoProductEventStore
+    arguments: ['@Backoffice.Shared.ConnectionManager']
+
+  Shop.Products.application.ProductCreator:
+    class: ../../../../../contexts/shop/product/application/create/product-creator
+    main: ProductCreator
+    arguments: ['@Backoffice.Shared.domain.EventBus', '@Shop.Products.domain.ProductEventStore']
+
+  Shop.Products.CreateProductCommandHandler:
+    class: ../../../../../contexts/shop/product/application/command-handlers/create-product-command-handler
+    main: CreateProductCommandHandler
+    arguments: ['@Shop.Products.application.ProductCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Backoffice.Products.application.ProductsFinder:
+    class: ../../../../../contexts/backoffice/product/application/search-all/products-finder
+    main: ProductsFinder
+    arguments: ['@Backoffice.Products.domain.BackofficeProductRepository']
+
+  Backoffice.Products.SearchAllProductsQueryHandler:
+    class: ../../../../../contexts/backoffice/product/application/search-all/search-all-products-query-handler
+    main: SearchAllProductsQueryHandler
+    arguments: ['@Backoffice.Products.application.ProductsFinder']
+    tags:
+      - { name: 'queryHandler' }
+
+  Backoffice.Products.domain.BackofficeProductRepository:
+    class: ../../../../../contexts/backoffice/product/infrastructure/persistence/elastic-backoffice-product-repository
+    main: ElasticBackofficeProductRepository
+    arguments: ['@Backoffice.Shared.ElasticConnectionManager', '@Backoffice.Shared.ElasticConfig']
+
+  Backoffice.Products.application.BackofficeProductCreator:
+    class: ../../../../../contexts/backoffice/product/application/create/backoffice-product-creator
+    main: BackofficeProductCreator
+    arguments: ['@Backoffice.Shared.domain.EventBus', '@Shop.Products.domain.ProductEventStore']
+
+  Backoffice.Products.CreateBackofficeProductOnProductCreated:
+    class: ../../../../../contexts/backoffice/product/application/event-handlers/create-backoffice-product-on-product-created-event-handler
+    main: CreateBackofficeProductOnProductCreatedEventHandler
+    arguments: ['@Backoffice.Products.domain.BackofficeProductRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Backoffice.Products.application.ProductsByCriteriaSearcher:
+    class: ../../../../../contexts/shop/product/application/search-by-criteria/products-by-criteria-searcher
+    main: ProductsByCriteriaSearcher
+    arguments: ['@Backoffice.Products.domain.BackofficeProductRepository']
+
+  Backoffice.Products.SearchProductsByCriteriaQueryHandler:
+    class: ../../../../../contexts/shop/product/application/search-by-criteria/search-products-by-criteria-query-handler
+    main: SearchProductsByCriteriaQueryHandler
+    arguments: ['@Backoffice.Products.application.ProductsByCriteriaSearcher']
+    tags:
+      - { name: 'queryHandler' }

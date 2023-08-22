@@ -18,7 +18,7 @@ export class ProductsCounterMother {
     );
   }
 
-  static withOne(courseId: ProductId) {
-    return new ProductsCounter(ProductsCounterId.random(), new ProductsCounterTotal(1), [courseId]);
+  static withOne(productId: ProductId) {
+    return new ProductsCounter(ProductsCounterId.random(), new ProductsCounterTotal(1), [productId]);
   }
 }

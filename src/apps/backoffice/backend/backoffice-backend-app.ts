@@ -11,11 +11,11 @@ import { Server } from './server';
 
 dotenv.config();
 
-export class ShopBackendApp {
+export class BackofficeBackendApp {
   server?: Server;
   container: ContainerBuilder;
 
-  async start(port = process.env.PORT || '5001') {
+  async start(port = process.env.BACKOFFICE_PORT || '3000') {
     this.container = await containerFactory();
 
     this.server = new Server(port, this.container);
@@ -30,15 +30,15 @@ export class ShopBackendApp {
   }
 
   async stop() {
-    const rabbitMQConnection = this.container.get<RabbitMqConnection>('Shop.Shared.RabbitMQConnection');
+    const rabbitMQConnection = this.container.get<RabbitMqConnection>('Backoffice.Shared.RabbitMQConnection');
     await rabbitMQConnection.close();
     return this.server?.stop();
   }
 
   private async configureEventBus() {
     await ConfigureRabbitMQCommand.run(this.container);
-    const eventBus = this.container.get<EventBus>('Shop.Shared.domain.EventBus');
-    const rabbitMQConnection = this.container.get<RabbitMqConnection>('Shop.Shared.RabbitMQConnection');
+    const eventBus = this.container.get<EventBus>('Backoffice.Shared.domain.EventBus');
+    const rabbitMQConnection = this.container.get<RabbitMqConnection>('Backoffice.Shared.RabbitMQConnection');
     await rabbitMQConnection.connect();
 
     eventBus.addSubscribers(DomainEventSubscribers.from(this.container));

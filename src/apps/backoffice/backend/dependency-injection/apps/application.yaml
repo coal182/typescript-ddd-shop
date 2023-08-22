@@ -1,0 +1,20 @@
+services:
+  Apps.Backoffice.Backend.controllers.ProductPostController:
+    class: ../../controllers/product-post-controller
+    main: ProductPostController
+    arguments: ['@Backoffice.Shared.domain.CommandBus']
+
+  Apps.Backoffice.Backend.controllers.ProductGetAllController:
+    class: ../../controllers/product-get-all-controller
+    main: ProductGetAllController
+    arguments: ['@Backoffice.Shared.domain.QueryBus']
+
+  Apps.Backoffice.Backend.controllers.ProductGetByIdController:
+    class: ../../controllers/product-get-by-id-controller
+    main: ProductGetByIdController
+    arguments: ['@Backoffice.Shared.domain.QueryBus']
+
+  Apps.Backoffice.Backend.controllers.ProductGetByCriteriaController:
+    class: ../../controllers/product-get-by-criteria-controller
+    main: ProductGetByCriteriaController
+    arguments: ['@Backoffice.Shared.domain.QueryBus']

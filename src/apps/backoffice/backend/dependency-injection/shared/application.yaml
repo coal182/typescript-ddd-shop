@@ -1,0 +1,95 @@
+services:
+  Shared.Logger:
+    class: ../../../../../contexts/shared/infrastructure/winston-logger
+    main: WinstonLogger
+    arguments: []
+  Backoffice.Shared.MongoConfig:
+    factory:
+      class: ../../../../../contexts/shop/shared/infrastructure/persistence/mongo/mongo-config-factory
+      main: MongoConfigFactory
+      method: 'createConfig'
+
+  Backoffice.Shared.ConnectionManager:
+    factory:
+      class: ../../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
+      main: MongoClientFactory
+      method: 'createClient'
+    arguments: ['shop', '@Backoffice.Shared.MongoConfig']
+
+  Backoffice.Shared.CommandHandlers:
+    class: ../../../../../contexts/shared/infrastructure/command-bus/command-handlers
+    main: CommandHandlers
+    arguments: ['!tagged commandHandler']
+
+  Backoffice.Shared.domain.CommandBus:
+    class: ../../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
+    main: InMemoryCommandBus
+    arguments: ['@Backoffice.Shared.CommandHandlers']
+
+  Backoffice.Shared.RabbitMQConfig:
+    factory:
+      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-config-factory
+      main: RabbitMQConfigFactory
+      method: 'createConfig'
+
+  Backoffice.Shared.domain.EventBus:
+    factory:
+      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
+      main: RabbitMQEventBusFactory
+      method: 'create'
+    arguments:
+      [
+        '@Backoffice.Shared.DomainEventFailoverPublisher',
+        '@Backoffice.Shared.RabbitMQConnection',
+        '@Backoffice.Shared.RabbitMQqueueFormatter',
+        '@Backoffice.Shared.RabbitMQConfig',
+        '@Shared.Logger',
+      ]
+
+  Backoffice.Shared.RabbitMQQueueFormatter:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
+    main: RabbitMQqueueFormatter
+    arguments: ['store']
+
+  Backoffice.Shared.RabbitMQConnection:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-connection
+    main: RabbitMqConnection
+    arguments: ['@Backoffice.Shared.RabbitMQConfig']
+
+  Backoffice.Shared.RabbitMQqueueFormatter:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
+    main: RabbitMQqueueFormatter
+    arguments: ['store']
+
+  Backoffice.Shared.RabbitMQConfigurer:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
+    main: RabbitMQConfigurer
+    arguments: ['@Backoffice.Shared.RabbitMQConnection', '@Backoffice.Shared.RabbitMQQueueFormatter']
+
+  Backoffice.Shared.DomainEventFailoverPublisher:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
+    main: DomainEventFailoverPublisher
+    arguments: ['@Backoffice.Shared.ConnectionManager']
+
+  Backoffice.Shared.QueryHandlers:
+    class: ../../../../../contexts/shared/infrastructure/query-bus/query-handlers
+    main: QueryHandlers
+    arguments: ['!tagged queryHandler']
+
+  Backoffice.Shared.domain.QueryBus:
+    class: ../../../../../contexts/shared/infrastructure/query-bus/in-memory-query-bus
+    main: InMemoryQueryBus
+    arguments: ['@Backoffice.Shared.QueryHandlers']
+
+  Backoffice.Shared.ElasticConfig:
+    factory:
+      class: ../../../../../contexts/backoffice/product/infrastructure/persistence/backoffice-elastic-config-factory
+      main: BackofficeElasticConfigFactory
+      method: 'createConfig'
+
+  Backoffice.Shared.ElasticConnectionManager:
+    factory:
+      class: ../../../../../contexts/shared/infrastructure/persistence/elasticsearch/elastic-client-factory
+      main: ElasticClientFactory
+      method: 'createClient'
+    arguments: ['backoffice', '@Backoffice.Shared.ElasticConfig']

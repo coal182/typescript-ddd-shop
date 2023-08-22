@@ -15,7 +15,7 @@ describe('FindProductsCounterQueryHandler', () => {
     repository = new ProductsCounterRepositoryMock();
   });
 
-  it('should find an existing courses counter', async () => {
+  it('should find an existing products counter', async () => {
     const counter = ProductsCounterMother.random();
     repository.returnOnSearch(counter);
     const finder = new ProductsCounterFinder(repository);
@@ -27,7 +27,7 @@ describe('FindProductsCounterQueryHandler', () => {
     expect(counter.total.value).to.be.equal(response.total);
   });
 
-  it('should throw an exception when courses counter does not exists', async () => {
+  it('should throw an exception when products counter does not exists', async () => {
     const finder = new ProductsCounterFinder(repository);
     const handler = new FindProductsCounterQueryHandler(finder);
 

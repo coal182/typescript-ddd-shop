@@ -8,11 +8,11 @@ import { ProductsCounterRepository } from '@storeback/products-counter/domain/pr
 export class ProductsCounterRepositoryMock implements ProductsCounterRepository {
   private mockSave = stub();
   private mockSearch = stub();
-  private coursesCounter: Nullable<ProductsCounter> = null;
+  private productsCounter: Nullable<ProductsCounter> = null;
 
   async search(): Promise<Nullable<ProductsCounter>> {
     this.mockSearch();
-    return this.coursesCounter;
+    return this.productsCounter;
   }
 
   async save(counter: ProductsCounter): Promise<void> {
@@ -20,7 +20,7 @@ export class ProductsCounterRepositoryMock implements ProductsCounterRepository 
   }
 
   returnOnSearch(counter: ProductsCounter) {
-    this.coursesCounter = counter;
+    this.productsCounter = counter;
   }
 
   assertSearch() {

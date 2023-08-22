@@ -1,0 +1,6 @@
+{
+    "elastic": {
+      "url": "http://shop-elasticsearch:9200"
+    }
+  }
+  
