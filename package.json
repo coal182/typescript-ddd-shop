@@ -16,7 +16,7 @@
     "postinstall": "npm run build",
     "test": "mocha --config ./tests/.mocharc.json ${MOCHA_ARGS}",
     "test-watch": "mocha -r ts-node/register -r tsconfig-paths/register tests/**/*.spec.ts --watch --extensions ts",
-    "test-features": "NODE_ENV=test RABBITMQ_HOSTNAME=rabbitmq_test cucumber-js -p shop_backend",
+    "test-features": "NODE_ENV=test RABBITMQ_HOSTNAME=rabbitmq_test cucumber-js -p shop_backend --exit",
     "command:store:rabbitmq": "NODE_ENV=production ts-node src/apps/shop/backend/command/run-configure-rabbitmq-command"
   },
   "_moduleAliases": {

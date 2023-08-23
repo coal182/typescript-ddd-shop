@@ -16,7 +16,7 @@ services:
       - ./:/app
       - ./node_modules/:/node_modules
     ports:
-      - "3000:3000"
+      - "3001:3001"
     command: sh -c "npm install && npm run test-features"
 
   rabbitmq_test:

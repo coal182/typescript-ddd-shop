@@ -21,11 +21,15 @@ BeforeAll({ timeout: 2 * 5000 }, async () => {
   await environmentArranger.arrange();
 });
 
-AfterAll(async () => {
+AfterAll({ timeout: 2 * 5000 }, async () => {
   await environmentArranger.arrange();
   await environmentArranger.close();
 
-  await application.stop();
+  application
+    .stop()
+    .then(() => console.log('Finishing...'))
+    .catch((error) => console.log('Error Finishing', error))
+    .finally(() => console.log('Finished'));
 });
 
 Before(beforeScenario);

@@ -116,7 +116,7 @@ export class RabbitMqConnection {
 
   async close() {
     await this.channel?.close();
-    return await this.connection?.close();
+    return this.connection?.close();
   }
 
   async consume(queue: string, onMessage: (message: ConsumeMessage) => void) {

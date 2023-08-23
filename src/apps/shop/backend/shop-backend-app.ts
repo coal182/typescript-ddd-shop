@@ -29,7 +29,7 @@ export class ShopBackendApp {
     return this.server?.getHTTPServer();
   }
 
-  async stop() {
+  async stop(): Promise<void> {
     const rabbitMQConnection = this.container.get<RabbitMqConnection>('Shop.Shared.RabbitMQConnection');
     await rabbitMQConnection.close();
     return this.server?.stop();
