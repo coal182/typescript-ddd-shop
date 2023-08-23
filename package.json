@@ -1,5 +1,5 @@
 {
-  "name": "ts-bookstore-api",
+  "name": "typescript-ddd-shop",
   "version": "1.0.0",
   "engines": {
     "node": "^18.16"

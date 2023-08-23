@@ -1,0 +1,1000 @@
+{
+	"info": {
+		"_postman_id": "1bff236e-219d-4249-83b1-efd1c3ffda13",
+		"name": "typescript-ddd-shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20880998"
+	},
+	"item": [
+		{
+			"name": "Backoffice",
+			"item": [
+				{
+					"name": "GET Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/product",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Product by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/product/44284e0a-e076-4a61-864b-647aaf71b7df",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"product",
+								"44284e0a-e076-4a61-864b-647aaf71b7df"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Products By Criteria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/product/criteria/?filters[0][field]=brand&filters[0][operator]==&filters[0][value]=Amix Nutrition&orderBy=name&order=asc&limit=5&offset=0",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"product",
+								"criteria",
+								""
+							],
+							"query": [
+								{
+									"key": "filters[0][field]",
+									"value": "brand"
+								},
+								{
+									"key": "filters[0][operator]",
+									"value": "="
+								},
+								{
+									"key": "filters[0][value]",
+									"value": "Amix Nutrition"
+								},
+								{
+									"key": "orderBy",
+									"value": "name"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shop",
+			"item": [
+				{
+					"name": "Cart",
+					"item": [
+						{
+							"name": "GET Cart",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYzMTg2NzcsImV4cCI6MTY1NjMyMjI3N30.o7bMHj44zUmSUQp2ymJ7fYCozy2nXYQW0xY49O4S5_k",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5001/cart/66ff74ee-aae3-46c4-97fe-5b7aeaf52250",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"cart",
+										"66ff74ee-aae3-46c4-97fe-5b7aeaf52250"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cart by User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo0fSwiaWF0IjoxNjU4MjI0OTU3LCJleHAiOjE2NTgyMjg1NTd9.C5T2dOxhQyDQKWqsjPlzCjSY-FdAIPZ5yn9g_n0ETv0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5001/cart/user/d0c3ce2f-3134-4357-9742-658f64d4d8b9",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"cart",
+										"user",
+										"d0c3ce2f-3134-4357-9742-658f64d4d8b9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Cart",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYwNjcyNTIsImV4cCI6MTY1NjA3MDg1Mn0.JsPxdLpFegIfju66zHkdVBLwLSp_WW6tvI4IlWn674I",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"id\":\"66ff74ee-aae3-46c4-97fe-5b7aeaf52250\", \"userId\": \"d0c3ce2f-3134-4357-9742-658f64d4d8b9\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5001/cart",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Cart Item",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYwNjcyNTIsImV4cCI6MTY1NjA3MDg1Mn0.JsPxdLpFegIfju66zHkdVBLwLSp_WW6tvI4IlWn674I",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"id\":\"66ff74ee-aae3-46c4-97fe-5b7aeaf52250\", \"productId\": \"5d3927ac-5441-460c-acb7-75653ebdeb8b\", \"qty\": 2, \"price\": 20.25}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5001/cart/add",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"cart",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Cart Item",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYwNjcyNTIsImV4cCI6MTY1NjA3MDg1Mn0.JsPxdLpFegIfju66zHkdVBLwLSp_WW6tvI4IlWn674I",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5001/cart/remove/66ff74ee-aae3-46c4-97fe-5b7aeaf52250/5d3927ac-5441-460c-acb7-75653ebdeb8b/2/20.25",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"cart",
+										"remove",
+										"66ff74ee-aae3-46c4-97fe-5b7aeaf52250",
+										"5d3927ac-5441-460c-acb7-75653ebdeb8b",
+										"2",
+										"20.25"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Clear Cart",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTN9LCJpYXQiOjE2NTYwNjcyNTIsImV4cCI6MTY1NjA3MDg1Mn0.JsPxdLpFegIfju66zHkdVBLwLSp_WW6tvI4IlWn674I",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5001/cart/clear/66ff74ee-aae3-46c4-97fe-5b7aeaf52250",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"cart",
+										"clear",
+										"66ff74ee-aae3-46c4-97fe-5b7aeaf52250"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Orders",
+					"item": [
+						{
+							"name": "GET Orders by User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo2fSwiaWF0IjoxNjU4NDc3Mzc3LCJleHAiOjE2NTg0ODA5Nzd9.QBimwV3W5Iy3lYS-Gz-kngbBWX-fvX0ARwN7WA_LKOI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5001/order/user/d0c3ce2f-3134-4357-9742-658f64d4d8b9",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"order",
+										"user",
+										"d0c3ce2f-3134-4357-9742-658f64d4d8b9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Order",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo2fSwiaWF0IjoxNjU4NDc3Mzc3LCJleHAiOjE2NTg0ODA5Nzd9.QBimwV3W5Iy3lYS-Gz-kngbBWX-fvX0ARwN7WA_LKOI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5001/order/574380e8-db4d-4ef9-8a60-d6bf71189d86",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"order",
+										"574380e8-db4d-4ef9-8a60-d6bf71189d86"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Order",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTZ9LCJpYXQiOjE2NTcxMDAzNjgsImV4cCI6MTY1NzEwMzk2OH0.zlIaL0j3bUOoDYorOPPc06lHTvm5CUI-Ljr07hlyFi8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"id\": \"bea877ef-378a-4608-81eb-b2f5cf85cf69\", \"userId\": \"d0c3ce2f-3134-4357-9742-658f64d4d8b9\", \"status\": \"created\", \"name\": \"CRISTIAN MARTIN\", \"address\": \"Barca 3 2º2 29011 Málaga\", \"total\": 120, \n\"lines\": [\n    {\"productId\": \"478d7150-4975-4492-ae53-35507d316a37\", \"qty\": 2, \"price\": 31.76},\n    {\"productId\": \"dc30fc82-a127-4292-94ca-38deb774bd60\", \"qty\": 2, \"price\": 23.96}\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5001/order",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"order"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "GET Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzVDAwOjAwOjAwLjAwMFoifSwiaWF0IjoxNjgyMzUxMDk3LCJleHAiOjE2ODIzNTQ2OTd9.tkwh4nkqC5L-npl1Zs8C7gl42EI_nRVxg5ELgl1nFDg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5001/user",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"email\":\"niclife78@gmail.com\", \"firstname\":\"Cristian 78\", \"lastname\":\"Martin Niclife\", \"dateOfBirth\":\"1991-06-03\", \"password\": \"123456\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5001/user",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET User",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5001/users",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT User Password",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"currentPassword\":\"654321\", \"newPassword\":\"123456\", \"newPasswordConfirm\":\"123456\", \"version\":0}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5001/user/9c945e12-22f0-4b0d-9268-a9d3b3af95a9/password",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"user",
+										"9c945e12-22f0-4b0d-9268-a9d3b3af95a9",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT User",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"email\":\"niclife79@gmail.com\", \"firstname\":\"Natalia\", \"lastname\":\"Sanchez\", \"dateOfBirth\":\"1991-05-31T00:00:00.000\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5001/user/9c945e12-22f0-4b0d-9268-a9d3b3af95a9/update",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"user",
+										"9c945e12-22f0-4b0d-9268-a9d3b3af95a9",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "GET Products",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6InI5bjE2Ykp0UWxweHhyVFRUaEVLbiIsImVtYWlsIjoibmljbGlmZTdAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiQ3Jpc3RpYW4iLCJsYXN0bmFtZSI6Ik1hcnRpbiBOaWNsaWZlIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6NTh9LCJpYXQiOjE2NTcyNzE4NTAsImV4cCI6MTY1NzI3NTQ1MH0.xw9qpsG--GVggqP4qF-t4Qb_8U62NM80U7x5wRHZ3IU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5001/product",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Products By Criteria",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzIiwidmVyc2lvbiI6N30sImlhdCI6MTY2NzgzNDYxNCwiZXhwIjoxNjY3ODM4MjE0fQ.4mLoYv5s24cj9yv4_q5xtyMqdubL2aJ9Op4C_M4MbmM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5001/product/criteria/?filters[0][field]=name&filters[0][operator]==&filters[0][value]=Space Viking&orderBy=name&order=asc&limit=5&offset=0",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"product",
+										"criteria",
+										""
+									],
+									"query": [
+										{
+											"key": "filters[0][field]",
+											"value": "name"
+										},
+										{
+											"key": "filters[0][operator]",
+											"value": "="
+										},
+										{
+											"key": "filters[0][value]",
+											"value": "Space Viking"
+										},
+										{
+											"key": "orderBy",
+											"value": "name"
+										},
+										{
+											"key": "order",
+											"value": "asc"
+										},
+										{
+											"key": "limit",
+											"value": "5"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Product by Id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo2fSwiaWF0IjoxNjYwNzI0MDUzLCJleHAiOjE2NjA3Mjc2NTN9.8z6PzeUdtnlaLI3Tsym9dIwXqstw8MixLPJuQ1F6nMI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5001/product/44284e0a-e076-4a61-864b-647aaf71b7df",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"product",
+										"44284e0a-e076-4a61-864b-647aaf71b7df"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo0fSwiaWF0IjoxNjU4MjI0OTU3LCJleHAiOjE2NTgyMjg1NTd9.C5T2dOxhQyDQKWqsjPlzCjSY-FdAIPZ5yn9g_n0ETv0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"brand\": \"Amix Nutrition\",\n  \"category\": \"Health & Wellness\",\n  \"description\": \"VITAMIN C 1000, 100 Caps Vitamin C 1000 from Amix is a product based on sustained delivery vitamin C , which has been enriched with rose hips, an extract that reinforces the effects of vitamin C. Vitamin C 1000 is highly concentrated and helps meet the vitamin C needs of even the most demanding people.\",\n  \"ean\": \"8594159532601\",\n  \"id\": \"44284e0a-e076-4a61-864b-647aaf71b7df\",\n  \"image\": \"1837.jpg\",\n  \"name\": \"VITAMIN C 1000 MG 100 CAPS - AMIX NUTRITION\",\n  \"price\": \"18.40\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:5001/product",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Product Description",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo0fSwiaWF0IjoxNjU4MjI0OTU3LCJleHAiOjE2NTgyMjg1NTd9.C5T2dOxhQyDQKWqsjPlzCjSY-FdAIPZ5yn9g_n0ETv0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"description\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum faucibus semper vulputate. In id ex ac urna dictum feugiat aliquam sit amet lorem. Nunc ut eleifend massa, at ultrices nunc. Aenean dignissim luctus magna non egestas. Praesent feugiat turpis sed tristique elementum. Quisque pharetra imperdiet erat quis facilisis. Nam dictum venenatis mi vitae aliquam. Morbi ac augue at nibh convallis imperdiet ac id ipsum. Etiam auctor, arcu in iaculis convallis, neque est scelerisque metus, eu tincidunt turpis ex quis ex. Proin at nisi a sem fringilla ultrices. Pellentesque egestas iaculis sapien, a congue dolor pretium eget. Nunc at metus tellus. Morbi sollicitudin placerat leo, ut viverra ante semper dignissim. Duis posuere, elit quis elementum pretium, tellus justo aliquam massa, quis iaculis metus purus non neque. Maecenas bibendum efficitur blandit. Aenean egestas malesuada elit sit amet bibendum.\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:5001/product/cbeb3f49-535b-43da-aad2-3d11708ae708/description",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"product",
+										"cbeb3f49-535b-43da-aad2-3d11708ae708",
+										"description"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Product Image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo2fSwiaWF0IjoxNjYwODE1MTExLCJleHAiOjE2NjA4MTg3MTF9.BDgYdJpCqgq8AYnhQ1JLTwm_eEI6-DKMpMP5KK0RahY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"image\":\"https://cinelatura.files.wordpress.com/2014/08/el-fin-de-la-eternidad-isaac-asimov.jpg\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:5001/product/cbeb3f49-535b-43da-aad2-3d11708ae708/image",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"product",
+										"cbeb3f49-535b-43da-aad2-3d11708ae708",
+										"image"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products Counter",
+					"item": [
+						{
+							"name": "GET Products Counter",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5001/products-counter",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"products-counter"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"niclife7@gmail.com\", \"password\": \"123456\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5001/login/signin",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5001",
+							"path": [
+								"login",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Login Renew",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzVDAwOjAwOjAwLjAwMFoifSwiaWF0IjoxNjgyMzUyMDM4LCJleHAiOjE2ODIzNTU2Mzh9.xopQ--EiAEO-yrRopdCpeIULUGVVZUEEM76hQ6biooY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"niclife7@gmail.com\", \"password\": \"060391\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5001/login/renew/d0c3ce2f-3134-4357-9742-658f64d4d8b9",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5001",
+							"path": [
+								"login",
+								"renew",
+								"d0c3ce2f-3134-4357-9742-658f64d4d8b9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
