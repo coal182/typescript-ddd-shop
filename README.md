@@ -19,12 +19,13 @@ The commands are sent by the frontend to the `commandBus` which then selects app
 3. MongoDB with MongoDB native driver as event store and projections
 4. node-dependency-injection as an IoC container
 5. Express (via Inversify Express Utils) as an API framework
-6. RabbitMq as the message bus
+6. RabbitMq as message broker
 7. Angular as UI
+8. Elasticsearch as second repository for backoffice app
 
 ## Components
 
-This project follows the standard CQRS & Event Sourcing applications available on GitHub. Highly inspired by Greg Young's SimpleCQRS project (written in ASP.NET C#).
+This project follows the standard CQRS & Event Sourcing applications available on GitHub. Highly inspired by CodelyTv's DDD on Typescript courses series (<a href="https://github.com/CodelyTV/typescript-ddd-example" target="_blank">CodelyTV Repo</a>).
 
 Below is the list of components in this project
 
@@ -51,13 +52,13 @@ Below is the list of components in this project
 cp .env_template .env
 ```
 
-To deploy docker container
+Deploying docker container
 
 ```bash
 docker-compose up
 ```
 
-### To test
+### Testing
 
 Backend:
 
