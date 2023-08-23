@@ -1,7 +1,7 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
-import { ProductCreated } from '@storeback/product/domain/events/product-created';
-import { ProductId } from '@storeback/product/domain/product-id';
+import { ProductCreated } from '@shop-backend/product/domain/events/product-created';
+import { ProductId } from '@shop-backend/product/domain/product-id';
 
 import { ProductsCounterIncrementer } from './products-counter-incrementer';
 

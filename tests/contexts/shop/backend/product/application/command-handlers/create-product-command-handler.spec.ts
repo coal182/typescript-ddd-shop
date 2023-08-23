@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
-import { ProductCreator } from '@storeback/product/application/create/product-creator';
-import { ProductNameLengthExceeded } from '@storeback/product/domain/product-name-length-exceeded';
+import { ProductCreator } from '@shop-backend/product/application/create/product-creator';
+import { ProductNameLengthExceeded } from '@shop-backend/product/domain/product-name-length-exceeded';
 import { CreateProductCommandHandler } from 'src/contexts/shop/product/application/command-handlers/create-product-command-handler';
 import EventBusMock from 'tests/contexts/shared/domain/event-bus-mock';
 

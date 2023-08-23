@@ -1,9 +1,9 @@
-import { InitiateOrderCommandHandler } from '@storeback/order/application/command-handlers/initiate-order-command-handler';
-import { InitiateOrderCommand } from '@storeback/order/application/commands/initiate-order';
-import { OrderCreator } from '@storeback/order/application/create/order-creator';
-import { OrderCreated } from '@storeback/order/domain/events/order-created';
-import { OrderInitiated } from '@storeback/order/domain/events/order-initiated';
-import { OrderStatus, OrderStatusEnum } from '@storeback/order/domain/order-status';
+import { InitiateOrderCommandHandler } from '@shop-backend/order/application/command-handlers/initiate-order-command-handler';
+import { InitiateOrderCommand } from '@shop-backend/order/application/commands/initiate-order';
+import { OrderCreator } from '@shop-backend/order/application/create/order-creator';
+import { OrderCreated } from '@shop-backend/order/domain/events/order-created';
+import { OrderInitiated } from '@shop-backend/order/domain/events/order-initiated';
+import { OrderStatus, OrderStatusEnum } from '@shop-backend/order/domain/order-status';
 import { CreateOrderCommandHandler } from 'src/contexts/shop/order/application/command-handlers/create-order-command-handler';
 import { CreateOrderCommand } from 'src/contexts/shop/order/application/commands/create-order';
 import EventBusMock from 'tests/contexts/shared/domain/event-bus-mock';

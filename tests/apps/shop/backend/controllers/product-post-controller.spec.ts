@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import sinon from 'sinon';
 import { v4 as uuidv4 } from 'uuid';
 
-import { CreateProductCommand } from '@storeback/product/application/commands/create-product';
-import { ProductPostController, ProductPostRequest } from '@storebackapp/controllers/product-post-controller';
+import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
+import { ProductPostController, ProductPostRequest } from '@shop-backend-app/controllers/product-post-controller';
 import CommandBusMock from 'tests/contexts/shared/domain/command-bus-mock';
 
 describe(ProductPostController.name, () => {

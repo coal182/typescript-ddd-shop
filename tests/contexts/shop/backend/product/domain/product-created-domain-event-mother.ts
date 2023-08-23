@@ -1,5 +1,5 @@
-import { ProductCreated } from '@storeback/product/domain/events/product-created';
-import { Product } from '@storeback/product/domain/product';
+import { ProductCreated } from '@shop-backend/product/domain/events/product-created';
+import { Product } from '@shop-backend/product/domain/product';
 
 export class ProductCreatedDomainEventMother {
   static create({

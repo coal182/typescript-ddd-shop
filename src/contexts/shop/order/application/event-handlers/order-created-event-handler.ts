@@ -1,11 +1,11 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
 import { NotFoundException } from '@shared/domain/errors/application-error';
-import { OrderEventStore } from '@storeback/order/domain/order-event-store';
-import { OrderId } from '@storeback/order/domain/order-id';
-import { OrderRepository } from '@storeback/order/domain/order-repository';
-import { ProductId } from '@storeback/product/domain/product-id';
-import { ProductRepository } from '@storeback/product/domain/product-repository';
+import { OrderEventStore } from '@shop-backend/order/domain/order-event-store';
+import { OrderId } from '@shop-backend/order/domain/order-id';
+import { OrderRepository } from '@shop-backend/order/domain/order-repository';
+import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductRepository } from '@shop-backend/product/domain/product-repository';
 import { OrderCreated } from 'src/contexts/shop/order/domain/events/order-created';
 import { Order } from 'src/contexts/shop/order/domain/order';
 

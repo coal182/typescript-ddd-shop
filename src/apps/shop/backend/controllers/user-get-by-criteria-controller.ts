@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { QueryBus } from '@shared/domain/query-bus';
-import { SearchUsersByCriteriaQuery } from '@storeback/user/application/search-by-criteria/search-users-by-criteria-query';
+import { SearchUsersByCriteriaQuery } from '@shop-backend/user/application/search-by-criteria/search-users-by-criteria-query';
 import { UsersResponse } from 'src/contexts/shop/user/application/user-response';
 
 type FilterType = { value: string; operator: string; field: string };

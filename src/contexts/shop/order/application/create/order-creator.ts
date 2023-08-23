@@ -1,9 +1,9 @@
 import { EventBus } from '@shared/domain/event-bus';
-import { OrderAddress } from '@storeback/order/domain/order-address';
-import { OrderLine } from '@storeback/order/domain/order-line';
-import { OrderStatus } from '@storeback/order/domain/order-status';
-import { OrderTotal } from '@storeback/order/domain/order-total';
-import { OrderUser } from '@storeback/order/domain/order-user';
+import { OrderAddress } from '@shop-backend/order/domain/order-address';
+import { OrderLine } from '@shop-backend/order/domain/order-line';
+import { OrderStatus } from '@shop-backend/order/domain/order-status';
+import { OrderTotal } from '@shop-backend/order/domain/order-total';
+import { OrderUser } from '@shop-backend/order/domain/order-user';
 import { Order } from 'src/contexts/shop/order/domain/order';
 import { OrderEventStore } from 'src/contexts/shop/order/domain/order-event-store';
 import { OrderId } from 'src/contexts/shop/order/domain/order-id';

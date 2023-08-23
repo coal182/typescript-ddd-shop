@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { CommandBus } from '@shared/domain/command-bus';
-import { UpdateUserPasswordCommand } from '@storeback/user/application/commands/update-user-password';
+import { UpdateUserPasswordCommand } from '@shop-backend/user/application/commands/update-user-password';
 
 export class UserPutPasswordController {
   constructor(private commandBus: CommandBus) {}

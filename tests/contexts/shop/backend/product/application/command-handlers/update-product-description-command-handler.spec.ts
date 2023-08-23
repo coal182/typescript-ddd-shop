@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
-import { ProductCreator } from '@storeback/product/application/create/product-creator';
-import { ProductDescriptionChanged } from '@storeback/product/domain/events/product-description-changed';
+import { ProductCreator } from '@shop-backend/product/application/create/product-creator';
+import { ProductDescriptionChanged } from '@shop-backend/product/domain/events/product-description-changed';
 import { CreateProductCommandHandler } from 'src/contexts/shop/product/application/command-handlers/create-product-command-handler';
 import { UpdateProductDescriptionCommandHandler } from 'src/contexts/shop/product/application/command-handlers/update-product-description-command-handler';
 import { UpdateProductDescriptionCommand } from 'src/contexts/shop/product/application/commands/update-product-description';

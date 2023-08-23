@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { CommandBus } from '@shared/domain/command-bus';
-import { CancelOrderCommand } from '@storeback/order/application/commands/cancel-order';
+import { CancelOrderCommand } from '@shop-backend/order/application/commands/cancel-order';
 
 import { ok } from '../processors/response';
 

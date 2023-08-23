@@ -1,5 +1,5 @@
 import { EventBus } from '@shared/domain/event-bus';
-import { CartUser } from '@storeback/cart/domain/cart-user';
+import { CartUser } from '@shop-backend/cart/domain/cart-user';
 import { Cart } from 'src/contexts/shop/cart/domain/cart';
 import { CartEventStore } from 'src/contexts/shop/cart/domain/cart-event-store';
 import { CartId } from 'src/contexts/shop/cart/domain/cart-id';

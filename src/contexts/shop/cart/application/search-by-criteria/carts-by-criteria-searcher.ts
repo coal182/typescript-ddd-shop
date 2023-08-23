@@ -1,7 +1,7 @@
 import { Criteria } from '@shared/domain/criteria/criteria';
 import { Filters } from '@shared/domain/criteria/filters';
 import { Order } from '@shared/domain/criteria/order';
-import { CartRepository } from '@storeback/cart/domain/cart-repository';
+import { CartRepository } from '@shop-backend/cart/domain/cart-repository';
 
 import { CartsResponse } from '../cart-response';
 

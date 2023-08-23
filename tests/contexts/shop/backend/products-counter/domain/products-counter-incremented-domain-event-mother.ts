@@ -1,6 +1,6 @@
 import { DomainEvent } from '@shared/domain/domain-event';
-import { ProductsCounter } from '@storeback/products-counter/domain/products-counter';
-import { ProductsCounterIncremented } from '@storeback/products-counter/domain/products-counter-incremented-domain-event';
+import { ProductsCounter } from '@shop-backend/products-counter/domain/products-counter';
+import { ProductsCounterIncremented } from '@shop-backend/products-counter/domain/products-counter-incremented-domain-event';
 
 import { ProductsCounterMother } from './products-counter-mother';
 

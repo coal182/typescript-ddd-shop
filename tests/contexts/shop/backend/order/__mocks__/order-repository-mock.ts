@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import { SinonStub, stub } from 'sinon';
 
 import { Criteria } from '@shared/domain/criteria/criteria';
-import { Order } from '@storeback/order/domain/order';
-import { OrderRepository } from '@storeback/order/domain/order-repository';
+import { Order } from '@shop-backend/order/domain/order';
+import { OrderRepository } from '@shop-backend/order/domain/order-repository';
 
 export class OrderRepositoryMock implements OrderRepository {
   private saveMock: SinonStub;

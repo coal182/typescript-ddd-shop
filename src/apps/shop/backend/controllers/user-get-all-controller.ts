@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { QueryBus } from '@shared/domain/query-bus';
-import { SearchAllUsersQuery } from '@storeback/user/application/search-all/search-all-users-query';
+import { SearchAllUsersQuery } from '@shop-backend/user/application/search-all/search-all-users-query';
 import { UsersResponse } from 'src/contexts/shop/user/application/user-response';
 
 export class UserGetAllController {

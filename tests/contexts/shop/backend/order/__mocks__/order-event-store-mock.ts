@@ -3,7 +3,7 @@ import { SinonStub, stub } from 'sinon';
 
 import { DomainEvent } from '@shared/domain/domain-event';
 import { Uuid } from '@shared/domain/value-objects/uuid';
-import { OrderEventStore } from '@storeback/order/domain/order-event-store';
+import { OrderEventStore } from '@shop-backend/order/domain/order-event-store';
 
 export class OrderEventStoreMock implements OrderEventStore {
   private saveMock: SinonStub;

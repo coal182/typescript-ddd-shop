@@ -1,8 +1,8 @@
 import { Command } from '@shared/domain/command';
 import { CommandHandler } from '@shared/domain/command-handler';
-import { ProductBrand } from '@storeback/product/domain/product-brand';
-import { ProductCategory } from '@storeback/product/domain/product-category';
-import { ProductEan } from '@storeback/product/domain/product-ean';
+import { ProductBrand } from '@shop-backend/product/domain/product-brand';
+import { ProductCategory } from '@shop-backend/product/domain/product-category';
+import { ProductEan } from '@shop-backend/product/domain/product-ean';
 import { CreateProductCommand } from 'src/contexts/shop/product/application/commands/create-product';
 import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
 import { ProductId } from 'src/contexts/shop/product/domain/product-id';

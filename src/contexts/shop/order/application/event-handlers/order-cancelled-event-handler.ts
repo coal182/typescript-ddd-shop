@@ -1,9 +1,9 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
 import { NotFoundException } from '@shared/domain/errors/application-error';
-import { OrderEventStore } from '@storeback/order/domain/order-event-store';
-import { OrderId } from '@storeback/order/domain/order-id';
-import { OrderRepository } from '@storeback/order/domain/order-repository';
+import { OrderEventStore } from '@shop-backend/order/domain/order-event-store';
+import { OrderId } from '@shop-backend/order/domain/order-id';
+import { OrderRepository } from '@shop-backend/order/domain/order-repository';
 import { OrderCancelled } from 'src/contexts/shop/order/domain/events/order-cancelled';
 import { Order } from 'src/contexts/shop/order/domain/order';
 

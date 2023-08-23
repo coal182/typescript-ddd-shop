@@ -1,10 +1,10 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
 import { NotFoundException } from '@shared/domain/errors/application-error';
-import { Cart } from '@storeback/cart/domain/cart';
-import { CartEventStore } from '@storeback/cart/domain/cart-event-store';
-import { CartId } from '@storeback/cart/domain/cart-id';
-import { CartRepository } from '@storeback/cart/domain/cart-repository';
+import { Cart } from '@shop-backend/cart/domain/cart';
+import { CartEventStore } from '@shop-backend/cart/domain/cart-event-store';
+import { CartId } from '@shop-backend/cart/domain/cart-id';
+import { CartRepository } from '@shop-backend/cart/domain/cart-repository';
 import { CartCleared } from 'src/contexts/shop/cart/domain/events/cart-cleared';
 
 export class CartClearedEventHandler implements DomainEventSubscriber<CartCleared> {

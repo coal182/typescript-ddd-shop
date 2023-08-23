@@ -1,5 +1,5 @@
 import { EventBus } from '@shared/domain/event-bus';
-import { ProductEventStore } from '@storeback/product/domain/product-event-store';
+import { ProductEventStore } from '@shop-backend/product/domain/product-event-store';
 
 import { BackofficeProduct } from '../../domain/backoffice-product';
 import { BackofficeProductBrand } from '../../domain/backoffice-product-brand';

@@ -1,5 +1,5 @@
-import { ProductsCounterNotExist } from '@storeback/products-counter/domain/products-counter-not-exist';
-import { ProductsCounterRepository } from '@storeback/products-counter/domain/products-counter-repository';
+import { ProductsCounterNotExist } from '@shop-backend/products-counter/domain/products-counter-not-exist';
+import { ProductsCounterRepository } from '@shop-backend/products-counter/domain/products-counter-repository';
 
 export class ProductsCounterFinder {
   constructor(private repository: ProductsCounterRepository) {}

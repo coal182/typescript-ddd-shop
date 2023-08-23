@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { CommandBus } from '@shared/domain/command-bus';
-import { ClearCartCommand } from '@storeback/cart/application/commands/clear-cart';
+import { ClearCartCommand } from '@shop-backend/cart/application/commands/clear-cart';
 
 import { ok } from '../processors/response';
 

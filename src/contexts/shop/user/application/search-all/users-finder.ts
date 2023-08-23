@@ -1,4 +1,4 @@
-import { UserRepository } from '@storeback/user/domain/user-repository';
+import { UserRepository } from '@shop-backend/user/domain/user-repository';
 
 export class UsersFinder {
   constructor(private userRepository: UserRepository) {}

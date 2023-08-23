@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { QueryBus } from '@shared/domain/query-bus';
-import { OrdersResponse } from '@storeback/order/application/order-response';
-import { SearchOrdersByCriteriaQuery } from '@storeback/order/application/search-by-criteria/search-orders-by-criteria-query';
+import { OrdersResponse } from '@shop-backend/order/application/order-response';
+import { SearchOrdersByCriteriaQuery } from '@shop-backend/order/application/search-by-criteria/search-orders-by-criteria-query';
 
 type FilterType = { value: string; operator: string; field: string };
 

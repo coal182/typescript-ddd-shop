@@ -2,10 +2,10 @@ import { Command } from '@shared/domain/command';
 import { CommandHandler } from '@shared/domain/command-handler';
 import { NotFoundException } from '@shared/domain/errors/application-error';
 import { EventBus } from '@shared/domain/event-bus';
-import { User } from '@storeback/user/domain/user';
-import { UserEventStore } from '@storeback/user/domain/user-event-store';
-import { UserId } from '@storeback/user/domain/user-id';
-import { UserPassword } from '@storeback/user/domain/user-password';
+import { User } from '@shop-backend/user/domain/user';
+import { UserEventStore } from '@shop-backend/user/domain/user-event-store';
+import { UserId } from '@shop-backend/user/domain/user-id';
+import { UserPassword } from '@shop-backend/user/domain/user-password';
 
 import { UpdateUserPasswordCommand } from '../commands/update-user-password';
 

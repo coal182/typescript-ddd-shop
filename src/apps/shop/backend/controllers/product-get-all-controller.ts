@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { QueryBus } from '@shared/domain/query-bus';
-import { SearchAllProductsQuery } from '@storeback/product/application/search-all/search-all-products-query';
+import { SearchAllProductsQuery } from '@shop-backend/product/application/search-all/search-all-products-query';
 import { ProductsResponse } from 'src/contexts/shop/product/application/product-response';
 
 export class ProductGetAllController {

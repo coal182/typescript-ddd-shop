@@ -3,8 +3,8 @@ import httpStatus from 'http-status';
 
 import { PasswordNotMatchException } from '@shared/domain/errors/application-error';
 import { QueryBus } from '@shared/domain/query-bus';
-import { SearchUsersByCriteriaQuery } from '@storeback/user/application/search-by-criteria/search-users-by-criteria-query';
-import { UsersResponse } from '@storeback/user/application/user-response';
+import { SearchUsersByCriteriaQuery } from '@shop-backend/user/application/search-by-criteria/search-users-by-criteria-query';
+import { UsersResponse } from '@shop-backend/user/application/user-response';
 
 import { createJWToken } from '../middlewares/auth';
 import { ok } from '../processors/response';

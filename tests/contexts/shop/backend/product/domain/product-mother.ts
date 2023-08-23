@@ -1,7 +1,7 @@
-import { CreateProductCommand } from '@storeback/product/application/commands/create-product';
-import { ProductBrand } from '@storeback/product/domain/product-brand';
-import { ProductCategory } from '@storeback/product/domain/product-category';
-import { ProductEan } from '@storeback/product/domain/product-ean';
+import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
+import { ProductBrand } from '@shop-backend/product/domain/product-brand';
+import { ProductCategory } from '@shop-backend/product/domain/product-category';
+import { ProductEan } from '@shop-backend/product/domain/product-ean';
 import { Product } from 'src/contexts/shop/product/domain/product';
 import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
 import { ProductId } from 'src/contexts/shop/product/domain/product-id';

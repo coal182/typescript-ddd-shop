@@ -1,6 +1,6 @@
 import { Command } from '@shared/domain/command';
 import { CommandHandler } from '@shared/domain/command-handler';
-import { OrderLine } from '@storeback/order/domain/order-line';
+import { OrderLine } from '@shop-backend/order/domain/order-line';
 import { InitiateOrderCommand } from 'src/contexts/shop/order/application/commands/initiate-order';
 import { OrderAddress } from 'src/contexts/shop/order/domain/order-address';
 import { OrderId } from 'src/contexts/shop/order/domain/order-id';

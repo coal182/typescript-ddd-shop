@@ -82,17 +82,17 @@ services:
     ports:
       - 5601:5601
 
-  shop_frontend:
-    image: node:18.17-alpine
-    container_name: shop-frontend
-    working_dir: /app
-    volumes:
-      - ./src/apps/shop/frontend/:/app
-      - ./src/apps/shop/frontend/node_modules/:/node_modules
-    ports:
-      - "4200:4200"
-      - "9876:9876"
-    command: sh -c "npm install && npm run start"
+  # shop_frontend:
+  #   image: node:18.17-alpine
+  #   container_name: shop-frontend
+  #   working_dir: /app
+  #   volumes:
+  #     - ./src/apps/shop/frontend/:/app
+  #     - ./src/apps/shop/frontend/node_modules/:/node_modules
+  #   ports:
+  #     - "4200:4200"
+  #     - "9876:9876"
+  #   command: sh -c "npm install && npm run start"
 
 volumes:
   node_modules:

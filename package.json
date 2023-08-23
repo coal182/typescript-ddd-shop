@@ -20,13 +20,15 @@
     "command:store:rabbitmq": "NODE_ENV=production ts-node src/apps/shop/backend/command/run-configure-rabbitmq-command"
   },
   "_moduleAliases": {
-    "@core": "dist/src/shared/core",
+    "@domain": "dist/src/shared/domain",
     "@config": "dist/src/config",
     "@constants": "dist/src/shared/constants",
     "@infrastructure": "dist/src/shared/infrastructure",
     "@interfaces": "dist/src/interfaces",
-    "@storeback": "dist/src/contexts/shop/backend",
-    "@storebackapp": "dist/src/apps/shop/backend",
+    "@shop-backend": "dist/src/contexts/shop/backend",
+    "@shop-backend-app": "dist/src/apps/shop/backend",
+    "@backoffice-backend": "dist/@backoffice-backend/backend",
+    "@backoffice-backend-app": "dist/src/apps/backoffice/backend",
     "@shared": "dist/src/shared"
   },
   "dependencies": {

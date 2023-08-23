@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
+import { SearchAllProductsQuery } from '@backoffice-backend/product/application/search-all/search-all-products-query';
 import { QueryBus } from '@shared/domain/query-bus';
-import { SearchAllProductsQuery } from 'src/contexts/backoffice/product/application/search-all/search-all-products-query';
 import { ProductsResponse } from 'src/contexts/shop/product/application/product-response';
 
 export class ProductGetAllController {

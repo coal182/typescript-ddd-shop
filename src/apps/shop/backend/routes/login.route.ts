@@ -1,8 +1,8 @@
 import { Express } from 'express';
 import { ContainerBuilder } from 'node-dependency-injection';
 
-import { LoginRenewGetController } from '@storebackapp/controllers/login-renew-get-controller';
-import { loginValidator } from '@storebackapp/middlewares/validators/login-validator';
+import { LoginRenewGetController } from '@shop-backend-app/controllers/login-renew-get-controller';
+import { loginValidator } from '@shop-backend-app/middlewares/validators/login-validator';
 
 import { LoginPostController } from '../controllers';
 import { verifyJWT_MW } from '../middlewares/auth';

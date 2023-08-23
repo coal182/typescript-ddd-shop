@@ -1,10 +1,10 @@
 import { MongoEventStore } from '@infrastructure/persistence/mongo/mongo-event-store';
 import { DomainEvent, DomainEventClass } from '@shared/domain/domain-event';
 import { Uuid } from '@shared/domain/value-objects/uuid';
-import { CartEventStore } from '@storeback/cart/domain/cart-event-store';
-import { CartCleared } from '@storeback/cart/domain/events/cart-cleared';
-import { CartItemAdded } from '@storeback/cart/domain/events/cart-item-added';
-import { CartItemRemoved } from '@storeback/cart/domain/events/cart-item-removed';
+import { CartEventStore } from '@shop-backend/cart/domain/cart-event-store';
+import { CartCleared } from '@shop-backend/cart/domain/events/cart-cleared';
+import { CartItemAdded } from '@shop-backend/cart/domain/events/cart-item-added';
+import { CartItemRemoved } from '@shop-backend/cart/domain/events/cart-item-removed';
 import { CartCreated } from 'src/contexts/shop/cart/domain/events/cart-created';
 
 export class MongoCartEventStore extends MongoEventStore implements CartEventStore {

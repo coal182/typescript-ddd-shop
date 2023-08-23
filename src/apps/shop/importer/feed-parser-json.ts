@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { NotFoundError } from '@shared/domain/errors/not-found-error';
 import { ParsingError } from '@shared/domain/errors/parsing-error';
-import { CreateProductCommand } from '@storeback/product/application/commands/create-product';
+import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
 
 import { Feed } from './feed';
 import { FeedParser } from './feed-parser';

@@ -8,8 +8,8 @@ import { ProductsResponse } from '../product-response';
 import { ProductsByCriteriaSearcher } from './products-by-criteria-searcher';
 import { SearchProductsByCriteriaQuery } from './search-products-by-criteria-query';
 
-export class SearchProductsByCriteriaQueryHandler
-  implements QueryHandler<SearchProductsByCriteriaQuery, ProductsResponse>
+// eslint-disable-next-line prettier/prettier
+export class SearchProductsByCriteriaQueryHandler implements QueryHandler<SearchProductsByCriteriaQuery, ProductsResponse>
 {
   constructor(private searcher: ProductsByCriteriaSearcher) {}
 

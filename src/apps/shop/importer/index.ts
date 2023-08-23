@@ -5,8 +5,8 @@ import { DomainEventSubscribers } from '@infrastructure/event-bus/domain-event-s
 import { RabbitMqConnection } from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
 import { CommandBus } from '@shared/domain/command-bus';
 import { EventBus } from '@shared/domain/event-bus';
-import { ConfigureRabbitMQCommand } from '@storebackapp/command/configure-rabbitmq-command';
-import { containerFactory } from '@storebackapp/dependency-injection';
+import { ConfigureRabbitMQCommand } from '@shop-backend-app/command/configure-rabbitmq-command';
+import { containerFactory } from '@shop-backend-app/dependency-injection';
 
 import { FeedInventoryAggregator } from './feed-inventory-aggregator';
 import { FeedParserFromContentType } from './feed-parser-from-content-type';

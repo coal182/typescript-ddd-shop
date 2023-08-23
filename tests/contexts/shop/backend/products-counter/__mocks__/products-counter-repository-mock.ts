@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import { stub } from 'sinon';
 
 import { Nullable } from '@shared/domain/nullable';
-import { ProductsCounter } from '@storeback/products-counter/domain/products-counter';
-import { ProductsCounterRepository } from '@storeback/products-counter/domain/products-counter-repository';
+import { ProductsCounter } from '@shop-backend/products-counter/domain/products-counter';
+import { ProductsCounterRepository } from '@shop-backend/products-counter/domain/products-counter-repository';
 
 export class ProductsCounterRepositoryMock implements ProductsCounterRepository {
   private mockSave = stub();

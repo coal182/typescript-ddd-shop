@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 
-import { FindProductsCounterQuery } from '@storeback/products-counter/application/find/find-products-counter-query';
-import { FindProductsCounterQueryHandler } from '@storeback/products-counter/application/find/find-products-counter-query-handler';
-import { ProductsCounterFinder } from '@storeback/products-counter/application/find/products-counter-finder';
-import { ProductsCounterNotExist } from '@storeback/products-counter/domain/products-counter-not-exist';
+import { FindProductsCounterQuery } from '@shop-backend/products-counter/application/find/find-products-counter-query';
+import { FindProductsCounterQueryHandler } from '@shop-backend/products-counter/application/find/find-products-counter-query-handler';
+import { ProductsCounterFinder } from '@shop-backend/products-counter/application/find/products-counter-finder';
+import { ProductsCounterNotExist } from '@shop-backend/products-counter/domain/products-counter-not-exist';
 
 import { ProductsCounterRepositoryMock } from '../../__mocks__/products-counter-repository-mock';
 import { ProductsCounterMother } from '../../domain/products-counter-mother';

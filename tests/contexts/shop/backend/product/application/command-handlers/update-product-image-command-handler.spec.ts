@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 
-import { UpdateProductImageCommand } from '@storeback/product/application/commands/update-product-image';
-import { ProductCreator } from '@storeback/product/application/create/product-creator';
-import { ProductImageChanged } from '@storeback/product/domain/events/product-image-changed';
+import { UpdateProductImageCommand } from '@shop-backend/product/application/commands/update-product-image';
+import { ProductCreator } from '@shop-backend/product/application/create/product-creator';
+import { ProductImageChanged } from '@shop-backend/product/domain/events/product-image-changed';
 import { CreateProductCommandHandler } from 'src/contexts/shop/product/application/command-handlers/create-product-command-handler';
 import { UpdateProductImageCommandHandler } from 'src/contexts/shop/product/application/command-handlers/update-product-image-command-handler';
 import EventBusMock from 'tests/contexts/shared/domain/event-bus-mock';

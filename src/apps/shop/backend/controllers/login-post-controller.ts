@@ -6,11 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { CommandBus } from '@shared/domain/command-bus';
 import { PasswordNotMatchException } from '@shared/domain/errors/application-error';
 import { QueryBus } from '@shared/domain/query-bus';
-import { CartResponse, CartsResponse } from '@storeback/cart/application/cart-response';
-import { CreateCartCommand } from '@storeback/cart/application/commands/create-cart';
-import { SearchCartsByCriteriaQuery } from '@storeback/cart/application/search-by-criteria/search-carts-by-criteria-query';
-import { SearchUsersByCriteriaQuery } from '@storeback/user/application/search-by-criteria/search-users-by-criteria-query';
-import { UsersResponse } from '@storeback/user/application/user-response';
+import { CartResponse, CartsResponse } from '@shop-backend/cart/application/cart-response';
+import { CreateCartCommand } from '@shop-backend/cart/application/commands/create-cart';
+import { SearchCartsByCriteriaQuery } from '@shop-backend/cart/application/search-by-criteria/search-carts-by-criteria-query';
+import { SearchUsersByCriteriaQuery } from '@shop-backend/user/application/search-by-criteria/search-users-by-criteria-query';
+import { UsersResponse } from '@shop-backend/user/application/user-response';
 
 import { createJWToken } from '../middlewares/auth';
 import { ok } from '../processors/response';

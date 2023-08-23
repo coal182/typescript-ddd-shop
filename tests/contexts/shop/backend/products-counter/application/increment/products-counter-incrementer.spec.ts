@@ -1,5 +1,5 @@
-import { ProductsCounterIncrementer } from '@storeback/products-counter/application/increment/products-counter-incrementer';
-import { ProductsCounter } from '@storeback/products-counter/domain/products-counter';
+import { ProductsCounterIncrementer } from '@shop-backend/products-counter/application/increment/products-counter-incrementer';
+import { ProductsCounter } from '@shop-backend/products-counter/domain/products-counter';
 import EventBusMock from 'tests/contexts/shared/domain/event-bus-mock';
 
 import { ProductIdMother } from '../../../product/domain/product-id-mother';

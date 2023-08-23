@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
-import { ProductCreated } from '@storeback/product/domain/events/product-created';
-import { ProductDescriptionChanged } from '@storeback/product/domain/events/product-description-changed';
-import { ProductImageChanged } from '@storeback/product/domain/events/product-image-changed';
+import { ProductCreated } from '@shop-backend/product/domain/events/product-created';
+import { ProductDescriptionChanged } from '@shop-backend/product/domain/events/product-description-changed';
+import { ProductImageChanged } from '@shop-backend/product/domain/events/product-image-changed';
 
 import { BackofficeProductBrand } from './backoffice-product-brand';
 import { BackofficeProductCategory } from './backoffice-product-category';

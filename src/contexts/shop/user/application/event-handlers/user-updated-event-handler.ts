@@ -1,15 +1,15 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
 import { NotFoundException } from '@shared/domain/errors/application-error';
-import { UserUpdated } from '@storeback/user/domain/events/user-updated';
-import { User } from '@storeback/user/domain/user';
-import { UserBirthdate } from '@storeback/user/domain/user-birthdate';
-import { UserEmail } from '@storeback/user/domain/user-email';
-import { UserEventStore } from '@storeback/user/domain/user-event-store';
-import { UserFirstname } from '@storeback/user/domain/user-firstname';
-import { UserId } from '@storeback/user/domain/user-id';
-import { UserLastname } from '@storeback/user/domain/user-lastname';
-import { UserRepository } from '@storeback/user/domain/user-repository';
+import { UserUpdated } from '@shop-backend/user/domain/events/user-updated';
+import { User } from '@shop-backend/user/domain/user';
+import { UserBirthdate } from '@shop-backend/user/domain/user-birthdate';
+import { UserEmail } from '@shop-backend/user/domain/user-email';
+import { UserEventStore } from '@shop-backend/user/domain/user-event-store';
+import { UserFirstname } from '@shop-backend/user/domain/user-firstname';
+import { UserId } from '@shop-backend/user/domain/user-id';
+import { UserLastname } from '@shop-backend/user/domain/user-lastname';
+import { UserRepository } from '@shop-backend/user/domain/user-repository';
 
 export class UserUpdatedEventHandler implements DomainEventSubscriber<UserUpdated> {
   public event = UserUpdated.name;

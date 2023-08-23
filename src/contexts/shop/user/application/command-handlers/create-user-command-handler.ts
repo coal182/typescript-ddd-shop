@@ -1,10 +1,10 @@
 import { Command } from '@shared/domain/command';
 import { CommandHandler } from '@shared/domain/command-handler';
-import { UserBirthdate } from '@storeback/user/domain/user-birthdate';
-import { UserEmail } from '@storeback/user/domain/user-email';
-import { UserFirstname } from '@storeback/user/domain/user-firstname';
-import { UserLastname } from '@storeback/user/domain/user-lastname';
-import { UserPassword } from '@storeback/user/domain/user-password';
+import { UserBirthdate } from '@shop-backend/user/domain/user-birthdate';
+import { UserEmail } from '@shop-backend/user/domain/user-email';
+import { UserFirstname } from '@shop-backend/user/domain/user-firstname';
+import { UserLastname } from '@shop-backend/user/domain/user-lastname';
+import { UserPassword } from '@shop-backend/user/domain/user-password';
 import { CreateUserCommand } from 'src/contexts/shop/user/application/commands/create-user';
 import { UserId } from 'src/contexts/shop/user/domain/user-id';
 

@@ -2,8 +2,8 @@ import { Command } from '@shared/domain/command';
 import { CommandHandler } from '@shared/domain/command-handler';
 import { NotFoundException } from '@shared/domain/errors/application-error';
 import { EventBus } from '@shared/domain/event-bus';
-import { OrderEventStore } from '@storeback/order/domain/order-event-store';
-import { OrderId } from '@storeback/order/domain/order-id';
+import { OrderEventStore } from '@shop-backend/order/domain/order-event-store';
+import { OrderId } from '@shop-backend/order/domain/order-id';
 import { Order } from 'src/contexts/shop/order/domain/order';
 
 import { CancelOrderCommand } from '../commands/cancel-order';

@@ -2,13 +2,13 @@ import { Command } from '@shared/domain/command';
 import { CommandHandler } from '@shared/domain/command-handler';
 import { NotFoundException } from '@shared/domain/errors/application-error';
 import { EventBus } from '@shared/domain/event-bus';
-import { User } from '@storeback/user/domain/user';
-import { UserBirthdate } from '@storeback/user/domain/user-birthdate';
-import { UserEmail } from '@storeback/user/domain/user-email';
-import { UserEventStore } from '@storeback/user/domain/user-event-store';
-import { UserFirstname } from '@storeback/user/domain/user-firstname';
-import { UserId } from '@storeback/user/domain/user-id';
-import { UserLastname } from '@storeback/user/domain/user-lastname';
+import { User } from '@shop-backend/user/domain/user';
+import { UserBirthdate } from '@shop-backend/user/domain/user-birthdate';
+import { UserEmail } from '@shop-backend/user/domain/user-email';
+import { UserEventStore } from '@shop-backend/user/domain/user-event-store';
+import { UserFirstname } from '@shop-backend/user/domain/user-firstname';
+import { UserId } from '@shop-backend/user/domain/user-id';
+import { UserLastname } from '@shop-backend/user/domain/user-lastname';
 import { UpdateUserCommand } from 'src/contexts/shop/user/application/commands/update-user';
 
 export class UpdateUserCommandHandler implements CommandHandler<UpdateUserCommand> {

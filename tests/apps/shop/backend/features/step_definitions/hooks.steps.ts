@@ -2,7 +2,7 @@ import { AfterAll, Before, BeforeAll } from '@cucumber/cucumber';
 import { ContainerBuilder } from 'node-dependency-injection';
 
 import { EventBus } from '@shared/domain/event-bus';
-import { ShopBackendApp } from '@storebackapp/shop-backend-app';
+import { ShopBackendApp } from '@shop-backend-app/shop-backend-app';
 import { EnvironmentArranger } from 'tests/contexts/shared/infrastructure/arranger/environment-arranger';
 
 let application: ShopBackendApp;

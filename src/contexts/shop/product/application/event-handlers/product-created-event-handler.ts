@@ -1,8 +1,8 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
-import { ProductBrand } from '@storeback/product/domain/product-brand';
-import { ProductCategory } from '@storeback/product/domain/product-category';
-import { ProductEan } from '@storeback/product/domain/product-ean';
+import { ProductBrand } from '@shop-backend/product/domain/product-brand';
+import { ProductCategory } from '@shop-backend/product/domain/product-category';
+import { ProductEan } from '@shop-backend/product/domain/product-ean';
 import { ProductCreated } from 'src/contexts/shop/product/domain/events/product-created';
 import { Product } from 'src/contexts/shop/product/domain/product';
 import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';

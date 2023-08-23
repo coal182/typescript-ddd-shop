@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { JwtPayload, verify, sign } from 'jsonwebtoken';
 import _ from 'lodash';
 
-import config from '@storeback/shared/infrastructure/config';
+import config from '@shop-backend/shared/infrastructure/config';
 
 export function verifyJWTToken(token: string): Promise<JwtPayload> {
   return new Promise((resolve, reject) => {

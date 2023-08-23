@@ -43,8 +43,8 @@
     "moduleResolution": "node", /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
     "baseUrl": ".", /* Base directory to resolve non-absolute module names. */
     "paths": {
-      "@core/*": [
-        "src/contexts/shared/core/*"
+      "@domain/*": [
+        "src/contexts/shared/domain/*"
       ],
       "@config/*": [
         "src/config/*"
@@ -58,11 +58,17 @@
       "@interfaces/*": [
         "src/interfaces/*"      
       ],
-      "@storeback/*": [
+      "@shop-backend/*": [
         "src/contexts/shop/*"
       ],
-      "@storebackapp/*": [
+      "@shop-backend-app/*": [
         "src/apps/shop/backend/*"
+      ],
+      "@backoffice-backend/*": [
+        "src/contexts/backoffice/*"
+      ],
+      "@backoffice-backend-app/*": [
+        "src/apps/backoffice/backend/*"
       ],
       "@shared/*": [
         "src/contexts/shared/*"

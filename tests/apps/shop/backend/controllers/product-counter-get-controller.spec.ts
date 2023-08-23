@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 import { SinonStub, assert, stub } from 'sinon';
 
 import { QueryBus } from '@shared/domain/query-bus';
-import { ProductsCounterGetController } from '@storebackapp/controllers/products-counter-get-controller';
+import { ProductsCounterGetController } from '@shop-backend-app/controllers/products-counter-get-controller';
 
 describe('ProductCounterGetController', () => {
   let queryBus: QueryBus;

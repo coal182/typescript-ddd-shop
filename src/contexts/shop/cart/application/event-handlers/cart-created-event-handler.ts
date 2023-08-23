@@ -1,9 +1,9 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
-import { Cart } from '@storeback/cart/domain/cart';
-import { CartId } from '@storeback/cart/domain/cart-id';
-import { CartRepository } from '@storeback/cart/domain/cart-repository';
-import { CartUser } from '@storeback/cart/domain/cart-user';
+import { Cart } from '@shop-backend/cart/domain/cart';
+import { CartId } from '@shop-backend/cart/domain/cart-id';
+import { CartRepository } from '@shop-backend/cart/domain/cart-repository';
+import { CartUser } from '@shop-backend/cart/domain/cart-user';
 import { CartCreated } from 'src/contexts/shop/cart/domain/events/cart-created';
 
 export class CartCreatedEventHandler implements DomainEventSubscriber<CartCreated> {

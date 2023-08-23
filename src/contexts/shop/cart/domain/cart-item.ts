@@ -1,4 +1,4 @@
-import { ProductResponse } from '@storeback/product/application/product-response';
+import { ProductResponse } from '@shop-backend/product/application/product-response';
 
 export class CartItem {
   public productId: string;

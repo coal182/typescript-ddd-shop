@@ -1,9 +1,9 @@
 import { MongoEventStore } from '@infrastructure/persistence/mongo/mongo-event-store';
 import { DomainEvent, DomainEventClass } from '@shared/domain/domain-event';
 import { Uuid } from '@shared/domain/value-objects/uuid';
-import { OrderCancelled } from '@storeback/order/domain/events/order-cancelled';
-import { OrderInitiated } from '@storeback/order/domain/events/order-initiated';
-import { OrderLineAdded } from '@storeback/order/domain/events/order-line-added';
+import { OrderCancelled } from '@shop-backend/order/domain/events/order-cancelled';
+import { OrderInitiated } from '@shop-backend/order/domain/events/order-initiated';
+import { OrderLineAdded } from '@shop-backend/order/domain/events/order-line-added';
 import { OrderCreated } from 'src/contexts/shop/order/domain/events/order-created';
 import { OrderEventStore } from 'src/contexts/shop/order/domain/order-event-store';
 

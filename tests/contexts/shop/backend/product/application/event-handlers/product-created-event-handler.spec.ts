@@ -1,4 +1,4 @@
-import { ProductCreatedEventHandler } from '@storeback/product/application/event-handlers/product-created-event-handler';
+import { ProductCreatedEventHandler } from '@shop-backend/product/application/event-handlers/product-created-event-handler';
 
 import { ProductRepositoryMock } from '../../__mocks__/product-repository-mock';
 import { ProductCreatedDomainEventMother } from '../../domain/product-created-domain-event-mother';

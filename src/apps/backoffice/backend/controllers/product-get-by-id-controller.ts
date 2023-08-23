@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
+import { SearchProductsByCriteriaQuery } from '@backoffice-backend/product/application/search-by-criteria/search-products-by-criteria-query';
 import { QueryBus } from '@shared/domain/query-bus';
-import { SearchProductsByCriteriaQuery } from '@storeback/product/application/search-by-criteria/search-products-by-criteria-query';
-import { ProductsResponse } from 'src/contexts/shop/product/application/product-response';
+import { ProductsResponse } from '@shop-backend/product/application/product-response';
 
 type FilterType = { value: string; operator: string; field: string };
 

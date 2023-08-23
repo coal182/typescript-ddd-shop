@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
-import { ProductResponse } from '@storeback/product/application/product-response';
+import { ProductResponse } from '@shop-backend/product/application/product-response';
 
 import { CartId } from './cart-id';
 import { CartItem } from './cart-item';
