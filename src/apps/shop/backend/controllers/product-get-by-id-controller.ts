@@ -27,9 +27,13 @@ export class ProductGetByIdController {
 
     const response = await this.queryBus.ask<ProductsResponse>(query);
 
-    res
-      .status(httpStatus.OK)
-      .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: response.products[0] });
+    if (!response.products.length) {
+      res.status(httpStatus.NOT_FOUND).send({ status: httpStatus.NOT_FOUND, message: 'Product Id not found' });
+    } else {
+      res
+        .status(httpStatus.OK)
+        .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: response.products[0] });
+    }
   }
 
   private parseFilters(params: Array<FilterType>): Array<Map<string, string>> {

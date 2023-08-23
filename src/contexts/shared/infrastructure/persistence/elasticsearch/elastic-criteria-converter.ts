@@ -7,6 +7,7 @@ import { Filters } from '@shared/domain/criteria/filters';
 
 export enum TypeQueryEnum {
   TERMS = 'terms',
+  MATCH = 'match',
   MATCH_ALL = 'match_all',
   RANGE = 'range',
   WILDCARD = 'wildcard',
@@ -23,8 +24,8 @@ export class ElasticCriteriaConverter {
 
   constructor() {
     this.queryTransformers = new Map<Operator, TransformerFunction<Filter, QueryObject>>([
-      [Operator.EQUAL, this.termsQuery],
-      [Operator.NOT_EQUAL, this.termsQuery],
+      [Operator.EQUAL, this.matchQuery],
+      [Operator.NOT_EQUAL, this.matchQuery],
       [Operator.GT, this.greaterThanQuery],
       [Operator.LT, this.lowerThanQuery],
       [Operator.CONTAINS, this.wildcardQuery],
@@ -75,6 +76,10 @@ export class ElasticCriteriaConverter {
 
   private termsQuery(filter: Filter): QueryObject {
     return { type: TypeQueryEnum.TERMS, field: filter.field.value, value: [filter.value.value] };
+  }
+
+  private matchQuery(filter: Filter): QueryObject {
+    return { type: TypeQueryEnum.MATCH, field: filter.field.value, value: filter.value.value };
   }
 
   private greaterThanQuery(filter: Filter): QueryObject {

@@ -51,12 +51,12 @@ services:
       - { name: 'domainEventSubscriber' }
 
   Backoffice.Products.application.ProductsByCriteriaSearcher:
-    class: ../../../../../contexts/shop/product/application/search-by-criteria/products-by-criteria-searcher
+    class: ../../../../../contexts/backoffice/product/application/search-by-criteria/products-by-criteria-searcher
     main: ProductsByCriteriaSearcher
     arguments: ['@Backoffice.Products.domain.BackofficeProductRepository']
 
   Backoffice.Products.SearchProductsByCriteriaQueryHandler:
-    class: ../../../../../contexts/shop/product/application/search-by-criteria/search-products-by-criteria-query-handler
+    class: ../../../../../contexts/backoffice/product/application/search-by-criteria/search-products-by-criteria-query-handler
     main: SearchProductsByCriteriaQueryHandler
     arguments: ['@Backoffice.Products.application.ProductsByCriteriaSearcher']
     tags:
