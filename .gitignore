@@ -10,5 +10,5 @@ logs/error.log
 logs/info.log
 src/contexts/shop/shared/infrastructure/config/default.json
 src/contexts/shop/shared/infrastructure/config/test.json
-src/contexts/backoffice/infrastructure/config/default.json
-src/contexts/backoffice/infrastructure/config/test.json
+src/contexts/backoffice/shared/infrastructure/config/default.json
+src/contexts/backoffice/shared/infrastructure/config/test.json
