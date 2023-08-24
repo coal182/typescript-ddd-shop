@@ -1,11 +1,11 @@
 import MongoConfig from '@shared/infrastructure/persistence/mongo/mongo-config';
 
-import config from '../../config';
+import shopConfig from '../../config';
 
 export class MongoConfigFactory {
   static createConfig(): MongoConfig {
     return {
-      url: config.get('mongo.url'),
+      url: shopConfig.get('mongo.url'),
     };
   }
 }

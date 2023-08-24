@@ -1,25 +1,29 @@
 import convict from 'convict';
 
-const config = convict({
+const shopConfig = convict({
   env: {
     doc: 'The application environment.',
     format: ['production', 'dev', 'staging', 'test'],
-    default: 'dev',
+    default: 'default',
     env: 'NODE_ENV',
+  },
+  api: {
+    port: {
+      doc: 'API port',
+      format: String,
+      default: '5001',
+    },
+    secret: {
+      doc: 'The JWT Secret for auth',
+      format: String,
+      default: 'jwtsecret',
+    },
   },
   mongo: {
     url: {
       doc: 'The Mongo connection URL',
       format: String,
-      default: 'mongodb://localhost:27017/mooc-backend-dev',
-    },
-  },
-  auth: {
-    secret: {
-      doc: 'The JWT Secret for auth',
-      format: String,
-      env: 'JWT_SECRET',
-      default: 'jwtsecret',
+      default: 'mongodb+srv://user:password@clusterX.sbkvX.mongodb.net/bookstore?retryWrites=true&w=majority',
     },
   },
   rabbitmq: {
@@ -85,6 +89,8 @@ const config = convict({
   },
 });
 
-config.loadFile([__dirname + '/default.json', __dirname + '/' + config.get('env') + '.json']);
+shopConfig.loadFile([__dirname + '/default.json', __dirname + '/' + shopConfig.get('env') + '.json']);
 
-export default config;
+const url: string = shopConfig.get('mongo.url');
+
+export default shopConfig;

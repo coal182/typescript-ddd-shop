@@ -1,12 +1,12 @@
 import ElasticConfig from '../../../../shared/infrastructure/persistence/elasticsearch/elastic-config';
-import config from '../config';
+import backofficeConfig from '../../../shared/infrastructure/config';
 
 export class BackofficeElasticConfigFactory {
   static createConfig(): ElasticConfig {
     return {
-      url: config.get('elastic.url'),
-      indexName: config.get('elastic.indexName'),
-      indexConfig: config.get('elastic.config'),
+      url: backofficeConfig.get('elastic.url'),
+      indexName: backofficeConfig.get('elastic.indexName'),
+      indexConfig: backofficeConfig.get('elastic.config'),
     };
   }
 }

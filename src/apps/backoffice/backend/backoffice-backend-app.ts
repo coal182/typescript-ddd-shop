@@ -1,6 +1,6 @@
-import * as dotenv from 'dotenv';
 import { ContainerBuilder } from 'node-dependency-injection';
 
+import backofficeConfig from '@backoffice-backend/shared/infrastructure/config';
 import { DomainEventSubscribers } from '@infrastructure/event-bus/domain-event-subscribers';
 import { RabbitMqConnection } from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
 import { EventBus } from '@shared/domain/event-bus';
@@ -9,13 +9,11 @@ import { ConfigureRabbitMQCommand } from './command/configure-rabbitmq-command';
 import { containerFactory } from './dependency-injection';
 import { Server } from './server';
 
-dotenv.config();
-
 export class BackofficeBackendApp {
   server?: Server;
   container: ContainerBuilder;
 
-  async start(port = process.env.BACKOFFICE_PORT || '3000') {
+  async start(port = backofficeConfig.get('api.port') || '3000') {
     this.container = await containerFactory();
 
     this.server = new Server(port, this.container);

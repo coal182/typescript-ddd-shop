@@ -1,21 +1,20 @@
-import * as dotenv from 'dotenv';
 import { ContainerBuilder } from 'node-dependency-injection';
 
 import { DomainEventSubscribers } from '@infrastructure/event-bus/domain-event-subscribers';
 import { RabbitMqConnection } from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
 import { EventBus } from '@shared/domain/event-bus';
+import shopConfig from '@shop-backend/shared/infrastructure/config';
 
 import { ConfigureRabbitMQCommand } from './command/configure-rabbitmq-command';
 import { containerFactory } from './dependency-injection';
 import { Server } from './server';
 
-dotenv.config();
-
 export class ShopBackendApp {
   server?: Server;
   container: ContainerBuilder;
 
-  async start(port = process.env.PORT || '5001') {
+  async start(port = shopConfig.get('api.port') || '5001') {
+    console.log('📌 ~ port:', port);
     this.container = await containerFactory();
 
     this.server = new Server(port, this.container);

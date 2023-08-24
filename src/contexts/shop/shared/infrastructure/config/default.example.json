@@ -1,4 +1,7 @@
 {
-    "mongo": { "url": "" }
+    "mongo": { "url": "" },
+    "api": {
+        "port": "5001",
+        "secret": ""
+    }
 }
-  

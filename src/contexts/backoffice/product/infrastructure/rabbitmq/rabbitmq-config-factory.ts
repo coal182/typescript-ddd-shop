@@ -1,7 +1,7 @@
 import { ConnectionSettings } from '@infrastructure/event-bus/rabbitmq/connection-settings';
 import { ExchangeSetting } from '@infrastructure/event-bus/rabbitmq/exchange-setting';
 
-import config from '../config';
+import backofficeConfig from '../../../shared/infrastructure/config';
 
 export type RabbitMQConfig = {
   connectionSettings: ConnectionSettings;
@@ -12,6 +12,6 @@ export type RabbitMQConfig = {
 
 export class RabbitMQConfigFactory {
   static createConfig(): RabbitMQConfig {
-    return config.get('rabbitmq');
+    return backofficeConfig.get('rabbitmq');
   }
 }

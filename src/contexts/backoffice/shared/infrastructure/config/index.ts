@@ -1,26 +1,29 @@
 import convict from 'convict';
 
-const config = convict({
+const backofficeConfig = convict({
   env: {
     doc: 'The application environment.',
     format: ['production', 'dev', 'staging', 'test'],
-    default: 'dev',
+    default: 'default',
     env: 'NODE_ENV',
+  },
+  api: {
+    port: {
+      doc: 'API port',
+      format: String,
+      default: '3000',
+    },
+    secret: {
+      doc: 'The JWT Secret for auth',
+      format: String,
+      default: 'jwtsecret',
+    },
   },
   mongo: {
     url: {
       doc: 'The Mongo connection URL',
       format: String,
-      env: 'MONGO_URL',
-      default: 'mongodb://localhost:27017/mooc-backend-dev',
-    },
-  },
-  auth: {
-    secret: {
-      doc: 'The JWT Secret for auth',
-      format: String,
-      env: 'JWT_SECRET',
-      default: 'jwtsecret',
+      default: 'mongodb+srv://user:password@clusterX.sbkvX.mongodb.net/bookstore?retryWrites=true&w=majority',
     },
   },
   rabbitmq: {
@@ -68,6 +71,7 @@ const config = convict({
       name: {
         doc: 'RabbitMQ exchange name',
         format: String,
+        env: 'RABBITMQ_EXCHANGE_NAME',
         default: 'domain_events',
       },
     },
@@ -84,8 +88,52 @@ const config = convict({
       default: 1000,
     },
   },
+  elastic: {
+    url: {
+      doc: 'The Elastic connection URL',
+      format: String,
+      env: 'ELASTIC_URL',
+      default: 'http://shop-elasticsearch:9200',
+    },
+    indexName: {
+      doc: 'The Elastic index name for this context',
+      format: String,
+      env: 'ELASTIC_INDEX_NAME',
+      default: 'backofficeproducts',
+    },
+    config: {
+      doc: 'The Elastic config for this context',
+      format: '*',
+      env: 'ELASTIC_CONFIG',
+      default: {
+        settings: {
+          index: {
+            number_of_replicas: 0, // for local development
+          },
+        },
+        mappings: {
+          properties: {
+            id: {
+              type: 'keyword',
+              index: true,
+            },
+            name: {
+              type: 'text',
+              index: true,
+              fielddata: true,
+            },
+            duration: {
+              type: 'text',
+              index: true,
+              fielddata: true,
+            },
+          },
+        },
+      },
+    },
+  },
 });
 
-config.loadFile([__dirname + '/default.json', __dirname + '/' + config.get('env') + '.json']);
+backofficeConfig.loadFile([__dirname + '/default.json', __dirname + '/' + backofficeConfig.get('env') + '.json']);
 
-export default config;
+export default backofficeConfig;
