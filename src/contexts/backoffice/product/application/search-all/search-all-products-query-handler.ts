@@ -13,7 +13,7 @@ export class SearchAllProductsQueryHandler implements QueryHandler<SearchAllProd
     return SearchAllProductsQuery;
   }
 
-  async handle(): Promise<BackofficeProductsResponse> {
+  async handle(query: SearchAllProductsQuery): Promise<BackofficeProductsResponse> {
     return new BackofficeProductsResponse(await this.productsFinder.run());
   }
 }
