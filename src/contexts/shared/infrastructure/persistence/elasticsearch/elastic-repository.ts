@@ -79,4 +79,40 @@ export abstract class ElasticRepository<T extends AggregateRoot> {
     const document = { ...aggregateRoot.toPrimitives() };
     await client.index({ index: this.indexName(), id, body: document, refresh: 'wait_for' }); // wait_for wait for a refresh to make this operation visible to search
   }
+
+  protected async deleteById(id: string): Promise<void> {
+    const client = await this.client();
+
+    await client.delete({
+      index: this.indexName(),
+      id,
+      refresh: 'wait_for', // Opcional: espera a que se refresque para que la eliminación sea visible
+    });
+  }
+
+  protected async clearIndex(): Promise<void> {
+    const client = await this.client();
+
+    await client.deleteByQuery({
+      index: this.indexName(),
+      body: {
+        query: {
+          match_all: {}, // Eliminar todos los documentos en el índice
+        },
+      },
+    });
+  }
+
+  protected async update(id: string, updateBody: any): Promise<void> {
+    const client = await this.client();
+
+    await client.update({
+      index: this.indexName(),
+      id,
+      body: {
+        doc: updateBody, // Cuerpo de actualización
+      },
+      refresh: 'wait_for', // Opcional: espera a que se refresque para que la actualización sea visible
+    });
+  }
 }
