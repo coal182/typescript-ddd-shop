@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import { Primitives } from '@domain/value-objects/primitives-type';
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
-import { ProductResponse } from '@shop-backend/product/application/product-response';
 
 import { CartId } from './cart-id';
 import { CartItem } from './cart-item';
@@ -76,11 +76,7 @@ export class Cart extends AggregateRoot {
     this.items = [];
   }
 
-  static fromPrimitives(plainData: {
-    id: string;
-    userId: string;
-    items: Array<{ productId: string; qty: number; price: number; product?: ProductResponse }>;
-  }): Cart {
+  static fromPrimitives(plainData: Primitives<Cart>): Cart {
     return new Cart(
       new CartId(plainData.id),
       new CartUser(plainData.userId),
@@ -88,7 +84,7 @@ export class Cart extends AggregateRoot {
     );
   }
 
-  toPrimitives() {
+  toPrimitives(): Primitives<Cart> {
     return {
       id: this.id.value,
       userId: this.userId.value,

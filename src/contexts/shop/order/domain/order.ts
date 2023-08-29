@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import { Primitives } from '@domain/value-objects/primitives-type';
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
-import { ProductResponse } from '@shop-backend/product/application/product-response';
 
 import { OrderCancelled } from './events/order-cancelled';
 import { OrderCreated } from './events/order-created';
@@ -117,15 +117,7 @@ export class Order extends AggregateRoot {
     this.status = new OrderStatus(OrderStatusEnum.Cancelled);
   }
 
-  static fromPrimitives(plainData: {
-    id: string;
-    userId: string;
-    status: string;
-    name: string;
-    address: string;
-    total: number;
-    lines: Array<{ productId: string; qty: number; price: number; product?: ProductResponse }>;
-  }): Order {
+  static fromPrimitives(plainData: Primitives<Order>): Order {
     return new Order(
       new OrderId(plainData.id),
       new OrderUser(plainData.userId),
@@ -137,7 +129,7 @@ export class Order extends AggregateRoot {
     );
   }
 
-  toPrimitives() {
+  toPrimitives(): Primitives<Order> {
     return {
       id: this.id.value,
       userId: this.userId.value,

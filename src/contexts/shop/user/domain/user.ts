@@ -1,3 +1,4 @@
+import { Primitives } from '@domain/value-objects/primitives-type';
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
 
@@ -13,11 +14,11 @@ import { UserPassword } from './user-password';
 
 export class User extends AggregateRoot {
   public id: UserId;
-  private email: UserEmail;
-  private firstname: UserFirstname;
-  private lastname: UserLastname;
-  private dateOfBirth: UserBirthdate;
-  private password: UserPassword;
+  public email: UserEmail;
+  public firstname: UserFirstname;
+  public lastname: UserLastname;
+  public dateOfBirth: UserBirthdate;
+  public password: UserPassword;
 
   constructor(
     id: UserId,
@@ -120,14 +121,7 @@ export class User extends AggregateRoot {
     this.password = new UserPassword(event.password);
   }
 
-  static fromPrimitives(plainData: {
-    id: string;
-    email: string;
-    firstname: string;
-    lastname: string;
-    dateOfBirth: Date;
-    password: string;
-  }): User {
+  static fromPrimitives(plainData: Primitives<User>): User {
     return new User(
       new UserId(plainData.id),
       new UserEmail(plainData.email),
@@ -138,7 +132,7 @@ export class User extends AggregateRoot {
     );
   }
 
-  toPrimitives() {
+  toPrimitives(): Primitives<User> {
     return {
       id: this.id.value,
       email: this.email.value,

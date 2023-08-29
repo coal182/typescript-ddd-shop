@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Primitives } from '@domain/value-objects/primitives-type';
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
 import { ProductCreated } from '@shop-backend/product/domain/events/product-created';
@@ -115,16 +116,7 @@ export class BackofficeProduct extends AggregateRoot {
     this.image = new BackofficeProductImage(event.image);
   }
 
-  static fromPrimitives(plainData: {
-    id: string;
-    name: string;
-    description: string;
-    image: string;
-    price: number;
-    brand: string;
-    category: string;
-    ean: string;
-  }): BackofficeProduct {
+  static fromPrimitives(plainData: Primitives<BackofficeProduct>): BackofficeProduct {
     return new BackofficeProduct(
       new BackofficeProductId(plainData.id),
       new BackofficeProductName(plainData.name),
@@ -137,7 +129,7 @@ export class BackofficeProduct extends AggregateRoot {
     );
   }
 
-  toPrimitives() {
+  toPrimitives(): Primitives<BackofficeProduct> {
     return {
       id: this.id.value,
       name: this.name.value,
