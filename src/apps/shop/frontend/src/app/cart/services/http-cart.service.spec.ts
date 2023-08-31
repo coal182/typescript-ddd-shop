@@ -61,7 +61,9 @@ fdescribe('HttpCartService', () => {
   const fb = new UntypedFormBuilder();
   const checkoutForm = fb.group({
     name: ['Cristian'],
-    address: ['C/ Barca'],
+    street: ['Barca'],
+    city: ['Malaga'],
+    number: [5],
   });
 
   beforeEach(() => {
@@ -129,7 +131,7 @@ fdescribe('HttpCartService', () => {
         expect(httpClientSpy.post.calls.allArgs()).toEqual([
           [`${environment.apiUrl}cart/add`, expectedParamsFirstCall],
           [`${environment.apiUrl}cart/add`, expectedParamsSecondCall],
-          [`${environment.apiUrl}orders`, expectedParamsThirdCall],
+          [`${environment.apiUrl}order`, expectedParamsThirdCall],
         ]);
       }));
     });

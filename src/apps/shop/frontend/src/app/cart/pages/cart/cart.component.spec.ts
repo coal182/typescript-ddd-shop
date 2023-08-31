@@ -4,11 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { MockCartService } from '../test/mock-cart-service';
-import { MockRouter } from '../test/mock-router';
 
-import { HttpCartService } from './cart-service/http-cart.service';
 import { CartComponent } from './cart.component';
+import { MockCartService } from 'src/app/test/mock-cart-service';
+import { MockRouter } from 'src/app/test/mock-router';
+import { HttpCartService } from '../../services/http-cart.service';
 
 describe('CartComponent', () => {
   let component: CartComponent;

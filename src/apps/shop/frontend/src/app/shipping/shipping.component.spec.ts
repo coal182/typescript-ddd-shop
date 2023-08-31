@@ -2,9 +2,9 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CartService } from '../cart/cart-service/cart.service';
 
 import { ShippingComponent } from './shipping.component';
+import { CartService } from '../cart/services/cart.service';
 
 describe('ShippingComponent', () => {
   let component: ShippingComponent;

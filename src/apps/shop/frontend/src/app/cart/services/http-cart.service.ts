@@ -90,6 +90,7 @@ export class HttpCartService extends CartService {
   }
 
   public confirmCart(checkoutForm: UntypedFormGroup, orderId: string): Observable<unknown> {
+    this.totalize();
     const confirmCartParams: ConfirmCartParams = {
       id: orderId,
       userId: this.cart.userId,
