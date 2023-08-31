@@ -53,7 +53,7 @@
           matInput
           type="text"
           formControlName="name"
-          placeholder="name"
+          placeholder="Name"
         />
         <!--<mat-error *ngIf="profileForm.get('name')?.errors && profileForm.get('name')?.touched">
           {{validateFormService.getError('Name', profileForm.get('name'))}}
@@ -63,17 +63,48 @@
       <br />
 
       <mat-form-field appearance="outline">
-        <mat-label>Address</mat-label>
+        <mat-label>Street</mat-label>
         <input
           matInput
           type="text"
-          formControlName="address"
-          placeholder="address"
+          formControlName="street"
+          placeholder="Street"
         />
         <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
           {{validateFormService.getError('address', profileForm.get('address'))}}
         </mat-error>-->
       </mat-form-field>
+
+      <br />
+
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="city"
+          placeholder="City"
+        />
+        <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
+          {{validateFormService.getError('address', profileForm.get('address'))}}
+        </mat-error>-->
+      </mat-form-field>
+
+      <br />
+
+      <mat-form-field appearance="outline">
+        <mat-label>Number</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="number"
+          placeholder="Number"
+        />
+        <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
+          {{validateFormService.getError('address', profileForm.get('address'))}}
+        </mat-error>-->
+      </mat-form-field>
+      
 
       <br />
       <button type="submit" mat-flat-button color="primary" data-testid="submit-button" [disabled]="!checkoutForm.valid">Confirm purchase</button>

@@ -29,7 +29,7 @@ export class OrderGetByIdController {
 
     res
       .status(httpStatus.OK)
-      .send({ status: httpStatus.OK, message: 'Sucessfully retrieved cart', data: response.orders[0] });
+      .send({ status: httpStatus.OK, message: 'Sucessfully retrieved order', data: response.orders[0] });
   }
 
   private parseFilters(params: Array<FilterType>): Array<Map<string, string>> {

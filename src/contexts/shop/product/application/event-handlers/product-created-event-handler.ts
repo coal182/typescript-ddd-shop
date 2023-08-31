@@ -25,13 +25,13 @@ export class ProductCreatedEventHandler implements DomainEventSubscriber<Product
     const id = new ProductId(domainEvent.aggregateId);
     const name = new ProductName(domainEvent.name);
     const description = new ProductDescription(domainEvent.description);
-    const image = new ProductImage(domainEvent.image);
+    const images = domainEvent.images.map((image) => new ProductImage(image));
     const price = new ProductPrice(domainEvent.price);
     const brand = new ProductBrand(domainEvent.brand);
     const category = new ProductCategory(domainEvent.category);
     const ean = new ProductEan(domainEvent.ean);
 
-    const product = new Product(id, name, description, image, price, brand, category, ean);
+    const product = new Product(id, name, description, images, price, brand, category, ean, true, new Date());
     await this.repository.save(product);
   }
 }

@@ -23,13 +23,15 @@ export class ProductMother {
     id: ProductId,
     name: ProductName,
     description: ProductDescription,
-    image: ProductImage,
+    images: ProductImage[],
     price: ProductPrice,
     brand: ProductBrand,
     category: ProductCategory,
-    ean: ProductEan
+    ean: ProductEan,
+    active: boolean,
+    createdAt: Date
   ): Product {
-    return new Product(id, name, description, image, price, brand, category, ean);
+    return new Product(id, name, description, images, price, brand, category, ean, active, createdAt);
   }
 
   static from(command: CreateProductCommand): Product {
@@ -37,11 +39,13 @@ export class ProductMother {
       ProductIdMother.create(command.id),
       ProductNameMother.create(command.name),
       ProductDescriptionMother.create(command.description),
-      ProductImageMother.create(command.image),
+      command.images.map((image) => ProductImageMother.create(image)),
       ProductPriceMother.create(command.price),
       ProductBrandMother.create(command.brand),
       ProductCategoryMother.create(command.category),
-      ProductEanMother.create(command.ean)
+      ProductEanMother.create(command.ean),
+      true,
+      new Date()
     );
   }
 
@@ -50,11 +54,13 @@ export class ProductMother {
       ProductIdMother.random(),
       ProductNameMother.random(),
       ProductDescriptionMother.random(),
-      ProductImageMother.random(),
+      [ProductImageMother.random(), ProductImageMother.random()],
       ProductPriceMother.random(),
       ProductBrandMother.random(),
       ProductCategoryMother.random(),
-      ProductEanMother.random()
+      ProductEanMother.random(),
+      true,
+      new Date()
     );
   }
 }

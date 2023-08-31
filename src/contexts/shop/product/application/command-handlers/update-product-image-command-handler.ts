@@ -17,7 +17,7 @@ export class UpdateProductImageCommandHandler implements CommandHandler<UpdatePr
 
   async handle(command: UpdateProductImageCommand) {
     const id = new ProductId(command.id);
-    const image = new ProductImage(command.image);
+    const images = command.images.map((image) => new ProductImage(image));
 
     const events = await this.eventStore.findByAggregateId(id);
     if (!events) {
@@ -26,7 +26,7 @@ export class UpdateProductImageCommandHandler implements CommandHandler<UpdatePr
 
     const product = Product.createEmptyProduct(id);
     product.loadFromHistory(events);
-    product.changeImage(image);
+    product.changeImages(images);
     const newDomainEvents = product.pullDomainEvents();
     await this.eventStore.save(newDomainEvents);
     await this.eventBus.publish(newDomainEvents);

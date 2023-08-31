@@ -26,13 +26,13 @@ export class CreateBackofficeProductOnProductCreatedEventHandler implements Doma
     const id = new BackofficeProductId(domainEvent.aggregateId);
     const name = new BackofficeProductName(domainEvent.name);
     const description = new BackofficeProductDescription(domainEvent.description);
-    const image = new BackofficeProductImage(domainEvent.image);
+    const images = domainEvent.images.map((image) => new BackofficeProductImage(image));
     const price = new BackofficeProductPrice(domainEvent.price);
     const brand = new BackofficeProductBrand(domainEvent.brand);
     const category = new BackofficeProductCategory(domainEvent.category);
     const ean = new BackofficeProductEan(domainEvent.ean);
 
-    const product = new BackofficeProduct(id, name, description, image, price, brand, category, ean);
+    const product = new BackofficeProduct(id, name, description, images, price, brand, category, ean, true, new Date());
     await this.repository.save(product);
   }
 }

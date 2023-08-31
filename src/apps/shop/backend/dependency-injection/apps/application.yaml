@@ -123,3 +123,7 @@ services:
     class: ../../controllers/cart-remove-item-delete-controller
     main: CartRemoveItemDeleteController
     arguments: ['@Shop.Shared.domain.CommandBus']
+
+  Apps.Shop.Backend.controllers.HealthcheckController:
+    class: ../../controllers/healthcheck-get-controller
+    main: HealthcheckController

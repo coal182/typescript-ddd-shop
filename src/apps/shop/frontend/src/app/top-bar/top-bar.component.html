@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-3 v-centered">
+    <div class="col-md-2 v-centered">
       <a [routerLink]="['/products']">
         <h1>Shop</h1>
       </a>
     </div>
 
-    <div class="col-md-6 v-centered">
+    <div class="col-md-7 v-centered">
       <finder *ngIf="this.authService.isLoggedIn" class="v-centered"></finder>
     </div>
 

@@ -19,7 +19,7 @@ export class ProductImageChangedEventHandler implements DomainEventSubscriber<Pr
 
   async on(domainEvent: ProductImageChanged): Promise<void> {
     const id = new ProductId(domainEvent.aggregateId);
-    const image = new ProductImage(domainEvent.image);
+    const images = domainEvent.images.map((image) => new ProductImage(image));
 
     const events = await this.eventStore.findByAggregateId(id);
     if (!events) {
@@ -28,7 +28,7 @@ export class ProductImageChangedEventHandler implements DomainEventSubscriber<Pr
 
     const product = Product.createEmptyProduct(id);
     product.loadFromHistory(events);
-    product.changeImage(image);
+    product.changeImages(images);
     await this.repository.save(product);
   }
 }

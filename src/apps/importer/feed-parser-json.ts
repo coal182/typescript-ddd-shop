@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 
-import { v4 as uuidv4 } from 'uuid';
-
+import { IdProvider } from '@domain/id-provider';
 import { NotFoundError } from '@shared/domain/errors/not-found-error';
 import { ParsingError } from '@shared/domain/errors/parsing-error';
 import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
@@ -12,7 +11,7 @@ import { FeedParser } from './feed-parser';
 export class FeedParserJson implements FeedParser {
   private feed: Feed;
 
-  async parse(feed: Feed): Promise<Array<CreateProductCommand>> {
+  parse(feed: Feed): Promise<Array<CreateProductCommand>> {
     this.feed = feed;
 
     return new Promise((resolve, reject) => {
@@ -20,12 +19,12 @@ export class FeedParserJson implements FeedParser {
         const content = fs.readFileSync(this.feed.filePath).toString();
         const items = JSON.parse(content);
         const commands = items.map((item: any) => {
-          item.id = uuidv4();
+          item.id = IdProvider.getId();
           const command = new CreateProductCommand(
             item.id,
             item.name,
             item.description,
-            item.image,
+            item.images,
             item.price,
             item.brand,
             item.category,

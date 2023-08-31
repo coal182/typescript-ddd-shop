@@ -18,3 +18,7 @@ services:
     class: ../../controllers/product-get-by-criteria-controller
     main: ProductGetByCriteriaController
     arguments: ['@Backoffice.Shared.domain.QueryBus']
+
+  Apps.Backoffice.Backend.controllers.HealthcheckController:
+    class: ../../controllers/healthcheck-get-controller
+    main: HealthcheckController

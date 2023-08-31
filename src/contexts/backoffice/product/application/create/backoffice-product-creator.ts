@@ -18,7 +18,7 @@ export class BackofficeProductCreator {
     id: BackofficeProductId;
     name: BackofficeProductName;
     description: BackofficeProductDescription;
-    image: BackofficeProductImage;
+    images: BackofficeProductImage[];
     price: BackofficeProductPrice;
     brand: BackofficeProductBrand;
     category: BackofficeProductCategory;
@@ -28,7 +28,7 @@ export class BackofficeProductCreator {
       params.id,
       params.name,
       params.description,
-      params.image,
+      params.images,
       params.price,
       params.brand,
       params.category,

@@ -1,33 +1,33 @@
 import { DomainEvent } from '@shared/domain/domain-event';
 
 type ChangeProductImageDomainEventData = {
-  readonly image: string;
+  readonly images: string[];
 };
 
 export class ProductImageChanged extends DomainEvent {
   static readonly EVENT_NAME = 'product.image_changed';
 
-  readonly image: string;
+  readonly images: string[];
 
   constructor({
     aggregateId,
-    image,
+    images,
     eventId,
     occurredOn,
   }: {
     aggregateId: string;
-    image: string;
+    images: string[];
     eventId?: string;
     occurredOn?: Date;
   }) {
     super({ eventName: ProductImageChanged.EVENT_NAME, aggregateId, eventId, occurredOn });
-    this.image = image;
+    this.images = images;
   }
 
   toPrimitives(): ChangeProductImageDomainEventData {
-    const { image } = this;
+    const { images } = this;
     return {
-      image,
+      images,
     };
   }
 
@@ -40,7 +40,7 @@ export class ProductImageChanged extends DomainEvent {
     const { aggregateId, data, occurredOn, eventId } = params;
     return new ProductImageChanged({
       aggregateId,
-      image: data.image,
+      images: data.images,
       eventId,
       occurredOn,
     });

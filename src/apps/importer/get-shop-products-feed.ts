@@ -1,7 +1,7 @@
 import { ContentType } from './content-type';
 import { Feed } from './feed';
 
-export function getBookstoreBookFeed(enabledContentType: ContentType = ContentType.Json): Feed {
+export function getShopProductsFeed(enabledContentType: ContentType = ContentType.Json): Feed {
   /*eslint indent: ["error", 2, {"SwitchCase": 1}]*/
   switch (enabledContentType) {
     case ContentType.Csv: {

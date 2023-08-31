@@ -9,11 +9,13 @@ interface ProductDocument {
   id: string;
   name: string;
   description: string;
-  image: string;
+  images: string[];
   price: number;
   brand: string;
   category: string;
   ean: string;
+  active: boolean;
+  createdAt: Date;
 }
 
 export class MongoProductRepository extends MongoRepository<Product> implements ProductRepository {
@@ -30,11 +32,13 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
         id: document.id,
         name: document.name,
         description: document.description,
-        image: document.image,
+        images: document.images,
         price: document.price,
         brand: document.brand,
         category: document.category,
         ean: document.ean,
+        active: document.active,
+        createdAt: document.createdAt,
       };
       return document ? Product.fromPrimitives(primitivesFromDocument) : null;
     }
@@ -54,11 +58,13 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
         id: document.id,
         name: document.name,
         description: document.description,
-        image: document.image,
+        images: document.images,
         price: document.price,
         brand: document.brand,
         category: document.category,
         ean: document.ean,
+        active: document.active,
+        createdAt: document.createdAt,
       };
       return Product.fromPrimitives(primitivesFromDocument);
     });
@@ -71,11 +77,13 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
         id: document.id,
         name: document.name,
         description: document.description,
-        image: document.image,
+        images: document.images,
         price: document.price,
         brand: document.brand,
         category: document.category,
         ean: document.ean,
+        active: document.active,
+        createdAt: document.createdAt,
       };
       return Product.fromPrimitives(primitivesFromDocument);
     });

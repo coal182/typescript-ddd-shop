@@ -6,6 +6,8 @@ export class MongoConfigFactory {
   static createConfig(): MongoConfig {
     return {
       url: shopConfig.get('mongo.url'),
+      username: shopConfig.get('mongo.username'),
+      password: shopConfig.get('mongo.password'),
     };
   }
 }

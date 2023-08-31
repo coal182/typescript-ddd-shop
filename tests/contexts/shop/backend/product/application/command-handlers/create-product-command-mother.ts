@@ -22,7 +22,7 @@ export class CreateProductCommandMother {
     id: ProductId,
     name: ProductName,
     description: ProductDescription,
-    image: ProductImage,
+    images: ProductImage[],
     price: ProductPrice,
     brand: ProductBrand,
     category: ProductCategory,
@@ -32,7 +32,7 @@ export class CreateProductCommandMother {
       id: id.value,
       name: name.value,
       description: description.value,
-      image: image.value,
+      images: images.map((image) => image.value),
       price: price.value,
       brand: brand.value,
       category: category.value,
@@ -45,7 +45,20 @@ export class CreateProductCommandMother {
       ProductIdMother.random(),
       ProductNameMother.random(),
       ProductDescriptionMother.random(),
-      ProductImageMother.random(),
+      [ProductImageMother.random(), ProductImageMother.random()],
+      ProductPriceMother.random(),
+      ProductBrandMother.random(),
+      ProductCategoryMother.random(),
+      ProductEanMother.random()
+    );
+  }
+
+  static randomWithId(id: string): CreateProductCommand {
+    return this.create(
+      ProductIdMother.create(id),
+      ProductNameMother.random(),
+      ProductDescriptionMother.random(),
+      [ProductImageMother.random(), ProductImageMother.random()],
       ProductPriceMother.random(),
       ProductBrandMother.random(),
       ProductCategoryMother.random(),
@@ -58,7 +71,7 @@ export class CreateProductCommandMother {
       id: ProductIdMother.random().value,
       name: ProductNameMother.invalidName(),
       description: ProductDescriptionMother.random().value,
-      image: ProductImageMother.random().value,
+      images: [ProductImageMother.random().value],
       price: ProductPriceMother.random().value,
       brand: ProductBrandMother.random().value,
       category: ProductCategoryMother.random().value,

@@ -14,11 +14,13 @@ Feature: Get products
         "data": {
           "name": "reprehenderit",
           "description": "porro",
-          "image": "nisi",
+          "images": ["nisi"],
           "price": "33769",
           "brand": "unde",
           "category": "possimus",
-          "ean": "debitis"
+          "ean": "debitis",
+          "active": true,
+          "createdAt": "2023-07-05T14:53:32.377Z"
         }
       }
     }
@@ -34,11 +36,13 @@ Feature: Get products
         "data": {
           "name": "qui",
           "description": "nesciunt",
-          "image": "qui",
+          "images": ["qui"],
           "price": "50840",
           "brand": "consequatur",
           "category": "temporibus",
-          "ean": "est"
+          "ean": "est",
+          "active": true,
+          "createdAt": "2023-07-05T14:54:37.993Z"
         }
       }
     }
@@ -53,7 +57,7 @@ Feature: Get products
             "id": "b1e1eace-0111-4dd3-9298-124a64807175",
             "name": "reprehenderit",
             "description": "porro",
-            "image": "nisi",
+            "images": ["nisi"],
             "price": "33769",
             "brand": "unde",
             "category": "possimus",
@@ -63,7 +67,7 @@ Feature: Get products
             "id": "bfd87817-dca3-47a8-baa3-4bcb451ee785",
             "name": "qui",
             "description": "nesciunt",
-            "image": "qui",
+            "images": ["qui"],
             "price": "50840",
             "brand": "consequatur",
             "category": "temporibus",

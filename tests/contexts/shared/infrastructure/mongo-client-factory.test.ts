@@ -8,7 +8,11 @@ describe('MongoClientFactory', () => {
   let client: MongoClient;
 
   beforeEach(async () => {
-    client = await factory.createClient('test', { url: 'mongodb://localhost:27017/mooc-backend-test1' });
+    client = await factory.createClient('test', {
+      url: 'mongodb://localhost:27017/mooc-backend-test1',
+      username: 'mongouser',
+      password: 'super-secret-password',
+    });
   });
 
   afterEach(async () => {
@@ -20,7 +24,11 @@ describe('MongoClientFactory', () => {
   });
 
   it('creates a new client if it does not exist a client with the given name', async () => {
-    const newClient = await factory.createClient('test2', { url: 'mongodb://localhost:27017/mooc-backend-test2' });
+    const newClient = await factory.createClient('test2', {
+      url: 'mongodb://localhost:27017/mooc-backend-test2',
+      username: 'mongouser',
+      password: 'super-secret-password',
+    });
 
     expect(newClient).not.to.be.equal(client);
 
@@ -28,7 +36,11 @@ describe('MongoClientFactory', () => {
   });
 
   it('returns a client if it already exists', async () => {
-    const newClient = await factory.createClient('test', { url: 'mongodb://localhost:27017/mooc-backend-test3' });
+    const newClient = await factory.createClient('test', {
+      url: 'mongodb://localhost:27017/mooc-backend-test3',
+      username: 'mongouser',
+      password: 'super-secret-password',
+    });
 
     expect(newClient).to.be.equal(client);
 

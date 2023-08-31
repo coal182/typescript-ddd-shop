@@ -1,17 +1,16 @@
-import { InvalidArgumentError } from '@shared/domain/errors/invalid-argument-error';
-import { StringValueObject } from '@shared/domain/value-objects/string-value-object';
+import { Primitives } from '@domain/value-objects/primitives-type';
 
-export class OrderAddress extends StringValueObject {
-  public constructor(value: string) {
-    super(value);
-    this.ensureLengthIsLessThan1000Characters(value || '');
-  }
+import { OrderCity } from './order-city';
+import { OrderStreet } from './order-street';
 
-  private ensureLengthIsLessThan1000Characters(value: string): void {
-    if (value.length > 1000) {
-      throw new InvalidArgumentError(
-        `The Book Description <${value}> has more than 1000 characters, (it has ${value.length})`
-      );
-    }
+export class OrderAddress {
+  constructor(public street: OrderStreet, public city: OrderCity, public number: number) {}
+
+  toPrimitives(): Primitives<OrderAddress> {
+    return {
+      street: this.street.value,
+      city: this.city.value,
+      number: this.number,
+    };
   }
 }

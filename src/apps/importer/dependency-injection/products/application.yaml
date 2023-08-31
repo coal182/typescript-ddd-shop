@@ -1,0 +1,17 @@
+services:
+  Shop.Products.domain.ProductEventStore:
+    class: ../../../../contexts/shop/product/infrastructure/persistence/mongo-product-event-store
+    main: MongoProductEventStore
+    arguments: ['@Shop.Shared.ConnectionManager']
+
+  Shop.Products.application.ProductCreator:
+    class: ../../../../contexts/shop/product/application/create/product-creator
+    main: ProductCreator
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Products.domain.ProductEventStore']
+
+  Shop.Products.CreateProductCommandHandler:
+    class: ../../../../contexts/shop/product/application/command-handlers/create-product-command-handler
+    main: CreateProductCommandHandler
+    arguments: ['@Shop.Products.application.ProductCreator']
+    tags:
+      - { name: 'commandHandler' }

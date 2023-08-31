@@ -22,7 +22,7 @@ export class FeedParserCsv implements FeedParser {
             item.id,
             item.name,
             item.description,
-            item.image,
+            [item.images],
             item.price,
             item.brand,
             item.category,

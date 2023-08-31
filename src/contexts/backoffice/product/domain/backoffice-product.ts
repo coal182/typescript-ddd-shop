@@ -18,55 +18,63 @@ export class BackofficeProduct extends AggregateRoot {
   public id: BackofficeProductId;
   public name: BackofficeProductName;
   public description: BackofficeProductDescription;
-  public image: BackofficeProductImage;
+  public images: BackofficeProductImage[];
   public price: BackofficeProductPrice;
   public brand: BackofficeProductBrand;
   public category: BackofficeProductCategory;
   public ean: BackofficeProductEan;
+  public active: boolean;
+  public createdAt: Date;
 
   constructor(
     id: BackofficeProductId,
     name: BackofficeProductName,
     description: BackofficeProductDescription,
-    image: BackofficeProductImage,
+    images: BackofficeProductImage[],
     price: BackofficeProductPrice,
     brand: BackofficeProductBrand,
     category: BackofficeProductCategory,
-    ean: BackofficeProductEan
+    ean: BackofficeProductEan,
+    active: boolean,
+    createdAt: Date
   ) {
     super();
     this.id = id;
     this.name = name;
     this.description = description;
-    this.image = image;
+    this.images = images;
     this.price = price;
     this.brand = brand;
     this.category = category;
     this.ean = ean;
+    this.active = active;
+    this.createdAt = createdAt;
   }
 
   static create(
     id: BackofficeProductId,
     name: BackofficeProductName,
     description: BackofficeProductDescription,
-    image: BackofficeProductImage,
+    images: BackofficeProductImage[],
     price: BackofficeProductPrice,
     brand: BackofficeProductBrand,
     category: BackofficeProductCategory,
     ean: BackofficeProductEan
   ): BackofficeProduct {
-    const product = new BackofficeProduct(id, name, description, image, price, brand, category, ean);
+    const product = new BackofficeProduct(id, name, description, images, price, brand, category, ean, true, new Date());
 
     product.record(
       new ProductCreated({
         aggregateId: product.id.value,
         name: product.name.value,
         description: product.description.value,
-        image: product.image.value,
+        images: product.images.map((image) => image.value),
         price: product.price.value,
         brand: product.brand.value,
         category: product.category.value,
         ean: product.ean.value,
+        active: product.active,
+        createdAt: product.createdAt,
       })
     );
 
@@ -76,13 +84,13 @@ export class BackofficeProduct extends AggregateRoot {
   static createEmptyProduct(id: BackofficeProductId): BackofficeProduct {
     const name = new BackofficeProductName('');
     const description = new BackofficeProductDescription('');
-    const image = new BackofficeProductImage('');
+    const images = [new BackofficeProductImage('')];
     const price = new BackofficeProductPrice(0);
     const brand = new BackofficeProductBrand('');
     const category = new BackofficeProductCategory('');
     const ean = new BackofficeProductEan('');
 
-    return new BackofficeProduct(id, name, description, image, price, brand, category, ean);
+    return new BackofficeProduct(id, name, description, images, price, brand, category, ean, true, new Date());
   }
 
   public changeDescription(description: BackofficeProductDescription) {
@@ -95,16 +103,16 @@ export class BackofficeProduct extends AggregateRoot {
     );
   }
 
-  public changeImage(image: BackofficeProductImage) {
-    this.image = image;
-    this.record(new ProductImageChanged({ aggregateId: this.id.value, image: image.value }));
+  public changeImages(images: BackofficeProductImage[]) {
+    this.images = images;
+    this.record(new ProductImageChanged({ aggregateId: this.id.value, images: images.map((image) => image.value) }));
   }
 
   public applyProductCreated(event: ProductCreated): void {
     this.id = new BackofficeProductId(event.aggregateId);
     this.name = new BackofficeProductName(event.name);
     this.description = new BackofficeProductDescription(event.description);
-    this.image = new BackofficeProductImage(event.image);
+    this.images = event.images.map((image) => new BackofficeProductImage(image));
     this.price = new BackofficeProductPrice(event.price);
   }
 
@@ -113,7 +121,7 @@ export class BackofficeProduct extends AggregateRoot {
   }
 
   public applyProductImageChanged(event: ProductImageChanged): void {
-    this.image = new BackofficeProductImage(event.image);
+    this.images = event.images.map((image) => new BackofficeProductImage(image));
   }
 
   static fromPrimitives(plainData: Primitives<BackofficeProduct>): BackofficeProduct {
@@ -121,11 +129,13 @@ export class BackofficeProduct extends AggregateRoot {
       new BackofficeProductId(plainData.id),
       new BackofficeProductName(plainData.name),
       new BackofficeProductDescription(plainData.description),
-      new BackofficeProductImage(plainData.image),
+      plainData.images.map((image) => new BackofficeProductImage(image)),
       new BackofficeProductPrice(plainData.price),
       new BackofficeProductBrand(plainData.brand),
       new BackofficeProductCategory(plainData.category),
-      new BackofficeProductEan(plainData.ean)
+      new BackofficeProductEan(plainData.ean),
+      plainData.active,
+      plainData.createdAt
     );
   }
 
@@ -134,11 +144,13 @@ export class BackofficeProduct extends AggregateRoot {
       id: this.id.value,
       name: this.name.value,
       description: this.description.value,
-      image: this.image.value,
+      images: this.images.map((image) => image.value),
       price: this.price.value,
       brand: this.brand.value,
       category: this.category.value,
       ean: this.ean.value,
+      active: this.active,
+      createdAt: this.createdAt,
     };
   }
 

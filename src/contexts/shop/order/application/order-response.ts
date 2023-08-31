@@ -1,13 +1,15 @@
+import { Primitives } from '@domain/value-objects/primitives-type';
 import { ProductResponse } from '@shop-backend/product/application/product-response';
 
 import { Order } from '../domain/order';
+import { OrderAddress } from '../domain/order-address';
 
 export interface OrderResponse {
   id: string;
   userId: string;
   status: string;
   name: string;
-  address: string;
+  address: Primitives<OrderAddress>;
   total: number;
   lines: Array<{ productId: string; qty: number; price: number; product?: ProductResponse }>;
 }

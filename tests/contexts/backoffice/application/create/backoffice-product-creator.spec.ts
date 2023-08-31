@@ -1,4 +1,7 @@
+import Sinon, { SinonFakeTimers, SinonSandbox } from 'sinon';
+
 import { BackofficeProductCreator } from '@backoffice-backend/product/application/create/backoffice-product-creator';
+import { Uuid } from '@domain/value-objects/uuid';
 import EventBusMock from 'tests/contexts/shared/domain/event-bus-mock';
 import { ProductEventStoreMock } from 'tests/contexts/shop/backend/product/__mocks__/product-event-store-mock';
 import { CreateProductCommandMother } from 'tests/contexts/shop/backend/product/application/command-handlers/create-product-command-mother';
@@ -7,9 +10,23 @@ import { ProductMother } from 'tests/contexts/shop/backend/product/domain/produc
 
 import { BackofficeProductMother } from '../../domain/backoffice-product-mother';
 
-describe('BackofficeProductCreator', () => {
+let sandbox: SinonSandbox;
+let clock: SinonFakeTimers;
+const staticId = new Uuid('49327053-06c3-4182-bb03-06c2873d4654');
+
+describe.only('BackofficeProductCreator', () => {
+  beforeEach(() => {
+    sandbox = Sinon.createSandbox();
+    clock = Sinon.useFakeTimers(new Date());
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+    clock.restore();
+  });
+
   it('creates a backoffice product', async () => {
-    const command = CreateProductCommandMother.random();
+    const command = CreateProductCommandMother.randomWithId(staticId.value);
     const backofficeProduct = BackofficeProductMother.from(command);
     const product = ProductMother.from(command);
 
@@ -20,10 +37,10 @@ describe('BackofficeProductCreator', () => {
     const domainEvent = ProductCreatedDomainEventMother.fromProduct(product);
 
     await applicationService.run({
-      id: backofficeProduct.id,
+      id: staticId,
       name: backofficeProduct.name,
       description: backofficeProduct.description,
-      image: backofficeProduct.image,
+      images: backofficeProduct.images,
       price: backofficeProduct.price,
       brand: backofficeProduct.brand,
       category: backofficeProduct.category,

@@ -1,8 +1,8 @@
-import { v4 as uuidv4 } from 'uuid';
+import { IdProvider } from '@domain/id-provider';
 
 export function addIdIfNotExists(obj: Record<string, unknown>): any {
   if (!obj.id) {
-    const id = uuidv4();
+    const id = IdProvider.getId();
     return { id, ...obj };
   }
   return obj;

@@ -30,7 +30,7 @@ describe(InitiateOrderCommandHandler.name, () => {
       userId: order.userId.value,
       status: order.status.value,
       name: order.name.value,
-      address: order.address.value,
+      address: order.address.toPrimitives(),
       total: order.total.value,
     });
 
@@ -39,7 +39,7 @@ describe(InitiateOrderCommandHandler.name, () => {
         order.id.value,
         order.userId.value,
         order.name.value,
-        order.address.value,
+        order.address.toPrimitives(),
         order.total.value
       );
       await handler.handle(command);

@@ -23,7 +23,17 @@ const backofficeConfig = convict({
     url: {
       doc: 'The Mongo connection URL',
       format: String,
-      default: 'mongodb+srv://user:password@clusterX.sbkvX.mongodb.net/bookstore?retryWrites=true&w=majority',
+      default: 'mongodb://shop-mongo/shop?retryWrites=true&w=majority',
+    },
+    username: {
+      doc: 'The Mongo connection user',
+      format: String,
+      default: 'mongouser',
+    },
+    password: {
+      doc: 'The Mongo connection password',
+      format: String,
+      default: 'super-secret-password',
     },
   },
   rabbitmq: {

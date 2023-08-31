@@ -8,10 +8,10 @@ import { Product } from '../../products/interfaces/products.interface';
 })
 export class ImagePipe implements PipeTransform {
   transform(product: Product): string {
-    if (!product.image) {
+    if (!product.images.length) {
       return '/assets/images/no-image.png';
-    } else if (product.image) {
-      return '/assets/images/products/' + product.image;
+    } else if (product.images[0]) {
+      return '/assets/images/products/' + product.images[0];
     }
   }
 }

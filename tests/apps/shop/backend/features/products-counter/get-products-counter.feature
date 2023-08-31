@@ -15,11 +15,13 @@ Feature: Obtain the total number of products
         "data": {
           "name": "reprehenderit",
           "description": "porro",
-          "image": "nisi",
+          "images": ["nisi"],
           "price": "33769",
           "brand": "unde",
           "category": "possimus",
-          "ean": "debitis"
+          "ean": "debitis",
+          "active": true,
+          "createdAt": "2019-08-09T08:36:32.000Z"
         }
       }
     }
@@ -48,11 +50,13 @@ Feature: Obtain the total number of products
         "data": {
           "name": "reprehenderit",
           "description": "porro",
-          "image": "nisi",
+          "images": ["nisi"],
           "price": "33769",
           "brand": "unde",
           "category": "possimus",
-          "ean": "debitis"
+          "ean": "debitis",
+          "active": true,
+          "createdAt": "2019-08-09T08:36:32.000Z"
         }
       }
     }
@@ -68,11 +72,13 @@ Feature: Obtain the total number of products
         "data": {
           "name": "reprehenderit 2",
           "description": "porro 2",
-          "image": "nisi 2",
+          "images": ["nisi 2"],
           "price": "55555",
           "brand": "unde 2",
           "category": "possimus 2",
-          "ean": "debitis 2"
+          "ean": "debitis 2",
+          "active": true,
+          "createdAt": "2019-08-09T08:36:32.000Z"
         }
       }
     }
@@ -88,11 +94,13 @@ Feature: Obtain the total number of products
         "data": {
           "name": "reprehenderit 2",
           "description": "porro 2",
-          "image": "nisi 2",
+          "images": ["nisi 2"],
           "price": "55555",
           "brand": "unde 2",
           "category": "possimus 2",
-          "ean": "debitis 2"
+          "ean": "debitis 2",
+          "active": true,
+          "createdAt": "2019-08-09T08:36:32.000Z"
         }
       }
     }

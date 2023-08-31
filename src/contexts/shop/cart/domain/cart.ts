@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
-
+import { IdProvider } from '@domain/id-provider';
 import { Primitives } from '@domain/value-objects/primitives-type';
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
@@ -38,7 +37,7 @@ export class Cart extends AggregateRoot {
   }
 
   static createEmptyCart(id: CartId): Cart {
-    const userId = new CartUser(uuidv4());
+    const userId = new CartUser(IdProvider.getId());
 
     return new Cart(id, userId);
   }

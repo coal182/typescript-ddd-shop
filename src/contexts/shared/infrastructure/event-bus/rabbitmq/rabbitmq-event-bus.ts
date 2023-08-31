@@ -57,7 +57,7 @@ export class RabbitMQEventBus implements EventBus {
 
         await this.connection.publish({ exchange: this.exchange, routingKey, content, options });
       } catch (error: any) {
-        console.log('📌 ~ error:', error);
+        this.logger.error(error);
         await this.failoverPublisher.publish(event);
       }
     }

@@ -6,7 +6,7 @@
       
       <div class="col-md-6">
         <h3>{{ (order$ | async)?.name }}</h3>
-        <p>{{ (order$ | async)?.address }}</p>
+        <p>{{ (order$ | async)?.address.street }} {{ (order$ | async)?.address.number }} {{ (order$ | async)?.address.city }}</p>
       </div>
       <div class="col-md-6">
         <table mat-table [dataSource]="(order$ | async)?.lines" class="order-table" #table>

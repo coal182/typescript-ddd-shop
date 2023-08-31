@@ -10,7 +10,7 @@
         </ng-container>
         <ng-container matColumnDef="address">
           <th mat-header-cell *matHeaderCellDef> Address </th>
-          <td mat-cell *matCellDef="let order"> {{order.address}} </td>
+          <td mat-cell *matCellDef="let order"> {{order.address.street}} {{order.address.number}} {{order.address.city}} </td>
         </ng-container>
         <ng-container matColumnDef="total">
           <th mat-header-cell *matHeaderCellDef> Total </th>

@@ -4,7 +4,7 @@ export interface BackofficeProductResponse {
   id: string;
   name: string;
   description: string;
-  image: string;
+  images: string[];
   price: number;
   brand: string;
   category: string;
@@ -21,7 +21,7 @@ export class BackofficeProductsResponse {
         id: primitives.id,
         name: primitives.name,
         description: primitives.description,
-        image: primitives.image,
+        images: primitives.images,
         price: primitives.price,
         brand: primitives.brand,
         category: primitives.category,

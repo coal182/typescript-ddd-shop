@@ -16,18 +16,20 @@ containerFactory().then((container) => {
   const productRepository: ProductRepository = container.get('Shop.Products.domain.ProductRepository');
 
   Given('there is the product:', async (product: any) => {
-    const { id, name, description, image, price, brand, category, ean } = JSON.parse(product);
+    const { id, name, description, images, price, brand, category, ean } = JSON.parse(product);
 
     await productRepository.save(
       new Product(
         new ProductId(id),
         new ProductName(name),
         new ProductDescription(description),
-        new ProductImage(image),
+        (images as string[]).map((image) => new ProductImage(image)),
         new ProductPrice(price),
         new ProductBrand(brand),
         new ProductCategory(category),
-        new ProductEan(ean)
+        new ProductEan(ean),
+        true,
+        new Date()
       )
     );
   });

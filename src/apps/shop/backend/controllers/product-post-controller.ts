@@ -9,8 +9,11 @@ export type ProductPostRequest = Request & {
     id?: string;
     name: string;
     description: string;
-    image: string;
+    images: string[];
     price: number;
+    brand: string;
+    category: string;
+    ean: string;
   };
 };
 
@@ -19,8 +22,8 @@ export class ProductPostController {
 
   async run(req: Request<ProductPostRequest>, res: Response) {
     try {
-      const { id, name, description, image, price, brand, category, ean } = req.body;
-      const createProductCommand = new CreateProductCommand(id, name, description, image, price, brand, category, ean);
+      const { id, name, description, images, price, brand, category, ean } = req.body;
+      const createProductCommand = new CreateProductCommand(id, name, description, images, price, brand, category, ean);
       await this.commandBus.dispatch(createProductCommand);
       res.status(httpStatus.CREATED).send();
     } catch (error) {

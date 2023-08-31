@@ -1,8 +1,8 @@
 import { compareSync } from 'bcryptjs';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { v4 as uuidv4 } from 'uuid';
 
+import { IdProvider } from '@domain/id-provider';
 import { CommandBus } from '@shared/domain/command-bus';
 import { PasswordNotMatchException } from '@shared/domain/errors/application-error';
 import { QueryBus } from '@shared/domain/query-bus';
@@ -109,10 +109,9 @@ export class LoginPostController {
       return cartsResponse.carts[0];
     }
 
-    const id = uuidv4();
+    const id = IdProvider.getId();
 
     const createCommand = new CreateCartCommand(id, userId);
-    console.log('📌 ~ id:', id);
     await this.commandBus.dispatch(createCommand);
     return {
       id,

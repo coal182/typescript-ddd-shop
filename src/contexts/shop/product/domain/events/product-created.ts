@@ -3,11 +3,13 @@ import { DomainEvent } from '@shared/domain/domain-event';
 type CreateProductDomainEventData = {
   readonly name: string;
   readonly description: string;
-  readonly image: string;
+  readonly images: string[];
   readonly price: number;
   readonly brand: string;
   readonly category: string;
   readonly ean: string;
+  readonly active: boolean;
+  readonly createdAt: Date;
 };
 
 export class ProductCreated extends DomainEvent {
@@ -15,55 +17,65 @@ export class ProductCreated extends DomainEvent {
 
   readonly name: string;
   readonly description: string;
-  readonly image: string;
+  readonly images: string[];
   readonly price: number;
   readonly brand: string;
   readonly category: string;
   readonly ean: string;
+  readonly active: boolean;
+  readonly createdAt: Date;
 
   constructor({
     aggregateId,
     name,
     description,
-    image,
+    images,
     price,
     brand,
     category,
     ean,
+    active,
+    createdAt,
     eventId,
     occurredOn,
   }: {
     aggregateId: string;
     name: string;
     description: string;
-    image: string;
+    images: string[];
     price: number;
     brand: string;
     category: string;
     ean: string;
+    active: boolean;
+    createdAt: Date;
     eventId?: string;
     occurredOn?: Date;
   }) {
     super({ eventName: ProductCreated.EVENT_NAME, aggregateId, eventId, occurredOn });
     this.name = name;
     this.description = description;
-    this.image = image;
+    this.images = images;
     this.price = price;
     this.brand = brand;
     this.category = category;
     this.ean = ean;
+    this.active = active;
+    this.createdAt = createdAt;
   }
 
   toPrimitives(): CreateProductDomainEventData {
-    const { name, description, image, price, brand, category, ean } = this;
+    const { name, description, images, price, brand, category, ean, active, createdAt } = this;
     return {
       name,
       description,
-      image,
+      images,
       price,
       brand,
       category,
       ean,
+      active,
+      createdAt,
     };
   }
 
@@ -78,11 +90,13 @@ export class ProductCreated extends DomainEvent {
       aggregateId,
       name: data.name,
       description: data.description,
-      image: data.image,
+      images: data.images,
       price: data.price,
       brand: data.brand,
       category: data.category,
       ean: data.ean,
+      active: data.active,
+      createdAt: data.createdAt,
       eventId,
       occurredOn,
     });

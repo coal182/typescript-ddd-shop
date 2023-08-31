@@ -27,7 +27,11 @@ export interface ConfirmCartParams {
   id: string;
   userId: string;
   name: string;
-  address: string;
+  address: {
+    street: string;
+    city: string;  
+    number: number;  
+  };
   total: number;
   lines: Array<CartItem>;
 }

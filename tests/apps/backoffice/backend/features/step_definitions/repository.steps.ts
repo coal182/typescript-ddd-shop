@@ -17,18 +17,20 @@ Given('there is the product:', async (product: any) => {
   const productRepository: BackofficeProductRepository = application.container.get(
     'Backoffice.Products.domain.BackofficeProductRepository'
   );
-  const { id, name, description, image, price, brand, category, ean } = JSON.parse(product);
+  const { id, name, description, images, price, brand, category, ean } = JSON.parse(product);
 
   await productRepository.save(
     new BackofficeProduct(
       new BackofficeProductId(id),
       new BackofficeProductName(name),
       new BackofficeProductDescription(description),
-      new BackofficeProductImage(image),
+      (images as string[]).map((image) => new BackofficeProductImage(image)),
       new BackofficeProductPrice(price),
       new BackofficeProductBrand(brand),
       new BackofficeProductCategory(category),
-      new BackofficeProductEan(ean)
+      new BackofficeProductEan(ean),
+      true,
+      new Date()
     )
   );
 });

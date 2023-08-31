@@ -10,11 +10,13 @@ interface ProductDocument {
   id: string;
   name: string;
   description: string;
-  image: string;
+  images: string[];
   price: number;
   brand: string;
   category: string;
   ean: string;
+  active: boolean;
+  createdAt: Date;
 }
 
 export class MongoBackofficeProductRepository
@@ -30,11 +32,13 @@ export class MongoBackofficeProductRepository
         id: document.id,
         name: document.name,
         description: document.description,
-        image: document.image,
+        images: document.images,
         price: document.price,
         brand: document.brand,
         category: document.category,
         ean: document.ean,
+        active: document.active,
+        createdAt: document.createdAt,
       };
       return document ? BackofficeProduct.fromPrimitives(primitivesFromDocument) : null;
     }
@@ -58,11 +62,13 @@ export class MongoBackofficeProductRepository
         id: document.id,
         name: document.name,
         description: document.description,
-        image: document.image,
+        images: document.images,
         price: document.price,
         brand: document.brand,
         category: document.category,
         ean: document.ean,
+        active: document.active,
+        createdAt: document.createdAt,
       };
       return BackofficeProduct.fromPrimitives(primitivesFromDocument);
     });
@@ -75,11 +81,13 @@ export class MongoBackofficeProductRepository
         id: document.id,
         name: document.name,
         description: document.description,
-        image: document.image,
+        images: document.images,
         price: document.price,
         brand: document.brand,
         category: document.category,
         ean: document.ean,
+        active: document.active,
+        createdAt: document.createdAt,
       };
       return BackofficeProduct.fromPrimitives(primitivesFromDocument);
     });

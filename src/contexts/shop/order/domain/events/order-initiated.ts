@@ -1,10 +1,13 @@
+import { Primitives } from '@domain/value-objects/primitives-type';
 import { DomainEvent } from '@shared/domain/domain-event';
+
+import { OrderAddress } from '../order-address';
 
 type InitiateOrderDomainEventData = {
   readonly userId: string;
   readonly status: string;
   readonly name: string;
-  readonly address: string;
+  readonly address: Primitives<OrderAddress>;
   readonly total: number;
 };
 
@@ -14,7 +17,7 @@ export class OrderInitiated extends DomainEvent {
   readonly userId: string;
   readonly status: string;
   readonly name: string;
-  readonly address: string;
+  readonly address: Primitives<OrderAddress>;
   readonly total: number;
 
   constructor({
@@ -31,7 +34,7 @@ export class OrderInitiated extends DomainEvent {
     userId: string;
     status: string;
     name: string;
-    address: string;
+    address: Primitives<OrderAddress>;
     total: number;
     eventId?: string;
     occurredOn?: Date;

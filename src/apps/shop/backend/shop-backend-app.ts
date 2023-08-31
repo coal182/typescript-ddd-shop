@@ -14,7 +14,6 @@ export class ShopBackendApp {
   container: ContainerBuilder;
 
   async start(port = shopConfig.get('api.port') || '5001') {
-    console.log('📌 ~ port:', port);
     this.container = await containerFactory();
 
     this.server = new Server(port, this.container);

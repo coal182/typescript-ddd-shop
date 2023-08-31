@@ -1,0 +1,8 @@
+imports:
+  - { resource: ./application.yaml }
+
+services:
+  Shop.EnvironmentArranger:
+    class: ../../../../../tests/contexts/shared/infrastructure/mongo/mongo-environment-arranger
+    main: MongoEnvironmentArranger
+    arguments: ['@Shop.Shared.ConnectionManager']

@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { Request, Response } from 'express';
 import sinon from 'sinon';
-import { v4 as uuidv4 } from 'uuid';
 
+import { IdProvider } from '@domain/id-provider';
 import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
 import { ProductPostController, ProductPostRequest } from '@shop-backend-app/controllers/product-post-controller';
 import CommandBusMock from 'tests/contexts/shared/domain/command-bus-mock';
@@ -23,14 +23,14 @@ describe(ProductPostController.name, () => {
       sandbox.restore();
     });
 
-    const id = uuidv4();
+    const id = IdProvider.getId();
 
     const req = {
       body: {
         id,
         name: 'Test Product',
         description: 'Test Product Description',
-        image: 'Test Product Image',
+        images: ['test-image.jpg', 'test-image-2.jpg'],
         authorId: 'Test Author Id',
         price: 'Test Product Price',
         brand: 'Test Product Brand',
@@ -41,9 +41,9 @@ describe(ProductPostController.name, () => {
 
     productController.run(req, res);
 
-    const { name, description, image, price, brand, category, ean } = req.body;
+    const { name, description, images, price, brand, category, ean } = req.body;
 
-    const expectedCommand = new CreateProductCommand(id, name, description, image, price, brand, category, ean);
+    const expectedCommand = new CreateProductCommand(id, name, description, images, price, brand, category, ean);
 
     it('should send a CreateProductCommand to the command bus', async () => {
       commandBusMock.assertLastDispatchedCommandIs(expectedCommand);

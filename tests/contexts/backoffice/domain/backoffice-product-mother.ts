@@ -23,13 +23,15 @@ export class BackofficeProductMother {
     id: BackofficeProductId,
     name: BackofficeProductName,
     description: BackofficeProductDescription,
-    image: BackofficeProductImage,
+    images: BackofficeProductImage[],
     price: BackofficeProductPrice,
     brand: BackofficeProductBrand,
     category: BackofficeProductCategory,
-    ean: BackofficeProductEan
+    ean: BackofficeProductEan,
+    active: boolean,
+    createdAt: Date
   ): BackofficeProduct {
-    return new BackofficeProduct(id, name, description, image, price, brand, category, ean);
+    return new BackofficeProduct(id, name, description, images, price, brand, category, ean, active, createdAt);
   }
 
   static from(command: CreateProductCommand): BackofficeProduct {
@@ -37,11 +39,13 @@ export class BackofficeProductMother {
       BackofficeProductIdMother.create(command.id),
       BackofficeProductNameMother.create(command.name),
       BackofficeProductDescriptionMother.create(command.description),
-      BackofficeProductImageMother.create(command.image),
+      command.images.map((image) => BackofficeProductImageMother.create(image)),
       BackofficeProductPriceMother.create(command.price),
       BackofficeProductBrandMother.create(command.brand),
       BackofficeProductCategoryMother.create(command.category),
-      BackofficeProductEanMother.create(command.ean)
+      BackofficeProductEanMother.create(command.ean),
+      true,
+      new Date()
     );
   }
 
@@ -50,11 +54,13 @@ export class BackofficeProductMother {
       BackofficeProductIdMother.random(),
       BackofficeProductNameMother.random(),
       BackofficeProductDescriptionMother.random(),
-      BackofficeProductImageMother.random(),
+      [BackofficeProductImageMother.random(), BackofficeProductImageMother.random()],
       BackofficeProductPriceMother.random(),
       BackofficeProductBrandMother.random(),
       BackofficeProductCategoryMother.random(),
-      BackofficeProductEanMother.random()
+      BackofficeProductEanMother.random(),
+      true,
+      new Date()
     );
   }
 }

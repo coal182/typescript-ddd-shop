@@ -17,7 +17,7 @@ export class ProductCreator {
     id: ProductId;
     name: ProductName;
     description: ProductDescription;
-    image: ProductImage;
+    images: ProductImage[];
     price: ProductPrice;
     brand: ProductBrand;
     category: ProductCategory;
@@ -27,7 +27,7 @@ export class ProductCreator {
       params.id,
       params.name,
       params.description,
-      params.image,
+      params.images,
       params.price,
       params.brand,
       params.category,

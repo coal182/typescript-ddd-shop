@@ -26,13 +26,18 @@ export class CartComponent implements OnInit, OnDestroy {
   namesRegex = new RegExp(
     /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
   );
+  numberRegex = new RegExp(
+    /^-?(0|[1-9]\d*)?$/u
+  );
 
   constructor(private cartService: HttpCartService, private fb: UntypedFormBuilder, private router: Router) {
     this.items = [];
 
     this.checkoutForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(this.namesRegex)]],
-      address: ['', [Validators.required]],
+      street: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      number: ['', [Validators.required, Validators.pattern(this.numberRegex)]],
     });
   }
 

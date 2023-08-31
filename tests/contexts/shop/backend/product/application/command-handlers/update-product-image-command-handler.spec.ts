@@ -36,7 +36,7 @@ describe(UpdateProductImageCommandHandler.name, () => {
       ProductCreatedDomainEventMother.fromProduct(product),
       new ProductImageChanged({
         aggregateId: product.id.value,
-        image: updatedImage.value,
+        images: [updatedImage.value],
       }),
     ];
 
@@ -46,7 +46,7 @@ describe(UpdateProductImageCommandHandler.name, () => {
 
     describe('and asked to update his image', () => {
       beforeEach(async () => {
-        const updateCommand = new UpdateProductImageCommand(product.id.value, updatedImage.value);
+        const updateCommand = new UpdateProductImageCommand(product.id.value, [updatedImage.value]);
         await updateHandler.handle(updateCommand);
       });
 

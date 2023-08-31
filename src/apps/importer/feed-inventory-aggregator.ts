@@ -6,7 +6,7 @@ import { FeedParser } from './feed-parser';
 export class FeedInventoryAggregator {
   constructor(private readonly commandBus: CommandBus, private parser: FeedParser) {}
 
-  run(feed: Feed): void {
+  async run(feed: Feed): Promise<void> {
     this.parser
       .parse(feed)
       .then((commands) => {

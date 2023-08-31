@@ -94,7 +94,11 @@ export class HttpCartService extends CartService {
       id: orderId,
       userId: this.cart.userId,
       name: checkoutForm.value.name,
-      address: checkoutForm.value.address,
+      address: {
+        street: checkoutForm.value.street,
+        city: checkoutForm.value.city,
+        number: checkoutForm.value.number,
+      },
       total: this.cart.total,
       lines: this.cart.items,
     };

@@ -2,7 +2,7 @@ export interface Product {
   id: string;
   name: string;
   description: string;
-  image: string;
+  images: string[];
   price: number;
   brand: string;
   category: string;
@@ -47,7 +47,7 @@ export interface ProductsResponseData {
   id: string;
   name: string;
   description: string;
-  image: string;
+  images: string[];
   author: AuthorProductsResponse;
   price: number;
   brand: string;
@@ -66,7 +66,7 @@ export interface ProductResponseData {
   id: string;
   name: string;
   description: string;
-  image: string;
+  images: string[];
   author: AuthorProductsResponse;
   price: number;
   brand: string;

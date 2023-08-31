@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
-
+import { IdProvider } from '@domain/id-provider';
 import { Command } from '@shared/domain/command';
 
 export class CreateUserCommand extends Command {
@@ -12,7 +11,7 @@ export class CreateUserCommand extends Command {
 
   constructor(id: string, email: string, firstname: string, lastname: string, dateOfBirth: Date, password: string) {
     super();
-    this.id = id || uuidv4();
+    this.id = id || IdProvider.getId();
     this.email = email;
     this.firstname = firstname;
     this.lastname = lastname;

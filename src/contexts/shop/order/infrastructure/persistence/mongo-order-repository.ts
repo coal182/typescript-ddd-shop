@@ -1,6 +1,8 @@
+import { Primitives } from '@domain/value-objects/primitives-type';
 import { MongoRepository } from '@infrastructure/persistence/mongo/mongo-repository';
 import { Criteria } from '@shared/domain/criteria/criteria';
 import { Nullable } from '@shared/domain/nullable';
+import { OrderAddress } from '@shop-backend/order/domain/order-address';
 import { Order } from 'src/contexts/shop/order/domain/order';
 import { OrderId } from 'src/contexts/shop/order/domain/order-id';
 import { OrderRepository } from 'src/contexts/shop/order/domain/order-repository';
@@ -16,7 +18,7 @@ interface OrderDocument {
   userId: string;
   status: string;
   name: string;
-  address: string;
+  address: Primitives<OrderAddress>;
   total: number;
   lines: Array<OrderLineDocument>;
 }

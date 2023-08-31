@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
-
+import { IdProvider } from '@domain/id-provider';
 import { Primitives } from '@domain/value-objects/primitives-type';
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
@@ -9,10 +8,12 @@ import { OrderCreated } from './events/order-created';
 import { OrderInitiated } from './events/order-initiated';
 import { OrderLineAdded } from './events/order-line-added';
 import { OrderAddress } from './order-address';
+import { OrderCity } from './order-city';
 import { OrderId } from './order-id';
 import { OrderLine } from './order-line';
 import { OrderName } from './order-name';
 import { OrderStatus, OrderStatusEnum } from './order-status';
+import { OrderStreet } from './order-street';
 import { OrderTotal } from './order-total';
 import { OrderUser } from './order-user';
 
@@ -61,7 +62,7 @@ export class Order extends AggregateRoot {
         userId: order.userId.value,
         status: order.status.value,
         name: order.name.value,
-        address: order.address.value,
+        address: order.address.toPrimitives(),
         total: total.value,
       })
     );
@@ -70,10 +71,10 @@ export class Order extends AggregateRoot {
   }
 
   static createEmptyOrder(id: OrderId): Order {
-    const userId = new OrderUser(uuidv4());
+    const userId = new OrderUser(IdProvider.getId());
     const status = new OrderStatus(OrderStatusEnum.Initiated);
     const name = new OrderName('');
-    const address = new OrderAddress('');
+    const address = new OrderAddress(new OrderStreet(''), new OrderCity(''), 0);
     const total = new OrderTotal(0);
     const lines: Array<OrderLine> = [];
 
@@ -98,7 +99,11 @@ export class Order extends AggregateRoot {
     this.userId = new OrderUser(event.userId);
     this.status = new OrderStatus(OrderStatusEnum.Initiated);
     this.name = new OrderName(event.name);
-    this.address = new OrderAddress(event.address);
+    this.address = new OrderAddress(
+      new OrderStreet(event.address.street),
+      new OrderCity(event.address.city),
+      event.address.number
+    );
     this.total = new OrderTotal(event.total);
     this.lines = [];
   }
@@ -123,7 +128,11 @@ export class Order extends AggregateRoot {
       new OrderUser(plainData.userId),
       new OrderStatus(plainData.status),
       new OrderName(plainData.name),
-      new OrderAddress(plainData.address),
+      new OrderAddress(
+        new OrderStreet(plainData.address.street),
+        new OrderCity(plainData.address.city),
+        plainData.address.number
+      ),
       new OrderTotal(plainData.total),
       plainData.lines.map((line) => new OrderLine(line.productId, line.qty, line.price, line.product))
     );
@@ -135,7 +144,7 @@ export class Order extends AggregateRoot {
       userId: this.userId.value,
       status: this.status.value,
       name: this.name.value,
-      address: this.address.value,
+      address: this.address.toPrimitives(),
       total: this.total.value,
       lines: this.lines,
     };
