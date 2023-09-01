@@ -4,7 +4,7 @@ import { PathReporter } from 'io-ts/lib/PathReporter';
 import { WrongRequestDataError } from './errors/wrong-request-data-error';
 
 export class ParamsParser {
-  static parse<T>(params: T, codec: Type<T, T, unknown>) {
+  static parse<T>(params: T, codec: Type<T, T, unknown>): T {
     const result = codec.decode(params);
 
     if (result._tag === 'Left') {

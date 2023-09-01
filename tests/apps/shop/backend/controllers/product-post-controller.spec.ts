@@ -1,15 +1,17 @@
 import 'reflect-metadata';
 import { Request, Response } from 'express';
-import sinon from 'sinon';
+import sinon, { createStubInstance } from 'sinon';
 
 import { IdProvider } from '@domain/id-provider';
+import WinstonLogger from '@infrastructure/winston-logger';
 import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
-import { ProductPostController, ProductPostRequest } from '@shop-backend-app/controllers/product-post-controller';
+import { ProductPostController } from '@shop-backend-app/controllers/product-post-controller';
 import CommandBusMock from 'tests/contexts/shared/domain/command-bus-mock';
 
 describe(ProductPostController.name, () => {
   const commandBusMock = new CommandBusMock();
-  const productController = new ProductPostController(commandBusMock);
+  const logger = createStubInstance(WinstonLogger);
+  const productController = new ProductPostController(commandBusMock, logger);
   describe('when requested to create a product', () => {
     const sandbox = sinon.createSandbox();
 
@@ -37,7 +39,7 @@ describe(ProductPostController.name, () => {
         category: 'Test Product Category',
         ean: 'Test Product EAN',
       },
-    } as Request<ProductPostRequest>;
+    } as Request;
 
     productController.run(req, res);
 

@@ -1,5 +1,19 @@
+import { Type, array, number, string, type } from 'io-ts';
+
 import { IdProvider } from '@domain/id-provider';
+import { Primitives } from '@domain/value-objects/primitives-type';
 import { Command } from '@shared/domain/command';
+
+export const createProductCodec: Type<Primitives<CreateProductCommand>> = type({
+  id: string,
+  name: string,
+  description: string,
+  images: array(string),
+  price: number,
+  brand: string,
+  category: string,
+  ean: string,
+});
 
 export class CreateProductCommand extends Command {
   public id: string;

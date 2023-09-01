@@ -1,9 +1,10 @@
 import * as fs from 'fs';
 
-import { IdProvider } from '@domain/id-provider';
+import { ParamsParser } from '@domain/params-parser';
+import { Primitives } from '@domain/value-objects/primitives-type';
 import { NotFoundError } from '@shared/domain/errors/not-found-error';
 import { ParsingError } from '@shared/domain/errors/parsing-error';
-import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
+import { CreateProductCommand, createProductCodec } from '@shop-backend/product/application/commands/create-product';
 
 import { Feed } from './feed';
 import { FeedParser } from './feed-parser';
@@ -19,17 +20,10 @@ export class FeedParserJson implements FeedParser {
         const content = fs.readFileSync(this.feed.filePath).toString();
         const items = JSON.parse(content);
         const commands = items.map((item: any) => {
-          item.id = IdProvider.getId();
-          const command = new CreateProductCommand(
-            item.id,
-            item.name,
-            item.description,
-            item.images,
-            item.price,
-            item.brand,
-            item.category,
-            item.ean
-          );
+          const { id, name, description, images, price, brand, category, ean } = ParamsParser.parse<
+            Primitives<CreateProductCommand>
+          >(item, createProductCodec);
+          const command = new CreateProductCommand(id, name, description, images, price, brand, category, ean);
           return command;
         });
         resolve(commands);
@@ -40,7 +34,7 @@ export class FeedParserJson implements FeedParser {
   }
 
   private translateFileReadError(err: NodeJS.ErrnoException): Error {
-    const message = `Failed to parse file ${this.feed.filePath}`;
+    const message = `Failed to parse file ${this.feed.filePath} Cause: ${err.message}`;
 
     return err.code === 'ENOENT' ? new NotFoundError(message) : new ParsingError(message);
   }
