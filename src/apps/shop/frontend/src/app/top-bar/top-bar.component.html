@@ -11,13 +11,15 @@
     </div>
 
     <div class="col-md-3 v-centered">
-      <button
-        *ngIf="this.authService.isLoggedIn"
-        routerLink="/cart"
-        mat-icon-button
-      >
-        <mat-icon>shopping_cart</mat-icon>
-      </button>
+      <div class="cart-button-container">
+        <button
+          *ngIf="this.authService.isLoggedIn"
+          routerLink="/cart"
+          mat-icon-button
+        >
+          <mat-icon>shopping_cart</mat-icon> 
+        </button>
+      <span class="cart-counter">{{this.cart_counter}}</span></div>
 
       <button
         *ngIf="this.authService.isLoggedIn"

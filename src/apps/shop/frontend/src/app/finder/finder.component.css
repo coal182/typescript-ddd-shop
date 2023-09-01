@@ -91,3 +91,7 @@
     padding-right: 0;
     border-radius: 5px;
 }
+
+::ng-deep .finder-form .mat-mdc-form-field-icon-suffix>.mat-icon{
+  color: grey
+}

@@ -17,14 +17,6 @@
     </h3>
     <h4>{{ product.name }}</h4>
 
-   <button
-      [routerLink]="['/products', product.id]"
-        mat-icon-button
-        class="article-button"
-      >
-        <mat-icon>search</mat-icon>
-      </button>
-
     <p *ngIf="product.price">{{ product.price | currency }}</p>
     
   </article>
