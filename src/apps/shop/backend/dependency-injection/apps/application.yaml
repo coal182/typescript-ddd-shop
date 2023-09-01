@@ -2,7 +2,7 @@ services:
   Apps.Shop.Backend.controllers.ProductPostController:
     class: ../../controllers/product-post-controller
     main: ProductPostController
-    arguments: ['@Shop.Shared.domain.CommandBus']
+    arguments: ['@Shop.Shared.domain.CommandBus', '@Shared.Logger']
 
   Apps.Shop.Backend.controllers.ProductGetAllController:
     class: ../../controllers/product-get-all-controller
