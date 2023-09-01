@@ -9,9 +9,9 @@ export class ProductPutImageController {
 
   async run(req: Request, res: Response) {
     const { id } = req.params;
-    const { image } = req.body;
+    const { images } = req.body;
 
-    const command = new UpdateProductImageCommand(id, image);
+    const command = new UpdateProductImageCommand(id, images);
     await this.commandBus.dispatch(command);
 
     res.status(httpStatus.CREATED).send();
