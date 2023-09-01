@@ -5,14 +5,3 @@ Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at https://angular.io/license
 */
-.cart-button-container{
-    position: relative;
-}
-.cart-counter{
-    font-size: 12px;
-    position: absolute;
-    left: 20px;
-    right: 0px;
-    color: rgba(3,10,136,1);
-    color: white;
-}

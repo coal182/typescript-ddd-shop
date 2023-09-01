@@ -1,6 +1,6 @@
 :host {
-  height: 66px;
-  margin-top: 10px;
+  height: 55px;
+  margin: 5px auto;
   width: 100%;
 }
 .finder-form {

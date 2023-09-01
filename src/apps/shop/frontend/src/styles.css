@@ -17,6 +17,12 @@ body {
   padding-top: 60px;
 }
 
+@media (max-width: 768px) {
+  body{
+    padding-top: 140px;
+  }
+}
+
 @keyframes rotate {
   100% {
     background-position: 15% 50%;
@@ -69,6 +75,7 @@ app-top-bar {
 
 app-top-bar a {
   text-decoration: none;
+  margin: 10px auto
 }
 
 app-top-bar h1 {
@@ -80,6 +87,23 @@ app-top-bar .v-centered {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+}
+
+app-top-bar .cart-button-container{
+  position: relative;
+  margin: 0 auto
+}
+app-top-bar .cart-counter{
+  font-size: 12px;
+  position: absolute;
+  left: 20px;
+  right: 0px;
+  color: rgba(3,10,136,1);
+  color: white;
+}
+
+app-top-bar .user-menu-button{
+  margin:0 auto;
 }
 
 /* Checkout Cart, Shipping Prices */

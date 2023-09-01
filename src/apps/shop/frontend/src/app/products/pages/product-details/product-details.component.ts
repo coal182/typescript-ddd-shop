@@ -92,7 +92,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
               html: 'Your product has been added to the cart!',
               icon: 'success',
               toast: true,
-              position: 'top-right',
+              position: 'bottom-right',
               iconColor: '#286f00',
               customClass: {
                 popup: 'colored-toast',

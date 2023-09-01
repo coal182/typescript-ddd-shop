@@ -10,13 +10,10 @@
 .img-wrapper { text-align: center;padding-top: 25px;}
 
 img {
-  width: 600px;
+  width: 100%;
   margin: 0 auto;
 }
 
 .product-detail .add-to-cart {
-  width: 50%!important;
-  min-width: unset!important;
-  flex: 1;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
