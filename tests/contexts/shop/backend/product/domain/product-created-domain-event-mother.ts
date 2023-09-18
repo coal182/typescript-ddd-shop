@@ -47,16 +47,16 @@ export class ProductCreatedDomainEventMother {
 
   static fromProduct(product: Product): ProductCreated {
     return new ProductCreated({
-      aggregateId: product.id.value,
-      name: product.name.value,
-      description: product.description.value,
-      images: product.images.map((image) => image.value),
-      price: product.price.value,
-      brand: product.brand.value,
-      category: product.category.value,
-      ean: product.ean.value,
-      active: product.active,
-      createdAt: product.createdAt,
+      aggregateId: product.getId(),
+      name: product.toPrimitives().name,
+      description: product.toPrimitives().description,
+      images: product.toPrimitives().images.map((image) => image),
+      price: product.toPrimitives().price,
+      brand: product.toPrimitives().brand,
+      category: product.toPrimitives().category,
+      ean: product.toPrimitives().ean,
+      active: product.toPrimitives().active,
+      createdAt: product.toPrimitives().createdAt,
     });
   }
 }

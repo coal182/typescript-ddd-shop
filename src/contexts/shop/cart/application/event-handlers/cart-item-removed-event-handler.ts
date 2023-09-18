@@ -33,13 +33,13 @@ export class CartItemRemovedEventHandler implements DomainEventSubscriber<CartIt
     const cart = Cart.createEmptyCart(id);
     cart.loadFromHistory(events);
     const items = await Promise.all(
-      cart.items.map(async (item) => {
+      cart.getItems().map(async (item) => {
         const product = await this.productRepository.search(new ProductId(item.productId));
         return { ...item, product: product?.toPrimitives() };
       })
     );
 
-    cart.items = items;
+    cart.setItems(items);
     await this.repository.save(cart);
   }
 }

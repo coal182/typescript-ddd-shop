@@ -1,6 +1,13 @@
-import Sinon, { SinonFakeTimers, SinonSandbox } from 'sinon';
+import { SinonFakeTimers, createSandbox } from 'sinon';
 
 import { BackofficeProductCreator } from '@backoffice-backend/product/application/create/backoffice-product-creator';
+import { BackofficeProductBrand } from '@backoffice-backend/product/domain/backoffice-product-brand';
+import { BackofficeProductCategory } from '@backoffice-backend/product/domain/backoffice-product-category';
+import { BackofficeProductDescription } from '@backoffice-backend/product/domain/backoffice-product-description';
+import { BackofficeProductEan } from '@backoffice-backend/product/domain/backoffice-product-ean';
+import { BackofficeProductImage } from '@backoffice-backend/product/domain/backoffice-product-image';
+import { BackofficeProductName } from '@backoffice-backend/product/domain/backoffice-product-name';
+import { BackofficeProductPrice } from '@backoffice-backend/product/domain/backoffice-product-price';
 import { Uuid } from '@domain/value-objects/uuid';
 import EventBusMock from 'tests/contexts/shared/domain/event-bus-mock';
 import { ProductEventStoreMock } from 'tests/contexts/shop/backend/product/__mocks__/product-event-store-mock';
@@ -10,19 +17,19 @@ import { ProductMother } from 'tests/contexts/shop/backend/product/domain/produc
 
 import { BackofficeProductMother } from '../../domain/backoffice-product-mother';
 
-let sandbox: SinonSandbox;
-let clock: SinonFakeTimers;
 const staticId = new Uuid('49327053-06c3-4182-bb03-06c2873d4654');
 
-describe.only('BackofficeProductCreator', () => {
+describe('BackofficeProductCreator', () => {
+  const sandbox = createSandbox();
+  let clock: SinonFakeTimers;
+
   beforeEach(() => {
-    sandbox = Sinon.createSandbox();
-    clock = Sinon.useFakeTimers(new Date());
+    clock = sandbox.useFakeTimers(new Date());
   });
 
   afterEach(() => {
-    sandbox.restore();
     clock.restore();
+    sandbox.restore();
   });
 
   it('creates a backoffice product', async () => {
@@ -38,13 +45,13 @@ describe.only('BackofficeProductCreator', () => {
 
     await applicationService.run({
       id: staticId,
-      name: backofficeProduct.name,
-      description: backofficeProduct.description,
-      images: backofficeProduct.images,
-      price: backofficeProduct.price,
-      brand: backofficeProduct.brand,
-      category: backofficeProduct.category,
-      ean: backofficeProduct.ean,
+      name: new BackofficeProductName(backofficeProduct.toPrimitives().name),
+      description: new BackofficeProductDescription(backofficeProduct.toPrimitives().description),
+      images: backofficeProduct.toPrimitives().images.map((image) => new BackofficeProductImage(image)),
+      price: new BackofficeProductPrice(backofficeProduct.toPrimitives().price),
+      brand: new BackofficeProductBrand(backofficeProduct.toPrimitives().brand),
+      category: new BackofficeProductCategory(backofficeProduct.toPrimitives().category),
+      ean: new BackofficeProductEan(backofficeProduct.toPrimitives().ean),
     });
 
     eventStore.assertSaveHaveBeenCalledWith([domainEvent]);

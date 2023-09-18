@@ -16,7 +16,7 @@ interface UserDocument {
 
 export class MongoUserRepository extends MongoRepository<User> implements UserRepository {
   public save(user: User): Promise<void> {
-    return this.persist(user.id.value, user);
+    return this.persist(user.getId(), user);
   }
 
   public async search(id: UserId): Promise<Nullable<User>> {

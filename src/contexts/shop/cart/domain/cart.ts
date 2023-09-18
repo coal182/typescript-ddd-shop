@@ -11,10 +11,20 @@ import { CartCreated } from './events/cart-created';
 import { CartItemAdded } from './events/cart-item-added';
 import { CartItemRemoved } from './events/cart-item-removed';
 
+export interface CartPrimitives {
+  id: string;
+  userId: string;
+  items: Primitives<CartItem>[];
+}
+export interface CartModel {
+  id: CartId;
+  userId: CartUser;
+  items: CartItem[];
+}
+
 export class Cart extends AggregateRoot {
-  public id: CartId;
-  public userId: CartUser;
-  public items: Array<CartItem>;
+  private userId: CartUser;
+  private items: Array<CartItem>;
 
   constructor(id: CartId, userId: CartUser, items: CartItem[] = []) {
     super();
@@ -40,6 +50,14 @@ export class Cart extends AggregateRoot {
     const userId = new CartUser(IdProvider.getId());
 
     return new Cart(id, userId);
+  }
+
+  public getItems(): ReadonlyArray<CartItem> {
+    return this.items;
+  }
+
+  public setItems(items: Array<CartItem>): void {
+    this.items = items;
   }
 
   public addItem(item: CartItem) {
@@ -75,7 +93,7 @@ export class Cart extends AggregateRoot {
     this.items = [];
   }
 
-  static fromPrimitives(plainData: Primitives<Cart>): Cart {
+  static fromPrimitives(plainData: CartPrimitives): Cart {
     return new Cart(
       new CartId(plainData.id),
       new CartUser(plainData.userId),
@@ -83,7 +101,7 @@ export class Cart extends AggregateRoot {
     );
   }
 
-  toPrimitives(): Primitives<Cart> {
+  toPrimitives(): CartPrimitives {
     return {
       id: this.id.value,
       userId: this.userId.value,

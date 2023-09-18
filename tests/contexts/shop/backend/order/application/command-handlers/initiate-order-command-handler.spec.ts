@@ -24,24 +24,18 @@ describe(InitiateOrderCommandHandler.name, () => {
   });
 
   describe('when asked to handle a command', () => {
-    const order = OrderMother.randomWithStatus(new OrderStatus(OrderStatusEnum.Initiated));
+    const order = OrderMother.randomWithStatus(new OrderStatus(OrderStatusEnum.Initiated)).toPrimitives();
     const domainEvent = new OrderInitiated({
-      aggregateId: order.id.value,
-      userId: order.userId.value,
-      status: order.status.value,
-      name: order.name.value,
-      address: order.address.toPrimitives(),
-      total: order.total.value,
+      aggregateId: order.id,
+      userId: order.userId,
+      status: order.status,
+      name: order.name,
+      address: order.address,
+      total: order.total,
     });
 
     beforeEach(async () => {
-      const command = new InitiateOrderCommand(
-        order.id.value,
-        order.userId.value,
-        order.name.value,
-        order.address.toPrimitives(),
-        order.total.value
-      );
+      const command = new InitiateOrderCommand(order.id, order.userId, order.name, order.address, order.total);
       await handler.handle(command);
     });
 

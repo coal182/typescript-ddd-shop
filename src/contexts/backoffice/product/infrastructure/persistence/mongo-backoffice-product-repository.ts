@@ -47,7 +47,7 @@ export class MongoBackofficeProductRepository
   }
 
   public save(product: BackofficeProduct): Promise<void> {
-    return this.persist(product.id.value, product);
+    return this.persist(product.getId(), product);
   }
 
   protected collectionName(): string {

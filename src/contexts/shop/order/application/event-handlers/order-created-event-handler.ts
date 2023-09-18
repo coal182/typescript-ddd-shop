@@ -32,13 +32,13 @@ export class OrderCreatedEventHandler implements DomainEventSubscriber<OrderCrea
     order.loadFromHistory(events);
 
     const lines = await Promise.all(
-      order.lines.map(async (line) => {
+      order.getLines().map(async (line) => {
         const product = await this.productRepository.search(new ProductId(line.productId));
         return { ...line, product: product?.toPrimitives() };
       })
     );
 
-    order.lines = lines;
+    order.setLines(lines);
 
     await this.repository.save(order);
   }

@@ -38,6 +38,10 @@ export class ProductEventStoreMock implements ProductEventStore {
   }
 
   private getDataFromDomainEvent(events: DomainEvent[]) {
-    return events;
+    return events.map((event) => {
+      const { eventId, occurredOn, ...attributes } = event; // we get rid of eventId, occurredOn because its variability
+
+      return attributes;
+    });
   }
 }

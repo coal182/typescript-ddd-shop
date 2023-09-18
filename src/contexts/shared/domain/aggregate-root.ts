@@ -1,12 +1,18 @@
 import { DomainEvent } from './domain-event';
+import { Uuid } from './value-objects/uuid';
 
 type Prefix<K> = K extends string ? `apply${K}` : K;
 export abstract class AggregateRoot {
   [x: Prefix<string>]: (event: any) => void;
   private domainEvents: Array<DomainEvent>;
+  protected id: Uuid;
 
   constructor() {
     this.domainEvents = [];
+  }
+
+  getId() {
+    return this.id.toString();
   }
 
   pullDomainEvents(): Array<DomainEvent> {

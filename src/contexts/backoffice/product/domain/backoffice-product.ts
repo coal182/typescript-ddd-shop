@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Primitives } from '@domain/value-objects/primitives-type';
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
 import { ProductCreated } from '@shop-backend/product/domain/events/product-created';
@@ -14,17 +13,43 @@ import { BackofficeProductId } from './backoffice-product-id';
 import { BackofficeProductImage } from './backoffice-product-image';
 import { BackofficeProductName } from './backoffice-product-name';
 import { BackofficeProductPrice } from './backoffice-product-price';
+
+export interface BackofficeProductPrimitives {
+  id: string;
+  name: string;
+  description: string;
+  images: string[];
+  price: number;
+  brand: string;
+  category: string;
+  ean: string;
+  active: boolean;
+  createdAt: Date;
+}
+
+export interface BackofficeProductModel {
+  id: BackofficeProductId;
+  name: BackofficeProductName;
+  description: BackofficeProductDescription;
+  images: BackofficeProductImage[];
+  price: BackofficeProductPrice;
+  brand: BackofficeProductBrand;
+  category: BackofficeProductCategory;
+  ean: BackofficeProductEan;
+  active: boolean;
+  createdAt: Date;
+}
+
 export class BackofficeProduct extends AggregateRoot {
-  public id: BackofficeProductId;
-  public name: BackofficeProductName;
-  public description: BackofficeProductDescription;
-  public images: BackofficeProductImage[];
-  public price: BackofficeProductPrice;
-  public brand: BackofficeProductBrand;
-  public category: BackofficeProductCategory;
-  public ean: BackofficeProductEan;
-  public active: boolean;
-  public createdAt: Date;
+  private name: BackofficeProductName;
+  private description: BackofficeProductDescription;
+  private images: BackofficeProductImage[];
+  private price: BackofficeProductPrice;
+  private brand: BackofficeProductBrand;
+  private category: BackofficeProductCategory;
+  private ean: BackofficeProductEan;
+  private active: boolean;
+  private createdAt: Date;
 
   constructor(
     id: BackofficeProductId,
@@ -124,7 +149,7 @@ export class BackofficeProduct extends AggregateRoot {
     this.images = event.images.map((image) => new BackofficeProductImage(image));
   }
 
-  static fromPrimitives(plainData: Primitives<BackofficeProduct>): BackofficeProduct {
+  static fromPrimitives(plainData: BackofficeProductPrimitives): BackofficeProduct {
     return new BackofficeProduct(
       new BackofficeProductId(plainData.id),
       new BackofficeProductName(plainData.name),
@@ -139,7 +164,7 @@ export class BackofficeProduct extends AggregateRoot {
     );
   }
 
-  toPrimitives(): Primitives<BackofficeProduct> {
+  toPrimitives(): BackofficeProductPrimitives {
     return {
       id: this.id.value,
       name: this.name.value,

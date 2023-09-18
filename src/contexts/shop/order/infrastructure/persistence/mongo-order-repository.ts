@@ -25,7 +25,7 @@ interface OrderDocument {
 
 export class MongoOrderRepository extends MongoRepository<Order> implements OrderRepository {
   public save(order: Order): Promise<void> {
-    return this.persist(order.id.value, order);
+    return this.persist(order.getId(), order);
   }
 
   public async search(id: OrderId): Promise<Nullable<Order>> {

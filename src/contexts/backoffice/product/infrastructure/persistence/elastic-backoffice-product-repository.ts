@@ -19,7 +19,7 @@ export class ElasticBackofficeProductRepository
   }
 
   async save(product: BackofficeProduct): Promise<void> {
-    return this.persist(product.id.value, product);
+    return this.persist(product.getId(), product);
   }
 
   async matching(criteria: Criteria): Promise<BackofficeProduct[]> {

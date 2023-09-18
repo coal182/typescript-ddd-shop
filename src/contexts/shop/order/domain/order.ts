@@ -17,14 +17,33 @@ import { OrderStreet } from './order-street';
 import { OrderTotal } from './order-total';
 import { OrderUser } from './order-user';
 
+export interface OrderPrimitives {
+  id: string;
+  userId: string;
+  status: string;
+  name: string;
+  address: Primitives<OrderAddress>;
+  total: number;
+  lines: Array<Primitives<OrderLine>>;
+}
+
+export interface OrderModel {
+  id: OrderId;
+  userId: OrderUser;
+  status: OrderStatus;
+  name: OrderName;
+  address: OrderAddress;
+  total: OrderTotal;
+  lines: Array<OrderLine>;
+}
+
 export class Order extends AggregateRoot {
-  public id: OrderId;
-  public userId: OrderUser;
-  public status: OrderStatus;
-  public name: OrderName;
-  public address: OrderAddress;
-  public total: OrderTotal;
-  public lines: Array<OrderLine>;
+  private userId: OrderUser;
+  private status: OrderStatus;
+  private name: OrderName;
+  private address: OrderAddress;
+  private total: OrderTotal;
+  private lines: Array<OrderLine>;
 
   constructor(
     id: OrderId,
@@ -81,6 +100,14 @@ export class Order extends AggregateRoot {
     return new Order(id, userId, status, name, address, total, lines);
   }
 
+  public getLines(): ReadonlyArray<OrderLine> {
+    return this.lines;
+  }
+
+  public setLines(lines: Array<OrderLine>): void {
+    this.lines = lines;
+  }
+
   public addLine(line: OrderLine) {
     this.lines.push(line);
     this.record(new OrderLineAdded({ aggregateId: this.id.value, line: line }));
@@ -122,7 +149,7 @@ export class Order extends AggregateRoot {
     this.status = new OrderStatus(OrderStatusEnum.Cancelled);
   }
 
-  static fromPrimitives(plainData: Primitives<Order>): Order {
+  static fromPrimitives(plainData: OrderPrimitives): Order {
     return new Order(
       new OrderId(plainData.id),
       new OrderUser(plainData.userId),
@@ -138,7 +165,7 @@ export class Order extends AggregateRoot {
     );
   }
 
-  toPrimitives(): Primitives<Order> {
+  toPrimitives(): OrderPrimitives {
     return {
       id: this.id.value,
       userId: this.userId.value,

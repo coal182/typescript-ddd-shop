@@ -20,7 +20,7 @@ interface ProductDocument {
 
 export class MongoProductRepository extends MongoRepository<Product> implements ProductRepository {
   public save(product: Product): Promise<void> {
-    return this.persist(product.id.value, product);
+    return this.persist(product.getId(), product);
   }
 
   public async search(id: ProductId): Promise<Nullable<Product>> {

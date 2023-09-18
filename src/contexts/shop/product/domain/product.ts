@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Primitives } from '@domain/value-objects/primitives-type';
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
 
@@ -14,17 +13,43 @@ import { ProductId } from './product-id';
 import { ProductImage } from './product-image';
 import { ProductName } from './product-name';
 import { ProductPrice } from './product-price';
+
+export interface ProductPrimitives {
+  id: string;
+  name: string;
+  description: string;
+  images: string[];
+  price: number;
+  brand: string;
+  category: string;
+  ean: string;
+  active: boolean;
+  createdAt: Date;
+}
+
+export interface ProductModel {
+  id: ProductId;
+  name: ProductName;
+  description: ProductDescription;
+  images: ProductImage[];
+  price: ProductPrice;
+  brand: ProductBrand;
+  category: ProductCategory;
+  ean: ProductEan;
+  active: boolean;
+  createdAt: Date;
+}
+
 export class Product extends AggregateRoot {
-  public id: ProductId;
-  public name: ProductName;
-  public description: ProductDescription;
-  public images: ProductImage[];
-  public price: ProductPrice;
-  public brand: ProductBrand;
-  public category: ProductCategory;
-  public ean: ProductEan;
-  public active: boolean;
-  public createdAt: Date;
+  private name: ProductName;
+  private description: ProductDescription;
+  private images: ProductImage[];
+  private price: ProductPrice;
+  private brand: ProductBrand;
+  private category: ProductCategory;
+  private ean: ProductEan;
+  private active: boolean;
+  private createdAt: Date;
 
   constructor(
     id: ProductId,
@@ -124,7 +149,7 @@ export class Product extends AggregateRoot {
     this.images = event.images.map((image) => new ProductImage(image));
   }
 
-  static fromPrimitives(plainData: Primitives<Product>): Product {
+  static fromPrimitives(plainData: ProductPrimitives): Product {
     return new Product(
       new ProductId(plainData.id),
       new ProductName(plainData.name),
@@ -139,7 +164,7 @@ export class Product extends AggregateRoot {
     );
   }
 
-  toPrimitives(): Primitives<Product> {
+  toPrimitives(): ProductPrimitives {
     return {
       id: this.id.value,
       name: this.name.value,

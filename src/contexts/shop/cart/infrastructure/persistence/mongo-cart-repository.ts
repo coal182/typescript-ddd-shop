@@ -19,7 +19,7 @@ interface CartDocument {
 
 export class MongoCartRepository extends MongoRepository<Cart> implements CartRepository {
   public save(cart: Cart): Promise<void> {
-    return this.persist(cart.id.value, cart);
+    return this.persist(cart.getId(), cart);
   }
 
   public async search(id: CartId): Promise<Nullable<Cart>> {

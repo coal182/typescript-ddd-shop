@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { SinonFakeTimers, createSandbox } from 'sinon';
 
 import { ProductCreator } from '@shop-backend/product/application/create/product-creator';
 import { ProductNameLengthExceeded } from '@shop-backend/product/domain/product-name-length-exceeded';
@@ -12,26 +13,39 @@ import { ProductMother } from '../../domain/product-mother';
 import { CreateProductCommandMother } from './create-product-command-mother';
 
 describe(CreateProductCommandHandler.name, () => {
+  const sandbox = createSandbox();
+  let clock: SinonFakeTimers;
   let eventStore: ProductEventStoreMock;
   let creator: ProductCreator;
   let eventBus: EventBusMock;
   let handler: CreateProductCommandHandler;
 
   beforeEach(() => {
+    clock = sandbox.useFakeTimers(new Date());
     eventStore = new ProductEventStoreMock();
     eventBus = new EventBusMock();
     creator = new ProductCreator(eventBus, eventStore);
     handler = new CreateProductCommandHandler(creator);
   });
 
+  afterEach(() => {
+    clock.restore();
+    sandbox.restore();
+  });
+
   describe('when asked to handle a command', () => {
-    const command = CreateProductCommandMother.random();
-    const product = ProductMother.from(command);
-    const domainEvent = ProductCreatedDomainEventMother.fromProduct(product);
+    let command = CreateProductCommandMother.random();
+    let product = ProductMother.from(command);
+    let domainEvent = ProductCreatedDomainEventMother.fromProduct(product);
+
+    beforeEach(() => {
+      command = CreateProductCommandMother.random();
+      product = ProductMother.from(command);
+      domainEvent = ProductCreatedDomainEventMother.fromProduct(product);
+    });
 
     it('should save the event on event store and publish it', async () => {
       await handler.handle(command);
-
       eventStore.assertSaveHaveBeenCalledWith([domainEvent]);
       eventBus.assertLastPublishedEventIs(domainEvent);
     });

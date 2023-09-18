@@ -27,35 +27,29 @@ describe(CreateOrderCommandHandler.name, () => {
   });
 
   describe('when asked to handle a command', () => {
-    const order = OrderMother.randomWithStatus(new OrderStatus(OrderStatusEnum.Initiated));
+    const order = OrderMother.randomWithStatus(new OrderStatus(OrderStatusEnum.Initiated)).toPrimitives();
 
     const domainEvents = [
       new OrderInitiated({
-        aggregateId: order.id.value,
-        userId: order.userId.value,
-        status: order.status.value,
-        name: order.name.value,
-        address: order.address.toPrimitives(),
-        total: order.total.value,
+        aggregateId: order.id,
+        userId: order.userId,
+        status: order.status,
+        name: order.name,
+        address: order.address,
+        total: order.total,
       }),
       new OrderCreated({
-        aggregateId: order.id.value,
+        aggregateId: order.id,
       }),
     ];
 
     beforeEach(async () => {
-      const command = new InitiateOrderCommand(
-        order.id.value,
-        order.userId.value,
-        order.name.value,
-        order.address.toPrimitives(),
-        order.total.value
-      );
+      const command = new InitiateOrderCommand(order.id, order.userId, order.name, order.address, order.total);
       await handler.handle(command);
     });
 
     it('should save the event on event store and publish it', async () => {
-      const createCommand = new CreateOrderCommand(order.id.value);
+      const createCommand = new CreateOrderCommand(order.id);
 
       await createHandler.handle(createCommand);
 
