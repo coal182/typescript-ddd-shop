@@ -19,7 +19,7 @@
         >
           <mat-icon>shopping_cart</mat-icon> 
         </button>
-      <span class="cart-counter">{{this.cart_counter}}</span></div>
+      <span class="cart-counter" *ngIf="this.authService.isLoggedIn">{{this.cart_counter}}</span></div>
 
       <button
         *ngIf="this.authService.isLoggedIn"

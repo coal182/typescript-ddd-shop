@@ -107,7 +107,7 @@ services:
   Apps.Shop.Backend.controllers.CartGetByUserController:
     class: ../../controllers/cart-get-by-user-controller
     main: CartGetByUserController
-    arguments: ['@Shop.Shared.domain.QueryBus']
+    arguments: ['@Shop.Shared.domain.QueryBus', '@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.CartGetByIdController:
     class: ../../controllers/cart-get-by-id-controller
