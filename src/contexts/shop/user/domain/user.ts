@@ -78,7 +78,7 @@ export class User extends AggregateRoot {
         email: user.email.value,
         firstname: user.firstname.value,
         lastname: user.lastname.value,
-        dateOfBirth: user.dateOfBirth.toString(),
+        dateOfBirth: user.dateOfBirth.value,
         password: user.password.value,
       })
     );

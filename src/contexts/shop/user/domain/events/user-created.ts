@@ -4,7 +4,7 @@ type CreateUserDomainEventData = {
   readonly email: string;
   readonly firstname: string;
   readonly lastname: string;
-  readonly dateOfBirth: string;
+  readonly dateOfBirth: Date;
   readonly password: string;
 };
 
@@ -14,7 +14,7 @@ export class UserCreated extends DomainEvent {
   readonly email: string;
   readonly firstname: string;
   readonly lastname: string;
-  readonly dateOfBirth: string;
+  readonly dateOfBirth: Date;
   readonly password: string;
 
   constructor({
@@ -31,7 +31,7 @@ export class UserCreated extends DomainEvent {
     email: string;
     firstname: string;
     lastname: string;
-    dateOfBirth: string;
+    dateOfBirth: Date;
     password: string;
     eventId?: string;
     occurredOn?: Date;
