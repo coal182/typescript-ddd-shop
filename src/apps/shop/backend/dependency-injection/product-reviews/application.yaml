@@ -1,0 +1,58 @@
+services:
+  Shop.ProductReviews.domain.ProductReviewRepository:
+    class: ../../../../../contexts/shop/product-review/infrastructure/persistence/mongo-product-review-repository
+    main: MongoProductReviewRepository
+    arguments: ['@Shop.Shared.ConnectionManager']
+
+  Shop.ProductReviews.domain.ProductReviewEventStore:
+    class: ../../../../../contexts/shop/product-review/infrastructure/persistence/mongo-product-review-event-store
+    main: MongoProductReviewEventStore
+    arguments: ['@Shop.Shared.ConnectionManager']
+
+  Shop.ProductReviews.application.ProductReviewCreator:
+    class: ../../../../../contexts/shop/product-review/application/create/product-review-creator
+    main: ProductReviewCreator
+    arguments:
+      [
+        '@Shop.Shared.domain.EventBus',
+        '@Shop.ProductReviews.domain.ProductReviewEventStore',
+        '@Shop.Products.application.ProductFinder',
+      ]
+
+  Shop.ProductReviews.CreateProductReviewCommandHandler:
+    class: ../../../../../contexts/shop/product-review/application/command-handlers/create-product-review-command-handler
+    main: CreateProductReviewCommandHandler
+    arguments: ['@Shop.ProductReviews.application.ProductReviewCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  # Shop.ProductReviews.application.ProductReviewsFinder:
+  #   class: ../../../../../contexts/shop/product-review/application/search-all/product-reviews-finder
+  #   main: ProductReviewsFinder
+  #   arguments: ['@Shop.ProductReviews.domain.ProductReviewRepository']
+
+  # Shop.ProductReviews.SearchAllProductReviewsQueryHandler:
+  #   class: ../../../../../contexts/shop/product-review/application/search-all/search-all-product-reviews-query-handler
+  #   main: SearchAllProductReviewsQueryHandler
+  #   arguments: ['@Shop.ProductReviews.application.ProductReviewsFinder']
+  #   tags:
+  #     - { name: 'queryHandler' }
+
+  Shop.ProductReviews.CreateProductReviewOnProductReviewCreated:
+    class: ../../../../../contexts/shop/product-review/application/event-handlers/product-review-created-event-handler
+    main: ProductReviewCreatedEventHandler
+    arguments: ['@Shop.ProductReviews.domain.ProductReviewRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  # Shop.ProductReviews.application.ProductReviewsByCriteriaSearcher:
+  #   class: ../../../../../contexts/shop/product-review/application/search-by-criteria/product-reviews-by-criteria-searcher
+  #   main: ProductReviewsByCriteriaSearcher
+  #   arguments: ['@Shop.ProductReviews.domain.ProductReviewRepository']
+
+  # Shop.ProductReviews.SearchProductReviewsByCriteriaQueryHandler:
+  #   class: ../../../../../contexts/shop/product-review/application/search-by-criteria/search-product-reviews-by-criteria-query-handler
+  #   main: SearchProductReviewsByCriteriaQueryHandler
+  #   arguments: ['@Shop.ProductReviews.application.ProductReviewsByCriteriaSearcher']
+  #   tags:
+  #     - { name: 'queryHandler' }

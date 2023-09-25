@@ -1,7 +1,7 @@
 import { Express } from 'express';
 import { ContainerBuilder } from 'node-dependency-injection';
 
-import { ProductsCounterGetController } from '@shop-backend-app/controllers/products-counter-get-controller';
+import { ProductsCounterGetController } from '../controllers';
 
 export const register = async (app: Express, container: ContainerBuilder) => {
   const productsCounterGetController: ProductsCounterGetController = container.get(

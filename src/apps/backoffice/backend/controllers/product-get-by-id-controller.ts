@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
-import { SearchProductsByCriteriaQuery } from '@backoffice-backend/product/application/search-by-criteria/search-products-by-criteria-query';
+import { BackofficeProductResponse } from '@backoffice-backend/product/application/backoffice-products-response';
+import { SearchProductByIdQuery } from '@backoffice-backend/product/application/search-by-id/search-product-by-id-query';
+import { BackofficeProductId } from '@backoffice-backend/product/domain/backoffice-product-id';
 import { QueryBus } from '@shared/domain/query-bus';
-import { ProductsResponse } from '@shop-backend/product/application/product-response';
-
-type FilterType = { value: string; operator: string; field: string };
 
 export class ProductGetByIdController {
   constructor(private readonly queryBus: QueryBus) {}
@@ -13,44 +12,15 @@ export class ProductGetByIdController {
   async run(_req: Request, res: Response) {
     const { id } = _req.params;
 
-    const filters: Array<FilterType> = [{ field: 'id', operator: '=', value: id }];
-    const orderBy = 'id';
-    const order = 'asc';
+    try {
+      const query = new SearchProductByIdQuery(new BackofficeProductId(id));
 
-    const query = new SearchProductsByCriteriaQuery(
-      this.parseFilters(filters as Array<FilterType>),
-      orderBy as string,
-      order as string,
-      undefined,
-      undefined
-    );
-
-    const response = await this.queryBus.ask<ProductsResponse>(query);
-
-    if (!response.products.length) {
-      res.status(httpStatus.NOT_FOUND).send({ status: httpStatus.NOT_FOUND, message: 'Product Id not found' });
-    } else {
+      const productResponse = await this.queryBus.ask<BackofficeProductResponse>(query);
       res
         .status(httpStatus.OK)
-        .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: response.products[0] });
+        .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: productResponse });
+    } catch (error) {
+      res.status(httpStatus.NOT_FOUND).send({ status: httpStatus.NOT_FOUND, message: 'Product Id not found' });
     }
-  }
-
-  private parseFilters(params: Array<FilterType>): Array<Map<string, string>> {
-    if (!params) {
-      return new Array<Map<string, string>>();
-    }
-
-    return params.map((filter) => {
-      const field = filter.field;
-      const value = filter.value;
-      const operator = filter.operator;
-
-      return new Map([
-        ['field', field],
-        ['operator', operator],
-        ['value', value],
-      ]);
-    });
   }
 }

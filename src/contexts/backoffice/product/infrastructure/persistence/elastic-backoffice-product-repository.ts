@@ -11,7 +11,7 @@ export class ElasticBackofficeProductRepository
   implements BackofficeProductRepository
 {
   async search(id: BackofficeProductId): Promise<Nullable<BackofficeProduct>> {
-    return this.searchInElastic(BackofficeProduct.fromPrimitives, id);
+    return this.searchInElastic(BackofficeProduct.fromPrimitives, id.toString());
   }
 
   async searchAll(): Promise<BackofficeProduct[]> {

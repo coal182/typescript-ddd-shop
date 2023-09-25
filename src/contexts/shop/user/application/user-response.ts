@@ -21,7 +21,7 @@ export class UsersResponse {
         firstname: primitives.firstname,
         lastname: primitives.lastname,
         dateOfBirth: primitives.dateOfBirth,
-        password: primitives.password,
+        password: primitives.password, // TODO: It's a leak, but necessary on user controller comparing passwords, thinking on something
       };
     });
   }

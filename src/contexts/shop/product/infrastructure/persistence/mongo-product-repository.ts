@@ -28,6 +28,7 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
     const document = await collection.findOne<ProductDocument>({ id: id.value });
 
     if (document) {
+      console.log('📌 ~ document:', document);
       const primitivesFromDocument = {
         id: document.id,
         name: document.name,

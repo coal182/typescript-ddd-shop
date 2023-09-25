@@ -1,7 +1,7 @@
 import { InvalidArgumentError } from '@shared/domain/errors/invalid-argument-error';
 import { StringValueObject } from '@shared/domain/value-objects/string-value-object';
 
-import { InvalidUserEmail } from './invalid-user-email';
+import { UserEmailNotValid } from './user-email-not-valid';
 
 export class UserEmail extends StringValueObject {
   private readonly validEmailRegExp =
@@ -23,7 +23,7 @@ export class UserEmail extends StringValueObject {
 
   private ensureIsValidEmail(value: string): void {
     if (!this.validEmailRegExp.test(value)) {
-      throw new InvalidUserEmail(`<${value}> is not a valid email`);
+      throw new UserEmailNotValid(`<${value}> is not a valid email`);
     }
   }
 }

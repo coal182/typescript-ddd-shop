@@ -2,10 +2,9 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
 import { QueryBus } from '@shared/domain/query-bus';
-import { SearchProductsByCriteriaQuery } from '@shop-backend/product/application/search-by-criteria/search-products-by-criteria-query';
-import { ProductsResponse } from 'src/contexts/shop/product/application/product-response';
-
-type FilterType = { value: string; operator: string; field: string };
+import { SearchProductByIdQuery } from '@shop-backend/product/application/search-by-id/search-product-by-id-query';
+import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductResponse } from 'src/contexts/shop/product/application/product-response';
 
 export class ProductGetByIdController {
   constructor(private readonly queryBus: QueryBus) {}
@@ -13,44 +12,15 @@ export class ProductGetByIdController {
   async run(_req: Request, res: Response) {
     const { id } = _req.params;
 
-    const filters: Array<FilterType> = [{ field: 'id', operator: '=', value: id }];
-    const orderBy = 'id';
-    const order = 'asc';
+    try {
+      const query = new SearchProductByIdQuery(new ProductId(id));
 
-    const query = new SearchProductsByCriteriaQuery(
-      this.parseFilters(filters as Array<FilterType>),
-      orderBy as string,
-      order as string,
-      undefined,
-      undefined
-    );
-
-    const response = await this.queryBus.ask<ProductsResponse>(query);
-
-    if (!response.products.length) {
-      res.status(httpStatus.NOT_FOUND).send({ status: httpStatus.NOT_FOUND, message: 'Product Id not found' });
-    } else {
+      const productResponse = await this.queryBus.ask<ProductResponse>(query);
       res
         .status(httpStatus.OK)
-        .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: response.products[0] });
+        .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: productResponse });
+    } catch (error) {
+      res.status(httpStatus.NOT_FOUND).send({ status: httpStatus.NOT_FOUND, message: 'Product Id not found' });
     }
-  }
-
-  private parseFilters(params: Array<FilterType>): Array<Map<string, string>> {
-    if (!params) {
-      return new Array<Map<string, string>>();
-    }
-
-    return params.map((filter) => {
-      const field = filter.field;
-      const value = filter.value;
-      const operator = filter.operator;
-
-      return new Map([
-        ['field', field],
-        ['operator', operator],
-        ['value', value],
-      ]);
-    });
   }
 }

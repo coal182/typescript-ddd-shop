@@ -5,7 +5,6 @@ import httpStatus from 'http-status';
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { Criteria } from '@shared/domain/criteria/criteria';
 import { Nullable } from '@shared/domain/nullable';
-import { Uuid } from '@shared/domain/value-objects/uuid';
 
 import ElasticConfig from './elastic-config';
 import { ElasticCriteriaConverter } from './elastic-criteria-converter';
@@ -25,7 +24,7 @@ export abstract class ElasticRepository<T extends AggregateRoot> {
     return this._client;
   }
 
-  protected async searchInElastic<D>(unserializer: (data: D) => T, id: Uuid): Promise<Nullable<T>> {
+  protected async searchInElastic<D>(unserializer: (data: D) => T, id: string): Promise<Nullable<T>> {
     const body = bodybuilder().query('match', 'id', id);
 
     const result = await this.searchInElasticWithBuilder(unserializer, body);

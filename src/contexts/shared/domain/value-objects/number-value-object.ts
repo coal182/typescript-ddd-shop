@@ -12,4 +12,8 @@ export abstract class NumberValueObject {
   public isBiggerThan(other: NumberValueObject): boolean {
     return this.value > other.value;
   }
+
+  public isLowerThan(other: NumberValueObject): boolean {
+    return this.value < other.value;
+  }
 }

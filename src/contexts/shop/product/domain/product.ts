@@ -139,6 +139,7 @@ export class Product extends AggregateRoot {
     this.description = new ProductDescription(event.description);
     this.images = event.images.map((image) => new ProductImage(image));
     this.price = new ProductPrice(event.price);
+    this.createdAt = event.createdAt;
   }
 
   public applyProductDescriptionChanged(event: ProductDescriptionChanged): void {

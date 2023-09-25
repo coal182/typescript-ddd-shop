@@ -4,8 +4,8 @@ import { SinonFakeTimers, createSandbox } from 'sinon';
 import { CreateUserCommand } from '@shop-backend/user/application/commands/create-user';
 import { UserCreator } from '@shop-backend/user/application/create/user-creator';
 import { UserCreated } from '@shop-backend/user/domain/events/user-created';
-import { InvalidUserEmail } from '@shop-backend/user/domain/invalid-user-email';
 import { User } from '@shop-backend/user/domain/user';
+import { UserEmailNotValid } from '@shop-backend/user/domain/user-email-not-valid';
 import { CreateUserCommandHandler } from 'src/contexts/shop/user/application/command-handlers/create-user-command-handler';
 import EventBusMock from 'tests/contexts/shared/domain/event-bus-mock';
 
@@ -55,7 +55,7 @@ describe(CreateUserCommandHandler.name, () => {
 
     it('should throw an error if the user email is invalid', async () => {
       const invalidCommand = CreateUserCommandMother.invalidEmail();
-      await expect(handler.handle(invalidCommand)).to.eventually.be.rejectedWith(InvalidUserEmail);
+      await expect(handler.handle(invalidCommand)).to.eventually.be.rejectedWith(UserEmailNotValid);
     });
   });
 });

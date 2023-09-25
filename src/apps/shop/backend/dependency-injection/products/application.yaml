@@ -35,6 +35,18 @@ services:
     tags:
       - { name: 'commandHandler' }
 
+  Shop.Products.application.ProductFinder:
+    class: ../../../../../contexts/shop/product/application/search-by-id/product-finder
+    main: ProductFinder
+    arguments: ['@Shop.Products.domain.ProductRepository']
+
+  Shop.Products.SearchProductByIdQueryHandler:
+    class: ../../../../../contexts/shop/product/application/search-by-id/search-product-by-id-query-handler
+    main: SearchProductByIdQueryHandler
+    arguments: ['@Shop.Products.application.ProductFinder']
+    tags:
+      - { name: 'queryHandler' }
+
   Shop.Products.application.ProductsFinder:
     class: ../../../../../contexts/shop/product/application/search-all/products-finder
     main: ProductsFinder

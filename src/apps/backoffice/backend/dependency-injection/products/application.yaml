@@ -21,6 +21,18 @@ services:
     tags:
       - { name: 'commandHandler' }
 
+  Backoffice.Products.application.ProductFinder:
+    class: ../../../../../contexts/backoffice/product/application/search-by-id/product-finder
+    main: ProductFinder
+    arguments: ['@Backoffice.Products.domain.BackofficeProductRepository']
+
+  Backoffice.Products.SearchProductByIdQueryHandler:
+    class: ../../../../../contexts/backoffice/product/application/search-by-id/search-product-by-id-query-handler
+    main: SearchProductByIdQueryHandler
+    arguments: ['@Backoffice.Products.application.ProductFinder']
+    tags:
+      - { name: 'queryHandler' }
+
   Backoffice.Products.application.ProductsFinder:
     class: ../../../../../contexts/backoffice/product/application/search-all/products-finder
     main: ProductsFinder
