@@ -5,7 +5,7 @@ import { InvalidUserEmail } from './invalid-user-email';
 
 export class UserEmail extends StringValueObject {
   private readonly validEmailRegExp =
-    /^(?=.*[@](?:gmail\.com|hotmail\.com)$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[a-zA-Z0-9_-]*$/;
+    /^(?=.*[@](?:gmail\.com|hotmail\.com|yahoo\.com)$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[a-zA-Z0-9_-]*$/;
 
   public constructor(value: string) {
     super(value);

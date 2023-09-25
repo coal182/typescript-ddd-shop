@@ -53,18 +53,9 @@ describe(CreateUserCommandHandler.name, () => {
       eventBus.assertLastPublishedEventIs(domainEvent);
     });
 
-    describe('given that the user email is invalid', () => {
-      it('should throw an error', async () => {
-        expect(() => {
-          const invalidCommand = CreateUserCommandMother.invalidEmail();
-          const invalidUser = UserMother.from(invalidCommand);
-          const invalidDomainEvent = UserCreatedDomainEventMother.fromUser(invalidUser);
-
-          handler.handle(invalidCommand);
-
-          eventStore.assertSaveHaveBeenCalledWith([invalidDomainEvent]);
-        }).to.throw(InvalidUserEmail);
-      });
+    it('should throw an error if the user email is invalid', async () => {
+      const invalidCommand = CreateUserCommandMother.invalidEmail();
+      await expect(handler.handle(invalidCommand)).to.eventually.be.rejectedWith(InvalidUserEmail);
     });
   });
 });

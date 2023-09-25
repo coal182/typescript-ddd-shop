@@ -1,7 +1,10 @@
 import { expect } from 'chai';
 import { SinonFakeTimers, createSandbox } from 'sinon';
 
+import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
 import { ProductCreator } from '@shop-backend/product/application/create/product-creator';
+import { ProductCreated } from '@shop-backend/product/domain/events/product-created';
+import { Product } from '@shop-backend/product/domain/product';
 import { ProductNameLengthExceeded } from '@shop-backend/product/domain/product-name-length-exceeded';
 import { CreateProductCommandHandler } from 'src/contexts/shop/product/application/command-handlers/create-product-command-handler';
 import EventBusMock from 'tests/contexts/shared/domain/event-bus-mock';
@@ -34,9 +37,9 @@ describe(CreateProductCommandHandler.name, () => {
   });
 
   describe('when asked to handle a command', () => {
-    let command = CreateProductCommandMother.random();
-    let product = ProductMother.from(command);
-    let domainEvent = ProductCreatedDomainEventMother.fromProduct(product);
+    let command: CreateProductCommand;
+    let product: Product;
+    let domainEvent: ProductCreated;
 
     beforeEach(() => {
       command = CreateProductCommandMother.random();
@@ -50,18 +53,9 @@ describe(CreateProductCommandHandler.name, () => {
       eventBus.assertLastPublishedEventIs(domainEvent);
     });
 
-    describe('given that the product name length is exceeded', () => {
-      it('should throw error', async () => {
-        expect(() => {
-          const invalidCommand = CreateProductCommandMother.invalid();
-          const invalidProduct = ProductMother.from(invalidCommand);
-          const invalidDomainEvent = ProductCreatedDomainEventMother.fromProduct(invalidProduct);
-
-          handler.handle(invalidCommand);
-
-          eventStore.assertSaveHaveBeenCalledWith([invalidDomainEvent]);
-        }).to.throw(ProductNameLengthExceeded);
-      });
+    it('should throw error if the product name length is exceeded', async () => {
+      const invalidCommand = CreateProductCommandMother.invalid();
+      await expect(handler.handle(invalidCommand)).to.eventually.be.rejectedWith(ProductNameLengthExceeded);
     });
   });
 });
