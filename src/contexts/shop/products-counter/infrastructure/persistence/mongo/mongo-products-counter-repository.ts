@@ -15,7 +15,7 @@ export class MongoProductsCounterRepository
   implements ProductsCounterRepository
 {
   protected collectionName(): string {
-    return 'products_counter';
+    return 'shop_products_counter';
   }
 
   public save(counter: ProductsCounter): Promise<void> {

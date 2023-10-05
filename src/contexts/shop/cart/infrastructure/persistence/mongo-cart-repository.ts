@@ -39,7 +39,7 @@ export class MongoCartRepository extends MongoRepository<Cart> implements CartRe
   }
 
   protected collectionName(): string {
-    return 'carts';
+    return 'shop_carts';
   }
 
   public async searchAll(): Promise<Cart[]> {

@@ -28,7 +28,6 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
     const document = await collection.findOne<ProductDocument>({ id: id.value });
 
     if (document) {
-      console.log('📌 ~ document:', document);
       const primitivesFromDocument = {
         id: document.id,
         name: document.name,
@@ -48,7 +47,7 @@ export class MongoProductRepository extends MongoRepository<Product> implements 
   }
 
   protected collectionName(): string {
-    return 'products';
+    return 'shop_products';
   }
 
   public async searchAll(): Promise<Product[]> {

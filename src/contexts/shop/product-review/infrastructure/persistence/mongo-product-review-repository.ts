@@ -39,7 +39,7 @@ export class MongoProductReviewRepository extends MongoRepository<ProductReview>
   }
 
   protected collectionName(): string {
-    return 'product_reviews';
+    return 'shop_product_reviews';
   }
 
   public async searchAll(): Promise<ProductReview[]> {

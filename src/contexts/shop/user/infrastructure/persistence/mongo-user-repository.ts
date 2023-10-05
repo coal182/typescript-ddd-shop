@@ -39,7 +39,7 @@ export class MongoUserRepository extends MongoRepository<User> implements UserRe
   }
 
   protected collectionName(): string {
-    return 'users';
+    return 'shop_users';
   }
 
   public async searchAll(): Promise<User[]> {

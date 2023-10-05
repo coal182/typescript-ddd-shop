@@ -49,7 +49,7 @@ export class MongoOrderRepository extends MongoRepository<Order> implements Orde
   }
 
   protected collectionName(): string {
-    return 'orders';
+    return 'shop_orders';
   }
 
   public async searchAll(): Promise<Order[]> {
