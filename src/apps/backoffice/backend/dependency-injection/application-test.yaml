@@ -3,6 +3,6 @@ imports:
 
 services:
   Backoffice.EnvironmentArranger:
-    class: ../../../../../tests/contexts/shared/infrastructure/elasticsearch/elastic-environment-arranger
-    main: ElasticEnvironmentArranger
-    arguments: ['@Backoffice.Shared.ElasticConnectionManager', '@Backoffice.Shared.ElasticConfig']
+    class: ../../../../../tests/contexts/shared/infrastructure/mongo/mongo-environment-arranger
+    main: MongoEnvironmentArranger
+    arguments: ['@Backoffice.Shared.ConnectionManager']

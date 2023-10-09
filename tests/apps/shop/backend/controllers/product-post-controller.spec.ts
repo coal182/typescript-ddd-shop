@@ -4,10 +4,10 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { createStubInstance, stub, spy } from 'sinon';
 
+import { CreateProductCommand } from '@backoffice-backend/product/application/commands/create-product';
+import { ProductPostController } from '@backoffice-backend-app/controllers/product-post-controller';
 import { IdProvider } from '@domain/id-provider';
 import WinstonLogger from '@infrastructure/winston-logger';
-import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
-import { ProductPostController } from '@shop-backend-app/controllers/product-post-controller';
 import CommandBusMock from 'tests/contexts/shared/domain/command-bus-mock';
 
 describe(ProductPostController.name, () => {

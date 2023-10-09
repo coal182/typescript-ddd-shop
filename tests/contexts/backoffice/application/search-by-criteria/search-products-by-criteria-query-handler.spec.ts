@@ -5,23 +5,19 @@ import { SearchProductsByCriteriaQuery } from '@backoffice-backend/product/appli
 import { SearchProductsByCriteriaQueryHandler } from '@backoffice-backend/product/application/search-by-criteria/search-products-by-criteria-query-handler';
 import { OrderTypes } from '@domain/criteria/order-type';
 
-import { BackofficeProductRepositoryMock } from '../../__mocks__/backoffice-product-repository-mock';
-import { BackofficeProductMother } from '../../domain/backoffice-product-mother';
+import { ProductRepositoryMock } from '../../__mocks__/product-repository-mock';
+import { ProductMother } from '../../domain/product-mother';
 import { SearchProductsByCriteriaResponseMother } from '../../domain/search-products-by-criteria-response-mother';
 
 describe('SearchAllProducts QueryHandler', () => {
-  let repository: BackofficeProductRepositoryMock;
+  let repository: ProductRepositoryMock;
 
   beforeEach(() => {
-    repository = new BackofficeProductRepositoryMock();
+    repository = new ProductRepositoryMock();
   });
 
   it('should find products filter by criteria', async () => {
-    const products = [
-      BackofficeProductMother.random(),
-      BackofficeProductMother.random(),
-      BackofficeProductMother.random(),
-    ];
+    const products = [ProductMother.random(), ProductMother.random(), ProductMother.random()];
     repository.returnMatching(products);
 
     const handler = new SearchProductsByCriteriaQueryHandler(new ProductsByCriteriaSearcher(repository));
@@ -48,11 +44,7 @@ describe('SearchAllProducts QueryHandler', () => {
   });
 
   it('should find products filter by criteria with order, limit and offset', async () => {
-    const products = [
-      BackofficeProductMother.random(),
-      BackofficeProductMother.random(),
-      BackofficeProductMother.random(),
-    ];
+    const products = [ProductMother.random(), ProductMother.random(), ProductMother.random()];
     repository.returnMatching(products);
 
     const handler = new SearchProductsByCriteriaQueryHandler(new ProductsByCriteriaSearcher(repository));

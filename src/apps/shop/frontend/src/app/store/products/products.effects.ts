@@ -22,7 +22,7 @@ export class ProductsEffects {
         const paramsObj: GetProductsParams = {
           'filters[0][field]': 'name',
           'filters[0][operator]': Operator.CONTAINS,
-          'filters[0][value]': ' ',
+          'filters[0][value]': '*',
           orderBy: 'name',
           order: 'asc',
           limit: '30',

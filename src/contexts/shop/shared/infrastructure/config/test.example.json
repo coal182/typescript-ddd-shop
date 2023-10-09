@@ -1,3 +1,6 @@
 {
-  "mongo": { "url": "" }
+  "mongo": { "url": "" },
+  "elastic": {
+    "indexName": "shop_products_test"
+  }
 }

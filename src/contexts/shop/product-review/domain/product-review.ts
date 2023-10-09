@@ -1,6 +1,6 @@
 import { AggregateRoot } from '@domain/aggregate-root';
 import { DomainEvent } from '@domain/domain-event';
-import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductId } from '@shared/product/domain/product-id';
 import { UserId } from '@shop-backend/user/domain/user-id';
 
 import { ProductReviewCreated } from './events/product-review-created';

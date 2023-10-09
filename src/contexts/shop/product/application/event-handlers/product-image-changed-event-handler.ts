@@ -1,11 +1,11 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
 import { NotFoundException } from '@shared/domain/errors/application-error';
+import { ProductId } from '@shared/product/domain/product-id';
+import { ProductImage } from '@shared/product/domain/product-image';
 import { ProductImageChanged } from 'src/contexts/shop/product/domain/events/product-image-changed';
 import { Product } from 'src/contexts/shop/product/domain/product';
 import { ProductEventStore } from 'src/contexts/shop/product/domain/product-event-store';
-import { ProductId } from 'src/contexts/shop/product/domain/product-id';
-import { ProductImage } from 'src/contexts/shop/product/domain/product-image';
 import { ProductRepository } from 'src/contexts/shop/product/domain/product-repository';
 
 export class ProductImageChangedEventHandler implements DomainEventSubscriber<ProductImageChanged> {

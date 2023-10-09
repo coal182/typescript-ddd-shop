@@ -3,13 +3,13 @@ import { Order } from '@shared/domain/criteria/order';
 import { Query } from '@shared/domain/query';
 import { QueryHandler } from '@shared/domain/query-handler';
 
-import { BackofficeProductsResponse } from '../backoffice-products-response';
+import { ProductsResponse } from '../products-response';
 
 import { ProductsByCriteriaSearcher } from './products-by-criteria-searcher';
 import { SearchProductsByCriteriaQuery } from './search-products-by-criteria-query';
 
 // eslint-disable-next-line prettier/prettier
-export class SearchProductsByCriteriaQueryHandler implements QueryHandler<SearchProductsByCriteriaQuery, BackofficeProductsResponse>
+export class SearchProductsByCriteriaQueryHandler implements QueryHandler<SearchProductsByCriteriaQuery, ProductsResponse>
 {
   constructor(private searcher: ProductsByCriteriaSearcher) {}
 
@@ -17,7 +17,7 @@ export class SearchProductsByCriteriaQueryHandler implements QueryHandler<Search
     return SearchProductsByCriteriaQuery;
   }
 
-  handle(query: SearchProductsByCriteriaQuery): Promise<BackofficeProductsResponse> {
+  handle(query: SearchProductsByCriteriaQuery): Promise<ProductsResponse> {
     const filters = Filters.fromValues(query.filters);
     const order = Order.fromValues(query.orderBy, query.orderType);
 

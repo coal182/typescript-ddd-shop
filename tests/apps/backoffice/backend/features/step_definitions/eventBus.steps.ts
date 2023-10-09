@@ -18,7 +18,7 @@ Given('another event is received:', async (event: any) => {
   const domainEvent = deserializer.deserialize(event)!;
 
   await eventBus.publish([domainEvent]);
-  return wait(2000);
+  return wait(500);
 });
 
 function buildDeserializer() {

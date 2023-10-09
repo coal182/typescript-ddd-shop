@@ -3,8 +3,5 @@
     "api": {
         "port": "3000",
         "secret": "secret"
-    },
-    "elastic": {
-        "url": "http://shop-elasticsearch:9200"
     }
 }

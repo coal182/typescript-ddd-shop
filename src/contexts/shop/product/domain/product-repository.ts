@@ -1,8 +1,8 @@
 import { Criteria } from '@shared/domain/criteria/criteria';
 import { Nullable } from '@shared/domain/nullable';
+import { ProductId } from '@shared/product/domain/product-id';
 
 import { Product } from './product';
-import { ProductId } from './product-id';
 
 export interface ProductRepository {
   save(product: Product): Promise<void>;

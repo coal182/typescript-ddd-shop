@@ -1,8 +1,8 @@
 import { ProductsCounterIncrementer } from '@shop-backend/products-counter/application/increment/products-counter-incrementer';
 import { ProductsCounter } from '@shop-backend/products-counter/domain/products-counter';
 import EventBusMock from 'tests/contexts/shared/domain/event-bus-mock';
+import { ProductIdMother } from 'tests/contexts/shared/product/domain/product-id-mother';
 
-import { ProductIdMother } from '../../../product/domain/product-id-mother';
 import { ProductsCounterRepositoryMock } from '../../__mocks__/products-counter-repository-mock';
 import { ProductsCounterIncrementedDomainEventMother } from '../../domain/products-counter-incremented-domain-event-mother';
 import { ProductsCounterMother } from '../../domain/products-counter-mother';

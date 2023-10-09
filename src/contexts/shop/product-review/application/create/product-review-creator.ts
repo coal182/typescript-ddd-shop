@@ -6,7 +6,7 @@ import { ProductReviewEventStore } from '@shop-backend/product-review/domain/pro
 import { ProductReviewId } from '@shop-backend/product-review/domain/product-review-id';
 import { ProductReviewRating } from '@shop-backend/product-review/domain/product-review-rating';
 import { UserId } from '@shop-backend/user/domain/user-id';
-import { ProductId } from 'src/contexts/shop/product/domain/product-id';
+import { ProductId } from '@shared/product/domain/product-id';
 
 export class ProductReviewCreator {
   constructor(

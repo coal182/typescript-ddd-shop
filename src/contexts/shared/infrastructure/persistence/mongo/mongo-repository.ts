@@ -1,6 +1,6 @@
 import { Collection, Document, MongoClient } from 'mongodb';
 
-import { MongoCriteriaConverter } from '../../../../shop/product/infrastructure/persistence/mongo-criteria-converter';
+import { MongoCriteriaConverter } from '../../../../backoffice/product/infrastructure/persistence/mongo-criteria-converter';
 import { AggregateRoot } from '../../../domain/aggregate-root';
 import { Criteria } from '../../../domain/criteria/criteria';
 

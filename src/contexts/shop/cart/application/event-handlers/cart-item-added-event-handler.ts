@@ -5,7 +5,7 @@ import { Cart } from '@shop-backend/cart/domain/cart';
 import { CartEventStore } from '@shop-backend/cart/domain/cart-event-store';
 import { CartId } from '@shop-backend/cart/domain/cart-id';
 import { CartRepository } from '@shop-backend/cart/domain/cart-repository';
-import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductId } from '@shared/product/domain/product-id';
 import { ProductRepository } from '@shop-backend/product/domain/product-repository';
 import { CartItemAdded } from 'src/contexts/shop/cart/domain/events/cart-item-added';
 

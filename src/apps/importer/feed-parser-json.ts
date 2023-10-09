@@ -1,10 +1,13 @@
 import * as fs from 'fs';
 
+import {
+  CreateProductCommand,
+  createProductCodec,
+} from '@backoffice-backend/product/application/commands/create-product';
 import { ParamsParser } from '@domain/params-parser';
 import { Primitives } from '@domain/value-objects/primitives-type';
 import { NotFoundError } from '@shared/domain/errors/not-found-error';
 import { ParsingError } from '@shared/domain/errors/parsing-error';
-import { CreateProductCommand, createProductCodec } from '@shop-backend/product/application/commands/create-product';
 
 import { Feed } from './feed';
 import { FeedParser } from './feed-parser';

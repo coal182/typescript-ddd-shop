@@ -49,7 +49,7 @@ services:
   Shop.Shared.RabbitMQQueueFormatter:
     class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
     main: RabbitMQqueueFormatter
-    arguments: ['store']
+    arguments: ['shop']
 
   Shop.Shared.RabbitMQConnection:
     class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-connection
@@ -59,7 +59,7 @@ services:
   Shop.Shared.RabbitMQqueueFormatter:
     class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
     main: RabbitMQqueueFormatter
-    arguments: ['store']
+    arguments: ['shop']
 
   Shop.Shared.RabbitMQConfigurer:
     class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
@@ -80,3 +80,16 @@ services:
     class: ../../../../../contexts/shared/infrastructure/query-bus/in-memory-query-bus
     main: InMemoryQueryBus
     arguments: ['@Shop.Shared.QueryHandlers']
+
+  Shop.Shared.ElasticConfig:
+    factory:
+      class: ../../../../../contexts/shop/product/infrastructure/persistence/elastic-config-factory
+      main: ElasticConfigFactory
+      method: 'createConfig'
+
+  Shop.Shared.ElasticConnectionManager:
+    factory:
+      class: ../../../../../contexts/shared/infrastructure/persistence/elasticsearch/elastic-client-factory
+      main: ElasticClientFactory
+      method: 'createClient'
+    arguments: ['shop', '@Shop.Shared.ElasticConfig']

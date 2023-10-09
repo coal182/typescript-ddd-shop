@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
+import { ProductBrand } from '@shared/product/domain/product-brand';
+import { ProductCategory } from '@shared/product/domain/product-category';
+import { ProductDescription } from '@shared/product/domain/product-description';
+import { ProductEan } from '@shared/product/domain/product-ean';
+import { ProductId } from '@shared/product/domain/product-id';
+import { ProductImage } from '@shared/product/domain/product-image';
+import { ProductName } from '@shared/product/domain/product-name';
+import { ProductPrice } from '@shared/product/domain/product-price';
 
 import { ProductCreated } from './events/product-created';
 import { ProductDescriptionChanged } from './events/product-description-changed';
 import { ProductImageChanged } from './events/product-image-changed';
-import { ProductBrand } from './product-brand';
-import { ProductCategory } from './product-category';
-import { ProductDescription } from './product-description';
-import { ProductEan } from './product-ean';
-import { ProductId } from './product-id';
-import { ProductImage } from './product-image';
-import { ProductName } from './product-name';
-import { ProductPrice } from './product-price';
 
 export interface ProductPrimitives {
   id: string;

@@ -1,17 +1,17 @@
 services:
-  Shop.Products.domain.ProductEventStore:
-    class: ../../../../contexts/shop/product/infrastructure/persistence/mongo-product-event-store
+  Backoffice.Products.domain.ProductEventStore:
+    class: ../../../../contexts/backoffice/product/infrastructure/persistence/mongo-product-event-store
     main: MongoProductEventStore
-    arguments: ['@Shop.Shared.ConnectionManager']
+    arguments: ['@Backoffice.Shared.ConnectionManager']
 
-  Shop.Products.application.ProductCreator:
-    class: ../../../../contexts/shop/product/application/create/product-creator
+  Backoffice.Products.application.ProductCreator:
+    class: ../../../../contexts/backoffice/product/application/create/product-creator
     main: ProductCreator
-    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Products.domain.ProductEventStore']
+    arguments: ['@Backoffice.Shared.domain.EventBus', '@Backoffice.Products.domain.ProductEventStore']
 
-  Shop.Products.CreateProductCommandHandler:
-    class: ../../../../contexts/shop/product/application/command-handlers/create-product-command-handler
+  Backoffice.Products.CreateProductCommandHandler:
+    class: ../../../../contexts/backoffice/product/application/command-handlers/create-product-command-handler
     main: CreateProductCommandHandler
-    arguments: ['@Shop.Products.application.ProductCreator']
+    arguments: ['@Backoffice.Products.application.ProductCreator']
     tags:
       - { name: 'commandHandler' }

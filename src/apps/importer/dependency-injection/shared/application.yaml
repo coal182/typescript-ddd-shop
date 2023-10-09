@@ -3,70 +3,70 @@ services:
     class: ../../../../contexts/shared/infrastructure/winston-logger
     main: WinstonLogger
     arguments: []
-  Shop.Shared.MongoConfig:
+  Backoffice.Shared.MongoConfig:
     factory:
-      class: ../../../../contexts/shop/shared/infrastructure/persistence/mongo/mongo-config-factory
+      class: ../../../../contexts/backoffice/shared/infrastructure/persistence/mongo/mongo-config-factory
       main: MongoConfigFactory
       method: 'createConfig'
 
-  Shop.Shared.ConnectionManager:
+  Backoffice.Shared.ConnectionManager:
     factory:
       class: ../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
       main: MongoClientFactory
       method: 'createClient'
-    arguments: ['shop', '@Shop.Shared.MongoConfig']
+    arguments: ['backoffice', '@Backoffice.Shared.MongoConfig']
 
-  Shop.Shared.CommandHandlers:
+  Backoffice.Shared.CommandHandlers:
     class: ../../../../contexts/shared/infrastructure/command-bus/command-handlers
     main: CommandHandlers
     arguments: ['!tagged commandHandler']
 
-  Shop.Shared.domain.CommandBus:
+  Backoffice.Shared.domain.CommandBus:
     class: ../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
     main: InMemoryCommandBus
-    arguments: ['@Shop.Shared.CommandHandlers']
+    arguments: ['@Backoffice.Shared.CommandHandlers']
 
-  Shop.Shared.RabbitMQConfig:
+  Backoffice.Shared.RabbitMQConfig:
     factory:
-      class: ../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-config-factory
+      class: ../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-config-factory
       main: RabbitMQConfigFactory
       method: 'createConfig'
 
-  Shop.Shared.domain.EventBus:
+  Backoffice.Shared.domain.EventBus:
     factory:
-      class: ../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
+      class: ../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
       main: RabbitMQEventBusFactory
       method: 'create'
     arguments:
       [
-        '@Shop.Shared.DomainEventFailoverPublisher',
-        '@Shop.Shared.RabbitMQConnection',
-        '@Shop.Shared.RabbitMQqueueFormatter',
-        '@Shop.Shared.RabbitMQConfig',
+        '@Backoffice.Shared.DomainEventFailoverPublisher',
+        '@Backoffice.Shared.RabbitMQConnection',
+        '@Backoffice.Shared.RabbitMQqueueFormatter',
+        '@Backoffice.Shared.RabbitMQConfig',
         '@Shared.Logger',
       ]
 
-  Shop.Shared.RabbitMQQueueFormatter:
+  Backoffice.Shared.RabbitMQQueueFormatter:
     class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
     main: RabbitMQqueueFormatter
-    arguments: ['store']
+    arguments: ['importer']
 
-  Shop.Shared.RabbitMQConnection:
+  Backoffice.Shared.RabbitMQConnection:
     class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-connection
     main: RabbitMqConnection
-    arguments: ['@Shop.Shared.RabbitMQConfig']
+    arguments: ['@Backoffice.Shared.RabbitMQConfig']
 
-  Shop.Shared.RabbitMQqueueFormatter:
+  Backoffice.Shared.RabbitMQqueueFormatter:
     class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
     main: RabbitMQqueueFormatter
-    arguments: ['store']
+    arguments: ['importer']
 
-  Shop.Shared.RabbitMQConfigurer:
+  Backoffice.Shared.RabbitMQConfigurer:
     class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
     main: RabbitMQConfigurer
-    arguments: ['@Shop.Shared.RabbitMQConnection', '@Shop.Shared.RabbitMQQueueFormatter']
+    arguments: ['@Backoffice.Shared.RabbitMQConnection', '@Backoffice.Shared.RabbitMQQueueFormatter']
 
-  Shop.Shared.DomainEventFailoverPublisher:
+  Backoffice.Shared.DomainEventFailoverPublisher:
     class: ../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
     main: DomainEventFailoverPublisher
-    arguments: ['@Shop.Shared.ConnectionManager']
+    arguments: ['@Backoffice.Shared.ConnectionManager']

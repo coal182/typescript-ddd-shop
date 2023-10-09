@@ -67,7 +67,7 @@ const backofficeConfig = convict({
           doc: 'RabbitMQ hostname',
           format: String,
           env: 'RABBITMQ_HOSTNAME',
-          default: 'localhost',
+          default: 'rabbitmq',
         },
         port: {
           doc: 'RabbitMQ amqp port',
@@ -96,50 +96,6 @@ const backofficeConfig = convict({
       format: Number,
       env: 'RABBITMQ_RETRY_TTL',
       default: 1000,
-    },
-  },
-  elastic: {
-    url: {
-      doc: 'The Elastic connection URL',
-      format: String,
-      env: 'ELASTIC_URL',
-      default: 'http://shop-elasticsearch:9200',
-    },
-    indexName: {
-      doc: 'The Elastic index name for this context',
-      format: String,
-      env: 'ELASTIC_INDEX_NAME',
-      default: 'backofficeproducts',
-    },
-    config: {
-      doc: 'The Elastic config for this context',
-      format: '*',
-      env: 'ELASTIC_CONFIG',
-      default: {
-        settings: {
-          index: {
-            number_of_replicas: 0, // for local development
-          },
-        },
-        mappings: {
-          properties: {
-            id: {
-              type: 'keyword',
-              index: true,
-            },
-            name: {
-              type: 'text',
-              index: true,
-              fielddata: true,
-            },
-            duration: {
-              type: 'text',
-              index: true,
-              fielddata: true,
-            },
-          },
-        },
-      },
     },
   },
 });

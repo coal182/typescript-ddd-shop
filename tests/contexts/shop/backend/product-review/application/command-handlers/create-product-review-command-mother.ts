@@ -1,11 +1,11 @@
-import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductId } from '@shared/product/domain/product-id';
 import { CreateProductReviewCommand } from '@shop-backend/product-review/application/commands/create-product-review';
 import { ProductReviewComment } from '@shop-backend/product-review/domain/product-review-comment';
 import { ProductReviewId } from '@shop-backend/product-review/domain/product-review-id';
 import { ProductReviewRating } from '@shop-backend/product-review/domain/product-review-rating';
 import { UserId } from '@shop-backend/user/domain/user-id';
+import { ProductIdMother } from 'tests/contexts/shared/product/domain/product-id-mother';
 
-import { ProductIdMother } from '../../../product/domain/product-id-mother';
 import { UserIdMother } from '../../../user/domain/user-id-mother';
 import { ProductReviewCommentMother } from '../../domain/product-review-comment-mother';
 import { ProductReviewIdMother } from '../../domain/product-review-id-mother';

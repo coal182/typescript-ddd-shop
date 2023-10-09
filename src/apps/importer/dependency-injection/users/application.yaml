@@ -2,17 +2,17 @@ services:
   Shop.Users.domain.UserRepository:
     class: ../../../../contexts/shop/user/infrastructure/persistence/mongo-user-repository
     main: MongoUserRepository
-    arguments: ['@Shop.Shared.ConnectionManager']
+    arguments: ['@Backoffice.Shared.ConnectionManager']
 
   Shop.Users.domain.UserEventStore:
     class: ../../../../contexts/shop/user/infrastructure/persistence/mongo-user-event-store
     main: MongoUserEventStore
-    arguments: ['@Shop.Shared.ConnectionManager']
+    arguments: ['@Backoffice.Shared.ConnectionManager']
 
   Shop.Users.application.UserCreator:
     class: ../../../../contexts/shop/user/application/create/user-creator
     main: UserCreator
-    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Users.domain.UserEventStore']
+    arguments: ['@Backoffice.Shared.domain.EventBus', '@Shop.Users.domain.UserEventStore']
 
   Shop.Users.CreateUserCommandHandler:
     class: ../../../../contexts/shop/user/application/command-handlers/create-user-command-handler

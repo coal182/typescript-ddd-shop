@@ -14,10 +14,12 @@ export class ElasticEnvironmentArranger extends EnvironmentArranger {
   }
 
   public async arrange(): Promise<void> {
-    //await this.clearIndex();
+    await this.clearIndex();
   }
 
   protected async clearIndex(): Promise<void> {
+    await this.wait(1000);
+
     const client = await this.client();
 
     await client.deleteByQuery({
@@ -51,5 +53,9 @@ export class ElasticEnvironmentArranger extends EnvironmentArranger {
 
   public async close(): Promise<void> {
     return (await this.client()).close();
+  }
+
+  private wait(milliseconds: number) {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
 }

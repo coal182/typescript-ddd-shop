@@ -1,9 +1,4 @@
 services:
-  Apps.Shop.Backend.controllers.ProductPostController:
-    class: ../../controllers/product-post-controller
-    main: ProductPostController
-    arguments: ['@Shop.Shared.domain.CommandBus', '@Shared.Logger']
-
   Apps.Shop.Backend.controllers.ProductGetAllController:
     class: ../../controllers/product-get-all-controller
     main: ProductGetAllController
@@ -18,16 +13,6 @@ services:
     class: ../../controllers/product-get-by-criteria-controller
     main: ProductGetByCriteriaController
     arguments: ['@Shop.Shared.domain.QueryBus']
-
-  Apps.Shop.Backend.controllers.ProductPutDescriptionController:
-    class: ../../controllers/product-put-description-controller
-    main: ProductPutDescriptionController
-    arguments: ['@Shop.Shared.domain.CommandBus']
-
-  Apps.Shop.Backend.controllers.ProductPutImageController:
-    class: ../../controllers/product-put-image-controller
-    main: ProductPutImageController
-    arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.ProductReviewPostController:
     class: ../../controllers/product-review-post-controller

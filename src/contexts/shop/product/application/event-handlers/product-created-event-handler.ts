@@ -1,15 +1,15 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
-import { ProductBrand } from '@shop-backend/product/domain/product-brand';
-import { ProductCategory } from '@shop-backend/product/domain/product-category';
-import { ProductEan } from '@shop-backend/product/domain/product-ean';
+import { ProductBrand } from '@shared/product/domain/product-brand';
+import { ProductCategory } from '@shared/product/domain/product-category';
+import { ProductDescription } from '@shared/product/domain/product-description';
+import { ProductEan } from '@shared/product/domain/product-ean';
+import { ProductId } from '@shared/product/domain/product-id';
+import { ProductImage } from '@shared/product/domain/product-image';
+import { ProductName } from '@shared/product/domain/product-name';
+import { ProductPrice } from '@shared/product/domain/product-price';
 import { ProductCreated } from 'src/contexts/shop/product/domain/events/product-created';
 import { Product } from 'src/contexts/shop/product/domain/product';
-import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
-import { ProductId } from 'src/contexts/shop/product/domain/product-id';
-import { ProductImage } from 'src/contexts/shop/product/domain/product-image';
-import { ProductName } from 'src/contexts/shop/product/domain/product-name';
-import { ProductPrice } from 'src/contexts/shop/product/domain/product-price';
 import { ProductRepository } from 'src/contexts/shop/product/domain/product-repository';
 
 export class ProductCreatedEventHandler implements DomainEventSubscriber<ProductCreated> {

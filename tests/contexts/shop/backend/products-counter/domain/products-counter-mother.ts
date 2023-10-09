@@ -1,10 +1,9 @@
-import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductId } from '@shared/product/domain/product-id';
 import { ProductsCounter } from '@shop-backend/products-counter/domain/products-counter';
 import { ProductsCounterId } from '@shop-backend/products-counter/domain/products-counter-id';
 import { ProductsCounterTotal } from '@shop-backend/products-counter/domain/products-counter-total';
+import { ProductIdMother } from 'tests/contexts/shared/product/domain/product-id-mother';
 import { Repeater } from 'tests/contexts/shared/repeater';
-
-import { ProductIdMother } from '../../product/domain/product-id-mother';
 
 import { ProductsCounterTotalMother } from './products-counter-total-mother';
 

@@ -1,13 +1,13 @@
-import { BackofficeProduct } from '@backoffice-backend/product/domain/backoffice-product';
-import { BackofficeProductId } from '@backoffice-backend/product/domain/backoffice-product-id';
+import { Product } from '@backoffice-backend/product/domain/product';
+import { ProductId } from '@shared/product/domain/product-id';
 import { ProductNotFound } from '@shop-backend/product/domain/product-not-found';
 
-import { BackofficeProductRepository } from '../../domain/backoffice-product-repository';
+import { ProductRepository } from '../../domain/product-repository';
 
 export class ProductFinder {
-  constructor(private productRepository: BackofficeProductRepository) {}
+  constructor(private productRepository: ProductRepository) {}
 
-  async run(id: BackofficeProductId): Promise<BackofficeProduct> {
+  async run(id: ProductId): Promise<Product> {
     const product = await this.productRepository.search(id);
 
     if (!product) {

@@ -4,6 +4,16 @@ services:
     main: ProductPostController
     arguments: ['@Backoffice.Shared.domain.CommandBus']
 
+  Apps.Backoffice.Backend.controllers.ProductPutDescriptionController:
+    class: ../../controllers/product-put-description-controller
+    main: ProductPutDescriptionController
+    arguments: ['@Backoffice.Shared.domain.CommandBus']
+
+  Apps.Backoffice.Backend.controllers.ProductPutImageController:
+    class: ../../controllers/product-put-image-controller
+    main: ProductPutImageController
+    arguments: ['@Backoffice.Shared.domain.CommandBus']
+
   Apps.Backoffice.Backend.controllers.ProductGetAllController:
     class: ../../controllers/product-get-all-controller
     main: ProductGetAllController

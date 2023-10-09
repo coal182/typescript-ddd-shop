@@ -1,7 +1,7 @@
 import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { DomainEvent } from '@shared/domain/domain-event';
 import { Uuid } from '@shared/domain/value-objects/uuid';
-import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductId } from '@shared/product/domain/product-id';
 
 import { ProductsCounterId } from './products-counter-id';
 import { ProductsCounterIncremented } from './products-counter-incremented-domain-event';

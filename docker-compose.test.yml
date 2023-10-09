@@ -31,16 +31,29 @@ services:
         timeout: 10s
         retries: 5
 
+  mongo:
+    image: mongo:6.0.9
+    container_name: shop-mongo-test
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: super-secret-password
+      MONGO_INITDB_DATABASE: shop_test
+    volumes:
+      #- ./data/mongo:/data/db:delegated
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - 27017:27017
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-    container_name: shop-elasticsearch
+    container_name: shop-elasticsearch-test
     healthcheck:
       test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
       interval: 30s
       timeout: 10s
       retries: 50
     environment:
-      - node.name=shop-elasticsearch
+      - node.name=shop-elasticsearch-test
       - discovery.type=single-node #Elasticsearch forms a single-node cluster
       - bootstrap.memory_lock=true # might cause the JVM or shell session to exit if it tries to allocate more memory than is available!
       - 'ES_JAVA_OPTS=-Xms2048m -Xmx2048m'

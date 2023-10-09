@@ -1,8 +1,8 @@
-import { BackofficeProductsResponse } from '@backoffice-backend/product/application/backoffice-products-response';
-import { BackofficeProduct } from '@backoffice-backend/product/domain/backoffice-product';
+import { ProductsResponse } from '@backoffice-backend/product/application/products-response';
+import { Product } from '@backoffice-backend/product/domain/product';
 
 export class SearchProductsByCriteriaResponseMother {
-  static create(product: Array<BackofficeProduct>) {
-    return new BackofficeProductsResponse(product);
+  static create(product: Array<Product>) {
+    return new ProductsResponse(product);
   }
 }

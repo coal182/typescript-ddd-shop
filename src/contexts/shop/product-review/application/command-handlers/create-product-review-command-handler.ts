@@ -1,6 +1,6 @@
 import { Command } from '@shared/domain/command';
 import { CommandHandler } from '@shared/domain/command-handler';
-import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductId } from '@shared/product/domain/product-id';
 import { ProductReviewComment } from '@shop-backend/product-review/domain/product-review-comment';
 import { ProductReviewId } from '@shop-backend/product-review/domain/product-review-id';
 import { ProductReviewRating } from '@shop-backend/product-review/domain/product-review-rating';

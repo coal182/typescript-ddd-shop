@@ -1,39 +1,13 @@
 services:
-  Shop.Products.domain.ProductRepository:
-    class: ../../../../../contexts/shop/product/infrastructure/persistence/mongo-product-repository
-    main: MongoProductRepository
-    arguments: ['@Shop.Shared.ConnectionManager']
-
   Shop.Products.domain.ProductEventStore:
     class: ../../../../../contexts/shop/product/infrastructure/persistence/mongo-product-event-store
     main: MongoProductEventStore
     arguments: ['@Shop.Shared.ConnectionManager']
 
-  Shop.Products.application.ProductCreator:
-    class: ../../../../../contexts/shop/product/application/create/product-creator
-    main: ProductCreator
-    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Products.domain.ProductEventStore']
-
-  Shop.Products.CreateProductCommandHandler:
-    class: ../../../../../contexts/shop/product/application/command-handlers/create-product-command-handler
-    main: CreateProductCommandHandler
-    arguments: ['@Shop.Products.application.ProductCreator']
-    tags:
-      - { name: 'commandHandler' }
-
-  Shop.Products.UpdateProductDescriptionCommandHandler:
-    class: ../../../../../contexts/shop/product/application/command-handlers/update-product-description-command-handler
-    main: UpdateProductDescriptionCommandHandler
-    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Products.domain.ProductEventStore']
-    tags:
-      - { name: 'commandHandler' }
-
-  Shop.Products.UpdateProductImageCommandHandler:
-    class: ../../../../../contexts/shop/product/application/command-handlers/update-product-image-command-handler
-    main: UpdateProductImageCommandHandler
-    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Products.domain.ProductEventStore']
-    tags:
-      - { name: 'commandHandler' }
+  Shop.Products.domain.ProductRepository:
+    class: ../../../../../contexts/shop/product/infrastructure/persistence/elastic-product-repository
+    main: ElasticProductRepository
+    arguments: ['@Shop.Shared.ElasticConnectionManager', '@Shop.Shared.ElasticConfig']
 
   Shop.Products.application.ProductFinder:
     class: ../../../../../contexts/shop/product/application/search-by-id/product-finder

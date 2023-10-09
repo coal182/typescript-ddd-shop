@@ -1,30 +1,44 @@
 services:
-  Shop.Products.domain.ProductRepository:
-    class: ../../../../../contexts/shop/product/infrastructure/persistence/mongo-product-repository
+  Backoffice.Products.domain.ProductRepository:
+    class: ../../../../../contexts/backoffice/product/infrastructure/persistence/mongo-product-repository
     main: MongoProductRepository
     arguments: ['@Backoffice.Shared.ConnectionManager']
 
-  Shop.Products.domain.ProductEventStore:
-    class: ../../../../../contexts/shop/product/infrastructure/persistence/mongo-product-event-store
+  Backoffice.Products.domain.ProductEventStore:
+    class: ../../../../../contexts/backoffice/product/infrastructure/persistence/mongo-product-event-store
     main: MongoProductEventStore
     arguments: ['@Backoffice.Shared.ConnectionManager']
 
-  Shop.Products.application.ProductCreator:
-    class: ../../../../../contexts/shop/product/application/create/product-creator
+  Backoffice.Products.application.ProductCreator:
+    class: ../../../../../contexts/backoffice/product/application/create/product-creator
     main: ProductCreator
-    arguments: ['@Backoffice.Shared.domain.EventBus', '@Shop.Products.domain.ProductEventStore']
+    arguments: ['@Backoffice.Shared.domain.EventBus', '@Backoffice.Products.domain.ProductEventStore']
 
-  Shop.Products.CreateProductCommandHandler:
-    class: ../../../../../contexts/shop/product/application/command-handlers/create-product-command-handler
+  Backoffice.Products.CreateProductCommandHandler:
+    class: ../../../../../contexts/backoffice/product/application/command-handlers/create-product-command-handler
     main: CreateProductCommandHandler
-    arguments: ['@Shop.Products.application.ProductCreator']
+    arguments: ['@Backoffice.Products.application.ProductCreator']
+    tags:
+      - { name: 'commandHandler' }
+
+  Backoffice.Products.UpdateProductDescriptionCommandHandler:
+    class: ../../../../../contexts/backoffice/product/application/command-handlers/update-product-description-command-handler
+    main: UpdateProductDescriptionCommandHandler
+    arguments: ['@Backoffice.Shared.domain.EventBus', '@Backoffice.Products.domain.ProductEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
+  Backoffice.Products.UpdateProductImageCommandHandler:
+    class: ../../../../../contexts/backoffice/product/application/command-handlers/update-product-image-command-handler
+    main: UpdateProductImageCommandHandler
+    arguments: ['@Backoffice.Shared.domain.EventBus', '@Backoffice.Products.domain.ProductEventStore']
     tags:
       - { name: 'commandHandler' }
 
   Backoffice.Products.application.ProductFinder:
     class: ../../../../../contexts/backoffice/product/application/search-by-id/product-finder
     main: ProductFinder
-    arguments: ['@Backoffice.Products.domain.BackofficeProductRepository']
+    arguments: ['@Backoffice.Products.domain.ProductRepository']
 
   Backoffice.Products.SearchProductByIdQueryHandler:
     class: ../../../../../contexts/backoffice/product/application/search-by-id/search-product-by-id-query-handler
@@ -36,7 +50,7 @@ services:
   Backoffice.Products.application.ProductsFinder:
     class: ../../../../../contexts/backoffice/product/application/search-all/products-finder
     main: ProductsFinder
-    arguments: ['@Backoffice.Products.domain.BackofficeProductRepository']
+    arguments: ['@Backoffice.Products.domain.ProductRepository']
 
   Backoffice.Products.SearchAllProductsQueryHandler:
     class: ../../../../../contexts/backoffice/product/application/search-all/search-all-products-query-handler
@@ -45,27 +59,31 @@ services:
     tags:
       - { name: 'queryHandler' }
 
-  Backoffice.Products.domain.BackofficeProductRepository:
-    class: ../../../../../contexts/backoffice/product/infrastructure/persistence/elastic-backoffice-product-repository
-    main: ElasticBackofficeProductRepository
-    arguments: ['@Backoffice.Shared.ElasticConnectionManager', '@Backoffice.Shared.ElasticConfig']
+  Backoffice.Products.CreateProductOnProductCreated:
+    class: ../../../../../contexts/backoffice/product/application/event-handlers/product-created-event-handler
+    main: ProductCreatedEventHandler
+    arguments: ['@Backoffice.Products.domain.ProductRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
 
-  Backoffice.Products.application.BackofficeProductCreator:
-    class: ../../../../../contexts/backoffice/product/application/create/backoffice-product-creator
-    main: BackofficeProductCreator
-    arguments: ['@Backoffice.Shared.domain.EventBus', '@Shop.Products.domain.ProductEventStore']
+  Backoffice.Products.ProductDescriptionChanged:
+    class: ../../../../../contexts/backoffice/product/application/event-handlers/product-description-changed-event-handler
+    main: ProductDescriptionChangedEventHandler
+    arguments: ['@Backoffice.Products.domain.ProductEventStore', '@Backoffice.Products.domain.ProductRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
 
-  Backoffice.Products.CreateBackofficeProductOnProductCreated:
-    class: ../../../../../contexts/backoffice/product/application/event-handlers/create-backoffice-product-on-product-created-event-handler
-    main: CreateBackofficeProductOnProductCreatedEventHandler
-    arguments: ['@Backoffice.Products.domain.BackofficeProductRepository']
+  Backoffice.Products.ProductImageChanged:
+    class: ../../../../../contexts/backoffice/product/application/event-handlers/product-image-changed-event-handler
+    main: ProductImageChangedEventHandler
+    arguments: ['@Backoffice.Products.domain.ProductEventStore', '@Backoffice.Products.domain.ProductRepository']
     tags:
       - { name: 'domainEventSubscriber' }
 
   Backoffice.Products.application.ProductsByCriteriaSearcher:
     class: ../../../../../contexts/backoffice/product/application/search-by-criteria/products-by-criteria-searcher
     main: ProductsByCriteriaSearcher
-    arguments: ['@Backoffice.Products.domain.BackofficeProductRepository']
+    arguments: ['@Backoffice.Products.domain.ProductRepository']
 
   Backoffice.Products.SearchProductsByCriteriaQueryHandler:
     class: ../../../../../contexts/backoffice/product/application/search-by-criteria/search-products-by-criteria-query-handler

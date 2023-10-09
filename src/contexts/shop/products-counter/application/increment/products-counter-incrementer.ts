@@ -1,5 +1,5 @@
 import { EventBus } from '@shared/domain/event-bus';
-import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductId } from '@shared/product/domain/product-id';
 import { ProductsCounter } from '@shop-backend/products-counter/domain/products-counter';
 import { ProductsCounterId } from '@shop-backend/products-counter/domain/products-counter-id';
 import { ProductsCounterRepository } from '@shop-backend/products-counter/domain/products-counter-repository';

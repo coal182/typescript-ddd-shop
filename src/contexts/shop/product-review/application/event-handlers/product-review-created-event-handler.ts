@@ -1,6 +1,6 @@
 import { DomainEventClass } from '@shared/domain/domain-event';
 import { DomainEventSubscriber } from '@shared/domain/domain-event-subscriber';
-import { ProductId } from '@shop-backend/product/domain/product-id';
+import { ProductId } from '@shared/product/domain/product-id';
 import { ProductReviewComment } from '@shop-backend/product-review/domain/product-review-comment';
 import { ProductReviewRating } from '@shop-backend/product-review/domain/product-review-rating';
 import { UserId } from '@shop-backend/user/domain/user-id';

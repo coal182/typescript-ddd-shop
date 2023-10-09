@@ -1,34 +1,34 @@
 import { Given } from '@cucumber/cucumber';
 
-import { BackofficeProduct } from '@backoffice-backend/product/domain/backoffice-product';
-import { BackofficeProductBrand } from '@backoffice-backend/product/domain/backoffice-product-brand';
-import { BackofficeProductCategory } from '@backoffice-backend/product/domain/backoffice-product-category';
-import { BackofficeProductDescription } from '@backoffice-backend/product/domain/backoffice-product-description';
-import { BackofficeProductEan } from '@backoffice-backend/product/domain/backoffice-product-ean';
-import { BackofficeProductId } from '@backoffice-backend/product/domain/backoffice-product-id';
-import { BackofficeProductImage } from '@backoffice-backend/product/domain/backoffice-product-image';
-import { BackofficeProductName } from '@backoffice-backend/product/domain/backoffice-product-name';
-import { BackofficeProductPrice } from '@backoffice-backend/product/domain/backoffice-product-price';
-import { BackofficeProductRepository } from '@backoffice-backend/product/domain/backoffice-product-repository';
+import { Product } from '@backoffice-backend/product/domain/product';
+import { ProductRepository } from '@backoffice-backend/product/domain/product-repository';
+import { ProductBrand } from '@shared/product/domain/product-brand';
+import { ProductCategory } from '@shared/product/domain/product-category';
+import { ProductDescription } from '@shared/product/domain/product-description';
+import { ProductEan } from '@shared/product/domain/product-ean';
+import { ProductId } from '@shared/product/domain/product-id';
+import { ProductImage } from '@shared/product/domain/product-image';
+import { ProductName } from '@shared/product/domain/product-name';
+import { ProductPrice } from '@shared/product/domain/product-price';
 
 import { application } from './hooks.steps';
 
 Given('there is the product:', async (product: any) => {
-  const productRepository: BackofficeProductRepository = application.container.get(
-    'Backoffice.Products.domain.BackofficeProductRepository'
+  const productRepository: ProductRepository = application.container.get(
+    'Backoffice.Products.domain.ProductRepository'
   );
   const { id, name, description, images, price, brand, category, ean } = JSON.parse(product);
 
   await productRepository.save(
-    new BackofficeProduct(
-      new BackofficeProductId(id),
-      new BackofficeProductName(name),
-      new BackofficeProductDescription(description),
-      (images as string[]).map((image) => new BackofficeProductImage(image)),
-      new BackofficeProductPrice(price),
-      new BackofficeProductBrand(brand),
-      new BackofficeProductCategory(category),
-      new BackofficeProductEan(ean),
+    new Product(
+      new ProductId(id),
+      new ProductName(name),
+      new ProductDescription(description),
+      (images as string[]).map((image) => new ProductImage(image)),
+      new ProductPrice(price),
+      new ProductBrand(brand),
+      new ProductCategory(category),
+      new ProductEan(ean),
       true,
       new Date()
     )

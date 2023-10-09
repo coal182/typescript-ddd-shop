@@ -4,23 +4,19 @@ import { ProductsFinder } from '@backoffice-backend/product/application/search-a
 import { SearchAllProductsQuery } from '@backoffice-backend/product/application/search-all/search-all-products-query';
 import { SearchAllProductsQueryHandler } from '@backoffice-backend/product/application/search-all/search-all-products-query-handler';
 
-import { BackofficeProductRepositoryMock } from '../../__mocks__/backoffice-product-repository-mock';
-import { BackofficeProductMother } from '../../domain/backoffice-product-mother';
+import { ProductRepositoryMock } from '../../__mocks__/product-repository-mock';
+import { ProductMother } from '../../domain/product-mother';
 import { SearchAllProductsResponseMother } from '../../domain/search-all-products-response-mother';
 
 describe('SearchAllProducts QueryHandler', () => {
-  let repository: BackofficeProductRepositoryMock;
+  let repository: ProductRepositoryMock;
 
   beforeEach(() => {
-    repository = new BackofficeProductRepositoryMock();
+    repository = new ProductRepositoryMock();
   });
 
   it('should find an existing products counter', async () => {
-    const products = [
-      BackofficeProductMother.random(),
-      BackofficeProductMother.random(),
-      BackofficeProductMother.random(),
-    ];
+    const products = [ProductMother.random(), ProductMother.random(), ProductMother.random()];
     repository.returnOnSearchAll(products);
 
     const handler = new SearchAllProductsQueryHandler(new ProductsFinder(repository));

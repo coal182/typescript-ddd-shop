@@ -1,22 +1,21 @@
-import { CreateProductCommand } from '@shop-backend/product/application/commands/create-product';
-import { ProductBrand } from '@shop-backend/product/domain/product-brand';
-import { ProductCategory } from '@shop-backend/product/domain/product-category';
-import { ProductEan } from '@shop-backend/product/domain/product-ean';
+import { CreateProductCommand } from '@backoffice-backend/product/application/commands/create-product';
+import { ProductBrand } from '@shared/product/domain/product-brand';
+import { ProductCategory } from '@shared/product/domain/product-category';
+import { ProductDescription } from '@shared/product/domain/product-description';
+import { ProductEan } from '@shared/product/domain/product-ean';
+import { ProductId } from '@shared/product/domain/product-id';
+import { ProductImage } from '@shared/product/domain/product-image';
+import { ProductName } from '@shared/product/domain/product-name';
+import { ProductPrice } from '@shared/product/domain/product-price';
 import { Product } from 'src/contexts/shop/product/domain/product';
-import { ProductDescription } from 'src/contexts/shop/product/domain/product-description';
-import { ProductId } from 'src/contexts/shop/product/domain/product-id';
-import { ProductImage } from 'src/contexts/shop/product/domain/product-image';
-import { ProductName } from 'src/contexts/shop/product/domain/product-name';
-import { ProductPrice } from 'src/contexts/shop/product/domain/product-price';
-
-import { ProductBrandMother } from './product-brand-mother';
-import { ProductCategoryMother } from './product-category-mother';
-import { ProductDescriptionMother } from './product-description-mother';
-import { ProductEanMother } from './product-ean-mother';
-import { ProductIdMother } from './product-id-mother';
-import { ProductImageMother } from './product-image-mother';
-import { ProductNameMother } from './product-name-mother';
-import { ProductPriceMother } from './product-price-mother';
+import { ProductBrandMother } from 'tests/contexts/shared/product/domain/product-brand-mother';
+import { ProductCategoryMother } from 'tests/contexts/shared/product/domain/product-category-mother';
+import { ProductDescriptionMother } from 'tests/contexts/shared/product/domain/product-description-mother';
+import { ProductEanMother } from 'tests/contexts/shared/product/domain/product-ean-mother';
+import { ProductIdMother } from 'tests/contexts/shared/product/domain/product-id-mother';
+import { ProductImageMother } from 'tests/contexts/shared/product/domain/product-image-mother';
+import { ProductNameMother } from 'tests/contexts/shared/product/domain/product-name-mother';
+import { ProductPriceMother } from 'tests/contexts/shared/product/domain/product-price-mother';
 
 export class ProductMother {
   static create(

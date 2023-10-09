@@ -1,12 +1,12 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+import { ConfigureRabbitMQCommand } from '@backoffice-backend-app/command/configure-rabbitmq-command';
 import { DomainEventSubscribers } from '@infrastructure/event-bus/domain-event-subscribers';
 import { RabbitMqConnection } from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
 import { CommandBus } from '@shared/domain/command-bus';
 import { EventBus } from '@shared/domain/event-bus';
 import { CreateUserCommand } from '@shop-backend/user/application/commands/create-user';
-import { ConfigureRabbitMQCommand } from '@shop-backend-app/command/configure-rabbitmq-command';
 
 import { containerFactory } from './dependency-injection';
 import { FeedInventoryAggregator } from './feed-inventory-aggregator';
@@ -17,8 +17,8 @@ import { getShopProductsFeed } from './get-shop-products-feed';
   const container = await containerFactory();
 
   await ConfigureRabbitMQCommand.run(container);
-  const eventBus = container.get<EventBus>('Shop.Shared.domain.EventBus');
-  const rabbitMQConnection = container.get<RabbitMqConnection>('Shop.Shared.RabbitMQConnection');
+  const eventBus = container.get<EventBus>('Backoffice.Shared.domain.EventBus');
+  const rabbitMQConnection = container.get<RabbitMqConnection>('Backoffice.Shared.RabbitMQConnection');
   await rabbitMQConnection.connect();
 
   eventBus.addSubscribers(DomainEventSubscribers.from(container));
@@ -27,7 +27,7 @@ import { getShopProductsFeed } from './get-shop-products-feed';
 
   const feedParserFromContentType = new FeedParserFromContentType();
   const parser = feedParserFromContentType.get(feed.contentType);
-  const commandBus = container.get<CommandBus>('Shop.Shared.domain.CommandBus');
+  const commandBus = container.get<CommandBus>('Backoffice.Shared.domain.CommandBus');
 
   const feedInventoryAggregator = new FeedInventoryAggregator(commandBus, parser);
   await feedInventoryAggregator.run(feed);

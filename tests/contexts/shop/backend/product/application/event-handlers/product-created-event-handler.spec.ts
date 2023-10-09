@@ -1,11 +1,11 @@
 import { SinonFakeTimers, createSandbox } from 'sinon';
 
 import { ProductCreatedEventHandler } from '@shop-backend/product/application/event-handlers/product-created-event-handler';
+import { CreateProductCommandMother } from 'tests/contexts/backoffice/application/command-handlers/create-product-command-mother';
 
 import { ProductRepositoryMock } from '../../__mocks__/product-repository-mock';
 import { ProductCreatedDomainEventMother } from '../../domain/product-created-domain-event-mother';
 import { ProductMother } from '../../domain/product-mother';
-import { CreateProductCommandMother } from '../command-handlers/create-product-command-mother';
 
 describe(ProductCreatedEventHandler.name, () => {
   const sandbox = createSandbox();

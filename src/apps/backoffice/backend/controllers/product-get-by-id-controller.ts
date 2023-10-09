@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 
-import { BackofficeProductResponse } from '@backoffice-backend/product/application/backoffice-products-response';
+import { ProductResponse } from '@backoffice-backend/product/application/products-response';
 import { SearchProductByIdQuery } from '@backoffice-backend/product/application/search-by-id/search-product-by-id-query';
-import { BackofficeProductId } from '@backoffice-backend/product/domain/backoffice-product-id';
 import { QueryBus } from '@shared/domain/query-bus';
+import { ProductId } from '@shared/product/domain/product-id';
 
 export class ProductGetByIdController {
   constructor(private readonly queryBus: QueryBus) {}
@@ -13,9 +13,9 @@ export class ProductGetByIdController {
     const { id } = _req.params;
 
     try {
-      const query = new SearchProductByIdQuery(new BackofficeProductId(id));
+      const query = new SearchProductByIdQuery(new ProductId(id));
 
-      const productResponse = await this.queryBus.ask<BackofficeProductResponse>(query);
+      const productResponse = await this.queryBus.ask<ProductResponse>(query);
       res
         .status(httpStatus.OK)
         .send({ status: httpStatus.OK, message: 'Successfully retrieved products', data: productResponse });
