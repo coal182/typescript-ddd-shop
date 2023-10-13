@@ -1,0 +1,10 @@
+{
+    "mongo": { "url": "" },
+    "api": {
+        "port": "5001",
+        "secret": ""
+    },
+    "elastic": {
+        "url": "http://shop-elasticsearch:9200"
+    }
+}

@@ -3,70 +3,70 @@ services:
     class: ../../../../contexts/shared/infrastructure/winston-logger
     main: WinstonLogger
     arguments: []
-  Backoffice.Shared.MongoConfig:
+  Importer.Shared.MongoConfig:
     factory:
       class: ../../../../contexts/backoffice/shared/infrastructure/persistence/mongo/mongo-config-factory
       main: MongoConfigFactory
       method: 'createConfig'
 
-  Backoffice.Shared.ConnectionManager:
+  Importer.Shared.ConnectionManager:
     factory:
       class: ../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
       main: MongoClientFactory
       method: 'createClient'
-    arguments: ['backoffice', '@Backoffice.Shared.MongoConfig']
+    arguments: ['backoffice', '@Importer.Shared.MongoConfig']
 
-  Backoffice.Shared.CommandHandlers:
+  Importer.Shared.CommandHandlers:
     class: ../../../../contexts/shared/infrastructure/command-bus/command-handlers
     main: CommandHandlers
     arguments: ['!tagged commandHandler']
 
-  Backoffice.Shared.domain.CommandBus:
+  Importer.Shared.domain.CommandBus:
     class: ../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
     main: InMemoryCommandBus
-    arguments: ['@Backoffice.Shared.CommandHandlers']
+    arguments: ['@Importer.Shared.CommandHandlers']
 
-  Backoffice.Shared.RabbitMQConfig:
+  Importer.Shared.RabbitMQConfig:
     factory:
       class: ../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-config-factory
       main: RabbitMQConfigFactory
       method: 'createConfig'
 
-  Backoffice.Shared.domain.EventBus:
+  Importer.Shared.domain.EventBus:
     factory:
       class: ../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
       main: RabbitMQEventBusFactory
       method: 'create'
     arguments:
       [
-        '@Backoffice.Shared.DomainEventFailoverPublisher',
-        '@Backoffice.Shared.RabbitMQConnection',
-        '@Backoffice.Shared.RabbitMQqueueFormatter',
-        '@Backoffice.Shared.RabbitMQConfig',
+        '@Importer.Shared.DomainEventFailoverPublisher',
+        '@Importer.Shared.RabbitMQConnection',
+        '@Importer.Shared.RabbitMQqueueFormatter',
+        '@Importer.Shared.RabbitMQConfig',
         '@Shared.Logger',
       ]
 
-  Backoffice.Shared.RabbitMQQueueFormatter:
+  Importer.Shared.RabbitMQQueueFormatter:
     class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
     main: RabbitMQqueueFormatter
     arguments: ['importer']
 
-  Backoffice.Shared.RabbitMQConnection:
+  Importer.Shared.RabbitMQConnection:
     class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-connection
     main: RabbitMqConnection
-    arguments: ['@Backoffice.Shared.RabbitMQConfig']
+    arguments: ['@Importer.Shared.RabbitMQConfig']
 
-  Backoffice.Shared.RabbitMQqueueFormatter:
+  Importer.Shared.RabbitMQqueueFormatter:
     class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
     main: RabbitMQqueueFormatter
     arguments: ['importer']
 
-  Backoffice.Shared.RabbitMQConfigurer:
+  Importer.Shared.RabbitMQConfigurer:
     class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
     main: RabbitMQConfigurer
-    arguments: ['@Backoffice.Shared.RabbitMQConnection', '@Backoffice.Shared.RabbitMQQueueFormatter']
+    arguments: ['@Importer.Shared.RabbitMQConnection', '@Importer.Shared.RabbitMQQueueFormatter']
 
-  Backoffice.Shared.DomainEventFailoverPublisher:
+  Importer.Shared.DomainEventFailoverPublisher:
     class: ../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
     main: DomainEventFailoverPublisher
-    arguments: ['@Backoffice.Shared.ConnectionManager']
+    arguments: ['@Importer.Shared.ConnectionManager']

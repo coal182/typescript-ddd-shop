@@ -1,0 +1,15 @@
+{
+    "mongo": { 
+        "url": "mongodb://shop-mongo/shop?retryWrites=true&w=majority",
+        "username": "mongouser", 
+        "password": "super-secret-password" 
+    },
+    "api": {
+        "port": "5001",
+        "secret": "eST0DEB3sercOMPlIC4D02080"
+    },
+    "elastic": {
+        "url": "http://shop-elasticsearch:9200"
+    }
+}
+  

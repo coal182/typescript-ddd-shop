@@ -70,6 +70,12 @@
       "@backoffice-backend-app/*": [
         "src/apps/backoffice/backend/*"
       ],
+      "@importer/*": [
+        "src/contexts/importer/*"
+      ],
+      "@importer-app/*": [
+        "src/apps/importer/*"
+      ],
       "@shared/*": [
         "src/contexts/shared/*"
       ]

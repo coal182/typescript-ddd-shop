@@ -1,22 +1,22 @@
 services:
-  Shop.Users.domain.UserRepository:
+  Importer.Users.domain.UserRepository:
     class: ../../../../contexts/shop/user/infrastructure/persistence/mongo-user-repository
     main: MongoUserRepository
-    arguments: ['@Backoffice.Shared.ConnectionManager']
+    arguments: ['@Importer.Shared.ConnectionManager']
 
-  Shop.Users.domain.UserEventStore:
+  Importer.Users.domain.UserEventStore:
     class: ../../../../contexts/shop/user/infrastructure/persistence/mongo-user-event-store
     main: MongoUserEventStore
-    arguments: ['@Backoffice.Shared.ConnectionManager']
+    arguments: ['@Importer.Shared.ConnectionManager']
 
-  Shop.Users.application.UserCreator:
+  Importer.Users.application.UserCreator:
     class: ../../../../contexts/shop/user/application/create/user-creator
     main: UserCreator
-    arguments: ['@Backoffice.Shared.domain.EventBus', '@Shop.Users.domain.UserEventStore']
+    arguments: ['@Importer.Shared.domain.EventBus', '@Importer.Users.domain.UserEventStore']
 
-  Shop.Users.CreateUserCommandHandler:
+  Importer.Users.CreateUserCommandHandler:
     class: ../../../../contexts/shop/user/application/command-handlers/create-user-command-handler
     main: CreateUserCommandHandler
-    arguments: ['@Shop.Users.application.UserCreator']
+    arguments: ['@Importer.Users.application.UserCreator']
     tags:
       - { name: 'commandHandler' }
