@@ -25,9 +25,7 @@ export class TopBarComponent implements OnDestroy {
   constructor(public authService: AuthService, public store: Store, public router: Router, public cartService: HttpCartService) {}
   ngOnInit() {
     this.user_id = localStorage.getItem('user_id');
-    this.store.select((state) => state).subscribe((data) => console.log('store:', data));
     
-
     this.loadCart();
 
     this.loadUserMenu();

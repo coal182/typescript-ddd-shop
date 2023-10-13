@@ -81,6 +81,12 @@ export interface AuthorProductsResponse {
   lastname: string;
 }
 
+export interface ProductsCountResponse {
+  status: number;
+  message: string;
+  total: number;
+}
+
 export enum Operator {
   EQUAL = '=',
   NOT_EQUAL = '!=',

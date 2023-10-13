@@ -18,6 +18,13 @@ export const singleProductInitialState: SingleProductState = {
   },
 };
 
+export const productsCountInitialState: ProductsCountState = {
+  count: 0,
+  metadata: {
+    loadingStatus: LoadingStatus.NotLoaded,
+  },
+};
+
 export interface ProductsState {
   products: ReadonlyArray<Product>;
   metadata: { loadingStatus: LoadingStatus };
@@ -25,5 +32,10 @@ export interface ProductsState {
 
 export interface SingleProductState {
   product: Product;
+  metadata: { loadingStatus: LoadingStatus };
+}
+
+export interface ProductsCountState {
+  count: number;
   metadata: { loadingStatus: LoadingStatus };
 }

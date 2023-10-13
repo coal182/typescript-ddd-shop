@@ -36,7 +36,7 @@ export class ProductsEffects {
     )
   );
 
-  fetchSingleProducts$ = createEffect(() =>
+  fetchSingleProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductsActions.fetchSingleProduct),
       withLatestFrom(this.store.pipe(select(ProductSelectors.selectSingleProduct))),

@@ -1,8 +1,11 @@
 <mat-progress-spinner *ngIf="isLoading"
-  mode="indeterminate"
-  data-test="progress-spinner-2"
-  style="margin:0 auto;"
+mode="indeterminate"
+data-test="progress-spinner-2"
+style="margin:0 auto;"
 ></mat-progress-spinner>
+<div style="text-align: center;">
+  {{productsCount$ | async}} products
+</div>
 <div class="product-list animate__animated animate__fadeIn">
   <article *ngFor="let product of products$ | async">
     <h3>

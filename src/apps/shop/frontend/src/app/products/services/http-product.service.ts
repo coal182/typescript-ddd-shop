@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { ProductResponse, ProductsResponse } from '../interfaces/products.interface';
+import { ProductResponse, ProductsCountResponse, ProductsResponse } from '../interfaces/products.interface';
 
 import { ProductService, GetProductParams, GetProductsParams } from './product.service';
 
@@ -26,5 +26,9 @@ export class HttpProductService extends ProductService {
 
   public getProduct(params: GetProductParams): Observable<ProductResponse> {
     return this.http.get<ProductResponse>(`${environment.apiUrl}product/${params.id}`);
+  }
+
+  public getProductCount(): Observable<ProductsCountResponse> {
+    return this.http.get<ProductsCountResponse>(`${environment.apiUrl}products-counter`);
   }
 }
