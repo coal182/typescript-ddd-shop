@@ -3,12 +3,12 @@
 ## UI
 
 - [ ] Implement Product Reviews
-- [ ] Create frontend for backoffice
+- [ ] Develope frontend for backoffice
 
 ## Shop Backend
 
-- [ ] Update products proyection to include rating and featured preview
-- [ ] Second projection in Couchbase
+- [ ] Update products projection to include rating and featured review
+- [ ] Secondary projection in Couchbase
 
 ## Backoffice Backend
 
@@ -16,4 +16,4 @@
 
 ## Optimizations
 
-- [ ] Run acceptance testof backoffice and shop separately
+- [ ] Run acceptance test of backoffice and shop separately
