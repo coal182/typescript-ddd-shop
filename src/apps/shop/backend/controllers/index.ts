@@ -2,6 +2,7 @@ export { ProductGetByCriteriaController } from './product/product-get-by-criteri
 export { ProductGetAllController } from './product/product-get-all-controller';
 export { ProductGetByIdController } from './product/product-get-by-id-controller';
 export { ProductReviewPostController } from './product-review/product-review-post-controller';
+export { ProductReviewGetByProductIdController } from './product-review/product-review-get-by-product-id-controller';
 export { ProductsCounterGetController } from './product/products-counter-get-controller';
 export { UserGetAllController } from './user/user-get-all-controller';
 export { UserGetByCriteriaController } from './user/user-get-by-criteria-controller';

@@ -10,6 +10,46 @@
 			"name": "Backoffice",
 			"item": [
 				{
+					"name": "POST Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo0fSwiaWF0IjoxNjU4MjI0OTU3LCJleHAiOjE2NTgyMjg1NTd9.C5T2dOxhQyDQKWqsjPlzCjSY-FdAIPZ5yn9g_n0ETv0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"44284e0a-e076-4a61-864b-647aaf71b7df\",\n  \"name\": \"VITAMIN C 1000 MG 100 CAPS - AMIX NUTRITION\",\n  \"description\": \"VITAMIN C 1000, 100 Caps Vitamin C 1000 from Amix is a product based on sustained delivery vitamin C , which has been enriched with rose hips, an extract that reinforces the effects of vitamin C. Vitamin C 1000 is highly concentrated and helps meet the vitamin C needs of even the most demanding people.\",\n  \"images\": [\"1837.jpg\"],\n  \"price\": 18.40,\n  \"category\": \"Health & Wellness\",\n  \"brand\": \"Amix Nutrition\",\n  \"ean\": \"8594159532601\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:3000/product",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GET Products",
 					"request": {
 						"method": "GET",
@@ -32,12 +72,34 @@
 					"response": []
 				},
 				{
+					"name": "GET Healthcheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3000/healthcheck",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"healthcheck"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GET Product by Id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:3000/product/44284e0a-e076-4a61-864b-647aaf71b7df",
+							"raw": "http://127.0.0.1:3000/product/bd678cc3-7466-44fb-a88c-8e133911d0f7",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -48,7 +110,7 @@
 							"port": "3000",
 							"path": [
 								"product",
-								"44284e0a-e076-4a61-864b-647aaf71b7df"
+								"bd678cc3-7466-44fb-a88c-8e133911d0f7"
 							]
 						}
 					},
@@ -444,7 +506,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"id\": \"bea877ef-378a-4608-81eb-b2f5cf85cf69\", \"userId\": \"d0c3ce2f-3134-4357-9742-658f64d4d8b9\", \"status\": \"created\", \"name\": \"CRISTIAN MARTIN\", \"address\": \"Barca 3 2º2 29011 Málaga\", \"total\": 120, \n\"lines\": [\n    {\"productId\": \"478d7150-4975-4492-ae53-35507d316a37\", \"qty\": 2, \"price\": 31.76},\n    {\"productId\": \"dc30fc82-a127-4292-94ca-38deb774bd60\", \"qty\": 2, \"price\": 23.96}\n    ]\n}",
+									"raw": "{\n    \"id\": \"bea877ef-378a-4608-81eb-b2f5cf85cf69\",\n    \"userId\": \"d0c3ce2f-3134-4357-9742-658f64d4d8b9\",\n    \"status\": \"created\",\n    \"name\": \"CRISTIAN MARTIN\",\n    \"address\": {\n        \"street\": \"Barca\",\n        \"city\": \"Málaga\",\n        \"number\": \"5\"\n    },\n    \"total\": 120,\n    \"lines\": [\n        {\n            \"productId\": \"478d7150-4975-4492-ae53-35507d316a37\",\n            \"qty\": 2,\n            \"price\": 31.76\n        },\n        {\n            \"productId\": \"dc30fc82-a127-4292-94ca-38deb774bd60\",\n            \"qty\": 2,\n            \"price\": 23.96\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -481,7 +543,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzVDAwOjAwOjAwLjAwMFoifSwiaWF0IjoxNjgyMzUxMDk3LCJleHAiOjE2ODIzNTQ2OTd9.tkwh4nkqC5L-npl1Zs8C7gl42EI_nRVxg5ELgl1nFDg",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNGI3NTA0M2ItM2Q5Yy00MmFkLWFjMDAtODYzMGQ4NDM1Y2QyIiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTAxLTAxVDAwOjAwOjAwLjAwMFoifSwiaWF0IjoxNjk1NjY0MTg4LCJleHAiOjE2OTU2Njc3ODh9.EjzJVtYQFDGvBUlVfJBIX-Z7TiXGxLaj3Kqj3S-THac",
 											"type": "string"
 										}
 									]
@@ -512,7 +574,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"email\":\"niclife78@gmail.com\", \"firstname\":\"Cristian 78\", \"lastname\":\"Martin Niclife\", \"dateOfBirth\":\"1991-06-03\", \"password\": \"123456\"}",
+									"raw": "{\"email\":\"niclife78@gmail.com\", \"firstname\":\"Cristian 78\", \"lastname\":\"Gomez Niclife\", \"dateOfBirth\":\"1991-01-05\", \"password\": \"123456\"}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -598,7 +660,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"email\":\"niclife79@gmail.com\", \"firstname\":\"Natalia\", \"lastname\":\"Sanchez\", \"dateOfBirth\":\"1991-05-31T00:00:00.000\"}",
+									"raw": "{\"email\":\"niclife79@gmail.com\", \"firstname\":\"Pablo\", \"lastname\":\"Sanchez\", \"dateOfBirth\":\"1991-03-30T00:00:00.000\"}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -677,7 +739,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:5001/product/criteria/?filters[0][field]=name&filters[0][operator]==&filters[0][value]=Space Viking&orderBy=name&order=asc&limit=5&offset=0",
+									"raw": "http://127.0.0.1:5001/product/criteria/?filters[0][field]=name&filters[0][operator]==&filters[0][value]=VITAMIN C&orderBy=name&order=asc&limit=5&offset=0",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -748,7 +810,7 @@
 									"raw": "{}"
 								},
 								"url": {
-									"raw": "http://127.0.0.1:5001/product/44284e0a-e076-4a61-864b-647aaf71b7df",
+									"raw": "http://127.0.0.1:5001/product/6a898c41-9a7e-4ea1-9229-9b1099616412",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -759,47 +821,7 @@
 									"port": "5001",
 									"path": [
 										"product",
-										"44284e0a-e076-4a61-864b-647aaf71b7df"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "POST Product",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjYyZDAxZDNlMDMwZDczMDFhNWMxNzA3OSIsImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIE5pY2xpZmUiLCJkYXRlT2ZCaXJ0aCI6IjE5OTEtMDYtMDMiLCJ2ZXJzaW9uIjo0fSwiaWF0IjoxNjU4MjI0OTU3LCJleHAiOjE2NTgyMjg1NTd9.C5T2dOxhQyDQKWqsjPlzCjSY-FdAIPZ5yn9g_n0ETv0",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"brand\": \"Amix Nutrition\",\n  \"category\": \"Health & Wellness\",\n  \"description\": \"VITAMIN C 1000, 100 Caps Vitamin C 1000 from Amix is a product based on sustained delivery vitamin C , which has been enriched with rose hips, an extract that reinforces the effects of vitamin C. Vitamin C 1000 is highly concentrated and helps meet the vitamin C needs of even the most demanding people.\",\n  \"ean\": \"8594159532601\",\n  \"id\": \"44284e0a-e076-4a61-864b-647aaf71b7df\",\n  \"image\": \"1837.jpg\",\n  \"name\": \"VITAMIN C 1000 MG 100 CAPS - AMIX NUTRITION\",\n  \"price\": \"18.40\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "127.0.0.1:5001/product",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "5001",
-									"path": [
-										"product"
+										"6a898c41-9a7e-4ea1-9229-9b1099616412"
 									]
 								}
 							},
@@ -864,7 +886,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"image\":\"https://cinelatura.files.wordpress.com/2014/08/el-fin-de-la-eternidad-isaac-asimov.jpg\"}",
+									"raw": "{\"images\":[\"https://cinelatura.files.wordpress.com/2014/08/el-fin-de-la-eternidad-isaac-asimov.jpg\"]}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -911,6 +933,76 @@
 									"port": "5001",
 									"path": [
 										"products-counter"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product Reviews",
+					"item": [
+						{
+							"name": "Post Product Review",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"8c8ae611-92bf-47a1-a732-f960ccb57afe\",\n    \"productId\": \"6a898c41-9a7e-4ea1-9229-9b1099616412\",\n    \"userId\": \"4b75043b-3d9c-42ad-ac00-8630d8435cd2\",\n    \"rating\": 5,\n    \"comment\": \"Nice product, it's perfect 2.\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:5001/product-review",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"product-review"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Product Reviews by Product Id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"8c8ae611-92bf-47a1-a732-f960ccb57afe\",\n    \"productId\": \"6a898c41-9a7e-4ea1-9229-9b1099616412\",\n    \"userId\": \"4b75043b-3d9c-42ad-ac00-8630d8435cd2\",\n    \"rating\": 5,\n    \"comment\": \"Nice product, it's perfect 2.\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:5001/product-review/product/6a898c41-9a7e-4ea1-9229-9b1099616412",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5001",
+									"path": [
+										"product-review",
+										"product",
+										"6a898c41-9a7e-4ea1-9229-9b1099616412"
 									]
 								}
 							},
@@ -989,6 +1081,49 @@
 								"login",
 								"renew",
 								"d0c3ce2f-3134-4357-9742-658f64d4d8b9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Healthcheck",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiZDBjM2NlMmYtMzEzNC00MzU3LTk3NDItNjU4ZjY0ZDRkOGI5IiwiZW1haWwiOiJuaWNsaWZlN0BnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJDcmlzdGlhbiIsImxhc3RuYW1lIjoiTWFydGluIiwiZGF0ZU9mQmlydGgiOiIxOTkxLTA2LTAzVDAwOjAwOjAwLjAwMFoifSwiaWF0IjoxNjgyMzUyMDM4LCJleHAiOjE2ODIzNTU2Mzh9.xopQ--EiAEO-yrRopdCpeIULUGVVZUEEM76hQ6biooY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"niclife7@gmail.com\", \"password\": \"123456\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5001/healthcheck",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5001",
+							"path": [
+								"healthcheck"
 							]
 						}
 					},

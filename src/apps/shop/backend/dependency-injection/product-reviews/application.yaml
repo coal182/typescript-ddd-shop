@@ -38,6 +38,18 @@ services:
   #   tags:
   #     - { name: 'queryHandler' }
 
+  Shop.ProductReviews.application.ProductReviewsFinder:
+    class: ../../../../../contexts/shop/product-review/application/search-by-product-id/product-reviews-finder
+    main: ProductReviewsFinder
+    arguments: ['@Shop.ProductReviews.domain.ProductReviewRepository']
+
+  Shop.ProductReviews.SearchProductReviewsByProductIdQueryHandler:
+    class: ../../../../../contexts/shop/product-review/application/search-by-product-id/search-product-reviews-by-product-id-query-handler
+    main: SearchProductReviewsByProductIdQueryHandler
+    arguments: ['@Shop.ProductReviews.application.ProductReviewsFinder']
+    tags:
+      - { name: 'queryHandler' }
+
   Shop.ProductReviews.CreateProductReviewOnProductReviewCreated:
     class: ../../../../../contexts/shop/product-review/application/event-handlers/product-review-created-event-handler
     main: ProductReviewCreatedEventHandler
