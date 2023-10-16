@@ -1,116 +1,116 @@
 services:
   Apps.Shop.Backend.controllers.ProductGetAllController:
-    class: ../../controllers/product-get-all-controller
+    class: ../../controllers/product/product-get-all-controller
     main: ProductGetAllController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.ProductGetByIdController:
-    class: ../../controllers/product-get-by-id-controller
+    class: ../../controllers/product/product-get-by-id-controller
     main: ProductGetByIdController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.ProductGetByCriteriaController:
-    class: ../../controllers/product-get-by-criteria-controller
+    class: ../../controllers/product/product-get-by-criteria-controller
     main: ProductGetByCriteriaController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.ProductReviewPostController:
-    class: ../../controllers/product-review-post-controller
+    class: ../../controllers/product-review/product-review-post-controller
     main: ProductReviewPostController
     arguments: ['@Shop.Shared.domain.CommandBus', '@Shared.Logger']
 
   Apps.Shop.Backend.controllers.ProductsCounterGetController:
-    class: ../../controllers/products-counter-get-controller
+    class: ../../controllers/product/products-counter-get-controller
     main: ProductsCounterGetController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.UserPostController:
-    class: ../../controllers/user-post-controller
+    class: ../../controllers/user/user-post-controller
     main: UserPostController
     arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.UserGetAllController:
-    class: ../../controllers/user-get-all-controller
+    class: ../../controllers/user/user-get-all-controller
     main: UserGetAllController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.UserGetByIdController:
-    class: ../../controllers/user-get-by-id-controller
+    class: ../../controllers/user/user-get-by-id-controller
     main: UserGetByIdController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.UserGetByCriteriaController:
-    class: ../../controllers/user-get-by-criteria-controller
+    class: ../../controllers/user/user-get-by-criteria-controller
     main: UserGetByCriteriaController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.UserPutController:
-    class: ../../controllers/user-put-controller
+    class: ../../controllers/user/user-put-controller
     main: UserPutController
     arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.UserPutPasswordController:
-    class: ../../controllers/user-put-password-controller
+    class: ../../controllers/user/user-put-password-controller
     main: UserPutPasswordController
     arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.LoginPostController:
-    class: ../../controllers/login-post-controller
+    class: ../../controllers/login/login-post-controller
     main: LoginPostController
     arguments: ['@Shop.Shared.domain.CommandBus', '@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.LoginRenewGetController:
-    class: ../../controllers/login-renew-get-controller
+    class: ../../controllers/login/login-renew-get-controller
     main: LoginRenewGetController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.OrderPostController:
-    class: ../../controllers/order-post-controller
+    class: ../../controllers/order/order-post-controller
     main: OrderPostController
     arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.OrderGetByUserController:
-    class: ../../controllers/order-get-by-user-controller
+    class: ../../controllers/order/order-get-by-user-controller
     main: OrderGetByUserController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.OrderGetByIdController:
-    class: ../../controllers/order-get-by-id-controller
+    class: ../../controllers/order/order-get-by-id-controller
     main: OrderGetByIdController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.OrderDeleteController:
-    class: ../../controllers/order-delete-controller
+    class: ../../controllers/order/order-delete-controller
     main: OrderDeleteController
     arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.CartPostController:
-    class: ../../controllers/cart-post-controller
+    class: ../../controllers/cart/cart-post-controller
     main: CartPostController
     arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.CartAddItemPostController:
-    class: ../../controllers/cart-add-item-post-controller
+    class: ../../controllers/cart/cart-add-item-post-controller
     main: CartAddItemPostController
     arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.CartGetByUserController:
-    class: ../../controllers/cart-get-by-user-controller
+    class: ../../controllers/cart/cart-get-by-user-controller
     main: CartGetByUserController
     arguments: ['@Shop.Shared.domain.QueryBus', '@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.CartGetByIdController:
-    class: ../../controllers/cart-get-by-id-controller
+    class: ../../controllers/cart/cart-get-by-id-controller
     main: CartGetByIdController
     arguments: ['@Shop.Shared.domain.QueryBus']
 
   Apps.Shop.Backend.controllers.CartDeleteController:
-    class: ../../controllers/cart-delete-controller
+    class: ../../controllers/cart/cart-delete-controller
     main: CartDeleteController
     arguments: ['@Shop.Shared.domain.CommandBus']
 
   Apps.Shop.Backend.controllers.CartRemoveItemDeleteController:
-    class: ../../controllers/cart-remove-item-delete-controller
+    class: ../../controllers/cart/cart-remove-item-delete-controller
     main: CartRemoveItemDeleteController
     arguments: ['@Shop.Shared.domain.CommandBus']
 

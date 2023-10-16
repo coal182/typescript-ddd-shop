@@ -1,7 +1,7 @@
 import { Express } from 'express';
 import { ContainerBuilder } from 'node-dependency-injection';
 
-import { LoginRenewGetController } from '@shop-backend-app/controllers/login-renew-get-controller';
+import { LoginRenewGetController } from '@shop-backend-app/controllers/login/login-renew-get-controller';
 import { loginValidator } from '@shop-backend-app/middlewares/validators/login-validator';
 
 import { LoginPostController } from '../controllers';
