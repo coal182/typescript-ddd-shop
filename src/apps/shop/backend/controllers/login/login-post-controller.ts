@@ -12,8 +12,8 @@ import { SearchCartsByCriteriaQuery } from '@shop-backend/cart/application/searc
 import { SearchUsersByCriteriaQuery } from '@shop-backend/user/application/search-by-criteria/search-users-by-criteria-query';
 import { UsersResponse } from '@shop-backend/user/application/user-response';
 
-import { createJWToken } from '../middlewares/auth';
-import { ok } from '../processors/response';
+import { createJWToken } from '../../middlewares/auth';
+import { ok } from '../../processors/response';
 
 type FilterType = { value: string; operator: string; field: string };
 

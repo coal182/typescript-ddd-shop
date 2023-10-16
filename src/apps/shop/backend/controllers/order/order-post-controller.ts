@@ -5,7 +5,7 @@ import { AddLineToOrderCommand } from 'src/contexts/shop/order/application/comma
 import { CreateOrderCommand } from 'src/contexts/shop/order/application/commands/create-order';
 import { InitiateOrderCommand } from 'src/contexts/shop/order/application/commands/initiate-order';
 
-import { ok } from '../processors/response';
+import { ok } from '../../processors/response';
 
 export class OrderPostController {
   constructor(private readonly commandBus: CommandBus) {}

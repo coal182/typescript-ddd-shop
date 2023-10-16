@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { CommandBus } from '@shared/domain/command-bus';
 import { ClearCartCommand } from '@shop-backend/cart/application/commands/clear-cart';
 
-import { ok } from '../processors/response';
+import { ok } from '../../processors/response';
 
 export class CartDeleteController {
   constructor(private readonly commandBus: CommandBus) {}

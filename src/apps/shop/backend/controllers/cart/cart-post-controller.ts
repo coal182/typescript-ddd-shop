@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { CommandBus } from '@shared/domain/command-bus';
 import { CreateCartCommand } from 'src/contexts/shop/cart/application/commands/create-cart';
 
-import { ok } from '../processors/response';
+import { ok } from '../../processors/response';
 
 export class CartPostController {
   constructor(private readonly commandBus: CommandBus) {}
