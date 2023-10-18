@@ -12,7 +12,7 @@ import { AddToCartParams, CartItem } from '../interfaces/cart';
 import { CartService, ConfirmCartParams } from './cart.service';
 import { HttpCartService } from './http-cart.service';
 
-fdescribe('HttpCartService', () => {
+describe('HttpCartService', () => {
   let service: CartService;
 
   let httpClientSpy: jasmine.SpyObj<HttpClient>;

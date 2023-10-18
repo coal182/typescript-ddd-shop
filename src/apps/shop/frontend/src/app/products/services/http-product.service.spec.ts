@@ -9,7 +9,7 @@ import { HttpProductService } from './http-product.service';
 import { GetProductParams, GetProductsParams, ProductService } from './product.service';
 import { Operator, ProductResponse, ProductsResponse } from '../interfaces/products.interface';
 
-fdescribe('HttpProductService', () => {
+describe('HttpProductService', () => {
   let service: ProductService;
   let httpMock: HttpTestingController;
 
