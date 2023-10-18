@@ -1,0 +1,29 @@
+ul{
+    list-style: none;
+    padding: 0;
+}
+
+li{
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 0;
+    border: 1px solid #f0f0f0;
+    font-size: 12px
+}
+
+li div {
+    margin-bottom: 10px;
+}
+
+.user {
+    font-size: 10px;
+    color: #aaa;
+}
+
+.rating div {
+    float: left;
+}
+
+.rating .filled {
+    color: #ffc800;
+}

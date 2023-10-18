@@ -21,7 +21,10 @@ export class ProductReviewsFinder {
       new FilterOperator(Operator.EQUAL),
       new FilterValue(id.toString())
     );
-    const criteria = new Criteria(new Filters([filter]), new Order(new OrderBy('id'), new OrderType(OrderTypes.ASC)));
+    const criteria = new Criteria(
+      new Filters([filter]),
+      new Order(new OrderBy('createdAt'), new OrderType(OrderTypes.DESC))
+    );
 
     const productReviews = await this.productReviewRepository.matching(criteria);
 

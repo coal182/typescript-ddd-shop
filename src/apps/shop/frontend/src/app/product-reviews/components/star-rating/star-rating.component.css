@@ -1,0 +1,7 @@
+.rating div {
+    float: left;
+}
+
+.rating .filled {
+    color: #ffc800;
+}

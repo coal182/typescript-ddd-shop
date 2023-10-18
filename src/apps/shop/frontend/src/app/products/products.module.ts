@@ -14,12 +14,14 @@ import { productsCountReducer } from '../store/products-count/products-count.red
 import { ProductsCountEffects } from '../store/products-count/products-count.effects';
 import { productsCountFeatureKey } from '../store/products-count/state/model';
 import { productsFeatureKey } from '../store/products/state/model';
+import { ProductReviewsModule } from '../product-reviews/product-reviews.module';
 
 @NgModule({
   declarations: [ProductListComponent, ProductAlertsComponent, ProductDetailsComponent],
   imports: [
     AppRoutingModule,
     SharedModule,
+    ProductReviewsModule,
     StoreModule.forFeature(productsFeatureKey, productReducer),
     StoreModule.forFeature(productsCountFeatureKey, productsCountReducer),
     EffectsModule.forFeature([ProductsEffects,ProductsCountEffects]),

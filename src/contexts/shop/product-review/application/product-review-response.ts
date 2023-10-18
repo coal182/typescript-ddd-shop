@@ -6,6 +6,7 @@ export class ProductReviewResponse {
   public readonly userId: string;
   public readonly rating: number;
   public readonly comment: string;
+  public readonly createdAt: Date;
 
   constructor(productReview: ProductReview) {
     const primitives = productReview.toPrimitives();
@@ -15,6 +16,7 @@ export class ProductReviewResponse {
       userId: primitives.userId,
       rating: primitives.rating,
       comment: primitives.comment,
+      createdAt: primitives.createdAt,
     };
   }
 }

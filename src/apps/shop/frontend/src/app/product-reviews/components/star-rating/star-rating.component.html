@@ -1,0 +1,8 @@
+<div class="rating">
+    <button mat-icon-button *ngFor="let star of stars" (click)="selectRating(star)">
+        <mat-icon fontIcon="star" [class.filled]="star.active"></mat-icon>
+    </button>
+    <button mat-icon-button (click)="resetRating()">
+        <mat-icon fontIcon="close"></mat-icon>
+    </button>
+</div>
