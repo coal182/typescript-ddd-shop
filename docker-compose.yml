@@ -76,7 +76,7 @@ services:
       #- ./data/mongo:/data/db:delegated
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     ports:
-      - 27017:27017
+      - 27018:27017
 
   rabbitmq:
     image: 'rabbitmq:3.8-management'
