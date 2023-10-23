@@ -40,9 +40,7 @@ describe('CartComponent', () => {
         {
           provide: IdProviderService,
           useValue: {
-            getId: () => {
-              return orderId;
-            },
+            getId: () => orderId,
           },
         },
       ],
