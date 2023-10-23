@@ -2,9 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { fakeAsync } from '@angular/core/testing';
 import { UntypedFormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
 
-import { MockLocalStorageService } from 'src/app/test/mock-local-storage-service';
+import { MockStorageService } from 'src/app/test/mock-local-storage-service';
 import { environment } from 'src/environments/environment';
 
 import { AddToCartParams, CartItem } from '../interfaces/cart';
@@ -16,7 +15,7 @@ describe('HttpCartService', () => {
   let service: CartService;
 
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
-  let localStorageMock: MockLocalStorageService;
+  let localStorageMock: MockStorageService;
 
   const cartId = 'cart-id';
   const userId = 'user-id';
@@ -100,7 +99,7 @@ describe('HttpCartService', () => {
       it('should call the api with expected params and clear the cart', fakeAsync(() => {
         service.addToCart(testItem);
         service.addToCart(testItem2);
-        const orderId = uuidv4();
+        const orderId = 'order-id';
         service.confirmCart(checkoutForm, orderId);
 
         const expectedParamsFirstCall: AddToCartParams = {
@@ -156,7 +155,7 @@ describe('HttpCartService', () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['post', 'delete']);
     httpClientSpy.post.and.returnValue(of(true));
     httpClientSpy.delete.and.returnValue(of(true));
-    localStorageMock = new MockLocalStorageService();
+    localStorageMock = new MockStorageService();
     localStorageMock.setItem('cart', JSON.stringify(testCart));
     service = new HttpCartService(httpClientSpy, localStorageMock);
   }

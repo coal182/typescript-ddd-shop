@@ -5,7 +5,8 @@ import { MatTable } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { catchError, Observable, Subject, switchMap, takeUntil, tap, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
-import { v4 as uuidv4 } from 'uuid';
+
+import { IdProviderService } from 'src/app/shared/services/id-provider.service';
 
 import { Cart, CartItem } from '../../interfaces/cart';
 import { HttpCartService } from '../../services/http-cart.service';
@@ -26,11 +27,14 @@ export class CartComponent implements OnInit, OnDestroy {
   namesRegex = new RegExp(
     /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
   );
-  numberRegex = new RegExp(
-    /^-?(0|[1-9]\d*)?$/u
-  );
+  numberRegex = new RegExp(/^-?(0|[1-9]\d*)?$/u);
 
-  constructor(private cartService: HttpCartService, private fb: UntypedFormBuilder, private router: Router) {
+  constructor(
+    private cartService: HttpCartService,
+    private fb: UntypedFormBuilder,
+    private router: Router,
+    private idProvider: IdProviderService
+  ) {
     this.items = [];
 
     this.checkoutForm = this.fb.group({
@@ -68,8 +72,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     // Process checkout data here
-    console.warn('Your order has been submitted', this.checkoutForm.value);
-    const orderId = uuidv4();
+    const orderId = this.idProvider.getId();
     this.cartService.confirmCart(this.checkoutForm, orderId).subscribe(() => {
       this.cartService.clearCart().subscribe(() => {
         this.items = [];

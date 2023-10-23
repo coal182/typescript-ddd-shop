@@ -8,6 +8,7 @@ import { Credentials } from 'src/app/store/login/state/model';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../user';
+import { StorageService } from '../services/storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +18,10 @@ export class AuthService {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
 
-  constructor(private http: HttpClient, public router: Router) {}
+  constructor(private http: HttpClient, public router: Router, private storageService: StorageService) {}
 
   get isLoggedIn(): boolean {
-    const authToken = localStorage.getItem('access_token');
+    const authToken = this.storageService.getItem('access_token');
     return authToken !== null && authToken !== 'null' && authToken !== 'undefined' ? true : false;
   }
 
@@ -34,13 +35,13 @@ export class AuthService {
   }
 
   getToken() {
-    return localStorage.getItem('access_token');
+    return this.storageService.getItem('access_token');
   }
 
   doLogout(): void {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('cart');
+    this.storageService.removeItem('access_token');
+    this.storageService.removeItem('user_id');
+    this.storageService.removeItem('cart');
   }
 
   getUserProfile(id: any): Observable<any> {

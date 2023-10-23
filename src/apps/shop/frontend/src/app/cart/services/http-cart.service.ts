@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 
 import { StorageService } from 'src/app/shared/services/storage.service';
 
@@ -18,7 +18,7 @@ export class HttpCartService extends CartService {
   public sessionCart: SessionCart;
   private cartSubject = new BehaviorSubject<Cart>({ id: '', userId: '', items: [], total: 0 });
 
-  public constructor(private http: HttpClient, @Inject('StorageService') private storageService: StorageService) {
+  public constructor(private http: HttpClient, private storageService: StorageService) {
     super();
     this.initCart();
   }
@@ -66,7 +66,7 @@ export class HttpCartService extends CartService {
     this.cart.items.push(item);
     this.cartSubject.next(this.cart);
 
-    //localStorage.setItem('cart', JSON.stringify(this.sessionCart));
+    //this.storageService.setItem('cart', JSON.stringify(this.sessionCart));
 
     return this.http.post<any>(`${environment.apiUrl}cart/add`, params);
   }
@@ -116,8 +116,9 @@ export class HttpCartService extends CartService {
     return this.http.delete<any>(`${environment.apiUrl}cart/clear/${this.cart.id}`);
   }
 
-  public getShippingPrices(): Observable<any> {
-    throw new Error('Method not implemented.');
+  public getShippingPrices(): Observable<void> {
+    //throw new Error('Method not implemented.');
+    return of();
   }
 }
 

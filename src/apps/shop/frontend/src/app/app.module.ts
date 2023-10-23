@@ -15,6 +15,7 @@ import { OrderDetailsComponent } from './orders/pages/order-details/order-detail
 import { OrderListComponent } from './orders/pages/order-list/order-list.component';
 import { ProductsModule } from './products/products.module';
 import { AuthInterceptor } from './shared/auth/authconfig.interceptor';
+import { IdProviderService } from './shared/services/id-provider.service';
 import { ValidationService } from './shared/services/validation.service';
 import { SharedModule } from './shared/shared.module';
 import { LoginEffects } from './store/login/login.effects';
@@ -53,6 +54,7 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
       multi: true,
     },
     ValidationService,
+    IdProviderService,
   ],
   bootstrap: [AppComponent],
 })

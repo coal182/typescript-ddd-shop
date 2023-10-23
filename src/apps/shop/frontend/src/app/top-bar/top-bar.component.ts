@@ -10,6 +10,7 @@ import { LoginSelectors } from '../store/login/login.selectors';
 import { LoadingStatus } from '../store/metadata-types';
 import { Cart } from '../cart/interfaces/cart';
 import { HttpCartService } from '../cart/services/http-cart.service';
+import { StorageService } from '../shared/services/storage.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -22,13 +23,43 @@ export class TopBarComponent implements OnDestroy {
   public user_id = '';
   public cart_counter = 0;
 
-  constructor(public authService: AuthService, public store: Store, public router: Router, public cartService: HttpCartService) {}
+  constructor(public authService: AuthService, public store: Store, public router: Router, public cartService: HttpCartService, public storageService: StorageService) {}
   ngOnInit() {
-    this.user_id = localStorage.getItem('user_id');
+    this.user_id = this.storageService.getItem('user_id');
     
-    this.loadCart();
+    this.confirmLogin();
 
-    this.loadUserMenu();
+    if (this.user_id) {
+      this.loadCart();
+    }
+
+  }
+
+  confirmLogin(){
+    this.store.pipe(select(LoginSelectors.selectLogin), takeUntil(this.onDestroy$)).subscribe((login) => {
+      if (login.metadata.loadingStatus === LoadingStatus.Loaded) {
+        if (login.access_token) {
+          this.storageService.setItem('access_token', login.access_token);
+          this.storageService.setItem('user_id', login.user_id);
+          this.storageService.setItem('cart', JSON.stringify(login.cart));
+          this.router.navigate(['products']);
+          this.user_id = login.user_id;
+          this.loadCart();
+          Swal.fire('Hello !', 'You have been signed up correctly! ', 'success');
+        }
+        
+      }
+
+      if (login.metadata.loadingStatus === LoadingStatus.NotLoaded) {
+        if (login.metadata.error) {
+          Swal.fire({
+            title: 'Error',
+            text: login.metadata.error.message,
+            icon: 'error',
+          });
+        }
+      }
+    });
   }
 
   loadCart(){
@@ -43,31 +74,6 @@ export class TopBarComponent implements OnDestroy {
       .subscribe((cart: Cart) => {
         this.cart_counter = cart.items.length;
       });
-  }
-
-  loadUserMenu(){
-    this.store.pipe(select(LoginSelectors.selectLogin), takeUntil(this.onDestroy$)).subscribe((login) => {
-      if (login.metadata.loadingStatus === LoadingStatus.Loaded) {
-        if (login.access_token) {
-          localStorage.setItem('access_token', login.access_token);
-          localStorage.setItem('user_id', login.user_id);
-          localStorage.setItem('cart', JSON.stringify(login.cart));
-          this.router.navigate(['products']);
-
-          Swal.fire('Hello !', 'You have been signed up correctly! ', 'success');
-        }
-      }
-
-      if (login.metadata.loadingStatus === LoadingStatus.NotLoaded) {
-        if (login.metadata.error) {
-          Swal.fire({
-            title: 'Error',
-            text: login.metadata.error.message,
-            icon: 'error',
-          });
-        }
-      }
-    });
   }
 
   logout() {

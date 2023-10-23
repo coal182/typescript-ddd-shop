@@ -1,6 +1,6 @@
 import { of } from 'rxjs';
-import { CartService } from '../cart/services/cart.service';
 
+import { CartService } from '../cart/services/cart.service';
 
 export class MockCartService implements CartService {
   addToCart = jasmine.createSpy('addToCart').and.returnValue(of({}));

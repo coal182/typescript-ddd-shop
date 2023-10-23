@@ -1,12 +1,14 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Type } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from 'src/app/shared/auth/auth.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
 import { ValidationService } from 'src/app/shared/services/validation.service';
+import { MockStorageService } from 'src/app/test/mock-local-storage-service';
 import { MockUserService } from 'src/app/test/mock-user-service';
 
 import { MockRouter } from '../../test/mock-router';
@@ -37,7 +39,9 @@ describe('UserProfileComponent', () => {
         { provide: HttpUserService, useValue: mockUserService },
         AuthService,
         ValidationService,
+        { provide: StorageService, useClass: MockStorageService },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });
 
@@ -71,8 +75,6 @@ describe('UserProfileComponent', () => {
         component.profileForm.setValue(testInvalidProfileForm);
         //component.profileForm.updateValueAndValidity();
         fixture.detectChanges();
-        console.log('->>>>>>>>>>>>>>>>>>>>>>>>>>>>><');
-        console.log(fixture.debugElement.query(By.css('[data-testid=submit-button]')).nativeElement);
 
         fixture.debugElement.query(By.css('[data-testid=submit-button]')).nativeElement.click();
         fixture.detectChanges();

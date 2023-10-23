@@ -1,10 +1,12 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Type } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { CartService } from '../cart/services/cart.service';
+import { StorageService } from '../shared/services/storage.service';
+import { MockStorageService } from '../test/mock-local-storage-service';
 
 import { ShippingComponent } from './shipping.component';
-import { CartService } from '../cart/services/cart.service';
 
 describe('ShippingComponent', () => {
   let component: ShippingComponent;
@@ -15,7 +17,8 @@ describe('ShippingComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [ShippingComponent],
-      providers: [CartService],
+      providers: [CartService, { provide: StorageService, useClass: MockStorageService }],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });
 
