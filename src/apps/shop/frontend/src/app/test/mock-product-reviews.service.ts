@@ -32,12 +32,7 @@ export class MockProductReviewsService extends ProductReviewsService {
   }
 
   public assertAddProductReviewHasBeenCalledWith(params: AddProductReviewParams){
-    expect(this.addProductReview).toHaveBeenCalledWith(jasmine.objectContaining({
-      productId: params.productId,
-      userId: params.userId,
-      rating: params.rating,
-      comment: params.comment
-    }));
+    expect(this.addProductReview).toHaveBeenCalledWith(params);
   }
 
 }

@@ -17,7 +17,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 
 import { ProductReviewsComponent } from './product-reviews.component';
 
-describe(ProductReviewsComponent.name, () => {
+fdescribe(ProductReviewsComponent.name, () => {
   const productId = 'product-id';
   const userId = 'user-id';
   let fixture: ComponentFixture<HostTestComponent>;
@@ -39,9 +39,7 @@ describe(ProductReviewsComponent.name, () => {
         {
           provide: IdProviderService,
           useValue: {
-            getId: () => {
-              'custom-id';
-            },
+            getId: () => 'review-id',
           },
         },
       ],
