@@ -2,7 +2,7 @@
     <form [formGroup]="reviewForm">
         <div class="row">
             <div class="col-md-12">
-                <star-rating [formControl]="ratingControl" formControlName="rating"></star-rating>
+                <star-rating formControlName="rating"></star-rating>
                 <mat-form-field>
                     <mat-label>Add your review: </mat-label>
                     <textarea class="form-control" formControlName="comment" placeholder="Place here your review" matInput
@@ -17,7 +17,7 @@
             <div class="col-sm-12">
                 <button mat-flat-button
                 type="button"
-                color="primary" type="button" (click)="addReview()" class="btn btn-primary float-end">
+                color="primary" type="button" (click)="addReview()" class="btn btn-primary float-end" data-test="add-review-btn">
                 <mat-icon mat-icon matTooltip="Save">save</mat-icon>
                     Send review
                 </button>

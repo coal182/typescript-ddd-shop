@@ -1,8 +1,8 @@
 <div class="rating">
-    <button mat-icon-button *ngFor="let star of stars" (click)="selectRating(star)">
+    <button mat-icon-button *ngFor="let star of stars; let i = index;" (click)="selectRating(star)" [attr.data-test]="'star-'+(i+1)">
         <mat-icon fontIcon="star" [class.filled]="star.active"></mat-icon>
     </button>
-    <button mat-icon-button (click)="resetRating()">
+    <button mat-icon-button (click)="resetRating()" data-test="reset-rating">
         <mat-icon fontIcon="close"></mat-icon>
     </button>
 </div>
