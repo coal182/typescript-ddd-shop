@@ -5,14 +5,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export abstract class UserService {
-  abstract getUsers(params: GetUsersParams): Observable<any>;
   abstract getUser(params: GetUserParams): Observable<any>;
   abstract putUser(params: PutUserParams): Observable<any>;
 }
 
-export interface GetUsersParams {
-  name: string;
-}
 export interface GetUserParams {
   id: string;
 }

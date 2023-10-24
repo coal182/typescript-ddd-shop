@@ -20,11 +20,9 @@ export class OrderListComponent implements OnInit {
   constructor(public orderService: HttpOrderService) {}
 
   ngOnInit() {
-    const params = {};
-
     this.isLoading = true;
 
-    this.orders$ = this.orderService.getOrders(params).pipe(
+    this.orders$ = this.orderService.getOrders().pipe(
       map((ord) => ord.data),
       tap((ord) => (this.isLoading = false))
     );

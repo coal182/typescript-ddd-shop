@@ -11,15 +11,10 @@ module.exports = function (config) {
       '@angular-devkit/build-angular/plugins/karma',
       'karma-spec-reporter',
     ],
-    client: {
-      clearContext: false, // leave Jasmine Spec Runner output visible in browser
-    },
-    coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, './coverage/angular-testing'),
-      reports: ['html', 'lcovonly', 'text-summary'],
-      fixWebpackSourcePaths: true,
-    },
     reporters: ['spec'],
+    specReporter: {
+      suppressSkipped: true,
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
