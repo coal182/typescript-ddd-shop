@@ -75,7 +75,7 @@ export class Cart extends AggregateRoot {
     this.record(new CartCleared({ aggregateId: this.id.value }));
   }
 
-  applyCartCreated(event: CartCreated) {
+  public applyCartCreated(event: CartCreated) {
     this.id = new CartId(event.aggregateId);
     this.userId = new CartUser(event.userId);
     this.items = [];
