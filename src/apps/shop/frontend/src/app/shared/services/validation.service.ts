@@ -45,6 +45,19 @@ export class ValidationService {
     }
   }
 
+  nameValidator(control) {
+    // RFC 2822 compliant regex
+    if (
+      control.value.match(
+        /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+      )
+    ) {
+      return null;
+    } else {
+      return { invalidName: true };
+    }
+  }
+
   emailValidator(control) {
     // RFC 2822 compliant regex
     if (

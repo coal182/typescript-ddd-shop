@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { StatusCodes } from 'http-status-codes';
 import { map, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ValidationService } from 'src/app/shared/services/validation.service';
 import Swal from 'sweetalert2';
 
-import { AuthService } from '../../shared/auth/auth.service';
+import { ValidationService } from 'src/app/shared/services/validation.service';
+
 import { User } from '../../shared/user';
 import { HttpUserService } from '../user-service/http-user.service';
 import { PutUserParams } from '../user-service/user.service';
@@ -23,25 +30,25 @@ export class UserProfileComponent implements OnInit {
   userIdFromRoute: string;
   profileForm: UntypedFormGroup;
   public isLoading = false;
-  public subscribedValidity = 'Unkwown';
-  namesRegex = new RegExp(
-    /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
-  );
   formattedMessage: string;
 
   constructor(
     public fb: UntypedFormBuilder,
     private route: ActivatedRoute,
-    public authService: AuthService,
     public userService: HttpUserService,
     public readonly validateFormService: ValidationService
   ) {
     this.profileForm = this.fb.group(
       {
-        firstname: ['', [Validators.required, Validators.pattern(this.namesRegex)]],
+        firstname: ['', [Validators.required, this.validateFormService.nameValidator]],
         lastname: [
           '',
-          [Validators.required, Validators.pattern(this.namesRegex), Validators.minLength(4), Validators.maxLength(20)],
+          [
+            Validators.required,
+            this.validateFormService.nameValidator,
+            Validators.minLength(4),
+            Validators.maxLength(20),
+          ],
         ],
         email: ['', [Validators.required, this.validateFormService.emailValidator]],
         dateOfBirth: ['', [Validators.required]],

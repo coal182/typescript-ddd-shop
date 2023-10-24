@@ -7,8 +7,8 @@ import { catchError, map } from 'rxjs/operators';
 import { Credentials } from 'src/app/store/login/state/model';
 
 import { environment } from '../../../environments/environment';
-import { User } from '../user';
 import { StorageService } from '../services/storage.service';
+import { User } from '../user';
 
 @Injectable({
   providedIn: 'root',
