@@ -97,6 +97,30 @@ const importerConfig = convict({
       default: 1000,
     },
   },
+  kafka: {
+    brokerConfig: {
+      clientId: {
+        format: String,
+        default: 'importer-client-id',
+      },
+      brokers: {
+        format: Array,
+        default: ['kafka:9092'],
+      },
+    },
+    producerConfig: {
+      transactionalId: {
+        format: String,
+        default: '',
+      },
+    },
+    consumerConfig: {
+      groupId: {
+        format: String,
+        default: 'importer-group-id',
+      },
+    },
+  },
   elastic: {
     url: {
       doc: 'The Elastic connection URL',

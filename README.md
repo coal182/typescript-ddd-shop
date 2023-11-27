@@ -78,3 +78,12 @@ UI:
 cd src/apps/shop/frontend
 npm run test
 ```
+
+Useful Kafka commands:
+
+```bash
+docker exec -it shop-kafka /bin/bash
+kafka-topics --bootstrap-server localhost:9092 --list
+kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic product_created --partition 0
+kafka-console-producer --broker-list localhost:9092 --topic product_created
+```

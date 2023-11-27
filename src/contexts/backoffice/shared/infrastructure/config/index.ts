@@ -98,6 +98,30 @@ const backofficeConfig = convict({
       default: 1000,
     },
   },
+  kafka: {
+    brokerConfig: {
+      clientId: {
+        format: String,
+        default: 'backoffice-client-id',
+      },
+      brokers: {
+        format: Array,
+        default: ['kafka:9092'],
+      },
+    },
+    producerConfig: {
+      transactionalId: {
+        format: String,
+        default: '',
+      },
+    },
+    consumerConfig: {
+      groupId: {
+        format: String,
+        default: 'backoffice-group-id',
+      },
+    },
+  },
 });
 
 backofficeConfig.loadFile([__dirname + '/default.json', __dirname + '/' + backofficeConfig.get('env') + '.json']);

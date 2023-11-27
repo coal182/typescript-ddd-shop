@@ -59,6 +59,7 @@
     "http-status-codes": "^2.2.0",
     "io-ts": "^2.2.20",
     "jsonwebtoken": "^8.5.1",
+    "kafkajs": "^2.2.4",
     "lodash": "^4.17.21",
     "module-alias": "^2.2.2",
     "mongodb": "^4.8.0",

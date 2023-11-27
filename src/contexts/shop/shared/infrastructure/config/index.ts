@@ -97,6 +97,30 @@ const shopConfig = convict({
       default: 1000,
     },
   },
+  kafka: {
+    brokerConfig: {
+      clientId: {
+        format: String,
+        default: 'shop-client-id',
+      },
+      brokers: {
+        format: Array,
+        default: ['kafka:9092'],
+      },
+    },
+    producerConfig: {
+      transactionalId: {
+        format: String,
+        default: '',
+      },
+    },
+    consumerConfig: {
+      groupId: {
+        format: String,
+        default: 'shop-group-id',
+      },
+    },
+  },
   elastic: {
     url: {
       doc: 'The Elastic connection URL',

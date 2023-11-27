@@ -2,12 +2,12 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import { DomainEventSubscribers } from '@infrastructure/event-bus/domain-event-subscribers';
-import { RabbitMqConnection } from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
+import { KafkaConnection } from '@infrastructure/event-bus/kafka/kafka-connection';
 import { CommandBus } from '@shared/domain/command-bus';
 import { EventBus } from '@shared/domain/event-bus';
 import { CreateUserCommand } from '@shop-backend/user/application/commands/create-user';
 
-import { ConfigureRabbitMQCommand } from './command/configure-rabbitmq-command';
+import { ConfigureKafkaCommand } from './command/configure-kafka-command';
 import { containerFactory } from './dependency-injection';
 import { FeedInventoryAggregator } from './feed-inventory-aggregator';
 import { FeedParserFromContentType } from './feed-parser-from-content-type';
@@ -16,10 +16,13 @@ import { getShopProductsFeed } from './get-shop-products-feed';
 (async () => {
   const container = await containerFactory();
 
-  await ConfigureRabbitMQCommand.run(container);
+  //await ConfigureRabbitMQCommand.run(container);
+  await ConfigureKafkaCommand.run(container);
   const eventBus = container.get<EventBus>('Importer.Shared.domain.EventBus');
-  const rabbitMQConnection = container.get<RabbitMqConnection>('Importer.Shared.RabbitMQConnection');
-  await rabbitMQConnection.connect();
+  // const rabbitMQConnection = container.get<RabbitMqConnection>('Importer.Shared.RabbitMQConnection');
+  // await rabbitMQConnection.connect();
+  const kafkaConnection = container.get<KafkaConnection>('Importer.Shared.KafkaConnection');
+  await kafkaConnection.connect();
 
   eventBus.addSubscribers(DomainEventSubscribers.from(container));
 
@@ -44,6 +47,7 @@ import { getShopProductsFeed } from './get-shop-products-feed';
   commandBus.dispatch(createUserCommand);
 
   setTimeout(() => {
-    rabbitMQConnection.close().then(process.exit(0));
+    //rabbitMQConnection.close().then(process.exit(0));
+    kafkaConnection.close().then(process.exit(0));
   }, 20000);
 })();

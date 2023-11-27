@@ -28,23 +28,23 @@ services:
 
   Backoffice.Shared.RabbitMQConfig:
     factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-config-factory
+      class: ../../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-config-factory
       main: RabbitMQConfigFactory
       method: 'createConfig'
 
-  Backoffice.Shared.domain.EventBus:
-    factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
-      main: RabbitMQEventBusFactory
-      method: 'create'
-    arguments:
-      [
-        '@Backoffice.Shared.DomainEventFailoverPublisher',
-        '@Backoffice.Shared.RabbitMQConnection',
-        '@Backoffice.Shared.RabbitMQqueueFormatter',
-        '@Backoffice.Shared.RabbitMQConfig',
-        '@Shared.Logger',
-      ]
+  # Backoffice.Shared.domain.EventBus:
+  #   factory:
+  #     class: ../../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
+  #     main: RabbitMQEventBusFactory
+  #     method: 'create'
+  #   arguments:
+  #     [
+  #       '@Backoffice.Shared.DomainEventFailoverPublisher',
+  #       '@Backoffice.Shared.RabbitMQConnection',
+  #       '@Backoffice.Shared.RabbitMQqueueFormatter',
+  #       '@Backoffice.Shared.RabbitMQConfig',
+  #       '@Shared.Logger',
+  #     ]
 
   Backoffice.Shared.RabbitMQQueueFormatter:
     class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
@@ -65,6 +65,40 @@ services:
     class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
     main: RabbitMQConfigurer
     arguments: ['@Backoffice.Shared.RabbitMQConnection', '@Backoffice.Shared.RabbitMQQueueFormatter']
+
+  Backoffice.Shared.KafkaConfig:
+    factory:
+      class: ../../../../../contexts/backoffice/shared/infrastructure/kafka/kafka-config-factory
+      main: KafkaConfigFactory
+      method: 'createConfig'
+
+  Backoffice.Shared.domain.EventBus:
+    factory:
+      class: ../../../../../contexts/backoffice/shared/infrastructure/kafka/kafka-event-bus-factory
+      main: KafkaEventBusFactory
+      method: 'create'
+    arguments:
+      [
+        '@Backoffice.Shared.DomainEventFailoverPublisher',
+        '@Backoffice.Shared.KafkaConnection',
+        '@Backoffice.Shared.KafkaTopicFormatter',
+        '@Shared.Logger',
+      ]
+
+  Backoffice.Shared.KafkaTopicFormatter:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
+    main: KafkaTopicFormatter
+    arguments: ['backoffice']
+
+  Backoffice.Shared.KafkaConnection:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-connection
+    main: KafkaConnection
+    arguments: ['@Backoffice.Shared.KafkaConfig']
+
+  Backoffice.Shared.KafkaConfigurer:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-configurer
+    main: KafkaConfigurer
+    arguments: ['@Backoffice.Shared.KafkaConnection', '@Backoffice.Shared.KafkaTopicFormatter']
 
   Backoffice.Shared.DomainEventFailoverPublisher:
     class: ../../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher

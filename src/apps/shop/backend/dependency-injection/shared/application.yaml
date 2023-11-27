@@ -32,19 +32,19 @@ services:
       main: RabbitMQConfigFactory
       method: 'createConfig'
 
-  Shop.Shared.domain.EventBus:
-    factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
-      main: RabbitMQEventBusFactory
-      method: 'create'
-    arguments:
-      [
-        '@Shop.Shared.DomainEventFailoverPublisher',
-        '@Shop.Shared.RabbitMQConnection',
-        '@Shop.Shared.RabbitMQqueueFormatter',
-        '@Shop.Shared.RabbitMQConfig',
-        '@Shared.Logger',
-      ]
+  # Shop.Shared.domain.EventBus:
+  #   factory:
+  #     class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
+  #     main: RabbitMQEventBusFactory
+  #     method: 'create'
+  #   arguments:
+  #     [
+  #       '@Shop.Shared.DomainEventFailoverPublisher',
+  #       '@Shop.Shared.RabbitMQConnection',
+  #       '@Shop.Shared.RabbitMQqueueFormatter',
+  #       '@Shop.Shared.RabbitMQConfig',
+  #       '@Shared.Logger',
+  #     ]
 
   Shop.Shared.RabbitMQQueueFormatter:
     class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
@@ -65,6 +65,40 @@ services:
     class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
     main: RabbitMQConfigurer
     arguments: ['@Shop.Shared.RabbitMQConnection', '@Shop.Shared.RabbitMQQueueFormatter']
+
+  Shop.Shared.KafkaConfig:
+    factory:
+      class: ../../../../../contexts/shop/shared/infrastructure/kafka/kafka-config-factory
+      main: KafkaConfigFactory
+      method: 'createConfig'
+
+  Shop.Shared.domain.EventBus:
+    factory:
+      class: ../../../../../contexts/shop/shared/infrastructure/kafka/kafka-event-bus-factory
+      main: KafkaEventBusFactory
+      method: 'create'
+    arguments:
+      [
+        '@Shop.Shared.DomainEventFailoverPublisher',
+        '@Shop.Shared.KafkaConnection',
+        '@Shop.Shared.KafkaTopicFormatter',
+        '@Shared.Logger',
+      ]
+
+  Shop.Shared.KafkaTopicFormatter:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
+    main: KafkaTopicFormatter
+    arguments: ['shop']
+
+  Shop.Shared.KafkaConnection:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-connection
+    main: KafkaConnection
+    arguments: ['@Shop.Shared.KafkaConfig']
+
+  Shop.Shared.KafkaConfigurer:
+    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-configurer
+    main: KafkaConfigurer
+    arguments: ['@Shop.Shared.KafkaConnection', '@Shop.Shared.KafkaTopicFormatter']
 
   Shop.Shared.DomainEventFailoverPublisher:
     class: ../../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher

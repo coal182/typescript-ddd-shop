@@ -9,8 +9,10 @@ services:
       - HOSTNAMERABBIT=rabbitmq
       - CLOUDAMQP_URL=amqp://rabbitmq:5672
     depends_on:
-      rabbitmq:
+      kafka:
         condition: service_healthy
+    #   rabbitmq:
+    #     condition: service_healthy
     working_dir: /app
     volumes:
       - ./:/app
@@ -31,7 +33,9 @@ services:
       - HOSTNAMERABBIT=rabbitmq
       - CLOUDAMQP_URL=amqp://rabbitmq:5672
     depends_on:
-      rabbitmq:
+      # rabbitmq:
+      #   condition: service_healthy
+      kafka:
         condition: service_healthy
       elasticsearch:
         condition: service_healthy
@@ -57,6 +61,8 @@ services:
     depends_on:
       shop_backend:
         condition: service_healthy
+      kafka:
+        condition: service_healthy
       backoffice_backend:
         condition: service_healthy
     working_dir: /app
@@ -78,17 +84,64 @@ services:
     ports:
       - 27018:27017
 
-  rabbitmq:
-    image: 'rabbitmq:3.8-management'
-    container_name: shop-rabbitmq
+  # rabbitmq:
+  #   image: 'rabbitmq:3.8-management'
+  #   container_name: shop-rabbitmq
+  #   ports:
+  #     - 5672:5672
+  #     - 15672:15672
+  #   healthcheck:
+  #       test: rabbitmq-diagnostics -q ping
+  #       interval: 10s
+  #       timeout: 10s
+  #       retries: 5
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.2.0
+    container_name: shop-zookeeper
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+  kafka:
+    image: confluentinc/cp-kafka:7.2.0
+    container_name: shop-kafka
+    hostname: localhost
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://localhost:9094,OUTSIDE://kafka:9092
+      KAFKA_LISTENERS: INSIDE://:9094,OUTSIDE://:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      ADVERTISED_HOST_NAME: kafka
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_DELETE_TOPIC_ENABLE: 'true'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_MIN_INSYNC_REPLICAS: 1
     healthcheck:
-        test: rabbitmq-diagnostics -q ping
-        interval: 10s
-        timeout: 10s
-        retries: 5
+      test: ["CMD", "kafka-topics", "--list", "--bootstrap-server", "localhost:9092"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+  cmak:
+    image: ghcr.io/eshepelyuk/dckr/cmak-3.0.0.5:latest
+    container_name: shop-cmak
+    restart: always
+    depends_on:
+      kafka:
+        condition: service_healthy
+    command:
+      - "-Dcmak.zkhosts=zookeeper:2181"
+      - "-DbasicAuthentication.enabled=true"
+      - "-DbasicAuthentication.username=username"
+      - "-DbasicAuthentication.password=password"
+    ports:
+      - "9000:9000"
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
