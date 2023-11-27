@@ -4,13 +4,13 @@ import { select, Store } from '@ngrx/store';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import Swal from 'sweetalert2';
 
+import { Cart } from '../cart/interfaces/cart';
+import { HttpCartService } from '../cart/services/http-cart.service';
 import { AuthService } from '../shared/auth/auth.service';
+import { StorageService } from '../shared/services/storage.service';
 import { LoginActions } from '../store/login/login.actions';
 import { LoginSelectors } from '../store/login/login.selectors';
 import { LoadingStatus } from '../store/metadata-types';
-import { Cart } from '../cart/interfaces/cart';
-import { HttpCartService } from '../cart/services/http-cart.service';
-import { StorageService } from '../shared/services/storage.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -23,19 +23,24 @@ export class TopBarComponent implements OnDestroy {
   public user_id = '';
   public cart_counter = 0;
 
-  constructor(public authService: AuthService, public store: Store, public router: Router, public cartService: HttpCartService, public storageService: StorageService) {}
+  constructor(
+    public authService: AuthService,
+    public store: Store,
+    public router: Router,
+    public cartService: HttpCartService,
+    public storageService: StorageService
+  ) {}
   ngOnInit() {
     this.user_id = this.storageService.getItem('user_id');
-    
+
     this.confirmLogin();
 
     if (this.user_id) {
       this.loadCart();
     }
-
   }
 
-  confirmLogin(){
+  confirmLogin() {
     this.store.pipe(select(LoginSelectors.selectLogin), takeUntil(this.onDestroy$)).subscribe((login) => {
       if (login.metadata.loadingStatus === LoadingStatus.Loaded) {
         if (login.access_token) {
@@ -47,7 +52,6 @@ export class TopBarComponent implements OnDestroy {
           this.loadCart();
           Swal.fire('Hello !', 'You have been signed up correctly! ', 'success');
         }
-        
       }
 
       if (login.metadata.loadingStatus === LoadingStatus.NotLoaded) {
@@ -62,7 +66,7 @@ export class TopBarComponent implements OnDestroy {
     });
   }
 
-  loadCart(){
+  loadCart() {
     this.cartService
       .getItems()
       .pipe(
