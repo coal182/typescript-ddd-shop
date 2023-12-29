@@ -68,9 +68,9 @@ export class KafkaConnection {
     await this.consumer.run({
       eachMessage: async ({ topic, partition, message, heartbeat, pause }) => {
         const subscriptionsByTopic = subscriptions.filter((s) => s.topic === topic);
-        subscriptionsByTopic.forEach((subscription) => {
-          subscription.onMessage({ topic, partition, message, heartbeat, pause });
-        });
+        for (const subscription of subscriptionsByTopic) {
+          await subscription.onMessage({ topic, partition, message, heartbeat, pause });
+        }
       },
     });
   }
