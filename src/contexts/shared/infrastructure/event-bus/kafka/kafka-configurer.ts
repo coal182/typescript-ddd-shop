@@ -14,7 +14,7 @@ export class KafkaConfigurer {
   }
 
   private async addTopic(subscriber: DomainEventSubscriber<DomainEvent>) {
-    const topic = this.topicNameFormatter.format(subscriber);
+    const topic = this.topicNameFormatter.formatFromSubscriber(subscriber);
 
     await this.connection.createTopic(topic);
   }

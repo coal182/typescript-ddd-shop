@@ -4,10 +4,18 @@ import { DomainEventSubscriber } from '../../../domain/domain-event-subscriber';
 export class KafkaTopicFormatter {
   constructor(private moduleName: string) {}
 
-  format(subscriber: DomainEventSubscriber<DomainEvent> | DomainEvent) {
-    const value = subscriber.constructor.name;
+  formatFromSubscriber(subscriber: DomainEventSubscriber<DomainEvent>) {
+    const value = subscriber.subscribedTo()[0].EVENT_NAME;
     const name = value
-      .replace('EventHandler', '')
+      .split(/(?=[A-Z])/)
+      .join('_')
+      .toLowerCase();
+    return `${name}`;
+  }
+
+  formatFromEvent(eventName: DomainEvent) {
+    const value = eventName.eventName;
+    const name = value
       .split(/(?=[A-Z])/)
       .join('_')
       .toLowerCase();
@@ -15,12 +23,12 @@ export class KafkaTopicFormatter {
   }
 
   formatRetry(subscriber: DomainEventSubscriber<DomainEvent>) {
-    const name = this.format(subscriber);
+    const name = this.formatFromSubscriber(subscriber);
     return `retry.${name}`;
   }
 
   formatDeadLetter(subscriber: DomainEventSubscriber<DomainEvent>) {
-    const name = this.format(subscriber);
+    const name = this.formatFromSubscriber(subscriber);
     return `dead_letter.${name}`;
   }
 }

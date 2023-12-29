@@ -37,7 +37,7 @@ export class KafkaEventBus implements EventBus {
     const consumerFactory = new KafkaConsumerFactory(deserializer, this.logger);
 
     const subscriptions = subscribers.items.map((subscriber) => {
-      const topicName = this.topicNameFormatter.format(subscriber);
+      const topicName = this.topicNameFormatter.formatFromSubscriber(subscriber);
       const kafkaConsumer = consumerFactory.build(subscriber, topicName);
 
       return { topic: topicName, onMessage: kafkaConsumer.onMessage.bind(kafkaConsumer) };
@@ -49,7 +49,7 @@ export class KafkaEventBus implements EventBus {
   async publish(events: Array<DomainEvent>): Promise<void> {
     for (const event of events) {
       try {
-        const topic = this.topicNameFormatter.format(event);
+        const topic = this.topicNameFormatter.formatFromEvent(event);
         const message = this.toMessage(event);
 
         await this.connection.publish({ topic, messages: [message] });
