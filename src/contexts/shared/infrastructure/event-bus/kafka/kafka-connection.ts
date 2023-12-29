@@ -60,16 +60,6 @@ export class KafkaConnection {
     await this.admin.disconnect();
   }
 
-  // async consume(topic: string, onMessage: (message: EachMessagePayload) => void) {
-  //   await this.consumer.subscribe({ topic, fromBeginning: true });
-
-  //   await this.consumer.run({
-  //     eachMessage: async ({ topic, partition, message, heartbeat, pause }) => {
-  //       onMessage({ topic, partition, message, heartbeat, pause });
-  //     },
-  //   });
-  // }
-
   async consume(subscriptions: { topic: string; onMessage: (message: EachMessagePayload) => void }[]) {
     const topics = subscriptions.map((subscription) => subscription.topic);
 

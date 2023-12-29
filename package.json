@@ -11,7 +11,7 @@
     "start": "node ./dist/src/apps/shop/backend/index.js",
     "dev:shop:backend": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/shop/backend/start.ts",
     "dev:backoffice:backend": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/backoffice/backend/start.ts",
-    "dev:importer": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/importer/index.ts",
+    "dev:importer": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/importer/start.ts",
     "lint": "eslint --fix .",
     "postinstall": "npm run build",
     "test": "mocha --config ./tests/.mocharc.json ${MOCHA_ARGS}",

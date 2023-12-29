@@ -36,6 +36,11 @@ const shopConfig = convict({
       default: 'super-secret-password',
     },
   },
+  messageBroker: {
+    doc: 'Enabled message broker',
+    format: ['kafka', 'rabbitmq'],
+    default: 'kafka',
+  },
   rabbitmq: {
     connectionSettings: {
       username: {
