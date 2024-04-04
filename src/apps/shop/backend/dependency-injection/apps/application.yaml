@@ -19,6 +19,11 @@ services:
     main: ProductReviewPostController
     arguments: ['@Shop.Shared.domain.CommandBus', '@Shared.Logger']
 
+  Apps.Shop.Backend.controllers.ProductReviewPutController:
+    class: ../../controllers/product-review/product-review-put-controller
+    main: ProductReviewPutController
+    arguments: ['@Shop.Shared.domain.CommandBus', '@Shared.Logger']
+
   Apps.Shop.Backend.controllers.ProductReviewGetByProductIdController:
     class: ../../controllers/product-review/product-review-get-by-product-id-controller
     main: ProductReviewGetByProductIdController

@@ -26,6 +26,13 @@ services:
     tags:
       - { name: 'commandHandler' }
 
+  Shop.ProductReviews.UpdateProductReviewCommandHandler:
+    class: ../../../../../contexts/shop/product-review/application/command-handlers/update-product-review-command-handler
+    main: UpdateProductReviewCommandHandler
+    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.ProductReviews.domain.ProductReviewEventStore']
+    tags:
+      - { name: 'commandHandler' }
+
   # Shop.ProductReviews.application.ProductReviewsFinder:
   #   class: ../../../../../contexts/shop/product-review/application/search-all/product-reviews-finder
   #   main: ProductReviewsFinder
@@ -54,6 +61,14 @@ services:
     class: ../../../../../contexts/shop/product-review/application/event-handlers/product-review-created-event-handler
     main: ProductReviewCreatedEventHandler
     arguments: ['@Shop.ProductReviews.domain.ProductReviewRepository']
+    tags:
+      - { name: 'domainEventSubscriber' }
+
+  Shop.ProductReviews.UpdateProductReviewOnProductReviewUpdated:
+    class: ../../../../../contexts/shop/product-review/application/event-handlers/product-review-updated-event-handler
+    main: ProductReviewUpdatedEventHandler
+    arguments:
+      ['@Shop.ProductReviews.domain.ProductReviewRepository', '@Shop.ProductReviews.domain.ProductReviewEventStore']
     tags:
       - { name: 'domainEventSubscriber' }
 
