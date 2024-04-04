@@ -24,7 +24,7 @@ export class CartClearedEventHandler implements DomainEventSubscriber<CartCleare
       throw new NotFoundException('Cart not found by its id');
     }
 
-    const cart = Cart.createEmptyCart(id);
+    const cart = Cart.initialize(id);
     cart.loadFromHistory(events);
     await this.repository.save(cart);
   }

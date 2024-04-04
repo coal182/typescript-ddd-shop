@@ -89,7 +89,7 @@ export class Order extends AggregateRoot {
     return order;
   }
 
-  static createEmptyOrder(id: OrderId): Order {
+  static initialize(id: OrderId): Order {
     const userId = new OrderUser(IdProvider.getId());
     const status = new OrderStatus(OrderStatusEnum.Initiated);
     const name = new OrderName('');

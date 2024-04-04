@@ -23,7 +23,7 @@ export class CreateOrderCommandHandler implements CommandHandler<CreateOrderComm
       throw new NotFoundException('Order not found by its id');
     }
 
-    const order = Order.createEmptyOrder(id);
+    const order = Order.initialize(id);
     order.loadFromHistory(events);
     order.create();
     const newDomainEvents = order.pullDomainEvents();

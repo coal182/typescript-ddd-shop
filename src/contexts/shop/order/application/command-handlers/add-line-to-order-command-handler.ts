@@ -24,7 +24,7 @@ export class AddLineToOrderCommandHandler implements CommandHandler<AddLineToOrd
       throw new NotFoundException('Order not found by its id');
     }
 
-    const order = Order.createEmptyOrder(id);
+    const order = Order.initialize(id);
     order.loadFromHistory(events);
     order.addLine(line);
     const newDomainEvents = order.pullDomainEvents();

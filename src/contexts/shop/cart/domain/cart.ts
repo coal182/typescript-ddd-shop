@@ -46,7 +46,7 @@ export class Cart extends AggregateRoot {
     return cart;
   }
 
-  static createEmptyCart(id: CartId): Cart {
+  static initialize(id: CartId): Cart {
     const userId = new CartUser(IdProvider.getId());
 
     return new Cart(id, userId);

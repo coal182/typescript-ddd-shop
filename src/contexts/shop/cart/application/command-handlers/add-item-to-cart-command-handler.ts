@@ -24,7 +24,7 @@ export class AddItemToCartCommandHandler implements CommandHandler<AddItemToCart
       throw new NotFoundException('Cart not found by its id');
     }
 
-    const cart = Cart.createEmptyCart(id);
+    const cart = Cart.initialize(id);
     cart.loadFromHistory(events);
     cart.addItem(item);
     const newDomainEvents = cart.pullDomainEvents();

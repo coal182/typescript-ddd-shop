@@ -23,7 +23,7 @@ export class ClearCartCommandHandler implements CommandHandler<ClearCartCommand>
       throw new NotFoundException('Cart not found by its id');
     }
 
-    const order = Cart.createEmptyCart(id);
+    const order = Cart.initialize(id);
     order.loadFromHistory(events);
     order.clear();
     const newDomainEvents = order.pullDomainEvents();

@@ -25,7 +25,7 @@ export class UpdateProductDescriptionCommandHandler implements CommandHandler<Up
       throw new NotFoundException('Product not found by its id');
     }
 
-    const product = Product.createEmptyProduct(id);
+    const product = Product.initialize(id);
     product.loadFromHistory(events);
     product.changeDescription(description);
     const newDomainEvents = product.pullDomainEvents();

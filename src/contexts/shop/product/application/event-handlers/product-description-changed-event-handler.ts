@@ -26,7 +26,7 @@ export class ProductDescriptionChangedEventHandler implements DomainEventSubscri
       throw new NotFoundException('Product not found by its id');
     }
 
-    const product = Product.createEmptyProduct(id);
+    const product = Product.initialize(id);
     product.loadFromHistory(events);
     product.changeDescription(description);
     await this.repository.save(product);

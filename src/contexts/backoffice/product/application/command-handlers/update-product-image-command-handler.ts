@@ -25,7 +25,7 @@ export class UpdateProductImageCommandHandler implements CommandHandler<UpdatePr
       throw new NotFoundException('Product not found by its id');
     }
 
-    const product = Product.createEmptyProduct(id);
+    const product = Product.initialize(id);
     product.loadFromHistory(events);
     product.changeImages(images);
     const newDomainEvents = product.pullDomainEvents();

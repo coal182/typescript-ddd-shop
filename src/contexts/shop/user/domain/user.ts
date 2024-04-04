@@ -86,7 +86,7 @@ export class User extends AggregateRoot {
     return user;
   }
 
-  static createEmptyUser(id: UserId): User {
+  static initialize(id: UserId): User {
     const email = new UserEmail('emptyuser@gmail.com');
     const firstname = new UserFirstname('');
     const lastname = new UserLastname('');

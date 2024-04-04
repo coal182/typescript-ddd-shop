@@ -26,7 +26,7 @@ export class UserPasswordChangedEventHandler implements DomainEventSubscriber<Us
       throw new NotFoundException('User not found by its id');
     }
 
-    const user = User.createEmptyUser(id);
+    const user = User.initialize(id);
     user.loadFromHistory(events);
     user.changePassword(password);
     await this.repository.save(user);

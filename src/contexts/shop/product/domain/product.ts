@@ -107,7 +107,7 @@ export class Product extends AggregateRoot {
     return product;
   }
 
-  static createEmptyProduct(id: ProductId): Product {
+  static initialize(id: ProductId): Product {
     const name = new ProductName('');
     const description = new ProductDescription('');
     const images: Array<ProductImage> = [];

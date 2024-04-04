@@ -30,7 +30,7 @@ export class CartItemAddedEventHandler implements DomainEventSubscriber<CartItem
       throw new NotFoundException('Cart not found by its id');
     }
 
-    const cart = Cart.createEmptyCart(id);
+    const cart = Cart.initialize(id);
     cart.loadFromHistory(events);
 
     const items = await Promise.all(

@@ -32,7 +32,7 @@ export class UserUpdatedEventHandler implements DomainEventSubscriber<UserUpdate
       throw new NotFoundException('User not found by its id');
     }
 
-    const user = User.createEmptyUser(id);
+    const user = User.initialize(id);
     user.loadFromHistory(events);
     user.updateUser(email, firstname, lastname, dateOfBirth);
     await this.repository.save(user);

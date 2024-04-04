@@ -30,7 +30,7 @@ export class UpdateUserCommandHandler implements CommandHandler<UpdateUserComman
       throw new NotFoundException('User not found by its id');
     }
 
-    const user = User.createEmptyUser(id);
+    const user = User.initialize(id);
     user.loadFromHistory(events);
     user.updateUser(email, firstname, lastname, dateOfBirth);
     const newDomainEvents = user.pullDomainEvents();

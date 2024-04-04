@@ -28,7 +28,7 @@ export class OrderCreatedEventHandler implements DomainEventSubscriber<OrderCrea
     if (!events) {
       throw new NotFoundException('Order not found by its id');
     }
-    const order = Order.createEmptyOrder(id);
+    const order = Order.initialize(id);
     order.loadFromHistory(events);
 
     const lines = await Promise.all(

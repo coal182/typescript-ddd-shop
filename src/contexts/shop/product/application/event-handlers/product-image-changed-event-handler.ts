@@ -26,7 +26,7 @@ export class ProductImageChangedEventHandler implements DomainEventSubscriber<Pr
       throw new NotFoundException('Product not found by its id');
     }
 
-    const product = Product.createEmptyProduct(id);
+    const product = Product.initialize(id);
     product.loadFromHistory(events);
     product.changeImages(images);
     await this.repository.save(product);

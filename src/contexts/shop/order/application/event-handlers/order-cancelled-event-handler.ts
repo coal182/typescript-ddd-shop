@@ -22,7 +22,7 @@ export class OrderCancelledEventHandler implements DomainEventSubscriber<OrderCa
     if (!events) {
       throw new NotFoundException('Order not found by its id');
     }
-    const order = Order.createEmptyOrder(id);
+    const order = Order.initialize(id);
     order.loadFromHistory(events);
 
     await this.repository.save(order);
