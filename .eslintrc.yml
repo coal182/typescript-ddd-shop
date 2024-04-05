@@ -10,7 +10,8 @@ extends:
 parser: '@typescript-eslint/parser'
 settings:
   import/resolver:
-    typescript: {}
+    typescript: { project: ['tsconfig.json', 'src/apps/shop/frontend/tsconfig.json'] }
+  workingDirectories: ['src', 'test', 'src/apps/shop/frontend']
 parserOptions:
   ecmaVersion: 11
   sourceType: module
