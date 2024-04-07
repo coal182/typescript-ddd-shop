@@ -8,7 +8,11 @@ li{
     padding: 10px;
     margin: 0;
     border: 1px solid #f0f0f0;
-    font-size: 12px
+    font-size: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 0;
+    justify-content: space-between;
 }
 
 li div {
@@ -18,12 +22,27 @@ li div {
 .user {
     font-size: 10px;
     color: #aaa;
+    width: 100%;
 }
 
-.rating div {
-    float: left;
+.rating {
+    width: 90% ;
 }
 
 .rating .filled {
     color: #ffc800;
+}
+
+.edit {
+    width: 10%;
+    cursor: pointer;
+    text-align: right;
+}
+
+.edit mat-icon{
+    font-size: 16px;
+}
+
+.comment{
+    width: 100%;
 }

@@ -1,51 +1,69 @@
 <div class="container">
-    <form [formGroup]="reviewForm">
-        <div class="row">
-            <div class="col-md-12">
-                <star-rating formControlName="rating"></star-rating>
-                <mat-form-field>
-                    <mat-label>Add your review: </mat-label>
-                    <textarea class="form-control" formControlName="comment" placeholder="Place here your review" matInput
-                    cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize"
-                    cdkAutosizeMinRows="5"
-                    cdkAutosizeMaxRows="20"></textarea>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <button mat-flat-button
-                type="button"
-                color="primary" type="button" (click)="addReview()" class="btn btn-primary float-end" data-test="add-review-btn">
-                <mat-icon mat-icon matTooltip="Save">save</mat-icon>
-                    Send review
-                </button>
-            </div>
-        </div>
-    </form>
-
-    <!--
-    <p>value: {{reviewForm.value | json}}</p>
-    <p>status: {{reviewForm.status | json}}</p>
-    <p>errors: {{reviewForm.errors | json}}</p>
-    <p>errors rating: {{reviewForm.get('rating').errors | json}}</p>
-    -->
-
+  <form [formGroup]="reviewForm" *ngIf="shouldShowForm">
     <div class="row">
-        <div class="col-md-12">
-            <ul *ngFor="let review of reviews">
-                <li>
-                    <div class="rating">
-                        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-                            <mat-icon fontIcon="star" [class.filled]="star <= review.rating"></mat-icon>
-                        </ng-container>
-                    </div>
-                    <div class="date">{{ review.createdAt | date: "YYYY-MM-dd hh:mm" }}</div>
-                    <div class="user">{{ review.userId }}</div>
-                    <div class="comment">{{ review.comment }}</div>
-                </li>
-            </ul>
-        </div>
+      <div class="col-md-12">
+        <star-rating formControlName="rating"></star-rating>
+        <mat-form-field>
+          <mat-label>Add your review: </mat-label>
+          <textarea
+            class="form-control"
+            formControlName="comment"
+            placeholder="Place here your review"
+            matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="5"
+            cdkAutosizeMaxRows="20"
+          ></textarea>
+          <mat-error *ngIf="invalidInput('comment')">{{ commentErrorMsg }}</mat-error>
+        </mat-form-field>
+      </div>
     </div>
+    <br />
+    <div class="row">
+      <div class="col-sm-12">
+        <button
+          mat-flat-button
+          type="submit"
+          color="primary"
+          (click)="saveReview()"
+          class="btn btn-primary float-end"
+          data-test="save-review-btn"
+        >
+          <mat-icon mat-icon matTooltip="Save">save</mat-icon>
+          Send review
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- 
+  <p>value: {{reviewForm.value | json}}</p>
+  <p>status: {{reviewForm.status | json}}</p>
+  <p>pristine: {{reviewForm.pristine| json}}</p>
+  <p>errors: {{reviewForm.errors | json}}</p>
+  <p>invalid input comment: {{invalidInput('comment')}}</p>
+  <p>invalid comment: {{reviewForm.get('comment').invalid | json}}</p>
+  <p>errors comment: {{reviewForm.get('comment').errors | json}}</p>
+  <p>invalid rating: {{reviewForm.get('rating').invalid | json}}</p>
+  <p>errors rating: {{reviewForm.get('rating').errors | json}}</p> 
+  -->
+    
+  <div class="row">
+    <div class="col-md-12">
+      <ul *ngFor="let review of reviews">
+        <li>
+          <div class="rating">
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+              <mat-icon fontIcon="star" [class.filled]="star <= review.rating"></mat-icon>
+            </ng-container>
+          </div>
+          <div class="edit" *ngIf="review.userId === userId"><mat-icon (click)="edit(review)" data-test="edit-review-btn">edit</mat-icon></div>
+          <div class="user">{{ review.userId }}</div>
+          <div class="date">{{ review.createdAt | date : 'YYYY-MM-dd hh:mm' }}</div>
+          <div class="comment">{{ review.comment }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

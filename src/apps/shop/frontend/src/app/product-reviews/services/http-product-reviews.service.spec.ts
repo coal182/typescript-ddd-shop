@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { ProductReviewsResponse } from '../interfaces/product-reviews.interface';
 
 import { HttpProductReviewsService } from './http-product-reviews.service';
-import { AddProductReviewParams, ProductReviewsService } from './product-reviews.service';
+import { ProductReviewBody, ProductReviewsService } from './product-reviews.service';
 
 describe(HttpProductReviewsService.name, () => {
   const productId = 'product-id';
@@ -34,7 +34,7 @@ describe(HttpProductReviewsService.name, () => {
     mockProductReviewsResponse = getMockedProductReviewsResponse();
 
     it('should send a GET request with the product id to fetch its reviews', () => {
-      service.getProductReviews(productId).subscribe((productReviews) => {
+      service.get(productId).subscribe((productReviews) => {
         expect(productReviews.status).toBe(HttpStatusCode.Ok);
         expect(productReviews.data.length).toBe(2);
         expect(productReviews).toEqual(mockProductReviewsResponse);
@@ -48,7 +48,7 @@ describe(HttpProductReviewsService.name, () => {
   });
 
   describe('when asked to add a product review', () => {
-    const productReviewToAdd: AddProductReviewParams = {
+    const productReviewToAdd: ProductReviewBody = {
       id: 'product-review-id',
       productId,
       userId: 'user-id',
@@ -57,7 +57,7 @@ describe(HttpProductReviewsService.name, () => {
     };
 
     it('should send a POST request with the correct data', () => {
-      service.addProductReview(productReviewToAdd).subscribe();
+      service.create(productReviewToAdd).subscribe();
 
       const req = httpMock.expectOne((request) => request.url === `${environment.apiUrl}product-review`);
       expect(req.request.method).toBe('POST');

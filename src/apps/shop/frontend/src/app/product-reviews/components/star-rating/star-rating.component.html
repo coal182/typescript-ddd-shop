@@ -5,4 +5,7 @@
     <button mat-icon-button (click)="resetRating()" data-test="reset-rating">
         <mat-icon fontIcon="close"></mat-icon>
     </button>
+
+    <mat-error *ngIf="showError">{{ errorMsg }}</mat-error>
+
 </div>

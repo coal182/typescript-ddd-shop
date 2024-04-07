@@ -1,12 +1,5 @@
-import { Component, forwardRef } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  ValidationErrors,
-  Validator,
-} from '@angular/forms';
+import { Component, Optional, Self } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { noop } from 'rxjs';
 
 import { NoOp, OnChangeFn } from 'src/app/shared/utils';
@@ -22,24 +15,39 @@ export interface RatingStar {
   selector: 'star-rating',
   templateUrl: 'star-rating.component.html',
   styleUrls: ['star-rating.component.css'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => StarRatingComponent),
-      multi: true,
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => StarRatingComponent),
-      multi: true,
-    },
-  ],
 })
-export class StarRatingComponent implements ControlValueAccessor, Validator {
+export class StarRatingComponent implements ControlValueAccessor {
   private onChange: OnChangeFn<Rating> = noop;
   private onTouched: () => void = noop;
 
   private rating = 0;
+
+  public get myControl(): NgControl {
+    return this.control;
+  }
+
+  public get invalid(): boolean {
+    return this.control ? this.control.invalid : false;
+  }
+
+  public get showError(): boolean {
+    if (!this.control) {
+      return false;
+    }
+
+    const { dirty, touched } = this.control;
+
+    return this.invalid ? dirty || touched : false;
+  }
+
+  public get errorMsg(): string {
+    const errors = this.control?.errors;
+    if (errors?.['min']) {
+      return 'You must select at least one star';
+    }
+
+    return '';
+  }
 
   public stars: Array<RatingStar> = [
     { rating: 1, active: false },
@@ -49,10 +57,15 @@ export class StarRatingComponent implements ControlValueAccessor, Validator {
     { rating: 5, active: false },
   ];
 
+  public constructor(@Self() @Optional() private control: NgControl) {
+    this.control.valueAccessor = this;
+  }
+
   public writeValue(data: Rating): void {
     if (!data) {
       this.resetRating();
     }
+    this.renderStars({ active: true, rating: data });
     this.rating = data;
   }
 
@@ -64,13 +77,14 @@ export class StarRatingComponent implements ControlValueAccessor, Validator {
     this.onTouched = fn;
   }
 
-  public validate(control: AbstractControl): ValidationErrors | null {
-    const error = control.value !== 0 ? null : { invalidMinimumRating: true };
-    return error;
+  public selectRating(selectedStar: RatingStar): void {
+    this.rating = selectedStar.rating;
+    this.renderStars(selectedStar);
+    this.onTouched();
+    this.onChange(this.rating);
   }
 
-  public selectRating(selectedStar): void {
-    this.rating = selectedStar.rating;
+  private renderStars(selectedStar: RatingStar) {
     this.stars = this.stars.map((star) => {
       if (star.rating <= selectedStar.rating) {
         star.active = true;
@@ -79,8 +93,6 @@ export class StarRatingComponent implements ControlValueAccessor, Validator {
       }
       return star;
     });
-    this.onTouched();
-    this.onChange(this.rating);
   }
 
   public resetRating() {

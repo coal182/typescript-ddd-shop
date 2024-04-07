@@ -7,11 +7,12 @@ import { ProductReviewsResponse } from '../interfaces/product-reviews.interface'
   providedIn: 'root',
 })
 export abstract class ProductReviewsService {
-  public abstract getProductReviews(productId: string): Observable<ProductReviewsResponse>;
-  public abstract addProductReview(params: AddProductReviewParams): Observable<void>;
+  public abstract get(productId: string): Observable<ProductReviewsResponse>;
+  public abstract create(params: ProductReviewBody): Observable<void>;
+  public abstract update(params: ProductReviewBody): Observable<void>;
 }
 
-export interface AddProductReviewParams {
+export interface ProductReviewBody {
   id: string;
   productId: string;
   userId: string;

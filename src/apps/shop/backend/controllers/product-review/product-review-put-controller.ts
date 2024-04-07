@@ -22,7 +22,6 @@ export class ProductReviewPutController {
         req.body,
         updateProductReviewCodec
       );
-      console.log('📌 ~ req.body:', req.body);
 
       const updateProductReviewCommand = new UpdateProductReviewCommand(id, productId, userId, rating, comment);
       await this.commandBus.dispatch(updateProductReviewCommand);
