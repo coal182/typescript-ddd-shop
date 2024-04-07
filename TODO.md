@@ -2,9 +2,14 @@
 
 ## UI
 
-- [ ] Implement Product Reviews
-- [ ] Develope frontend for backoffice
+- [x] Implement Product Reviews
 - [ ] User registration
+- [ ] Addresses management
+- [ ] Wishlists management
+- [ ] Payment Gateway
+- [ ] Categories/Brands filtering
+- [ ] Infinite Scroll
+- [ ] Frontend for backoffice
 
 ## Shop Backend
 
@@ -14,8 +19,8 @@
 
 ## Backoffice Backend
 
-- [ ] Kafka as message broker for backoffice
+- [x] Kafka as message broker for backoffice
 
 ## Optimizations
 
-- [ ] Run acceptance test of backoffice and shop separately
+- [x] Run acceptance test of backoffice and shop separately
