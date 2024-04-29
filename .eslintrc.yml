@@ -43,8 +43,8 @@ rules:
       alphabetize:
         order: asc
         caseInsensitive: true
-  no-return-assign:
-    - warn
+  '@typescript-eslint/explicit-function-return-type':
+    - error
   '@typescript-eslint/no-explicit-any':
     - off
   '@typescript-eslint/explicit-module-boundary-types':
