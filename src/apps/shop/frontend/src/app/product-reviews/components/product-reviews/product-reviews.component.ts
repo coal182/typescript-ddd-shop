@@ -1,7 +1,6 @@
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, Input, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject, take } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { IdProviderService } from 'src/app/shared/services/id-provider.service';
 import { PopupService } from 'src/app/shared/services/popup/popup-service';
@@ -16,7 +15,7 @@ type ProductReviewForm = FormGroup<{
   comment: FormControl<string>;
 }>;
 
-interface ProductReviewFormData {
+export interface ProductReviewFormData {
   id: string | null;
   rating: number;
   comment: string;
@@ -38,15 +37,15 @@ export class ProductReviewsComponent implements OnInit, OnDestroy {
 
   public reviews: ProductReview[];
 
+  public rating: FormControl<number | null> = new FormControl<number>(0, [Validators.required]);
+
   public reviewForm: ProductReviewForm = this.fb.group({
     id: [null],
-    rating: [0, [Validators.min(1)]],
+    rating: this.rating,
     comment: new FormControl<string>('', [Validators.required, Validators.maxLength(1000)]),
   });
 
   public shouldShowForm = false;
-
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
     private productReviewsService: ProductReviewsService,
@@ -71,7 +70,7 @@ export class ProductReviewsComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  public invalidInput(inputName: string) {
+  public invalidInput(inputName: string): boolean {
     return this.reviewForm.controls[inputName].invalid;
   }
 
@@ -105,12 +104,12 @@ export class ProductReviewsComponent implements OnInit, OnDestroy {
       };
 
       this.productReviewsService.update(updateReviewParams).subscribe({
-        next: (res) => {
+        next: () => {
           this.popupService.open('Your review has been updated', '', 'success');
           this.resetForm();
           this.loadProductReviews();
         },
-        error: (err) => {
+        error: () => {
           this.popupService.open('There has been an error updating your review', '', 'error');
         },
       });
@@ -124,45 +123,38 @@ export class ProductReviewsComponent implements OnInit, OnDestroy {
     };
 
     this.productReviewsService.create(addReviewParams).subscribe({
-      next: (res) => {
+      next: () => {
         this.popupService.open('Your review has been sent', '', 'success');
         this.resetForm();
         this.loadProductReviews();
       },
-      error: (err) => {
+      error: () => {
         this.popupService.open('There has been an error saving your review', '', 'error');
       },
     });
   }
 
-  public edit(review: ProductReview) {
+  public edit(review: ProductReview): void {
     this.reviewForm.patchValue({ id: review.id, rating: review.rating, comment: review.comment });
     this.shouldShowForm = true;
   }
 
-  private resetForm() {
+  private resetForm(): void {
     this.reviewForm.reset(this.defaultFormValue);
     // Object.keys(this.reviewForm.controls).forEach((key) => {
     //   this.reviewForm.controls[key].setErrors(null);
     // });
   }
 
-  private triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
-    this.ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
-  }
-
-  private loadProductReviews() {
+  private loadProductReviews(): void {
     this.productReviewsService.get(this.productId).subscribe((res) => {
       this.reviews = res.data;
 
       this.handleFormVisibility();
-
-      this.triggerResize();
     });
   }
 
-  private handleFormVisibility() {
+  private handleFormVisibility(): void {
     if (this.reviews.some((review) => review.userId === this.userId)) {
       this.shouldShowForm = false;
     } else {

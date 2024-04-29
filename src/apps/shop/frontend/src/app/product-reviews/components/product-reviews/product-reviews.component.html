@@ -1,8 +1,8 @@
 <div class="container">
-  <form [formGroup]="reviewForm" *ngIf="shouldShowForm">
+  <form [formGroup]="reviewForm" *ngIf="shouldShowForm" data-test="review-form">
     <div class="row">
       <div class="col-md-12">
-        <star-rating formControlName="rating"></star-rating>
+        <coal-star-rating [formControl]="rating"></coal-star-rating>
         <mat-form-field>
           <mat-label>Add your review: </mat-label>
           <textarea
@@ -10,10 +10,7 @@
             formControlName="comment"
             placeholder="Place here your review"
             matInput
-            cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="5"
-            cdkAutosizeMaxRows="20"
+            rows="4"
           ></textarea>
           <mat-error *ngIf="invalidInput('comment')">{{ commentErrorMsg }}</mat-error>
         </mat-form-field>
