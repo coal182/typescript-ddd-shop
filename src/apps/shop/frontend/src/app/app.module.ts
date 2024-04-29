@@ -16,14 +16,14 @@ import { OrderListComponent } from './orders/pages/order-list/order-list.compone
 import { ProductsModule } from './products/products.module';
 import { AuthInterceptor } from './shared/auth/authconfig.interceptor';
 import { IdProviderService } from './shared/services/id-provider.service';
+import { PopupService } from './shared/services/popup/popup-service';
+import { SwalPopupService } from './shared/services/popup/swal-popup-service';
 import { ValidationService } from './shared/services/validation.service';
 import { SharedModule } from './shared/shared.module';
 import { LoginEffects } from './store/login/login.effects';
 import { loginReducer } from './store/login/login.reducer';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
-import { PopupService } from './shared/services/popup/popup-service';
-import { SwalPopupService } from './shared/services/popup/swal-popup-service';
 
 @NgModule({
   imports: [
@@ -55,7 +55,7 @@ import { SwalPopupService } from './shared/services/popup/swal-popup-service';
       useClass: AuthInterceptor,
       multi: true,
     },
-    {provide: PopupService, useClass: SwalPopupService},
+    { provide: PopupService, useClass: SwalPopupService },
     ValidationService,
     IdProviderService,
   ],
