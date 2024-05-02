@@ -159,6 +159,10 @@ export class RabbitMqConnection {
   }
 
   private incrementRedeliveryCount(message: ConsumeMessage) {
+    if(!message.properties.headers) {
+      throw new Error("There is no headers in the rabbitmq message properties");
+    }
+
     if (this.hasBeenRedelivered(message)) {
       const count = parseInt(message.properties.headers['redelivery_count']);
       message.properties.headers['redelivery_count'] = count + 1;
@@ -170,6 +174,6 @@ export class RabbitMqConnection {
   }
 
   private hasBeenRedelivered(message: ConsumeMessage) {
-    return message.properties.headers['redelivery_count'] !== undefined;
+    return message.properties.headers?.['redelivery_count'] !== undefined;
   }
 }
