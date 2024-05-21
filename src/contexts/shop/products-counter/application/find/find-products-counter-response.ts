@@ -1,7 +1,7 @@
 export class FindProductsCounterResponse {
-  readonly total: number;
+    readonly total: number;
 
-  constructor(total: number) {
-    this.total = total;
-  }
+    constructor(total: number) {
+        this.total = total;
+    }
 }

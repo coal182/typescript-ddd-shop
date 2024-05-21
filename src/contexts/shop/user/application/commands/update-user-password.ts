@@ -1,7 +1,10 @@
-import { Command } from '@shared/domain/command';
+import {Command} from '@shared/domain/command';
 
 export class UpdateUserPasswordCommand extends Command {
-  constructor(public readonly id: string, public readonly password: string) {
-    super();
-  }
+    constructor(
+        public readonly id: string,
+        public readonly password: string,
+    ) {
+        super();
+    }
 }

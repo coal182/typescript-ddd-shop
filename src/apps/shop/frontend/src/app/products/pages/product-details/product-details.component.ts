@@ -1,21 +1,20 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { StatusCodes } from 'http-status-codes';
-import { map, Observable, Subject, throwError } from 'rxjs';
-import { catchError, tap, takeUntil } from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {ActivatedRoute} from '@angular/router';
+import {select, Store} from '@ngrx/store';
+import {StatusCodes} from 'http-status-codes';
+import {map, Observable, Subject, throwError} from 'rxjs';
+import {catchError, tap, takeUntil} from 'rxjs/operators';
+import {CartItem} from 'src/app/cart/interfaces/cart';
+import {LoadingStatus} from 'src/app/store/metadata-types';
+import {ProductsActions} from 'src/app/store/products/products.actions';
+import {ProductSelectors} from 'src/app/store/products/products.selectors';
 import Swal from 'sweetalert2';
 
-import { CartItem } from 'src/app/cart/interfaces/cart';
-import { LoadingStatus } from 'src/app/store/metadata-types';
-import { ProductsActions } from 'src/app/store/products/products.actions';
-import { ProductSelectors } from 'src/app/store/products/products.selectors';
-
-import { AlertDialogComponent } from '../../../alert-dialog/alert-dialog.component';
-import { HttpCartService } from '../../../cart/services/http-cart.service';
-import { HttpProductService } from '../../services/http-product.service';
+import {AlertDialogComponent} from '../../../alert-dialog/alert-dialog.component';
+import {HttpCartService} from '../../../cart/services/http-cart.service';
+import {HttpProductService} from '../../services/http-product.service';
 
 @Component({
   selector: 'app-product-details',
@@ -45,11 +44,11 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   );
 
   constructor(
-    private route: ActivatedRoute,
-    public productService: HttpProductService,
-    private cartService: HttpCartService,
-    private readonly dialog: MatDialog,
-    private store: Store
+        private route: ActivatedRoute,
+        public productService: HttpProductService,
+        private cartService: HttpCartService,
+        private readonly dialog: MatDialog,
+        private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +56,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     const routeParams = this.route.snapshot.paramMap;
     const productIdFromRoute: string = routeParams.get('productId');
 
-    const params = { id: productIdFromRoute };
+    const params = {id: productIdFromRoute};
 
     this.isLoading = true;
 
@@ -73,7 +72,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.product$
       .pipe(
         takeUntil(this.onDestroy$),
-        map((pro): CartItem => ({ product: pro, qty: 1, price: pro.price }))
+        map((pro): CartItem => ({product: pro, qty: 1, price: pro.price}))
       )
       .subscribe((item: CartItem) => {
         this.cartService
@@ -110,7 +109,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {
       const dialogRef = this.dialog.open(AlertDialogComponent, {
-        data: { title: 'Sharing Product', msg: 'The product has been shared!' },
+        data: {title: 'Sharing Product', msg: 'The product has been shared!'},
       });
 
       this.isLoading = false;

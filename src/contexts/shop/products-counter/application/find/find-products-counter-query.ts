@@ -1,3 +1,3 @@
-import { Query } from '@shared/domain/query';
+import {Query} from '@shared/domain/query';
 
 export class FindProductsCounterQuery implements Query {}

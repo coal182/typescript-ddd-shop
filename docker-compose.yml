@@ -3,7 +3,7 @@ version: '2.1'
 services:
 
   shop_backend:
-    image: node:lts-alpine3.18
+    image: node:20.9-alpine
     container_name: shop-backend
     environment:
       - HOSTNAMERABBIT=rabbitmq
@@ -27,7 +27,7 @@ services:
     command: sh -c "npm install && npm run dev:shop:backend"
 
   backoffice_backend:
-    image: node:lts-alpine3.18
+    image: node:20.9-alpine
     container_name: backoffice-backend
     environment:
       - HOSTNAMERABBIT=rabbitmq
@@ -35,6 +35,8 @@ services:
     depends_on:
       # rabbitmq:
       #   condition: service_healthy
+      shop_backend:
+        condition: service_healthy
       kafka:
         condition: service_healthy
       elasticsearch:
@@ -53,7 +55,7 @@ services:
     command: sh -c "npm run dev:backoffice:backend"
 
   shop_importer:
-    image: node:lts-alpine3.18
+    image: node:20.9-alpine
     container_name: shop-importer
     environment:
       - HOSTNAMERABBIT=rabbitmq
@@ -176,7 +178,7 @@ services:
       - 5601:5601
 
   shop_frontend:
-    image: node:18.17-alpine
+    image: node:20.9-alpine
     container_name: shop-frontend
     working_dir: /app
     volumes:

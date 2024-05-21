@@ -1,7 +1,7 @@
-import { MotherCreator } from './mother-creator';
+import {MotherCreator} from './mother-creator';
 
 export class EmailMother {
-  static random(): string {
-    return MotherCreator.random().internet.email();
-  }
+    static random(): string {
+        return MotherCreator.random().internet.email();
+    }
 }

@@ -60,3 +60,6 @@ baseline.json
 
 # Assets products
 src/assets/images/products
+
+# Angular
+.nx/

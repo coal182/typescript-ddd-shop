@@ -1,36 +1,36 @@
-import { OrderBy } from './order-by';
-import { OrderType, OrderTypes } from './order-type';
+import {OrderBy} from './order-by';
+import {OrderType, OrderTypes} from './order-type';
 
 export class Order {
-  readonly orderBy: OrderBy;
-  readonly orderType: OrderType;
+    readonly orderBy: OrderBy;
+    readonly orderType: OrderType;
 
-  constructor(orderBy: OrderBy, orderType: OrderType) {
-    this.orderBy = orderBy;
-    this.orderType = orderType;
-  }
-
-  static fromValues(orderBy?: string, orderType?: string): Order {
-    if (!orderBy) {
-      return Order.none();
+    constructor(orderBy: OrderBy, orderType: OrderType) {
+        this.orderBy = orderBy;
+        this.orderType = orderType;
     }
 
-    return new Order(new OrderBy(orderBy), OrderType.fromValue(orderType || OrderTypes.ASC));
-  }
+    static fromValues(orderBy?: string, orderType?: string): Order {
+        if (!orderBy) {
+            return Order.none();
+        }
 
-  static none(): Order {
-    return new Order(new OrderBy(''), new OrderType(OrderTypes.NONE));
-  }
+        return new Order(new OrderBy(orderBy), OrderType.fromValue(orderType || OrderTypes.ASC));
+    }
 
-  static desc(orderBy: string): Order {
-    return new Order(new OrderBy(orderBy), new OrderType(OrderTypes.DESC));
-  }
+    static none(): Order {
+        return new Order(new OrderBy(''), new OrderType(OrderTypes.NONE));
+    }
 
-  static asc(orderBy: string): Order {
-    return new Order(new OrderBy(orderBy), new OrderType(OrderTypes.ASC));
-  }
+    static desc(orderBy: string): Order {
+        return new Order(new OrderBy(orderBy), new OrderType(OrderTypes.DESC));
+    }
 
-  public hasOrder() {
-    return !this.orderType.isNone();
-  }
+    static asc(orderBy: string): Order {
+        return new Order(new OrderBy(orderBy), new OrderType(OrderTypes.ASC));
+    }
+
+    public hasOrder(): boolean {
+        return !this.orderType.isNone();
+    }
 }

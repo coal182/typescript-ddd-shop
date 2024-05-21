@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable, map, of, tap } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {Store, select} from '@ngrx/store';
+import {Observable, map, of, tap} from 'rxjs';
+import {LoadingStatus} from 'src/app/store/metadata-types';
+import {ProductsActions} from 'src/app/store/products/products.actions';
+import {ProductSelectors} from 'src/app/store/products/products.selectors';
+import {ProductsCountActions} from 'src/app/store/products-count/products-count.actions';
+import {ProductsCountSelectors} from 'src/app/store/products-count/products-count.selectors';
 
-import { ProductsActions } from 'src/app/store/products/products.actions';
-import { Product } from '../../interfaces/products.interface';
-import { LoadingStatus } from 'src/app/store/metadata-types';
-import { ProductSelectors } from 'src/app/store/products/products.selectors';
-import { ProductsCountSelectors } from 'src/app/store/products-count/products-count.selectors';
-import { ProductsCountActions } from 'src/app/store/products-count/products-count.actions';
+import {Product} from '../../interfaces/products.interface';
 
 @Component({
   selector: 'app-product-list',
@@ -25,14 +25,14 @@ export class ProductListComponent implements OnInit {
     this.getProductsCount();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const params = {}; // TODO: add params query to the store action
 
     this.store.dispatch(ProductsActions.fetchProducts());
     this.store.dispatch(ProductsCountActions.fetchProductsCount());
   }
 
-  getProducts(){
+  getProducts(): void {
     this.products$ = this.store.pipe(
       select(ProductSelectors.selectProducts),
       tap((products) => {
@@ -52,14 +52,14 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  getProductsCount(){
+  getProductsCount(): void {
     this.productsCount$ = this.store.pipe(
       select(ProductsCountSelectors.selectProductsCount),
       map((productsCount) => productsCount.count)
-    )
+    );
   }
 
-  onNotify() {
+  onNotify(): void {
     window.alert('You will be notified when the product goes on sale');
   }
 }

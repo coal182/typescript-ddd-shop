@@ -1,7 +1,19 @@
-import { StatusCodes } from 'http-status-codes';
+import {StatusCodes} from 'http-status-codes';
 
-export const ok = (message: string, data: any) => ({
-  status: StatusCodes.OK,
-  message: message || 'Success',
-  data,
+export interface ApiResponse {
+    status: StatusCodes;
+    message: string;
+    data: Record<string, unknown>;
+}
+
+export const ok = (message: string, data?: any): ApiResponse => ({
+    status: StatusCodes.OK,
+    message: message || 'Success',
+    data,
+});
+
+export const created = (message: string, data?: any): ApiResponse => ({
+    status: StatusCodes.CREATED,
+    message: message || 'Success',
+    data,
 });

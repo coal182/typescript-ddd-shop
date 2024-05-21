@@ -1,12 +1,12 @@
-import { OrderTotal } from 'src/contexts/shop/order/domain/order-total';
-import { IntegerMother } from 'tests/contexts/shared/integer-mother';
+import {OrderTotal} from 'src/contexts/shop/order/domain/order-total';
+import {IntegerMother} from 'tests/contexts/shared/integer-mother';
 
 export class OrderTotalMother {
-  static create(value: number): OrderTotal {
-    return new OrderTotal(value);
-  }
+    static create(value: number): OrderTotal {
+        return new OrderTotal(value);
+    }
 
-  static random(): OrderTotal {
-    return this.create(IntegerMother.random());
-  }
+    static random(): OrderTotal {
+        return this.create(IntegerMother.random());
+    }
 }

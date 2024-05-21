@@ -1,24 +1,23 @@
-import { expect } from 'chai';
-import { spy } from 'sinon';
-
-import { Command } from '@shared/domain/command';
-import { CommandBus } from '@shared/domain/command-bus';
+import {Command} from '@shared/domain/command';
+import {CommandBus} from '@shared/domain/command-bus';
+import {expect} from 'chai';
+import {spy} from 'sinon';
 
 export default class CommandBusMock implements CommandBus {
-  private dispatchSpy = spy();
+    private dispatchSpy = spy();
 
-  async dispatch(command: Command[]) {
-    this.dispatchSpy(command);
-  }
+    async dispatch(command: Command[]): Promise<void> {
+        this.dispatchSpy(command);
+    }
 
-  assertLastDispatchedCommandIs(expectedCommand: Command) {
-    const dispatchSpyCalls = this.dispatchSpy.getCalls();
+    assertLastDispatchedCommandIs(expectedCommand: Command): void {
+        const dispatchSpyCalls = this.dispatchSpy.getCalls();
 
-    expect(dispatchSpyCalls.length).to.be.greaterThan(0);
+        expect(dispatchSpyCalls.length).to.be.greaterThan(0);
 
-    const lastPublishSpyCall = dispatchSpyCalls[dispatchSpyCalls.length - 1];
-    const lastDispatchedCommand = lastPublishSpyCall.args[0];
+        const lastPublishSpyCall = dispatchSpyCalls[dispatchSpyCalls.length - 1];
+        const lastDispatchedCommand = lastPublishSpyCall.args[0];
 
-    expect(expectedCommand).to.deep.equal(lastDispatchedCommand);
-  }
+        expect(expectedCommand).to.deep.equal(lastDispatchedCommand);
+    }
 }

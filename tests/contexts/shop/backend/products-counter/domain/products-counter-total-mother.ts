@@ -1,8 +1,8 @@
-import { ProductsCounterTotal } from '@shop-backend/products-counter/domain/products-counter-total';
-import { IntegerMother } from 'tests/contexts/shared/integer-mother';
+import {ProductsCounterTotal} from '@shop-backend/products-counter/domain/products-counter-total';
+import {IntegerMother} from 'tests/contexts/shared/integer-mother';
 
 export class ProductsCounterTotalMother {
-  static random() {
-    return new ProductsCounterTotal(IntegerMother.random());
-  }
+    static random(): ProductsCounterTotal {
+        return new ProductsCounterTotal(IntegerMother.random());
+    }
 }

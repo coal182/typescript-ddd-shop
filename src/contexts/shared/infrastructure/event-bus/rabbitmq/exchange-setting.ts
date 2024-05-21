@@ -1,4 +1,4 @@
 export type ExchangeSetting = {
-  name: string;
-  type?: string;
+    name: string;
+    type?: string;
 };

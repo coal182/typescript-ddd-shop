@@ -1,7 +1,10 @@
-import { Command } from '@shared/domain/command';
+import {Command} from '@shared/domain/command';
 
 export class UpdateProductDescriptionCommand extends Command {
-  constructor(public readonly id: string, public readonly description: string) {
-    super();
-  }
+    constructor(
+        public readonly id: string,
+        public readonly description: string,
+    ) {
+        super();
+    }
 }

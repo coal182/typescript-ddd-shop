@@ -1,0 +1,61 @@
+{
+  "root": true,
+  "overrides": [
+    {
+      "plugins": ["prettier", "import"],
+      "files": [
+        "*.ts"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "linebreak-style": [
+          "error",
+          "unix"
+        ],
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "semi": [
+          "error",
+          "always"
+        ],
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              "external",
+              "builtin",
+              "internal",
+              "sibling",
+              "parent",
+              "index"
+            ],
+            "newlines-between": "always",
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            }
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-empty-interface": "off",
+        "prettier/prettier": [
+          "error",
+          {
+              "singleQuote": true,
+              "tabWidth": 4,
+              "printWidth": 160,
+              "bracketSpacing": false
+          }
+        ]
+      }
+    }
+  ]
+}

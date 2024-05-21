@@ -1,0 +1,67 @@
+{
+  "root": true,
+  "extends": ["../../../../.eslintrc.json"],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+              "singleQuote": true,
+              "tabWidth": 4,
+              "printWidth": 160,
+              "bracketSpacing": false
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "plugins": ["prettier", "html"],
+      "parser": "html",
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {
+        "prettier/prettier": [
+            "error",
+            {
+                "tabWidth": 4,
+                "printWidth": 120,
+                "bracketSameLine": true
+            }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.component.html",
+        "*.directive.html"
+      ],
+      "plugins": ["prettier", "html"],
+      "parser": "@angular-eslint/template-parser",
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {
+        "prettier/prettier": [
+            "error",
+            {
+                "tabWidth": 4,
+                "printWidth": 120,
+                "bracketSameLine": true                
+            }
+        ]
+      }
+    }
+  ]
+}

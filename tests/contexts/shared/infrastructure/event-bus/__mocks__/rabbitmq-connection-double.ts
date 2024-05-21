@@ -1,7 +1,8 @@
-import { RabbitMqConnection } from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
+import {RabbitMqConnection} from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
 
 export class RabbitMQConnectionDouble extends RabbitMqConnection {
-  async publish(params: any): Promise<boolean> {
-    throw new Error();
-  }
+    async publish(params: any): Promise<void> {
+        console.log('📌 ~ params:', params);
+        throw new Error();
+    }
 }
