@@ -2,43 +2,38 @@
 
 <div class="row order-list animate__animated animate__fadeIn">
     <div class="col-md-12">
-      <table mat-table [dataSource]="orders$ | async" class="order-table" #table>
-  
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let order"> {{order.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="address">
-          <th mat-header-cell *matHeaderCellDef> Address </th>
-          <td mat-cell *matCellDef="let order"> {{order.address.street}} {{order.address.number}} {{order.address.city}} </td>
-        </ng-container>
-        <ng-container matColumnDef="total">
-          <th mat-header-cell *matHeaderCellDef> Total </th>
-          <td mat-cell *matCellDef="let order"> {{order.total | currency}} </td>
-        </ng-container>
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
-          <td mat-cell *matCellDef="let order">  
-            <button
-                mat-flat-button
-                type="button"
-                color="primary"
-                [routerLink]="['/orders', order.id]" 
-            >
-                <mat-icon>add</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-      
-      </table>
+        <table mat-table [dataSource]="orders$ | async" class="order-table" #table>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let order">{{ order.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef>Address</th>
+                <td mat-cell *matCellDef="let order">
+                    {{ order.address.street }} {{ order.address.number }} {{ order.address.city }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef>Total</th>
+                <td mat-cell *matCellDef="let order">{{ order.total | currency }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let order">
+                    <button mat-flat-button type="button" color="primary" [routerLink]="['/orders', order.id]">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+        </table>
     </div>
 </div>
 
-<mat-progress-spinner *ngIf="isLoading"
-  mode="indeterminate"
-  data-test="progress-spinner-2"
-  style="margin:0 auto;"
-></mat-progress-spinner>
+<mat-progress-spinner
+    *ngIf="isLoading"
+    mode="indeterminate"
+    data-test="progress-spinner-2"
+    style="margin: 0 auto"></mat-progress-spinner>

@@ -1,7 +1,7 @@
-import { createFeatureSelector } from '@ngrx/store';
+import {createFeatureSelector} from '@ngrx/store';
 
-import { LoginState } from './state/model';
+import {LoginState} from './state/model';
 
 export class LoginSelectors {
-  public static selectLogin = createFeatureSelector<LoginState>('login');
+    public static selectLogin = createFeatureSelector<LoginState>('login');
 }

@@ -1,88 +1,70 @@
 <div class="auth-wrapper container animate__animated animate__fadeIn">
-  <div class="row">
-    <div class="col-md-12">
-      <mat-progress-spinner *ngIf="isLoading"
-        mode="indeterminate"
-        data-test="progress-spinner-2"
-        style="margin:0 auto;"
-      ></mat-progress-spinner>
-      <form *ngIf="!isLoading"
-        class="form-signin text-center"
-        [formGroup]="profileForm"
-        (ngSubmit)="onSubmit()"
-      >
-        
-        <h3 class="h3 mb-3 font-weight-normal">
-          This is your profile, {{ (user$ | async)?.firstname }}
-        </h3>
+    <div class="row">
+        <div class="col-md-12">
+            <mat-progress-spinner
+                *ngIf="isLoading"
+                mode="indeterminate"
+                data-test="progress-spinner-2"
+                style="margin: 0 auto"></mat-progress-spinner>
+            <form *ngIf="!isLoading" class="form-signin text-center" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+                <h3 class="h3 mb-3 font-weight-normal">This is your profile, {{ (user$ | async)?.firstname }}</h3>
 
-        <mat-error *ngIf="profileForm.hasError('entitiesAreEmpty')">
-          {{profileForm.errors?.entitiesAreEmpty}}
-        </mat-error>
+                <mat-error *ngIf="profileForm.hasError('entitiesAreEmpty')">
+                    {{ profileForm.errors?.entitiesAreEmpty }}
+                </mat-error>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Firstname</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="firstname"
-            placeholder="Firstname"
-          />
-          <mat-error *ngIf="profileForm.get('firstname')?.errors && profileForm.get('firstname')?.touched">
-            {{validateFormService.getError('Firstname', profileForm.get('firstname'))}}
-          </mat-error>
-        </mat-form-field>
-        <br />
-        <mat-form-field appearance="outline">
-          <mat-label>Lastname</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="lastname"
-            placeholder="Lastname"
-          />
-          <mat-error *ngIf="profileForm.get('lastname')?.errors && profileForm.get('lastname')?.touched">
-            {{validateFormService.getError('Lastname', profileForm.get('lastname'))}}
-          </mat-error>
-        </mat-form-field>
-        <br />
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="email"
-            placeholder="Email"
-          />
-          <mat-error *ngIf="profileForm.get('email')?.errors && profileForm.get('email')?.touched">
-            {{validateFormService.getError('Email', profileForm.get('email'))}}
-          </mat-error>
-        </mat-form-field>
-        <br />
-        <mat-form-field appearance="outline">
-          <mat-label>Date of birth</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            formControlName="dateOfBirth"
-            placeholder="Date of birth"
-          />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="profileForm.get('dateOfBirth')?.errors && profileForm.get('dateOfBirth')?.touched">
-            {{validateFormService.getError('Date Of Birth', profileForm.get('dateOfBirth'))}}
-          </mat-error>
-        </mat-form-field>
-        <p>Form Status: {{ profileForm.status }}</p>
-        <p>Form Value: {{ profileForm.value | json }}</p>
-        <p [innerHTML]="formattedMessage"></p>
-        <br />
-        <button type="submit" mat-flat-button color="primary" data-testid="submit-button" [disabled]="!profileForm.valid">Update</button>
-      </form>
+                <mat-form-field appearance="outline">
+                    <mat-label>Firstname</mat-label>
+                    <input matInput type="text" formControlName="firstname" placeholder="Firstname" />
+                    <mat-error *ngIf="profileForm.get('firstname')?.errors && profileForm.get('firstname')?.touched">
+                        {{ validateFormService.getError("Firstname", profileForm.get("firstname")) }}
+                    </mat-error>
+                </mat-form-field>
+                <br />
+                <mat-form-field appearance="outline">
+                    <mat-label>Lastname</mat-label>
+                    <input matInput type="text" formControlName="lastname" placeholder="Lastname" />
+                    <mat-error *ngIf="profileForm.get('lastname')?.errors && profileForm.get('lastname')?.touched">
+                        {{ validateFormService.getError("Lastname", profileForm.get("lastname")) }}
+                    </mat-error>
+                </mat-form-field>
+                <br />
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email" placeholder="Email" />
+                    <mat-error *ngIf="profileForm.get('email')?.errors && profileForm.get('email')?.touched">
+                        {{ validateFormService.getError("Email", profileForm.get("email")) }}
+                    </mat-error>
+                </mat-form-field>
+                <br />
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of birth</mat-label>
+                    <input
+                        matInput
+                        [matDatepicker]="picker"
+                        formControlName="dateOfBirth"
+                        placeholder="Date of birth" />
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error
+                        *ngIf="profileForm.get('dateOfBirth')?.errors && profileForm.get('dateOfBirth')?.touched">
+                        {{ validateFormService.getError("Date Of Birth", profileForm.get("dateOfBirth")) }}
+                    </mat-error>
+                </mat-form-field>
+                <p>Form Status: {{ profileForm.status }}</p>
+                <p>Form Value: {{ profileForm.value | json }}</p>
+                <p [innerHTML]="formattedMessage"></p>
+                <br />
+                <button
+                    type="submit"
+                    mat-flat-button
+                    color="primary"
+                    data-testid="submit-button"
+                    [disabled]="!profileForm.valid">
+                    Update
+                </button>
+            </form>
+        </div>
     </div>
-  </div>
 </div>

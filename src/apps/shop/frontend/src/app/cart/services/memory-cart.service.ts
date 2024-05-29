@@ -1,40 +1,41 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {Observable, of} from 'rxjs';
 
-import { CartItem } from '../interfaces/cart';
+import {CartService} from './cart.service';
 
-import { CartService } from './cart.service';
+import {CartItem} from '../interfaces/cart';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class MemoryCartService extends CartService {
-  items: CartItem[] = [];
+    items: CartItem[] = [];
 
-  constructor(private http: HttpClient) {
-    super();
-  }
+    constructor(private http: HttpClient) {
+        super();
+    }
 
-  addToCart(item: CartItem): void {
-    this.items.push(item);
-  }
+    addToCart(item: CartItem): void {
+        this.items.push(item);
+    }
 
-  getItems() {
-    return of(this.items);
-  }
+    getItems(): Observable<CartItem[]> {
+        return of(this.items);
+    }
 
-  confirmCart(checkoutForm: FormGroup, orderId: string): Observable<unknown> {
-    throw new Error('Method not implemented.');
-  }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    confirmCart(checkoutForm: FormGroup, orderId: string): Observable<unknown> {
+        throw new Error('Method not implemented.');
+    }
 
-  clearCart(): Observable<unknown> {
-    this.items = [];
-    return of(this.items);
-  }
+    clearCart(): Observable<unknown> {
+        this.items = [];
+        return of(this.items);
+    }
 
-  getShippingPrices() {
-    return this.http.get<{ type: string; price: number }[]>('/assets/shipping.json');
-  }
+    getShippingPrices(): Observable<{type: string; price: number}[]> {
+        return this.http.get<{type: string; price: number}[]>('/assets/shipping.json');
+    }
 }

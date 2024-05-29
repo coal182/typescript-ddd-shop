@@ -1,41 +1,41 @@
-import { Product } from 'src/app/products/interfaces/products.interface';
+import {Product} from 'src/app/products/interfaces/products.interface';
 
-import { LoadingStatus } from '../../metadata-types';
+import {LoadingStatus} from '../../metadata-types';
 
 export const productsFeatureKey = 'products';
 
 export const productsInitialState: ProductsState = {
-  products: [],
-  metadata: {
-    loadingStatus: LoadingStatus.NotLoaded,
-  },
+    products: [],
+    metadata: {
+        loadingStatus: LoadingStatus.NotLoaded,
+    },
 };
 
 export const singleProductInitialState: SingleProductState = {
-  product: undefined,
-  metadata: {
-    loadingStatus: LoadingStatus.NotLoaded,
-  },
+    product: undefined,
+    metadata: {
+        loadingStatus: LoadingStatus.NotLoaded,
+    },
 };
 
 export const productsCountInitialState: ProductsCountState = {
-  count: 0,
-  metadata: {
-    loadingStatus: LoadingStatus.NotLoaded,
-  },
+    count: 0,
+    metadata: {
+        loadingStatus: LoadingStatus.NotLoaded,
+    },
 };
 
 export interface ProductsState {
-  products: ReadonlyArray<Product>;
-  metadata: { loadingStatus: LoadingStatus };
+    products: ReadonlyArray<Product>;
+    metadata: {loadingStatus: LoadingStatus};
 }
 
 export interface SingleProductState {
-  product: Product;
-  metadata: { loadingStatus: LoadingStatus };
+    product: Product;
+    metadata: {loadingStatus: LoadingStatus};
 }
 
 export interface ProductsCountState {
-  count: number;
-  metadata: { loadingStatus: LoadingStatus };
+    count: number;
+    metadata: {loadingStatus: LoadingStatus};
 }

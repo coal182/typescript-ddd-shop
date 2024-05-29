@@ -19,6 +19,7 @@ describe('ProductDetailsComponent', () => {
     const mockActivatedRoute = {
         snapshot: {
             paramMap: {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 get: (id: number): string => 'LE9G8_jAwMSjb2FZ0k5wE',
             },
         },

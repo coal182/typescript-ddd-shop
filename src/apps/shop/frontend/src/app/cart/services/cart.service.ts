@@ -1,37 +1,37 @@
-import { Injectable } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {UntypedFormGroup} from '@angular/forms';
+import {Observable} from 'rxjs';
 
-import { CartItem } from '../interfaces/cart';
+import {CartItem} from '../interfaces/cart';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export abstract class CartService {
-  abstract addToCart(item: CartItem): void;
+    abstract addToCart(item: CartItem): void;
 
-  abstract getItems(): Observable<unknown>;
+    abstract getItems(): Observable<unknown>;
 
-  abstract confirmCart(checkoutForm: UntypedFormGroup, orderId: string): Observable<unknown>;
+    abstract confirmCart(checkoutForm: UntypedFormGroup, orderId: string): Observable<unknown>;
 
-  abstract clearCart(): Observable<unknown>;
+    abstract clearCart(): Observable<unknown>;
 
-  abstract getShippingPrices(): Observable<any>;
+    abstract getShippingPrices(): Observable<any>;
 }
 
 export interface GetCartParams {
-  userId: string;
+    userId: string;
 }
 
 export interface ConfirmCartParams {
-  id: string;
-  userId: string;
-  name: string;
-  address: {
-    street: string;
-    city: string;  
-    number: number;  
-  };
-  total: number;
-  lines: Array<CartItem>;
+    id: string;
+    userId: string;
+    name: string;
+    address: {
+        street: string;
+        city: string;
+        number: number;
+    };
+    total: number;
+    lines: Array<CartItem>;
 }

@@ -17,102 +17,101 @@ import {HttpCartService} from '../../../cart/services/http-cart.service';
 import {HttpProductService} from '../../services/http-product.service';
 
 @Component({
-  selector: 'app-product-details',
-  templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css'],
+    selector: 'app-product-details',
+    templateUrl: './product-details.component.html',
+    styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-  private onDestroy$: Subject<void> = new Subject();
-  public isLoading = false;
+    private onDestroy$: Subject<void> = new Subject();
+    public isLoading = false;
 
-  product$ = this.store.pipe(
-    select(ProductSelectors.selectSingleProduct),
-    tap((product) => {
-      /*eslint indent: ["error", 2, {"SwitchCase": 1}]*/
-      switch (product.metadata.loadingStatus) {
-        case LoadingStatus.Loaded:
-          this.isLoading = false;
-          break;
-        case LoadingStatus.Loading:
-          this.isLoading = true;
-          break;
-        case LoadingStatus.NotLoaded:
-          this.isLoading = false;
-      }
-    }),
-    map((product) => product.product)
-  );
+    product$ = this.store.pipe(
+        select(ProductSelectors.selectSingleProduct),
+        tap((product) => {
+            switch (product.metadata.loadingStatus) {
+                case LoadingStatus.Loaded:
+                    this.isLoading = false;
+                    break;
+                case LoadingStatus.Loading:
+                    this.isLoading = true;
+                    break;
+                case LoadingStatus.NotLoaded:
+                    this.isLoading = false;
+            }
+        }),
+        map((product) => product.product),
+    );
 
-  constructor(
+    constructor(
         private route: ActivatedRoute,
         public productService: HttpProductService,
         private cartService: HttpCartService,
         private readonly dialog: MatDialog,
-        private store: Store
-  ) {}
+        private store: Store,
+    ) {}
 
-  ngOnInit(): void {
-    // First get the product id from the current route.
-    const routeParams = this.route.snapshot.paramMap;
-    const productIdFromRoute: string = routeParams.get('productId');
+    ngOnInit(): void {
+        // First get the product id from the current route.
+        const routeParams = this.route.snapshot.paramMap;
+        const productIdFromRoute: string = routeParams.get('productId');
 
-    const params = {id: productIdFromRoute};
+        const params = {id: productIdFromRoute};
 
-    this.isLoading = true;
+        this.isLoading = true;
 
-    this.store.dispatch(ProductsActions.fetchSingleProduct(params));
-  }
+        this.store.dispatch(ProductsActions.fetchSingleProduct(params));
+    }
 
-  ngOnDestroy(): void {
-    this.onDestroy$.next();
-    this.onDestroy$.complete();
-  }
+    ngOnDestroy(): void {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
+    }
 
-  addToCart() {
-    this.product$
-      .pipe(
-        takeUntil(this.onDestroy$),
-        map((pro): CartItem => ({product: pro, qty: 1, price: pro.price}))
-      )
-      .subscribe((item: CartItem) => {
-        this.cartService
-          .addToCart(item)
-          .pipe(
-            catchError((error: HttpErrorResponse): Observable<Error> => {
-              if (error.status === StatusCodes.UNAUTHORIZED) {
-                Swal.fire('Error!', 'There was an error adding this product!', 'error');
-              }
-              return throwError(() => error);
-            })
-          )
-          .subscribe((res: any) => {
-            Swal.fire({
-              title: 'Product added',
-              html: 'Your product has been added to the cart!',
-              icon: 'success',
-              toast: true,
-              position: 'bottom-right',
-              iconColor: '#286f00',
-              customClass: {
-                popup: 'colored-toast',
-              },
-              showConfirmButton: false,
-              timer: 1500,
-              timerProgressBar: true,
+    public addToCart(): void {
+        this.product$
+            .pipe(
+                takeUntil(this.onDestroy$),
+                map((pro): CartItem => ({product: pro, qty: 1, price: pro.price})),
+            )
+            .subscribe((item: CartItem) => {
+                this.cartService
+                    .addToCart(item)
+                    .pipe(
+                        catchError((error: HttpErrorResponse): Observable<Error> => {
+                            if (error.status === StatusCodes.UNAUTHORIZED) {
+                                Swal.fire('Error!', 'There was an error adding this product!', 'error');
+                            }
+                            return throwError(() => error);
+                        }),
+                    )
+                    .subscribe(() => {
+                        Swal.fire({
+                            title: 'Product added',
+                            html: 'Your product has been added to the cart!',
+                            icon: 'success',
+                            toast: true,
+                            position: 'bottom-right',
+                            iconColor: '#286f00',
+                            customClass: {
+                                popup: 'colored-toast',
+                            },
+                            showConfirmButton: false,
+                            timer: 1500,
+                            timerProgressBar: true,
+                        });
+                    });
             });
-          });
-      });
-  }
+    }
 
-  share() {
-    this.isLoading = true;
+    public share(): void {
+        this.isLoading = true;
 
-    setTimeout(() => {
-      const dialogRef = this.dialog.open(AlertDialogComponent, {
-        data: {title: 'Sharing Product', msg: 'The product has been shared!'},
-      });
+        setTimeout(() => {
+            this.dialog.open(AlertDialogComponent, {
+                data: {title: 'Sharing Product', msg: 'The product has been shared!'},
+            });
 
-      this.isLoading = false;
-    }, 1000);
-  }
+            this.isLoading = false;
+        }, 1000);
+    }
 }

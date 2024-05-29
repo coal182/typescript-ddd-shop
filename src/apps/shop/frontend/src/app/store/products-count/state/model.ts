@@ -1,16 +1,15 @@
-
-import { LoadingStatus } from '../../metadata-types';
+import {LoadingStatus} from '../../metadata-types';
 
 export const productsCountFeatureKey = 'productsCount';
 
 export const productsCountInitialState: ProductsCountState = {
-  count: 0,
-  metadata: {
-    loadingStatus: LoadingStatus.NotLoaded,
-  },
+    count: 0,
+    metadata: {
+        loadingStatus: LoadingStatus.NotLoaded,
+    },
 };
 
 export interface ProductsCountState {
-  count: number;
-  metadata: { loadingStatus: LoadingStatus };
+    count: number;
+    metadata: {loadingStatus: LoadingStatus};
 }

@@ -1,114 +1,100 @@
 <h3>Cart</h3>
 
 <div class="row animate__animated animate__fadeIn">
-  <div class="col-md-8">
-    <table mat-table [dataSource]="items" class="cart-table" #table>
-      <ng-container matColumnDef="image">
-        <th mat-header-cell *matHeaderCellDef> Image </th>
-        <td mat-cell *matCellDef="let item"> <img [src]="item.product | image" class="cart-image" [routerLink]="['/products', item.product.id]" /> </td>
-      </ng-container>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let item"> {{item.product.name}} </td>
-      </ng-container>
-      <ng-container matColumnDef="qty">
-        <th mat-header-cell *matHeaderCellDef> Qty </th>
-        <td mat-cell *matCellDef="let item"> {{item.qty}} </td>
-      </ng-container>
-      <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef> Price </th>
-        <td mat-cell *matCellDef="let item"> {{item.price | currency}} </td>
-      </ng-container>
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
-        <td mat-cell *matCellDef="let item"> 
-          <button mat-icon-button type="button" (click)="removeFromCart(item)">
-            <mat-icon mat-icon matTooltip="Remove">delete</mat-icon>
-          </button>  
-        </td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-    
-    </table>
+    <div class="col-md-8">
+        <table mat-table [dataSource]="items" class="cart-table" #table>
+            <ng-container matColumnDef="image">
+                <th mat-header-cell *matHeaderCellDef>Image</th>
+                <td mat-cell *matCellDef="let item">
+                    <img
+                        [src]="item.product | image"
+                        class="cart-image"
+                        [routerLink]="['/products', item.product.id]" />
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let item">{{ item.product.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="qty">
+                <th mat-header-cell *matHeaderCellDef>Qty</th>
+                <td mat-cell *matCellDef="let item">{{ item.qty }}</td>
+            </ng-container>
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let item">{{ item.price | currency }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let item">
+                    <button mat-icon-button type="button" (click)="removeFromCart(item)">
+                        <mat-icon mat-icon matTooltip="Remove">delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
 
-    <h1>Total:</h1>
-    <h3>{{ total | currency }}</h3>
-    
-    <!--<p>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+        </table>
+
+        <h1>Total:</h1>
+        <h3>{{ total | currency }}</h3>
+
+        <!--<p>
       <a routerLink="/shipping">Shipping Prices</a>
     </p>-->
+    </div>
+    <div class="col-md-4">
+        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="form-signin text-center">
+            <h3 class="h3 mb-3 font-weight-normal">Confirm your order</h3>
 
-  </div>
-  <div class="col-md-4">
-    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="form-signin text-center">
-      <h3 class="h3 mb-3 font-weight-normal">
-        Confirm your order
-      </h3>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="name"
-          placeholder="Name"
-        />
-        <!--<mat-error *ngIf="profileForm.get('name')?.errors && profileForm.get('name')?.touched">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" formControlName="name" placeholder="Name" />
+                <!--<mat-error *ngIf="profileForm.get('name')?.errors && profileForm.get('name')?.touched">
           {{validateFormService.getError('Name', profileForm.get('name'))}}
         </mat-error>-->
-      </mat-form-field>
+            </mat-form-field>
 
-      <br />
+            <br />
 
-      <mat-form-field appearance="outline">
-        <mat-label>Street</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="street"
-          placeholder="Street"
-        />
-        <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
+            <mat-form-field appearance="outline">
+                <mat-label>Street</mat-label>
+                <input matInput type="text" formControlName="street" placeholder="Street" />
+                <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
           {{validateFormService.getError('address', profileForm.get('address'))}}
         </mat-error>-->
-      </mat-form-field>
+            </mat-form-field>
 
-      <br />
+            <br />
 
-      <mat-form-field appearance="outline">
-        <mat-label>City</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="city"
-          placeholder="City"
-        />
-        <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
+            <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <input matInput type="text" formControlName="city" placeholder="City" />
+                <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
           {{validateFormService.getError('address', profileForm.get('address'))}}
         </mat-error>-->
-      </mat-form-field>
+            </mat-form-field>
 
-      <br />
+            <br />
 
-      <mat-form-field appearance="outline">
-        <mat-label>Number</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="number"
-          placeholder="Number"
-        />
-        <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
+            <mat-form-field appearance="outline">
+                <mat-label>Number</mat-label>
+                <input matInput type="text" formControlName="number" placeholder="Number" />
+                <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
           {{validateFormService.getError('address', profileForm.get('address'))}}
         </mat-error>-->
-      </mat-form-field>
-      
+            </mat-form-field>
 
-      <br />
-      <button type="submit" mat-flat-button color="primary" data-testid="submit-button" [disabled]="!checkoutForm.valid">Confirm purchase</button>
-
-    </form>
-  </div>
+            <br />
+            <button
+                type="submit"
+                mat-flat-button
+                color="primary"
+                data-testid="submit-button"
+                [disabled]="!checkoutForm.valid">
+                Confirm purchase
+            </button>
+        </form>
+    </div>
 </div>
