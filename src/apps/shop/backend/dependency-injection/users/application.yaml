@@ -1,81 +1,101 @@
 services:
-  Shop.Users.domain.UserRepository:
-    class: ../../../../../contexts/shop/user/infrastructure/persistence/mongo-user-repository
-    main: MongoUserRepository
-    arguments: ['@Shop.Shared.ConnectionManager']
+    Shop.Users.domain.UserRepository:
+        class: ../../../../../contexts/shop/user/infrastructure/persistence/mongo-user-repository
+        main: MongoUserRepository
+        arguments: ["@Shop.Shared.ConnectionManager"]
 
-  Shop.Users.domain.UserEventStore:
-    class: ../../../../../contexts/shop/user/infrastructure/persistence/mongo-user-event-store
-    main: MongoUserEventStore
-    arguments: ['@Shop.Shared.ConnectionManager']
+    Shop.Users.domain.UserEventStore:
+        class: ../../../../../contexts/shop/user/infrastructure/persistence/mongo-user-event-store
+        main: MongoUserEventStore
+        arguments: ["@Shop.Shared.ConnectionManager"]
 
-  Shop.Users.application.UserCreator:
-    class: ../../../../../contexts/shop/user/application/create/user-creator
-    main: UserCreator
-    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Users.domain.UserEventStore']
+    Shop.Users.application.UserCreator:
+        class: ../../../../../contexts/shop/user/application/create/user-creator
+        main: UserCreator
+        arguments:
+            [
+                "@Shop.Shared.domain.EventBus",
+                "@Shop.Users.domain.UserEventStore",
+            ]
 
-  Shop.Users.CreateUserCommandHandler:
-    class: ../../../../../contexts/shop/user/application/command-handlers/create-user-command-handler
-    main: CreateUserCommandHandler
-    arguments: ['@Shop.Users.application.UserCreator']
-    tags:
-      - { name: 'commandHandler' }
+    Shop.Users.CreateUserCommandHandler:
+        class: ../../../../../contexts/shop/user/application/command-handlers/create-user-command-handler
+        main: CreateUserCommandHandler
+        arguments: ["@Shop.Users.application.UserCreator"]
+        tags:
+            - { name: "commandHandler" }
 
-  Shop.Users.UpdateUserCommandHandler:
-    class: ../../../../../contexts/shop/user/application/command-handlers/update-user-command-handler
-    main: UpdateUserCommandHandler
-    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Users.domain.UserEventStore']
-    tags:
-      - { name: 'commandHandler' }
+    Shop.Users.UpdateUserCommandHandler:
+        class: ../../../../../contexts/shop/user/application/command-handlers/update-user-command-handler
+        main: UpdateUserCommandHandler
+        arguments:
+            [
+                "@Shop.Shared.domain.EventBus",
+                "@Shop.Users.domain.UserEventStore",
+            ]
+        tags:
+            - { name: "commandHandler" }
 
-  Shop.Users.UpdateUserPasswordCommandHandler:
-    class: ../../../../../contexts/shop/user/application/command-handlers/update-user-password-command-handler
-    main: UpdateUserPasswordCommandHandler
-    arguments: ['@Shop.Shared.domain.EventBus', '@Shop.Users.domain.UserEventStore']
-    tags:
-      - { name: 'commandHandler' }
+    Shop.Users.UpdateUserPasswordCommandHandler:
+        class: ../../../../../contexts/shop/user/application/command-handlers/update-user-password-command-handler
+        main: UpdateUserPasswordCommandHandler
+        arguments:
+            [
+                "@Shop.Shared.domain.EventBus",
+                "@Shop.Users.domain.UserEventStore",
+            ]
+        tags:
+            - { name: "commandHandler" }
 
-  Shop.Users.application.UsersFinder:
-    class: ../../../../../contexts/shop/user/application/search-all/users-finder
-    main: UsersFinder
-    arguments: ['@Shop.Users.domain.UserRepository']
+    Shop.Users.application.UsersFinder:
+        class: ../../../../../contexts/shop/user/application/search-all/users-finder
+        main: UsersFinder
+        arguments: ["@Shop.Users.domain.UserRepository"]
 
-  Shop.Users.SearchAllUsersQueryHandler:
-    class: ../../../../../contexts/shop/user/application/search-all/search-all-users-query-handler
-    main: SearchAllUsersQueryHandler
-    arguments: ['@Shop.Users.application.UsersFinder']
-    tags:
-      - { name: 'queryHandler' }
+    Shop.Users.SearchAllUsersQueryHandler:
+        class: ../../../../../contexts/shop/user/application/search-all/search-all-users-query-handler
+        main: SearchAllUsersQueryHandler
+        arguments: ["@Shop.Users.application.UsersFinder"]
+        tags:
+            - { name: "queryHandler" }
 
-  Shop.Users.CreateUserOnUserCreated:
-    class: ../../../../../contexts/shop/user/application/event-handlers/user-created-event-handler
-    main: UserCreatedEventHandler
-    arguments: ['@Shop.Users.domain.UserRepository']
-    tags:
-      - { name: 'domainEventSubscriber' }
+    Shop.Users.UserCreated:
+        class: ../../../../../contexts/shop/user/application/event-handlers/user-created-event-handler
+        main: UserCreatedEventHandler
+        arguments: ["@Shop.Users.domain.UserRepository"]
+        tags:
+            - { name: "domainEventSubscriber" }
 
-  Shop.Users.UserUpdated:
-    class: ../../../../../contexts/shop/user/application/event-handlers/user-updated-event-handler
-    main: UserUpdatedEventHandler
-    arguments: ['@Shop.Users.domain.UserEventStore', '@Shop.Users.domain.UserRepository']
-    tags:
-      - { name: 'domainEventSubscriber' }
+    Shop.Users.UserUpdated:
+        class: ../../../../../contexts/shop/user/application/event-handlers/user-updated-event-handler
+        main: UserUpdatedEventHandler
+        arguments:
+            [
+                "@Shop.Users.domain.UserEventStore",
+                "@Shop.Users.domain.UserRepository",
+            ]
+        tags:
+            - { name: "domainEventSubscriber" }
 
-  Shop.Users.UserPasswordChanged:
-    class: ../../../../../contexts/shop/user/application/event-handlers/user-password-changed-event-handler
-    main: UserPasswordChangedEventHandler
-    arguments: ['@Shop.Users.domain.UserEventStore', '@Shop.Users.domain.UserRepository']
-    tags:
-      - { name: 'domainEventSubscriber' }
+    Shop.Users.UserPasswordChanged:
+        class: ../../../../../contexts/shop/user/application/event-handlers/user-password-changed-event-handler
+        main: UserPasswordChangedEventHandler
+        arguments:
+            [
+                "@Shop.Users.domain.UserEventStore",
+                "@Shop.Users.domain.UserRepository",
+            ]
+        tags:
+            - { name: "domainEventSubscriber" }
 
-  Shop.Users.application.UsersByCriteriaSearcher:
-    class: ../../../../../contexts/shop/user/application/search-by-criteria/users-by-criteria-searcher
-    main: UsersByCriteriaSearcher
-    arguments: ['@Shop.Users.domain.UserRepository']
+    Shop.Users.application.UsersByCriteriaSearcher:
+        class: ../../../../../contexts/shop/user/application/search-by-criteria/users-by-criteria-searcher
+        main: UsersByCriteriaSearcher
+        arguments: ["@Shop.Users.domain.UserRepository"]
 
-  Shop.Users.SearchUsersByCriteriaQueryHandler:
-    class: ../../../../../contexts/shop/user/application/search-by-criteria/search-users-by-criteria-query-handler
-    main: SearchUsersByCriteriaQueryHandler
-    arguments: ['@Shop.Users.application.UsersByCriteriaSearcher']
-    tags:
-      - { name: 'queryHandler' }
+    Shop.Users.SearchUsersByCriteriaQueryHandler:
+        class: ../../../../../contexts/shop/user/application/search-by-criteria/search-users-by-criteria-query-handler
+        main: SearchUsersByCriteriaQueryHandler
+        arguments: ["@Shop.Users.application.UsersByCriteriaSearcher"]
+        tags:
+            - { name: "queryHandler" }
