@@ -12,6 +12,7 @@ export interface DialogData {
 @Component({
     selector: 'alert-dialog',
     templateUrl: './alert-dialog.component.html',
+    standalone: false
 })
 export class AlertDialogComponent {
     constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}

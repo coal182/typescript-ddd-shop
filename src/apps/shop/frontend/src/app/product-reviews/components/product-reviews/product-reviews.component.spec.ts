@@ -197,8 +197,9 @@ describe(ProductReviewsComponent.name, () => {
     }
 
     @Component({
-        template: '<app-product-reviews [productId]="productId"></app-product-reviews>',
-    })
+    template: '<app-product-reviews [productId]="productId"></app-product-reviews>',
+    standalone: false
+})
     class HostTestComponent {
         productId = 'product-id';
     }

@@ -4,7 +4,8 @@ import {Product} from '../../products/interfaces/products.interface';
 
 @Pipe({
     name: 'image',
-    pure: false, //disparar cada vez que se detecta un cambio en el ciclo de angular (too expensive)
+    pure: false,
+    standalone: false
 })
 export class ImagePipe implements PipeTransform {
     transform(product: Product): string {

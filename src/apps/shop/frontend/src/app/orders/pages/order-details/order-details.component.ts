@@ -11,6 +11,7 @@ import {HttpOrderService} from '../../services/http-order.service';
     selector: 'app-order-details',
     templateUrl: './order-details.component.html',
     styleUrls: ['./order-details.component.css'],
+    standalone: false
 })
 export class OrderDetailsComponent implements OnInit {
     public columnsToDisplay = ['name', 'qty', 'price'];

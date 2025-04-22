@@ -24,6 +24,7 @@ export interface ProductReviewFormData {
     selector: 'app-product-reviews',
     templateUrl: './product-reviews.component.html',
     styleUrls: ['./product-reviews.component.css'],
+    standalone: false
 })
 export class ProductReviewsComponent implements OnInit, OnDestroy {
     private readonly onDestroy$ = new Subject();

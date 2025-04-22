@@ -18,6 +18,7 @@ export interface State {
     selector: 'finder',
     templateUrl: 'finder.component.html',
     styleUrls: ['finder.component.css'],
+    standalone: false
 })
 export class FinderComponent {
     filteredProducts: Product[];

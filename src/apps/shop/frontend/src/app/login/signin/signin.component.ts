@@ -10,6 +10,7 @@ import {AuthService} from '../../shared/auth/auth.service';
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     styleUrls: ['./signin.component.css'],
+    standalone: false
 })
 export class SigninComponent implements OnInit, OnDestroy {
     signinForm: UntypedFormGroup;

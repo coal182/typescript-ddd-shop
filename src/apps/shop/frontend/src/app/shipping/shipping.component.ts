@@ -6,6 +6,7 @@ import {HttpCartService} from '../cart/services/http-cart.service';
     selector: 'app-shipping',
     templateUrl: './shipping.component.html',
     styleUrls: ['./shipping.component.css'],
+    standalone: false
 })
 export class ShippingComponent {
     shippingCosts = this.cartService.getShippingPrices();

@@ -14,6 +14,7 @@ import {HttpCartService} from '../../services/http-cart.service';
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.css'],
+    standalone: false
 })
 export class CartComponent implements OnInit, OnDestroy {
     private onDestroy$: Subject<void> = new Subject();

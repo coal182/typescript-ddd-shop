@@ -7,6 +7,7 @@ import {AuthService} from '../../shared/auth/auth.service';
     selector: 'app-signup',
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.css'],
+    standalone: false
 })
 export class SignupComponent {
     signupForm: UntypedFormGroup;

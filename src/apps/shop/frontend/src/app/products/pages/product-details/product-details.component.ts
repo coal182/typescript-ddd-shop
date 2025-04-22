@@ -20,6 +20,7 @@ import {HttpProductService} from '../../services/http-product.service';
     selector: 'app-product-details',
     templateUrl: './product-details.component.html',
     styleUrls: ['./product-details.component.css'],
+    standalone: false
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
     private onDestroy$: Subject<void> = new Subject();

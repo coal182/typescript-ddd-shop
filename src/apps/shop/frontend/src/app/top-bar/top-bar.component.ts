@@ -16,6 +16,7 @@ import {LoadingStatus} from '../store/metadata-types';
     selector: 'app-top-bar',
     templateUrl: './top-bar.component.html',
     styleUrls: ['./top-bar.component.css'],
+    standalone: false
 })
 export class TopBarComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<void>();
