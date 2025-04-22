@@ -7,6 +7,7 @@ import bodybuilder, {Bodybuilder} from 'bodybuilder';
 export enum TypeQueryEnum {
     TERMS = 'terms',
     MATCH = 'match',
+    MATCH_PHRASE = 'match_phrase',
     MATCH_ALL = 'match_all',
     RANGE = 'range',
     WILDCARD = 'wildcard',
@@ -29,6 +30,7 @@ export class ElasticCriteriaConverter {
             [Operator.LT, this.lowerThanQuery],
             [Operator.CONTAINS, this.wildcardQuery],
             [Operator.NOT_CONTAINS, this.wildcardQuery],
+            [Operator.ONE_OF, this.matchPhraseQuery],
         ]);
     }
 
@@ -53,8 +55,22 @@ export class ElasticCriteriaConverter {
         filters.filters.map((filter) => {
             const {type, value, field} = this.queryForFilter(filter);
 
-            if (filter.operator.isPositive()) {
-                body.query(type, field, value);
+            if (filter.operator.value === Operator.ONE_OF) {
+                if (typeof value === 'string') {
+                    const chunks = value.split('|');
+                    body.andQuery('bool', (b) => {
+                        if (chunks.length === 1) {
+                            return b.orQuery(type, field, value);
+                        } else {
+                            value.split('|').forEach((val) => {
+                                b.orQuery(type, field, val);
+                            });
+                            return b;
+                        }
+                    });
+                }
+            } else if (filter.operator.isPositive()) {
+                body.andQuery(type, field, value);
             } else {
                 body.notQuery(type, field, value);
             }
@@ -79,6 +95,10 @@ export class ElasticCriteriaConverter {
 
     private matchQuery(filter: Filter): QueryObject {
         return {type: TypeQueryEnum.MATCH, field: filter.field.value, value: filter.value.value};
+    }
+
+    private matchPhraseQuery(filter: Filter): QueryObject {
+        return {type: TypeQueryEnum.MATCH_PHRASE, field: filter.field.value, value: filter.value.value};
     }
 
     private greaterThanQuery(filter: Filter): QueryObject {

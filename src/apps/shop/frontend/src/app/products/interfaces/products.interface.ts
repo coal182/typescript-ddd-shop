@@ -94,4 +94,5 @@ export enum Operator {
     LT = '<',
     CONTAINS = 'CONTAINS',
     NOT_CONTAINS = 'NOT_CONTAINS',
+    ONE_OF = 'ONE_OF',
 }

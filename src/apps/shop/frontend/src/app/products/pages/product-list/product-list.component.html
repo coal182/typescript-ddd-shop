@@ -1,18 +1,28 @@
-<mat-progress-spinner
-    *ngIf="isLoading"
-    mode="indeterminate"
-    data-test="progress-spinner-2"
-    style="margin: 0 auto"></mat-progress-spinner>
 <div style="text-align: center">{{ productsCount$ | async }} products</div>
-<div class="product-list animate__animated animate__fadeIn">
-    <article *ngFor="let product of products$ | async">
-        <h3>
-            <a [title]="product.name + ' details'" [routerLink]="['/products', product.id]">
-                <img [src]="product | image" />
-            </a>
-        </h3>
-        <h4>{{ product.name }}</h4>
+<div class="row">
+    <div class="col-md-2">
+        <coal-filter-bar
+            *ngIf="resultsWithFilterableFields"
+            [resultsWithFilterableFields]="resultsWithFilterableFields"
+            (filtersSelection)="onFilterSelection($event)"></coal-filter-bar>
+    </div>
+    <div class="col-md-10">
+        <mat-progress-spinner
+            *ngIf="isLoading"
+            mode="indeterminate"
+            data-test="progress-spinner-2"
+            style="margin: 0 auto"></mat-progress-spinner>
+        <div class="product-list animate__animated animate__fadeIn">
+            <article *ngFor="let product of products$ | async">
+                <h3>
+                    <a [title]="product.name + ' details'" [routerLink]="['/products', product.id]">
+                        <img [src]="product | image" />
+                    </a>
+                </h3>
+                <h4>{{ product.name }}</h4>
 
-        <p *ngIf="product.price">{{ product.price | currency }}</p>
-    </article>
+                <p *ngIf="product.price">{{ product.price | currency }}</p>
+            </article>
+        </div>
+    </div>
 </div>

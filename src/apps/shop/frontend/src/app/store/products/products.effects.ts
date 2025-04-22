@@ -20,17 +20,9 @@ export class ProductsEffects {
     fetchProducts$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ProductsActions.fetchProducts),
-            withLatestFrom(this.store.pipe(select(ProductSelectors.selectProducts))),
-            mergeMap(() => {
-                const paramsObj: GetProductsParams = {
-                    'filters[0][field]': 'name',
-                    'filters[0][operator]': Operator.CONTAINS,
-                    'filters[0][value]': '*',
-                    orderBy: 'name',
-                    order: 'asc',
-                    limit: '30',
-                    offset: '0',
-                };
+            mergeMap((action) => {
+                const paramsObj = this.buildParamsObj(action);
+
                 return this.productsService.getProducts(paramsObj).pipe(
                     map((response) => ProductsActions.fetchProductsSuccess({products: response.data})),
                     catchError((error: Error) => of(ProductsActions.fetchProductsFailure({error}))),
@@ -51,4 +43,35 @@ export class ProductsEffects {
             }),
         ),
     );
+
+    private buildParamsObj(action): GetProductsParams {
+        const filters = [
+            {
+                field: 'name',
+                operator: Operator.CONTAINS,
+                value: '*',
+            },
+        ];
+
+        if (action.payload.filters) {
+            action.payload.filters.forEach((filter) => {
+                filters.push({field: filter.category.toString(), operator: Operator.ONE_OF, value: filter.selection.join('|')});
+            });
+        }
+
+        return filters.reduce(
+            (params, filter, index) => {
+                params[`filters[${index}][field]`] = filter.field.toLowerCase();
+                params[`filters[${index}][operator]`] = filter.operator;
+                params[`filters[${index}][value]`] = filter.value;
+                return params;
+            },
+            {
+                orderBy: 'name',
+                order: 'asc',
+                limit: '200',
+                offset: '0',
+            },
+        );
+    }
 }

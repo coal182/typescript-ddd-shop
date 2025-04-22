@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
+import {NgxCoalModule} from 'ngx-coal';
 
 import {ProductAlertsComponent} from './components/product-alerts/product-alerts.component';
 import {ProductDetailsComponent} from './pages/product-details/product-details.component';
@@ -25,6 +26,7 @@ import {productsCountFeatureKey} from '../store/products-count/state/model';
         StoreModule.forFeature(productsFeatureKey, productReducer),
         StoreModule.forFeature(productsCountFeatureKey, productsCountReducer),
         EffectsModule.forFeature([ProductsEffects, ProductsCountEffects]),
+        NgxCoalModule,
     ],
     exports: [ProductListComponent],
 })
