@@ -1,4 +1,4 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -12,6 +12,7 @@ import {MockCartService} from 'src/app/test/mock-cart-service';
 import {CartComponent} from './cart.component';
 
 import {HttpCartService} from '../../services/http-cart.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CartComponent', () => {
     const orderId = 'orderId';
@@ -25,20 +26,22 @@ describe('CartComponent', () => {
         mockCartService = new MockCartService();
 
         await TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, FormsModule, ReactiveFormsModule, RouterTestingModule.withRoutes([{path: 'orders', component: BlankComponent}])],
-            declarations: [CartComponent],
-            providers: [
-                {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: HttpCartService, useValue: mockCartService},
-                {
-                    provide: IdProviderService,
-                    useValue: {
-                        getId: (): string => orderId,
-                    },
-                },
-            ],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
+    declarations: [CartComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [FormsModule, ReactiveFormsModule, RouterTestingModule.withRoutes([{ path: 'orders', component: BlankComponent }])],
+    providers: [
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: HttpCartService, useValue: mockCartService },
+        {
+            provide: IdProviderService,
+            useValue: {
+                getId: (): string => orderId,
+            },
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
     });
 
     beforeEach(() => {

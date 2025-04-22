@@ -1,4 +1,4 @@
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA, Type} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {UntypedFormBuilder} from '@angular/forms';
@@ -8,6 +8,7 @@ import {MockStorageService} from 'src/app/test/mock-local-storage-service';
 import {MockRouter} from 'src/app/test/mock-router';
 
 import {SignupComponent} from './signup.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SignupComponent', () => {
     let component: SignupComponent;
@@ -20,15 +21,17 @@ describe('SignupComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            declarations: [SignupComponent],
-            providers: [
-                {provide: UntypedFormBuilder, useFactory: formBuilderStub},
-                {provide: Router, useValue: mockRouter},
-                {provide: StorageService, useClass: MockStorageService},
-            ],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
+    declarations: [SignupComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
+        { provide: UntypedFormBuilder, useFactory: formBuilderStub },
+        { provide: Router, useValue: mockRouter },
+        { provide: StorageService, useClass: MockStorageService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
     });
 
     beforeEach(() => {

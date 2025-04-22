@@ -1,4 +1,4 @@
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
 import {StorageService} from 'src/app/shared/services/storage.service';
 import {MockStorageService} from 'src/app/test/mock-local-storage-service';
@@ -7,6 +7,7 @@ import {environment} from 'src/environments/environment';
 import {HttpOrderService} from './http-order.service';
 
 import {Order} from '../interfaces/orders';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe(HttpOrderService.name, () => {
     let service: HttpOrderService;
@@ -17,9 +18,9 @@ describe(HttpOrderService.name, () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [HttpOrderService, {provide: StorageService, useClass: MockStorageService}],
-        });
+    imports: [],
+    providers: [HttpOrderService, { provide: StorageService, useClass: MockStorageService }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         service = TestBed.inject(HttpOrderService);
         httpTestingController = TestBed.inject(HttpTestingController);
     });

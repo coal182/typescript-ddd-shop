@@ -1,9 +1,10 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatAutocomplete} from '@angular/material/autocomplete';
 
 import {FinderComponent} from './finder.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('FinderComponent', () => {
     let component: FinderComponent;
@@ -11,10 +12,11 @@ describe('FinderComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MatAutocomplete],
-            declarations: [FinderComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
+    declarations: [FinderComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [MatAutocomplete],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
     });
 
     beforeEach(() => {

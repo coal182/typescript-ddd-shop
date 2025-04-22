@@ -1,5 +1,5 @@
-import {HttpParams} from '@angular/common/http';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import { HttpParams, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
 import {environment} from 'src/environments/environment';
 
@@ -16,7 +16,7 @@ describe('HttpProductService', () => {
     let dummySingleProduct: ProductResponse;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({imports: [HttpClientTestingModule], providers: [HttpProductService]});
+        TestBed.configureTestingModule({ imports: [], providers: [HttpProductService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()] });
         service = TestBed.inject(HttpProductService);
         httpMock = TestBed.inject(HttpTestingController);
     });

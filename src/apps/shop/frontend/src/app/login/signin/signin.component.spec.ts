@@ -1,4 +1,4 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {UntypedFormBuilder} from '@angular/forms';
@@ -10,6 +10,7 @@ import {loginInitialState} from 'src/app/store/login/state/model';
 import {MockStorageService} from 'src/app/test/mock-local-storage-service';
 
 import {SigninComponent} from './signin.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SigninComponent', () => {
     let component: SigninComponent;
@@ -19,16 +20,18 @@ describe('SigninComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
-            declarations: [SigninComponent],
-            providers: [
-                {provide: UntypedFormBuilder, useFactory: formBuilderStub},
-                AuthService,
-                {provide: StorageService, useClass: MockStorageService},
-                provideMockStore({initialState: loginInitialState}),
-            ],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
+    declarations: [SigninComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [RouterTestingModule.withRoutes([])],
+    providers: [
+        { provide: UntypedFormBuilder, useFactory: formBuilderStub },
+        AuthService,
+        { provide: StorageService, useClass: MockStorageService },
+        provideMockStore({ initialState: loginInitialState }),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
     });
 
     beforeEach(() => {

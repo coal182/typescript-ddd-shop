@@ -1,4 +1,4 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -14,6 +14,7 @@ import {UserProfileComponent} from './user-profile.component';
 
 import {HttpUserService} from '../user-service/http-user.service';
 import {PutUserParams} from '../user-service/user.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UserProfileComponent', () => {
     let component: UserProfileComponent;
@@ -25,16 +26,18 @@ describe('UserProfileComponent', () => {
     beforeEach(async () => {
         mockUserService = new MockUserService();
         await TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, FormsModule, ReactiveFormsModule, RouterTestingModule.withRoutes([])],
-            declarations: [UserProfileComponent],
-            providers: [
-                {provide: ActivatedRoute, useValue: {snapshot: {paramMap: {get: (): string => userId}}}},
-                {provide: HttpUserService, useValue: mockUserService},
-                {provide: StorageService, useClass: MockStorageService},
-                ValidationService,
-            ],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
+    declarations: [UserProfileComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [FormsModule, ReactiveFormsModule, RouterTestingModule.withRoutes([])],
+    providers: [
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (): string => userId } } } },
+        { provide: HttpUserService, useValue: mockUserService },
+        { provide: StorageService, useClass: MockStorageService },
+        ValidationService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
     });
 
     beforeEach(() => {

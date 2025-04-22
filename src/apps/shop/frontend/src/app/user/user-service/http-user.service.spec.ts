@@ -1,5 +1,5 @@
-import {HttpStatusCode} from '@angular/common/http';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import { HttpStatusCode, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
 import {environment} from 'src/environments/environment';
 
@@ -13,9 +13,9 @@ describe(HttpUserService.name, () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [HttpUserService],
-        });
+    imports: [],
+    providers: [HttpUserService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         service = TestBed.inject(HttpUserService);
         httpTestingController = TestBed.inject(HttpTestingController);
     });

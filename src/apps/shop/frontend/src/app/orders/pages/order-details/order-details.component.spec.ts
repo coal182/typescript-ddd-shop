@@ -1,4 +1,4 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
@@ -9,6 +9,7 @@ import {MockStorageService} from 'src/app/test/mock-local-storage-service';
 import {OrderDetailsComponent} from './order-details.component';
 
 import {HttpOrderService} from '../../services/http-order.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('OrderDetailsComponent', () => {
     let component: OrderDetailsComponent;
@@ -16,22 +17,26 @@ describe('OrderDetailsComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [OrderDetailsComponent],
-            imports: [HttpClientTestingModule],
-            providers: [
-                HttpOrderService,
-                {
-                    provide: ActivatedRoute,
-                    useValue: {
-                        snapshot: {
-                            paramMap: {get: (): Observable<ReadonlyArray<{orderId: number}>> => of([{orderId: 1}])},
-                        },
-                    },
+    declarations: [OrderDetailsComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [],
+    providers: [
+        HttpOrderService,
+        {
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    paramMap: { get: (): Observable<ReadonlyArray<{
+                            orderId: number;
+                        }>> => of([{ orderId: 1 }]) },
                 },
-                {provide: StorageService, useClass: MockStorageService},
-            ],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
+            },
+        },
+        { provide: StorageService, useClass: MockStorageService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
     });
 
     beforeEach(() => {

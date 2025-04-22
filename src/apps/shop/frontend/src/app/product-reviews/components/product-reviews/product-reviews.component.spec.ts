@@ -1,5 +1,5 @@
 import {TextFieldModule} from '@angular/cdk/text-field';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {Component, DebugElement, NO_ERRORS_SCHEMA, NgZone} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
@@ -16,6 +16,7 @@ import {ProductReviewFormData, ProductReviewsComponent} from './product-reviews.
 
 import {MockProductReviewsService} from '../../../test/mock-product-reviews.service';
 import {ProductReviewBody, ProductReviewsService} from '../../services/product-reviews.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe(ProductReviewsComponent.name, () => {
     const productId = 'product-id';
@@ -144,23 +145,25 @@ describe(ProductReviewsComponent.name, () => {
         popupServiceSpy = jasmine.createSpyObj('PopupService', ['open']);
 
         TestBed.configureTestingModule({
-            declarations: [HostTestComponent, ProductReviewsComponent, StarRatingComponent],
-            providers: [
-                {provide: ProductReviewsService, useValue: productReviewsService},
-                {provide: StorageService, useValue: storageService},
-                {provide: FormBuilder},
-                {provide: NgZone, useClass: MockNgZone},
-                {provide: PopupService, useValue: popupServiceSpy},
-                {
-                    provide: IdProviderService,
-                    useValue: {
-                        getId: (): string => reviewId,
-                    },
-                },
-            ],
-            imports: [ReactiveFormsModule, HttpClientTestingModule, TextFieldModule, MatIconModule],
-            schemas: [NO_ERRORS_SCHEMA],
-        });
+    declarations: [HostTestComponent, ProductReviewsComponent, StarRatingComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [ReactiveFormsModule, TextFieldModule, MatIconModule],
+    providers: [
+        { provide: ProductReviewsService, useValue: productReviewsService },
+        { provide: StorageService, useValue: storageService },
+        { provide: FormBuilder },
+        { provide: NgZone, useClass: MockNgZone },
+        { provide: PopupService, useValue: popupServiceSpy },
+        {
+            provide: IdProviderService,
+            useValue: {
+                getId: (): string => reviewId,
+            },
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
     }
 
     async function initComponent(productId: string): Promise<void> {

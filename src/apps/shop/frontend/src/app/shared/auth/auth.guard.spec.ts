@@ -1,4 +1,4 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {TestBed} from '@angular/core/testing';
 import {Router} from '@angular/router';
 import {MockStorageService} from 'src/app/test/mock-local-storage-service';
@@ -8,6 +8,7 @@ import {AuthGuard} from './auth.guard';
 import {AuthService} from './auth.service';
 
 import {StorageService} from '../services/storage.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AuthGuard', () => {
     let guard: AuthGuard;
@@ -15,9 +16,9 @@ describe('AuthGuard', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [{provide: Router, useValue: mockRouter}, AuthService, {provide: StorageService, useClass: MockStorageService}],
-        });
+    imports: [],
+    providers: [{ provide: Router, useValue: mockRouter }, AuthService, { provide: StorageService, useClass: MockStorageService }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         guard = TestBed.inject(AuthGuard);
     });
 

@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {fakeAsync} from '@angular/core/testing';
 import {UntypedFormBuilder} from '@angular/forms';
 import {of} from 'rxjs';

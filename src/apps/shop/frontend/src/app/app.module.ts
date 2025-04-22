@@ -1,4 +1,4 @@
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
@@ -25,20 +25,7 @@ import {loginReducer} from './store/login/login.reducer';
 import {TopBarComponent} from './top-bar/top-bar.component';
 import {UserProfileComponent} from './user/user-profile/user-profile.component';
 
-@NgModule({
-    imports: [
-        HttpClientModule,
-        AppRoutingModule,
-        SharedModule,
-        ProductsModule,
-        CartModule,
-        OrdersModule,
-        StoreModule.forRoot({}, {}),
-        EffectsModule.forRoot([]),
-        StoreModule.forFeature('login', loginReducer),
-        EffectsModule.forFeature([LoginEffects]),
-    ],
-    declarations: [
+@NgModule({ declarations: [
         AppComponent,
         TopBarComponent,
         AlertDialogComponent,
@@ -49,16 +36,23 @@ import {UserProfileComponent} from './user/user-profile/user-profile.component';
         OrderListComponent,
         OrderDetailsComponent,
     ],
-    providers: [
+    bootstrap: [AppComponent], imports: [AppRoutingModule,
+        SharedModule,
+        ProductsModule,
+        CartModule,
+        OrdersModule,
+        StoreModule.forRoot({}, {}),
+        EffectsModule.forRoot([]),
+        StoreModule.forFeature('login', loginReducer),
+        EffectsModule.forFeature([LoginEffects])], providers: [
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
             multi: true,
         },
-        {provide: PopupService, useClass: SwalPopupService},
+        { provide: PopupService, useClass: SwalPopupService },
         ValidationService,
         IdProviderService,
-    ],
-    bootstrap: [AppComponent],
-})
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {}

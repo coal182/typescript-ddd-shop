@@ -1,4 +1,4 @@
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
@@ -12,6 +12,7 @@ import {MockCartService} from 'src/app/test/mock-cart-service';
 import {MockStorageService} from 'src/app/test/mock-local-storage-service';
 
 import {ProductDetailsComponent} from './product-details.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ProductDetailsComponent', () => {
     let component: ProductDetailsComponent;
@@ -27,17 +28,19 @@ describe('ProductDetailsComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MatDialogModule],
-            declarations: [ProductDetailsComponent, AlertDialogComponent],
-            providers: [
-                {provide: ActivatedRoute, useValue: mockActivatedRoute},
-                {provide: MatDialog, useValue: {}},
-                {provide: CartService, useClass: MockCartService},
-                {provide: StorageService, useClass: MockStorageService},
-                provideMockStore({initialState: singleProductInitialState}),
-            ],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
+    declarations: [ProductDetailsComponent, AlertDialogComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [MatDialogModule],
+    providers: [
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: MatDialog, useValue: {} },
+        { provide: CartService, useClass: MockCartService },
+        { provide: StorageService, useClass: MockStorageService },
+        provideMockStore({ initialState: singleProductInitialState }),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
     });
 
     beforeEach(() => {
