@@ -32,8 +32,9 @@
     </div>
 </div>
 
-<mat-progress-spinner
-    *ngIf="isLoading"
-    mode="indeterminate"
-    data-test="progress-spinner-2"
-    style="margin: 0 auto"></mat-progress-spinner>
+@if (isLoading) {
+    <mat-progress-spinner
+        mode="indeterminate"
+        data-test="progress-spinner-2"
+        style="margin: 0 auto"></mat-progress-spinner>
+}

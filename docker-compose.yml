@@ -178,7 +178,7 @@ services:
       - 5601:5601
 
   shop_frontend:
-    image: node:20.9-alpine
+    image: node:20.14-alpine
     container_name: shop-frontend
     working_dir: /app
     volumes:

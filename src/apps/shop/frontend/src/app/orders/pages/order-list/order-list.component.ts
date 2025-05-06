@@ -1,4 +1,10 @@
+import {AsyncPipe, CurrencyPipe} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTableModule} from '@angular/material/table';
+import {RouterModule} from '@angular/router';
 import {map, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
@@ -9,7 +15,7 @@ import {HttpOrderService} from '../../services/http-order.service';
     selector: 'app-order-list',
     templateUrl: './order-list.component.html',
     styleUrls: ['./order-list.component.css'],
-    standalone: false
+    imports: [MatButtonModule, MatIconModule, MatTableModule, AsyncPipe, CurrencyPipe, MatProgressSpinnerModule, RouterModule],
 })
 export class OrderListComponent implements OnInit {
     public isLoading = false;

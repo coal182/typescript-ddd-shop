@@ -1,16 +1,19 @@
-import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
-import {Store} from '@ngrx/store';
-import {LoginActions} from 'src/app/store/login/login.actions';
-import {Credentials} from 'src/app/store/login/state/model';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { LoginActions } from 'src/app/store/login/login.actions';
+import { Credentials } from 'src/app/store/login/state/model';
 
-import {AuthService} from '../../shared/auth/auth.service';
+import { AuthService } from '../../shared/auth/auth.service';
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     styleUrls: ['./signin.component.css'],
-    standalone: false
+    imports: [ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatIconModule],
 })
 export class SigninComponent implements OnInit, OnDestroy {
     signinForm: UntypedFormGroup;

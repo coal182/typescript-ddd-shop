@@ -4,6 +4,7 @@ export interface ProductReview {
     userId: string;
     rating: number;
     comment: string;
+    createdAt: string;
 }
 
 export interface ProductReviewResponseData {
@@ -12,6 +13,7 @@ export interface ProductReviewResponseData {
     userId: string;
     rating: number;
     comment: string;
+    createdAt: string;
 }
 
 export interface ProductReviewResponse {

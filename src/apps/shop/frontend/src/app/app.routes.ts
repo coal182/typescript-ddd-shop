@@ -1,6 +1,4 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {Routes, RouterModule} from '@angular/router';
+import {Routes} from '@angular/router';
 
 import {CartComponent} from './cart/pages/cart/cart.component';
 import {SigninComponent} from './login/signin/signin.component';
@@ -13,7 +11,7 @@ import {AuthGuard} from './shared/auth/auth.guard';
 import {ShippingComponent} from './shipping/shipping.component';
 import {UserProfileComponent} from './user/user-profile/user-profile.component';
 
-const routes: Routes = [
+export const routes: Routes = [
     {path: '', redirectTo: '/log-in', pathMatch: 'full'},
     {path: 'log-in', component: SigninComponent},
     {path: 'sign-up', component: SignupComponent},
@@ -33,9 +31,3 @@ const routes: Routes = [
     {path: 'orders/:orderId', component: OrderDetailsComponent},
     {path: 'shipping', component: ShippingComponent},
 ];
-
-@NgModule({
-    imports: [BrowserModule, RouterModule.forRoot(routes)],
-    exports: [RouterModule],
-})
-export class AppRoutingModule {}

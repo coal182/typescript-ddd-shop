@@ -1,68 +1,87 @@
-<div class="product-detail animate__animated animate__fadeIn" *ngIf="product$ | async as product">
-    <div *ngIf="!isLoading">
-        <ng-container></ng-container>
+@let product = product$ | async;
 
-        <div class="row">
-            <div class="col-md-6 img-wrapper">
-                <img [src]="product | image" />
-            </div>
-            <div class="col-md-6">
-                <h1>{{ product.name }}</h1>
-                <h4>{{ product.price | currency }}</h4>
-                <p>{{ product.brand }}</p>
-                <p>{{ product.category }}</p>
+@if (product) {
+    <div class="product-detail animate__animated animate__fadeIn">
+        @if (!isLoading) {
+            <div>
+                <ng-container></ng-container>
+
                 <div class="row">
-                    <div class="col-12">
-                        <button mat-flat-button type="button" color="primary" (click)="addToCart()" class="add-to-cart">
-                            Add to cart <mat-icon>add_shopping_cart</mat-icon>
-                        </button>
+                    <div class="col-md-6 img-wrapper">
+                        <img [src]="product | image" />
                     </div>
-                    <div class="col-12">
-                        <button mat-flat-button type="button" color="basic" (click)="share()" [disabled]="isLoading">
-                            Share <mat-icon>share</mat-icon>
-                            <mat-icon *ngIf="isLoading">
-                                <mat-progress-spinner
-                                    mode="indeterminate"
-                                    diameter="24"
-                                    data-test="progress-spinner"></mat-progress-spinner>
-                            </mat-icon>
-                        </button>
+                    <div class="col-md-6">
+                        <h1>{{ product.name }}</h1>
+                        <h4>{{ product.price | currency }}</h4>
+                        <p>{{ product.brand }}</p>
+                        <p>{{ product.category }}</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <button
+                                    mat-flat-button
+                                    type="button"
+                                    color="primary"
+                                    (click)="addToCart()"
+                                    class="add-to-cart">
+                                    Add to cart <mat-icon>add_shopping_cart</mat-icon>
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <button
+                                    mat-flat-button
+                                    type="button"
+                                    color="basic"
+                                    (click)="share()"
+                                    [disabled]="isLoading">
+                                    Share <mat-icon>share</mat-icon>
+                                    @if (isLoading) {
+                                        <mat-icon>
+                                            <mat-progress-spinner
+                                                mode="indeterminate"
+                                                diameter="24"
+                                                data-test="progress-spinner"></mat-progress-spinner>
+                                        </mat-icon>
+                                    }
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col"><br /></div>
+                </div>
+                <div class="row">
+                    <mat-tab-group animationDuration="0ms" color="primary">
+                        <mat-tab label="Reviews"
+                            ><br />
+                            <h2>Reviews</h2>
+                            <app-product-reviews [productId]="product.id"></app-product-reviews>
+                        </mat-tab>
+                        <mat-tab label="Description"><br />{{ product.description }}</mat-tab>
+                        <mat-tab label="Caracteristics">
+                            <br />
+
+                            <table>
+                                <tr>
+                                    <th>Brand</th>
+                                    <td>{{ product.brand }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Category</th>
+                                    <td>{{ product.category }}</td>
+                                </tr>
+                            </table>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col"><br /></div>
-        </div>
-        <div class="row">
-            <mat-tab-group animationDuration="0ms" color="primary">
-                <mat-tab label="Reviews"
-                    ><br />
-                    <h2>Reviews</h2>
-                    <app-product-reviews [productId]="product.id"></app-product-reviews>
-                </mat-tab>
-                <mat-tab label="Description"><br />{{ product.description }}</mat-tab>
-                <mat-tab label="Caracteristics">
-                    <br />
-
-                    <table>
-                        <tr>
-                            <th>Brand</th>
-                            <td>{{ product.brand }}</td>
-                        </tr>
-                        <tr>
-                            <th>Category</th>
-                            <td>{{ product.category }}</td>
-                        </tr>
-                    </table>
-                </mat-tab>
-            </mat-tab-group>
-        </div>
+        }
     </div>
-</div>
+}
 
-<mat-progress-spinner
-    *ngIf="isLoading"
-    mode="indeterminate"
-    data-test="progress-spinner-2"
-    style="margin: 0 auto"></mat-progress-spinner>
+@if (isLoading) {
+    <mat-progress-spinner
+        mode="indeterminate"
+        data-test="progress-spinner-2"
+        style="margin: 0 auto"></mat-progress-spinner>
+}

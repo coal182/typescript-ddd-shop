@@ -1,11 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {Router, RouterModule} from '@angular/router';
 import {select, Store} from '@ngrx/store';
 import {Subject, switchMap, takeUntil} from 'rxjs';
 import Swal from 'sweetalert2';
 
 import {Cart} from '../cart/interfaces/cart';
 import {HttpCartService} from '../cart/services/http-cart.service';
+import {FinderComponent} from '../finder/finder.component';
 import {AuthService} from '../shared/auth/auth.service';
 import {StorageService} from '../shared/services/storage.service';
 import {LoginActions} from '../store/login/login.actions';
@@ -13,10 +17,10 @@ import {LoginSelectors} from '../store/login/login.selectors';
 import {LoadingStatus} from '../store/metadata-types';
 
 @Component({
+    imports: [RouterModule, FinderComponent, MatButtonModule, MatIconModule, MatMenuModule],
     selector: 'app-top-bar',
     templateUrl: './top-bar.component.html',
     styleUrls: ['./top-bar.component.css'],
-    standalone: false
 })
 export class TopBarComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<void>();

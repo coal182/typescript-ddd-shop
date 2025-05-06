@@ -1,9 +1,9 @@
 import {createAction, props} from '@ngrx/store';
-import {SelectedFilters} from 'ngx-coal';
+import {Selection} from 'ngx-coal';
 import {Product} from 'src/app/products/interfaces/products.interface';
 
 export class ProductsActions {
-    public static fetchProducts = createAction('[Products] Fetch products', (payload: {filters?: ReadonlyArray<SelectedFilters>} = {}) => ({payload}));
+    public static fetchProducts = createAction('[Products] Fetch products', (payload: {filters?: Selection} = {}) => ({payload}));
 
     public static fetchProductsSuccess = createAction('[Products] Fetch products Success', props<{products: ReadonlyArray<Product>}>());
 

@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams, HttpUrlEncodingCodec } from '@angular/common/http';
+import {HttpClient, HttpParams, HttpUrlEncodingCodec} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 

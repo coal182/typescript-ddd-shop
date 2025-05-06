@@ -7,25 +7,31 @@
         </div>
 
         <div class="col-md-7 v-centered">
-            <finder *ngIf="this.authService.isLoggedIn" class="v-centered"></finder>
+            @if (this.authService.isLoggedIn) {
+                <finder class="v-centered"></finder>
+            }
         </div>
 
         <div class="col-md-3 v-centered">
             <div class="cart-button-container">
-                <button *ngIf="this.authService.isLoggedIn" routerLink="/cart" mat-icon-button>
-                    <mat-icon>shopping_cart</mat-icon>
-                </button>
-                <span class="cart-counter" *ngIf="this.authService.isLoggedIn">{{ this.cart_counter }}</span>
+                @if (this.authService.isLoggedIn) {
+                    <button routerLink="/cart" mat-icon-button>
+                        <mat-icon>shopping_cart</mat-icon>
+                    </button>
+                    <span class="cart-counter">{{ this.cart_counter }}</span>
+                }
             </div>
 
-            <button
-                *ngIf="this.authService.isLoggedIn"
-                mat-icon-button
-                [matMenuTriggerFor]="menu"
-                aria-label="Example icon-button with a menu"
-                class="user-menu-button">
-                <mat-icon>menu</mat-icon>
-            </button>
+            @if (this.authService.isLoggedIn) {
+                <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu"
+                    class="user-menu-button">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            }
+
             <mat-menu #menu="matMenu">
                 <button mat-menu-item [routerLink]="['user-profile/' + this.user_id]">
                     <mat-icon>manage_accounts</mat-icon>
@@ -40,31 +46,16 @@
                     <span>Logout</span>
                 </button>
             </mat-menu>
-
-            <button
-                *ngIf="!this.authService.isLoggedIn"
-                mat-flat-button
-                type="button"
-                routerLinkActive="active"
-                routerLink="/log-in">
-                <mat-icon>login</mat-icon> Sign in
-            </button>
-            &nbsp;
-            <button
-                *ngIf="!this.authService.isLoggedIn"
-                mat-flat-button
-                type="button"
-                routerLinkActive="active"
-                routerLink="/sign-up">
-                <mat-icon>add</mat-icon>
-                Sign up
-            </button>
+            @if (!this.authService.isLoggedIn) {
+                <button mat-flat-button type="button" routerLinkActive="active" routerLink="/log-in">
+                    <mat-icon>login</mat-icon> Sign in
+                </button>
+                &nbsp;
+                <button mat-flat-button type="button" routerLinkActive="active" routerLink="/sign-up">
+                    <mat-icon>add</mat-icon>
+                    Sign up
+                </button>
+            }
         </div>
     </div>
 </div>
-
-<!-- 
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://angular.io/license
--->

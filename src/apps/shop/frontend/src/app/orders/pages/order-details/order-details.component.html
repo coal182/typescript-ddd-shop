@@ -1,41 +1,45 @@
 <h2>Order Details</h2>
+@if (order$ | async) {
+    <div class="order-detail">
+        @if (!isLoading) {
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>{{ (order$ | async)?.name }}</h3>
+                        <p>
+                            {{ (order$ | async)?.address.street }} {{ (order$ | async)?.address.number }}
+                            {{ (order$ | async)?.address.city }}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <table mat-table [dataSource]="(order$ | async)?.lines" class="order-table" #table>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef>Name</th>
+                                <td mat-cell *matCellDef="let item">{{ item.product.name }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="qty">
+                                <th mat-header-cell *matHeaderCellDef>Qty</th>
+                                <td mat-cell *matCellDef="let item">{{ item.qty }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="price">
+                                <th mat-header-cell *matHeaderCellDef>Price</th>
+                                <td mat-cell *matCellDef="let item">{{ item.price | currency }}</td>
+                            </ng-container>
 
-<div class="order-detail" *ngIf="order$ | async">
-    <div *ngIf="!isLoading">
-        <div class="row">
-            <div class="col-md-6">
-                <h3>{{ (order$ | async)?.name }}</h3>
-                <p>
-                    {{ (order$ | async)?.address.street }} {{ (order$ | async)?.address.number }}
-                    {{ (order$ | async)?.address.city }}
-                </p>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+                        </table>
+                        <h4>{{ (order$ | async)?.total | currency }}</h4>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <table mat-table [dataSource]="(order$ | async)?.lines" class="order-table" #table>
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef>Name</th>
-                        <td mat-cell *matCellDef="let item">{{ item.product.name }}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="qty">
-                        <th mat-header-cell *matHeaderCellDef>Qty</th>
-                        <td mat-cell *matCellDef="let item">{{ item.qty }}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="price">
-                        <th mat-header-cell *matHeaderCellDef>Price</th>
-                        <td mat-cell *matCellDef="let item">{{ item.price | currency }}</td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-                </table>
-                <h4>{{ (order$ | async)?.total | currency }}</h4>
-            </div>
-        </div>
+        }
     </div>
-</div>
+}
 
-<mat-progress-spinner
-    *ngIf="isLoading"
-    mode="indeterminate"
-    data-test="progress-spinner-2"
-    style="margin: 0 auto"></mat-progress-spinner>
+@if (isLoading) {
+    <mat-progress-spinner
+        mode="indeterminate"
+        data-test="progress-spinner-2"
+        style="margin: 0 auto"></mat-progress-spinner>
+}

@@ -6,7 +6,6 @@ import {Product} from '../../interfaces/products.interface';
     selector: 'app-product-alerts',
     templateUrl: './product-alerts.component.html',
     styleUrls: ['./product-alerts.component.css'],
-    standalone: false
 })
 export class ProductAlertsComponent {
     @Input() product!: Product;

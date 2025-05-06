@@ -1,9 +1,16 @@
-import {Component} from '@angular/core';
+import {CurrencyPipe} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {RouterModule} from '@angular/router';
 import {fromEvent} from 'rxjs';
 import {tap, switchMap, debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 import {Operator, Product} from '../products/interfaces/products.interface';
 import {HttpProductService} from '../products/services/http-product.service';
+import {ImagePipe} from '../shared/pipes/image.pipe';
 
 export interface State {
     flag: string;
@@ -18,9 +25,9 @@ export interface State {
     selector: 'finder',
     templateUrl: 'finder.component.html',
     styleUrls: ['finder.component.css'],
-    standalone: false
+    imports: [MatAutocompleteModule, MatInputModule, MatFormFieldModule, RouterModule, CurrencyPipe, ImagePipe, MatProgressSpinnerModule],
 })
-export class FinderComponent {
+export class FinderComponent implements OnInit {
     filteredProducts: Product[];
     loading = false;
 

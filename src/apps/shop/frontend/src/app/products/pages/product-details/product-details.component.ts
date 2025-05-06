@@ -1,12 +1,15 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterModule} from '@angular/router';
 import {select, Store} from '@ngrx/store';
 import {StatusCodes} from 'http-status-codes';
 import {map, Observable, Subject, throwError} from 'rxjs';
 import {catchError, tap, takeUntil} from 'rxjs/operators';
 import {CartItem} from 'src/app/cart/interfaces/cart';
+import {ProductReviewsComponent} from 'src/app/product-reviews/components/product-reviews/product-reviews.component';
+import {ImagePipe} from 'src/app/shared/pipes/image.pipe';
+import {SharedModule} from 'src/app/shared/shared.module';
 import {LoadingStatus} from 'src/app/store/metadata-types';
 import {ProductsActions} from 'src/app/store/products/products.actions';
 import {ProductSelectors} from 'src/app/store/products/products.selectors';
@@ -17,10 +20,10 @@ import {HttpCartService} from '../../../cart/services/http-cart.service';
 import {HttpProductService} from '../../services/http-product.service';
 
 @Component({
+    imports: [ProductReviewsComponent, SharedModule, RouterModule, ImagePipe],
     selector: 'app-product-details',
     templateUrl: './product-details.component.html',
     styleUrls: ['./product-details.component.css'],
-    standalone: false
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
     private onDestroy$: Subject<void> = new Subject();

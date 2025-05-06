@@ -1,9 +1,11 @@
+import {AsyncPipe, JsonPipe} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {ActivatedRoute, RouterModule} from '@angular/router';
 import {StatusCodes} from 'http-status-codes';
 import {map, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import {MaterialModule} from 'src/app/shared/material/material.module';
 import {ValidationService} from 'src/app/shared/services/validation.service';
 import Swal from 'sweetalert2';
 
@@ -15,7 +17,7 @@ import {PutUserParams} from '../user-service/user.service';
     selector: 'app-user-profile',
     templateUrl: './user-profile.component.html',
     styleUrls: ['./user-profile.component.css'],
-    standalone: false
+    imports: [RouterModule, MaterialModule, ReactiveFormsModule, AsyncPipe, JsonPipe],
 })
 export class UserProfileComponent implements OnInit {
     currentUser: User;

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {UntypedFormGroup} from '@angular/forms';
 import {BehaviorSubject, map, Observable, of, tap} from 'rxjs';
@@ -116,9 +116,9 @@ export class HttpCartService extends CartService {
         return this.http.delete<any>(`${environment.apiUrl}cart/clear/${this.cart.id}`);
     }
 
-    public getShippingPrices(): Observable<void> {
+    public getShippingPrices(): Observable<ReadonlyArray<{type: string; price: number}>> {
         //throw new Error('Method not implemented.');
-        return of();
+        return of([]);
     }
 }
 

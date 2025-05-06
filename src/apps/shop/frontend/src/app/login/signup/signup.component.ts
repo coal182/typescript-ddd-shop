@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
+import {ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {AuthService} from '../../shared/auth/auth.service';
@@ -7,7 +7,7 @@ import {AuthService} from '../../shared/auth/auth.service';
     selector: 'app-signup',
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.css'],
-    standalone: false
+    imports: [ReactiveFormsModule],
 })
 export class SignupComponent {
     signupForm: UntypedFormGroup;

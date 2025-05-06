@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {select, Store} from '@ngrx/store';
+import {Selection} from 'ngx-coal';
 import {catchError, map, mergeMap, of, withLatestFrom} from 'rxjs';
 import {Operator} from 'src/app/products/interfaces/products.interface';
 import {HttpProductService} from 'src/app/products/services/http-product.service';
@@ -20,8 +21,8 @@ export class ProductsEffects {
     fetchProducts$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ProductsActions.fetchProducts),
-            mergeMap((action) => {
-                const paramsObj = this.buildParamsObj(action);
+            mergeMap(({payload}) => {
+                const paramsObj = this.buildParamsObj(payload);
 
                 return this.productsService.getProducts(paramsObj).pipe(
                     map((response) => ProductsActions.fetchProductsSuccess({products: response.data})),
@@ -44,7 +45,7 @@ export class ProductsEffects {
         ),
     );
 
-    private buildParamsObj(action): GetProductsParams {
+    private buildParamsObj(payload: {filters?: Selection}): GetProductsParams {
         const filters = [
             {
                 field: 'name',
@@ -53,8 +54,9 @@ export class ProductsEffects {
             },
         ];
 
-        if (action.payload.filters) {
-            action.payload.filters.forEach((filter) => {
+        if (payload.filters) {
+            console.log('📌 ~ payload.filters:', payload.filters);
+            payload.filters.categories.forEach((filter) => {
                 filters.push({field: filter.category.toString(), operator: Operator.ONE_OF, value: filter.selection.join('|')});
             });
         }

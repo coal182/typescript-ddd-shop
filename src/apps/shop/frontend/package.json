@@ -15,12 +15,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.2.7",
-    "@angular/cdk": "^19.2.10",
+    "@angular/cdk": "^19.2.7",
     "@angular/common": "^19.2.7",
     "@angular/compiler": "^19.2.7",
     "@angular/core": "^19.2.7",
     "@angular/forms": "^19.2.7",
-    "@angular/material": "^19.2.10",
+    "@angular/material": "^19.2.7",
     "@angular/platform-browser": "^19.2.7",
     "@angular/platform-browser-dynamic": "^19.2.7",
     "@angular/router": "^19.2.7",
@@ -29,6 +29,7 @@
     "@ngrx/store": "^19.1.0",
     "bootstrap": "^5.3.3",
     "http-status-codes": "^2.3.0",
+    "ngx-coal": "^2.0.2",
     "rxjs": "^7.8.0",
     "sweetalert2": "^11.10.8",
     "tslib": "^2.6.1",
@@ -75,5 +76,8 @@
     "protractor": "^7.0.0",
     "ts-node": "~10.1.0",
     "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": "20.14.0"
   }
 }

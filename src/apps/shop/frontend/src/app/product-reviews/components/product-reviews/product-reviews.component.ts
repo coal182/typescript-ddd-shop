@@ -1,11 +1,17 @@
+import {TextFieldModule} from '@angular/cdk/text-field';
 import {Component, Input, NgZone, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {StarRatingComponent} from 'ngx-coal';
 import {Subject} from 'rxjs';
 import {IdProviderService} from 'src/app/shared/services/id-provider.service';
 import {PopupService} from 'src/app/shared/services/popup/popup-service';
 import {StorageService} from 'src/app/shared/services/storage.service';
+import {SharedModule} from 'src/app/shared/shared.module';
 
 import {ProductReview} from '../../interfaces/product-reviews.interface';
+import {HttpProductReviewsService} from '../../services/http-product-reviews.service';
 import {ProductReviewBody, ProductReviewsService} from '../../services/product-reviews.service';
 
 type ProductReviewForm = FormGroup<{
@@ -21,10 +27,11 @@ export interface ProductReviewFormData {
 }
 
 @Component({
+    imports: [StarRatingComponent, SharedModule, MatFormFieldModule, MatInputModule, TextFieldModule, ReactiveFormsModule],
+    providers: [{provide: ProductReviewsService, useClass: HttpProductReviewsService}],
     selector: 'app-product-reviews',
     templateUrl: './product-reviews.component.html',
     styleUrls: ['./product-reviews.component.css'],
-    standalone: false
 })
 export class ProductReviewsComponent implements OnInit, OnDestroy {
     private readonly onDestroy$ = new Subject();

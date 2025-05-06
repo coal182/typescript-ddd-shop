@@ -1,7 +1,10 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
+import {RouterModule} from '@angular/router';
 import {Store, select} from '@ngrx/store';
-import {ResultWithFilterableFields, SelectedFilters} from 'ngx-coal';
+import {FilterBarComponent, ResultWithFilterableFields, Selection} from 'ngx-coal';
 import {BehaviorSubject, Subject, map, takeUntil, tap} from 'rxjs';
+import {ImagePipe} from 'src/app/shared/pipes/image.pipe';
+import {SharedModule} from 'src/app/shared/shared.module';
 import {LoadingStatus} from 'src/app/store/metadata-types';
 import {ProductsActions} from 'src/app/store/products/products.actions';
 import {ProductSelectors} from 'src/app/store/products/products.selectors';
@@ -14,23 +17,22 @@ import {Product} from '../../interfaces/products.interface';
 const AVAILABLE_FILTER_CATEGORIES = ['brand', 'category'] as const;
 
 @Component({
+    imports: [FilterBarComponent, SharedModule, RouterModule, ImagePipe],
     selector: 'app-product-list',
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.css'],
-    standalone: false
 })
 export class ProductListComponent implements OnInit, OnDestroy {
     public isLoading = true;
     public products$ = new BehaviorSubject<ReadonlyArray<Product>>([]);
     public productsCount$ = new BehaviorSubject(0);
-    public resultsWithFilterableFields: ReadonlyArray<ResultWithFilterableFields>;
+    public resultsWithFilterableFields$: WritableSignal<ReadonlyArray<ResultWithFilterableFields>> = signal([
+        {title: '', filterableFields: {brand: '', category: ''}},
+    ]);
 
     private destroySubject$ = new Subject();
 
-    constructor(
-        private store: Store,
-        private changeDetectorRef: ChangeDetectorRef,
-    ) {}
+    constructor(private store: Store) {}
 
     public ngOnInit(): void {
         this.store.dispatch(ProductsActions.fetchProducts());
@@ -43,7 +45,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.destroySubject$.next(null);
     }
 
-    public onFilterSelection(selectedFilters: ReadonlyArray<SelectedFilters>): void {
+    public onFilterSelection(selectedFilters: Selection): void {
         this.store.dispatch(ProductsActions.fetchProducts({filters: selectedFilters}));
         this.store.dispatch(ProductsCountActions.fetchProductsCount());
     }
@@ -58,7 +60,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroySubject$),
                 select(ProductSelectors.selectProducts),
                 tap((products) => {
-                    console.log('📌 ~ store products:', products);
                     this.handleLoadingStatus(products);
                 }),
                 map((products) => products.products),
@@ -83,7 +84,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     private buildResultsWithFilterableFields(products: ReadonlyArray<Product>): void {
-        this.resultsWithFilterableFields = products.map((product) => ({
+        const resultsWithFilterableFields = products.map((product) => ({
             title: product.name,
             filterableFields: AVAILABLE_FILTER_CATEGORIES.reduce((filterableFields, filterCategory) => {
                 return {
@@ -92,6 +93,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
                 };
             }, {}),
         }));
+        this.resultsWithFilterableFields$.set(resultsWithFilterableFields);
     }
 
     private getProductsCount(): void {

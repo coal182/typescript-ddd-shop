@@ -1,9 +1,15 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import {CurrencyPipe} from '@angular/common';
+import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
-import {MatTable} from '@angular/material/table';
-import {Router} from '@angular/router';
+import {ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatTable, MatTableModule} from '@angular/material/table';
+import {Router, RouterModule} from '@angular/router';
 import {catchError, Observable, Subject, switchMap, takeUntil, tap, throwError} from 'rxjs';
+import {ImagePipe} from 'src/app/shared/pipes/image.pipe';
 import {IdProviderService} from 'src/app/shared/services/id-provider.service';
 import Swal from 'sweetalert2';
 
@@ -14,7 +20,7 @@ import {HttpCartService} from '../../services/http-cart.service';
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.css'],
-    standalone: false
+    imports: [MatTableModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, RouterModule, CurrencyPipe, MatButtonModule, MatIconModule, ImagePipe],
 })
 export class CartComponent implements OnInit, OnDestroy {
     private onDestroy$: Subject<void> = new Subject();

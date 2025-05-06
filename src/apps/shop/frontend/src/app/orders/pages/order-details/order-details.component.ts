@@ -1,5 +1,7 @@
+import {AsyncPipe, CurrencyPipe} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatTable} from '@angular/material/table';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTable, MatTableModule} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
@@ -11,7 +13,7 @@ import {HttpOrderService} from '../../services/http-order.service';
     selector: 'app-order-details',
     templateUrl: './order-details.component.html',
     styleUrls: ['./order-details.component.css'],
-    standalone: false
+    imports: [MatTableModule, AsyncPipe, CurrencyPipe, MatProgressSpinnerModule],
 })
 export class OrderDetailsComponent implements OnInit {
     public columnsToDisplay = ['name', 'qty', 'price'];

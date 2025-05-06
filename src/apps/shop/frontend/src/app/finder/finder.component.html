@@ -4,23 +4,28 @@
         <input matInput aria-label="Search..." id="search-box-input" [matAutocomplete]="auto" />
         <mat-autocomplete #auto="matAutocomplete">
             <!-- If we're loading -->
-            <mat-option class="loading" *ngIf="loading">
-                <mat-spinner diameter="35" color="primary" style="margin: 0 auto"></mat-spinner>
-            </mat-option>
-            <!-- If we're not loading AND the array length is 0, show this -->
-            <mat-option disabled *ngIf="filteredProducts?.length === 0 && !loading"> No products found </mat-option>
-            <!-- Actual payload -->
-            <ng-container *ngIf="!loading">
-                <mat-option
-                    *ngFor="let product of filteredProducts"
-                    [value]="product.name"
-                    [routerLink]="['/products', product.id]">
-                    <img class="example-option-img" aria-hidden [src]="product | image" height="25" />
-                    &nbsp;
-                    <span>{{ product.name }}</span> |
-                    <small>Price: {{ product.price | currency }}</small>
+            @if (loading) {
+                <mat-option class="loading">
+                    <mat-spinner diameter="35" color="primary" style="margin: 0 auto"></mat-spinner>
                 </mat-option>
-            </ng-container>
+            }
+            <!-- If we're not loading AND the array length is 0, show this -->
+            @if (filteredProducts?.length === 0 && !loading) {
+                <mat-option disabled> No products found </mat-option>
+            }
+            <!-- Actual payload -->
+            @if (!loading) {
+                <ng-container>
+                    @for (product of filteredProducts; track $index) {
+                        <mat-option [value]="product.name" [routerLink]="['/products', product.id]">
+                            <img class="example-option-img" aria-hidden [src]="product | image" height="25" />
+                            &nbsp;
+                            <span>{{ product.name }}</span> |
+                            <small>Price: {{ product.price | currency }}</small>
+                        </mat-option>
+                    }
+                </ng-container>
+            }
         </mat-autocomplete>
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
