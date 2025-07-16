@@ -105,19 +105,23 @@ services:
       - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+    healthcheck:
+      test: nc -z localhost 2181 || exit -1
+      interval: 10s
+      timeout: 5s
+      retries: 3
   kafka:
     image: confluentinc/cp-kafka:7.2.0
     container_name: shop-kafka
-    hostname: localhost
+    hostname: kafka
     ports:
       - "9092:9092"
     depends_on:
       - zookeeper
     environment:
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://localhost:9094,OUTSIDE://kafka:9092
-      KAFKA_LISTENERS: INSIDE://:9094,OUTSIDE://:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       ADVERTISED_HOST_NAME: kafka
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
@@ -125,25 +129,25 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_MIN_INSYNC_REPLICAS: 1
     healthcheck:
-      test: ["CMD", "kafka-topics", "--list", "--bootstrap-server", "localhost:9092"]
+      test: ["CMD", "kafka-topics", "--list", "--bootstrap-server", "kafka:9092"]
       interval: 5s
       timeout: 10s
       retries: 5
 
-  cmak:
-    image: ghcr.io/eshepelyuk/dckr/cmak-3.0.0.5:latest
-    container_name: shop-cmak
-    restart: always
+  kafbat-ui:
+    container_name: kafbat-ui
+    image: ghcr.io/kafbat/kafka-ui:latest
     depends_on:
       kafka:
         condition: service_healthy
-    command:
-      - "-Dcmak.zkhosts=zookeeper:2181"
-      - "-DbasicAuthentication.enabled=true"
-      - "-DbasicAuthentication.username=username"
-      - "-DbasicAuthentication.password=password"
+      zookeeper:
+        condition: service_healthy
     ports:
-      - "9000:9000"
+      - 8080:8080
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+    volumes:
+      - ./kui/config.yml:/etc/kafkaui/dynamic_config.yaml
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
@@ -188,8 +192,3 @@ services:
       - "4200:4200"
       - "9876:9876"
     command: sh -c "npm install && npm run start"
-
-# volumes:
-#   node_modules:
-#   esdata:
-#     driver: local

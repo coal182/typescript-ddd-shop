@@ -1,0 +1,4 @@
+kafka:
+  clusters:
+    - name: shop
+      bootstrapServers: kafka:9092

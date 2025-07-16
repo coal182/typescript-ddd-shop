@@ -83,15 +83,11 @@ npm run test
 
 ```bash
 docker exec -it shop-kafka /bin/bash
-kafka-topics --bootstrap-server localhost:9092 --list
-kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic product_created --partition 0
-kafka-console-producer --broker-list localhost:9092 --topic product_created
+kafka-topics --bootstrap-server kafka:9092 --list
+kafka-console-consumer --bootstrap-server kafka:9092 --from-beginning --topic product_created --partition 0
+kafka-console-producer --broker-list kafka:9092 --topic product_created
 ```
 
-**CMAK Config:**
+**Kafbat-UI Use:**
 
-1. Go to http://localhost:9000/addCluster
-2. Username: username, Password: password (as defined in docker-compose.yml)
-3. Cluster name: Shop
-4. Cluster Zookeeper Hosts: zookeeper:2181
-5. Save
+1. Go to http://localhost:8080
