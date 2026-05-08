@@ -1,67 +1,64 @@
-version: '2.1'
-
 services:
+    shop_backend_test:
+        image: node:24.15-alpine
+        container_name: shop-backend-test
+        environment:
+            - HOSTNAMERABBIT=rabbitmq
+            - CLOUDAMQP_URL=amqp://rabbitmq:5672
+        depends_on:
+            rabbitmq_test:
+                condition: service_healthy
+        working_dir: /app
+        volumes:
+            - ./:/app
+            - ./node_modules/:/node_modules
+        ports:
+            - "5002:5002"
+        command: sh -c "npm install && npm run test:features"
 
-  shop_backend_test:
-    image: node:lts-alpine3.18
-    container_name: shop-backend-test
-    environment:
-      - HOSTNAMERABBIT=rabbitmq
-      - CLOUDAMQP_URL=amqp://rabbitmq:5672
-    depends_on:
-      rabbitmq_test:
-        condition: service_healthy
-    working_dir: /app
-    volumes:
-      - ./:/app
-      - ./node_modules/:/node_modules
-    ports:
-      - "5002:5002"
-    command: sh -c "npm install && npm run test:features"
+    rabbitmq_test:
+        image: "rabbitmq:3.8-management"
+        container_name: tba-rabbitmq-test
+        ports:
+            - 5672:5672
+            - 15672:15672
+        healthcheck:
+            test: rabbitmq-diagnostics -q ping
+            interval: 10s
+            timeout: 10s
+            retries: 5
 
-  rabbitmq_test:
-    image: 'rabbitmq:3.8-management'
-    container_name: tba-rabbitmq-test
-    ports:
-      - 5672:5672
-      - 15672:15672
-    healthcheck:
-        test: rabbitmq-diagnostics -q ping
-        interval: 10s
-        timeout: 10s
-        retries: 5
+    mongo:
+        image: mongo:6.0.9
+        container_name: shop-mongo-test
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: mongouser
+            MONGO_INITDB_ROOT_PASSWORD: super-secret-password
+            MONGO_INITDB_DATABASE: shop_test
+        volumes:
+            #- ./data/mongo:/data/db:delegated
+            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+        ports:
+            - 27017:27017
 
-  mongo:
-    image: mongo:6.0.9
-    container_name: shop-mongo-test
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongouser
-      MONGO_INITDB_ROOT_PASSWORD: super-secret-password
-      MONGO_INITDB_DATABASE: shop_test
-    volumes:
-      #- ./data/mongo:/data/db:delegated
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    ports:
-      - 27017:27017
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-    container_name: shop-elasticsearch-test
-    healthcheck:
-      test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
-      interval: 30s
-      timeout: 10s
-      retries: 50
-    environment:
-      - node.name=shop-elasticsearch-test
-      - discovery.type=single-node #Elasticsearch forms a single-node cluster
-      - bootstrap.memory_lock=true # might cause the JVM or shell session to exit if it tries to allocate more memory than is available!
-      - 'ES_JAVA_OPTS=-Xms2048m -Xmx2048m'
-      - xpack.security.enabled=false
-      - xpack.security.http.ssl.enabled=false
-    ulimits:
-      memlock:
-        soft: -1 # The memlock soft and hard values configures the range of memory that ElasticSearch will use. Setting this to –1 means unlimited.
-        hard: -1
-    ports:
-      - '9200:9200'
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+        container_name: shop-elasticsearch-test
+        healthcheck:
+            test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
+            interval: 30s
+            timeout: 10s
+            retries: 50
+        environment:
+            - node.name=shop-elasticsearch-test
+            - discovery.type=single-node #Elasticsearch forms a single-node cluster
+            - bootstrap.memory_lock=true # might cause the JVM or shell session to exit if it tries to allocate more memory than is available!
+            - "ES_JAVA_OPTS=-Xms2048m -Xmx2048m"
+            - xpack.security.enabled=false
+            - xpack.security.http.ssl.enabled=false
+        ulimits:
+            memlock:
+                soft: -1 # The memlock soft and hard values configures the range of memory that ElasticSearch will use. Setting this to –1 means unlimited.
+                hard: -1
+        ports:
+            - "9200:9200"
