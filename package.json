@@ -2,7 +2,7 @@
   "name": "typescript-ddd-shop",
   "version": "1.0.0",
   "engines": {
-    "node": "^20.9"
+    "node": "24.15.0"
   },
   "main": "index.js",
   "license": "MIT",

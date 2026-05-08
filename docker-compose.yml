@@ -1,194 +1,198 @@
-version: '2.1'
-
 services:
+    shop_backend:
+        image: node:24.15-alpine
+        container_name: shop-backend
+        environment:
+            - HOSTNAMERABBIT=rabbitmq
+            - CLOUDAMQP_URL=amqp://rabbitmq:5672
+        depends_on:
+            kafka:
+                condition: service_healthy
+        #   rabbitmq:
+        #     condition: service_healthy
+        working_dir: /app
+        volumes:
+            - ./:/app
+            - ./node_modules/:/node_modules
+        ports:
+            - "5001:5001"
+        healthcheck:
+            test: wget --no-verbose --tries=1 --spider http://shop_backend:5001/healthcheck || exit 1
+            interval: 30s
+            timeout: 10s
+            retries: 50
+        command: sh -c "npm install && npm run dev:shop:backend"
 
-  shop_backend:
-    image: node:20.9-alpine
-    container_name: shop-backend
-    environment:
-      - HOSTNAMERABBIT=rabbitmq
-      - CLOUDAMQP_URL=amqp://rabbitmq:5672
-    depends_on:
-      kafka:
-        condition: service_healthy
-    #   rabbitmq:
-    #     condition: service_healthy
-    working_dir: /app
-    volumes:
-      - ./:/app
-      - ./node_modules/:/node_modules
-    ports:
-      - "5001:5001"
-    healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://shop_backend:5001/healthcheck || exit 1
-      interval: 30s
-      timeout: 10s
-      retries: 50
-    command: sh -c "npm install && npm run dev:shop:backend"
+    backoffice_backend:
+        image: node:24.15-alpine
+        container_name: backoffice-backend
+        environment:
+            - HOSTNAMERABBIT=rabbitmq
+            - CLOUDAMQP_URL=amqp://rabbitmq:5672
+        depends_on:
+            # rabbitmq:
+            #   condition: service_healthy
+            shop_backend:
+                condition: service_healthy
+            kafka:
+                condition: service_healthy
+            elasticsearch:
+                condition: service_healthy
+        working_dir: /app
+        volumes:
+            - ./:/app
+            - ./node_modules/:/node_modules
+        ports:
+            - "3000:3000"
+        healthcheck:
+            test: wget --no-verbose --tries=1 --spider http://backoffice_backend:3000/healthcheck || exit 1
+            interval: 30s
+            timeout: 10s
+            retries: 50
+        command: sh -c "npm run dev:backoffice:backend"
 
-  backoffice_backend:
-    image: node:20.9-alpine
-    container_name: backoffice-backend
-    environment:
-      - HOSTNAMERABBIT=rabbitmq
-      - CLOUDAMQP_URL=amqp://rabbitmq:5672
-    depends_on:
-      # rabbitmq:
-      #   condition: service_healthy
-      shop_backend:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-      elasticsearch:
-        condition: service_healthy
-    working_dir: /app
-    volumes:
-      - ./:/app
-      - ./node_modules/:/node_modules
-    ports:
-      - "3000:3000"
-    healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://backoffice_backend:3000/healthcheck || exit 1
-      interval: 30s
-      timeout: 10s
-      retries: 50
-    command: sh -c "npm run dev:backoffice:backend"
+    shop_importer:
+        image: node:24.15-alpine
+        container_name: shop-importer
+        environment:
+            - HOSTNAMERABBIT=rabbitmq
+            - CLOUDAMQP_URL=amqp://rabbitmq:5672
+        depends_on:
+            shop_backend:
+                condition: service_healthy
+            kafka:
+                condition: service_healthy
+            backoffice_backend:
+                condition: service_healthy
+        working_dir: /app
+        volumes:
+            - ./:/app
+            - ./node_modules/:/node_modules
+        command: sh -c "npm run dev:importer"
 
-  shop_importer:
-    image: node:20.9-alpine
-    container_name: shop-importer
-    environment:
-      - HOSTNAMERABBIT=rabbitmq
-      - CLOUDAMQP_URL=amqp://rabbitmq:5672
-    depends_on:
-      shop_backend:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-      backoffice_backend:
-        condition: service_healthy
-    working_dir: /app
-    volumes:
-      - ./:/app
-      - ./node_modules/:/node_modules
-    command: sh -c "npm run dev:importer"
+    mongo:
+        image: mongo:6.0.9
+        container_name: shop-mongo
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: mongouser
+            MONGO_INITDB_ROOT_PASSWORD: super-secret-password
+            MONGO_INITDB_DATABASE: shop
+        volumes:
+            #- ./data/mongo:/data/db:delegated
+            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+        ports:
+            - 27018:27017
 
-  mongo:
-    image: mongo:6.0.9
-    container_name: shop-mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongouser
-      MONGO_INITDB_ROOT_PASSWORD: super-secret-password
-      MONGO_INITDB_DATABASE: shop
-    volumes:
-      #- ./data/mongo:/data/db:delegated
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    ports:
-      - 27018:27017
+    # rabbitmq:
+    #   image: 'rabbitmq:3.8-management'
+    #   container_name: shop-rabbitmq
+    #   ports:
+    #     - 5672:5672
+    #     - 15672:15672
+    #   healthcheck:
+    #       test: rabbitmq-diagnostics -q ping
+    #       interval: 10s
+    #       timeout: 10s
+    #       retries: 5
 
-  # rabbitmq:
-  #   image: 'rabbitmq:3.8-management'
-  #   container_name: shop-rabbitmq
-  #   ports:
-  #     - 5672:5672
-  #     - 15672:15672
-  #   healthcheck:
-  #       test: rabbitmq-diagnostics -q ping
-  #       interval: 10s
-  #       timeout: 10s
-  #       retries: 5
+    zookeeper:
+        image: confluentinc/cp-zookeeper:7.2.0
+        container_name: shop-zookeeper
+        ports:
+            - "2181:2181"
+        environment:
+            ZOOKEEPER_CLIENT_PORT: 2181
+        healthcheck:
+            test: nc -z localhost 2181 || exit -1
+            interval: 10s
+            timeout: 5s
+            retries: 3
+    kafka:
+        image: confluentinc/cp-kafka:7.2.0
+        container_name: shop-kafka
+        hostname: kafka
+        ports:
+            - "9092:9092"
+        depends_on:
+            - zookeeper
+        environment:
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+            KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+            KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+            ADVERTISED_HOST_NAME: kafka
+            KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+            KAFKA_DELETE_TOPIC_ENABLE: "true"
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+            KAFKA_MIN_INSYNC_REPLICAS: 1
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "kafka-topics",
+                    "--list",
+                    "--bootstrap-server",
+                    "kafka:9092",
+                ]
+            interval: 5s
+            timeout: 10s
+            retries: 5
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.2.0
-    container_name: shop-zookeeper
-    ports:
-      - "2181:2181"
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-    healthcheck:
-      test: nc -z localhost 2181 || exit -1
-      interval: 10s
-      timeout: 5s
-      retries: 3
-  kafka:
-    image: confluentinc/cp-kafka:7.2.0
-    container_name: shop-kafka
-    hostname: kafka
-    ports:
-      - "9092:9092"
-    depends_on:
-      - zookeeper
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      ADVERTISED_HOST_NAME: kafka
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
-      KAFKA_DELETE_TOPIC_ENABLE: 'true'
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_MIN_INSYNC_REPLICAS: 1
-    healthcheck:
-      test: ["CMD", "kafka-topics", "--list", "--bootstrap-server", "kafka:9092"]
-      interval: 5s
-      timeout: 10s
-      retries: 5
+    kafbat-ui:
+        container_name: kafbat-ui
+        image: ghcr.io/kafbat/kafka-ui:latest
+        depends_on:
+            kafka:
+                condition: service_healthy
+            zookeeper:
+                condition: service_healthy
+        ports:
+            - 8080:8080
+        environment:
+            DYNAMIC_CONFIG_ENABLED: "true"
+        volumes:
+            - ./kui/config.yml:/etc/kafkaui/dynamic_config.yaml
 
-  kafbat-ui:
-    container_name: kafbat-ui
-    image: ghcr.io/kafbat/kafka-ui:latest
-    depends_on:
-      kafka:
-        condition: service_healthy
-      zookeeper:
-        condition: service_healthy
-    ports:
-      - 8080:8080
-    environment:
-      DYNAMIC_CONFIG_ENABLED: 'true'
-    volumes:
-      - ./kui/config.yml:/etc/kafkaui/dynamic_config.yaml
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
+        container_name: shop-elasticsearch
+        healthcheck:
+            test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
+            interval: 30s
+            timeout: 10s
+            retries: 50
+        environment:
+            - node.name=shop-elasticsearch
+            - discovery.type=single-node #Elasticsearch forms a single-node cluster
+            - bootstrap.memory_lock=true # might cause the JVM or shell session to exit if it tries to allocate more memory than is available!
+            - "ES_JAVA_OPTS=-Xms2048m -Xmx2048m"
+            - xpack.security.enabled=false
+            - xpack.security.http.ssl.enabled=false
+        ulimits:
+            memlock:
+                soft: -1 # The memlock soft and hard values configures the range of memory that ElasticSearch will use. Setting this to –1 means unlimited.
+                hard: -1
+        # volumes:
+        #   - esdata:/usr/share/elasticsearch/data
+        ports:
+            - "9200:9200"
+    kibana:
+        image: docker.elastic.co/kibana/kibana:8.8.1
+        container_name: shop-kibana
+        environment:
+            ELASTICSEARCH_URL: http://shop-elasticsearch:9200
+            ELASTICSEARCH_HOSTS: http://shop-elasticsearch:9200
+        ports:
+            - 5601:5601
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-    container_name: shop-elasticsearch
-    healthcheck:
-      test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
-      interval: 30s
-      timeout: 10s
-      retries: 50
-    environment:
-      - node.name=shop-elasticsearch
-      - discovery.type=single-node #Elasticsearch forms a single-node cluster
-      - bootstrap.memory_lock=true # might cause the JVM or shell session to exit if it tries to allocate more memory than is available!
-      - 'ES_JAVA_OPTS=-Xms2048m -Xmx2048m'
-      - xpack.security.enabled=false
-      - xpack.security.http.ssl.enabled=false
-    ulimits:
-      memlock:
-        soft: -1 # The memlock soft and hard values configures the range of memory that ElasticSearch will use. Setting this to –1 means unlimited.
-        hard: -1
-    # volumes:
-    #   - esdata:/usr/share/elasticsearch/data
-    ports:
-      - '9200:9200'
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.8.1
-    container_name: shop-kibana
-    environment:
-      ELASTICSEARCH_URL: http://shop-elasticsearch:9200
-      ELASTICSEARCH_HOSTS: http://shop-elasticsearch:9200
-    ports:
-      - 5601:5601
-
-  shop_frontend:
-    image: node:20.14-alpine
-    container_name: shop-frontend
-    working_dir: /app
-    volumes:
-      - ./src/apps/shop/frontend/:/app
-      - ./src/apps/shop/frontend/node_modules/:/node_modules
-    ports:
-      - "4200:4200"
-      - "9876:9876"
-    command: sh -c "npm install && npm run start"
+    shop_frontend:
+        image: node:24.15-alpine
+        container_name: shop-frontend
+        working_dir: /app
+        volumes:
+            - ./src/apps/shop/frontend/:/app
+            - ./src/apps/shop/frontend/node_modules/:/node_modules
+        ports:
+            - "4200:4200"
+            - "9876:9876"
+        command: sh -c "npm install && npm run start"
