@@ -16,7 +16,7 @@ BeforeAll({timeout: 2 * 5000}, async () => {
     container = application.container;
 
     environmentArranger = await container.get<Promise<EnvironmentArranger>>('Backoffice.EnvironmentArranger');
-    eventBus = await container.get<EventBus>('Backoffice.Shared.domain.EventBus');
+    eventBus = await container.get<EventBus>('Shared.domain.EventBus');
     await environmentArranger.arrange();
 });
 

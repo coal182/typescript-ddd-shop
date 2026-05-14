@@ -18,7 +18,7 @@ BeforeAll({timeout: 2 * 50000}, async () => {
 
     environmentArranger = await container.get<Promise<EnvironmentArranger>>('Shop.EnvironmentArranger');
     elasticEnvironmentArranger = await container.get<Promise<EnvironmentArranger>>('Shop.ElasticEnvironmentArranger');
-    eventBus = await container.get<EventBus>('Shop.Shared.domain.EventBus');
+    eventBus = await container.get<EventBus>('Shared.domain.EventBus');
     await environmentArranger.arrange();
     await elasticEnvironmentArranger.arrange();
 });

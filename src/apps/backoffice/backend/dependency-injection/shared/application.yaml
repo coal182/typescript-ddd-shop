@@ -1,116 +1,76 @@
 services:
-  Shared.Logger:
-    class: ../../../../../contexts/shared/infrastructure/winston-logger
-    main: WinstonLogger
-    arguments: []
-  Backoffice.Shared.MongoConfig:
-    factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/persistence/mongo/mongo-config-factory
-      main: MongoConfigFactory
-      method: 'createConfig'
+    Shared.Logger:
+        class: ../../../../../contexts/shared/infrastructure/winston-logger
+        main: WinstonLogger
+        arguments: []
+    Shared.MongoConfig:
+        factory:
+            class: ../../../../../contexts/shop/shared/infrastructure/persistence/mongo/mongo-config-factory
+            main: MongoConfigFactory
+            method: "createConfig"
 
-  Backoffice.Shared.ConnectionManager:
-    factory:
-      class: ../../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
-      main: MongoClientFactory
-      method: 'createClient'
-    arguments: ['shop', '@Backoffice.Shared.MongoConfig']
+    Shared.ConnectionManager:
+        factory:
+            class: ../../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
+            main: MongoClientFactory
+            method: "createClient"
+        arguments: ["shop", "@Shared.MongoConfig"]
 
-  Backoffice.Shared.CommandHandlers:
-    class: ../../../../../contexts/shared/infrastructure/command-bus/command-handlers
-    main: CommandHandlers
-    arguments: ['!tagged commandHandler']
+    Shared.CommandHandlers:
+        class: ../../../../../contexts/shared/infrastructure/command-bus/command-handlers
+        main: CommandHandlers
+        arguments: ["!tagged commandHandler"]
 
-  Backoffice.Shared.domain.CommandBus:
-    class: ../../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
-    main: InMemoryCommandBus
-    arguments: ['@Backoffice.Shared.CommandHandlers']
+    Shared.domain.CommandBus:
+        class: ../../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
+        main: InMemoryCommandBus
+        arguments: ["@Shared.CommandHandlers"]
 
-  Backoffice.Shared.RabbitMQConfig:
-    factory:
-      class: ../../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-config-factory
-      main: RabbitMQConfigFactory
-      method: 'createConfig'
+    Shared.KafkaConfig:
+        factory:
+            class: ../../../../../contexts/backoffice/shared/infrastructure/kafka/kafka-config-factory
+            main: KafkaConfigFactory
+            method: "createConfig"
 
-  # Backoffice.Shared.domain.EventBus:
-  #   factory:
-  #     class: ../../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
-  #     main: RabbitMQEventBusFactory
-  #     method: 'create'
-  #   arguments:
-  #     [
-  #       '@Backoffice.Shared.DomainEventFailoverPublisher',
-  #       '@Backoffice.Shared.RabbitMQConnection',
-  #       '@Backoffice.Shared.RabbitMQqueueFormatter',
-  #       '@Backoffice.Shared.RabbitMQConfig',
-  #       '@Shared.Logger',
-  #     ]
+    Shared.domain.EventBus:
+        factory:
+            class: ../../../../../contexts/backoffice/shared/infrastructure/kafka/kafka-event-bus-factory
+            main: KafkaEventBusFactory
+            method: "create"
+        arguments:
+            [
+                "@Shared.DomainEventFailoverPublisher",
+                "@Shared.KafkaConnection",
+                "@Shared.KafkaTopicFormatter",
+                "@Shared.Logger",
+            ]
 
-  Backoffice.Shared.RabbitMQQueueFormatter:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
-    main: RabbitMQqueueFormatter
-    arguments: ['backoffice']
+    Shared.KafkaTopicFormatter:
+        class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
+        main: KafkaTopicFormatter
+        arguments: ["backoffice"]
 
-  Backoffice.Shared.RabbitMQConnection:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-connection
-    main: RabbitMqConnection
-    arguments: ['@Backoffice.Shared.RabbitMQConfig']
+    Shared.KafkaConnection:
+        class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-connection
+        main: KafkaConnection
+        arguments: ["@Shared.KafkaConfig"]
 
-  Backoffice.Shared.RabbitMQqueueFormatter:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
-    main: RabbitMQqueueFormatter
-    arguments: ['backoffice']
+    Shared.KafkaConfigurer:
+        class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-configurer
+        main: KafkaConfigurer
+        arguments: ["@Shared.KafkaConnection", "@Shared.KafkaTopicFormatter"]
 
-  Backoffice.Shared.RabbitMQConfigurer:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
-    main: RabbitMQConfigurer
-    arguments: ['@Backoffice.Shared.RabbitMQConnection', '@Backoffice.Shared.RabbitMQQueueFormatter']
+    Shared.DomainEventFailoverPublisher:
+        class: ../../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
+        main: DomainEventFailoverPublisher
+        arguments: ["@Shared.ConnectionManager"]
 
-  Backoffice.Shared.KafkaConfig:
-    factory:
-      class: ../../../../../contexts/backoffice/shared/infrastructure/kafka/kafka-config-factory
-      main: KafkaConfigFactory
-      method: 'createConfig'
+    Shared.QueryHandlers:
+        class: ../../../../../contexts/shared/infrastructure/query-bus/query-handlers
+        main: QueryHandlers
+        arguments: ["!tagged queryHandler"]
 
-  Backoffice.Shared.domain.EventBus:
-    factory:
-      class: ../../../../../contexts/backoffice/shared/infrastructure/kafka/kafka-event-bus-factory
-      main: KafkaEventBusFactory
-      method: 'create'
-    arguments:
-      [
-        '@Backoffice.Shared.DomainEventFailoverPublisher',
-        '@Backoffice.Shared.KafkaConnection',
-        '@Backoffice.Shared.KafkaTopicFormatter',
-        '@Shared.Logger',
-      ]
-
-  Backoffice.Shared.KafkaTopicFormatter:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
-    main: KafkaTopicFormatter
-    arguments: ['backoffice']
-
-  Backoffice.Shared.KafkaConnection:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-connection
-    main: KafkaConnection
-    arguments: ['@Backoffice.Shared.KafkaConfig']
-
-  Backoffice.Shared.KafkaConfigurer:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-configurer
-    main: KafkaConfigurer
-    arguments: ['@Backoffice.Shared.KafkaConnection', '@Backoffice.Shared.KafkaTopicFormatter']
-
-  Backoffice.Shared.DomainEventFailoverPublisher:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
-    main: DomainEventFailoverPublisher
-    arguments: ['@Backoffice.Shared.ConnectionManager']
-
-  Backoffice.Shared.QueryHandlers:
-    class: ../../../../../contexts/shared/infrastructure/query-bus/query-handlers
-    main: QueryHandlers
-    arguments: ['!tagged queryHandler']
-
-  Backoffice.Shared.domain.QueryBus:
-    class: ../../../../../contexts/shared/infrastructure/query-bus/in-memory-query-bus
-    main: InMemoryQueryBus
-    arguments: ['@Backoffice.Shared.QueryHandlers']
+    Shared.domain.QueryBus:
+        class: ../../../../../contexts/shared/infrastructure/query-bus/in-memory-query-bus
+        main: InMemoryQueryBus
+        arguments: ["@Shared.QueryHandlers"]

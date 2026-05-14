@@ -1,110 +1,70 @@
 services:
-  Shared.Logger:
-    class: ../../../../contexts/shared/infrastructure/winston-logger
-    main: WinstonLogger
-    arguments: []
-  Importer.Shared.MongoConfig:
-    factory:
-      class: ../../../../contexts/backoffice/shared/infrastructure/persistence/mongo/mongo-config-factory
-      main: MongoConfigFactory
-      method: 'createConfig'
+    Shared.Logger:
+        class: ../../../../contexts/shared/infrastructure/winston-logger
+        main: WinstonLogger
+        arguments: []
+    Shared.MongoConfig:
+        factory:
+            class: ../../../../contexts/backoffice/shared/infrastructure/persistence/mongo/mongo-config-factory
+            main: MongoConfigFactory
+            method: "createConfig"
 
-  Importer.Shared.ConnectionManager:
-    factory:
-      class: ../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
-      main: MongoClientFactory
-      method: 'createClient'
-    arguments: ['backoffice', '@Importer.Shared.MongoConfig']
+    Shared.ConnectionManager:
+        factory:
+            class: ../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
+            main: MongoClientFactory
+            method: "createClient"
+        arguments: ["backoffice", "@Shared.MongoConfig"]
 
-  Importer.Shared.CommandHandlers:
-    class: ../../../../contexts/shared/infrastructure/command-bus/command-handlers
-    main: CommandHandlers
-    arguments: ['!tagged commandHandler']
+    Shared.CommandHandlers:
+        class: ../../../../contexts/shared/infrastructure/command-bus/command-handlers
+        main: CommandHandlers
+        arguments: ["!tagged commandHandler"]
 
-  Importer.Shared.domain.CommandBus:
-    class: ../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
-    main: InMemoryCommandBus
-    arguments: ['@Importer.Shared.CommandHandlers']
+    Shared.domain.CommandBus:
+        class: ../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
+        main: InMemoryCommandBus
+        arguments: ["@Shared.CommandHandlers"]
 
-  Importer.Shared.RabbitMQConfig:
-    factory:
-      class: ../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-config-factory
-      main: RabbitMQConfigFactory
-      method: 'createConfig'
+    Shared.domain.EventBus:
+        factory:
+            class: ../../../../contexts/importer/shared/infrastructure/kafka/kafka-event-bus-factory
+            main: KafkaEventBusFactory
+            method: "create"
+        arguments:
+            [
+                "@Shared.DomainEventFailoverPublisher",
+                "@Shared.KafkaConnection",
+                "@Shared.KafkaTopicFormatter",
+                "@Shared.Logger",
+            ]
 
-  # Importer.Shared.domain.EventBus:
-  #   factory:
-  #     class: ../../../../contexts/backoffice/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
-  #     main: RabbitMQEventBusFactory
-  #     method: 'create'
-  #   arguments:
-  #     [
-  #       '@Importer.Shared.DomainEventFailoverPublisher',
-  #       '@Importer.Shared.RabbitMQConnection',
-  #       '@Importer.Shared.RabbitMQqueueFormatter',
-  #       '@Importer.Shared.RabbitMQConfig',
-  #       '@Shared.Logger',
-  #     ]
+    Shared.KafkaConfig:
+        factory:
+            class: ../../../../contexts/importer/shared/infrastructure/kafka/kafka-config-factory
+            main: KafkaConfigFactory
+            method: "createConfig"
+    Shared.KafkaQueueFormatter:
+        class: ../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
+        main: KafkaTopicFormatter
+        arguments: ["importer"]
 
-  Importer.Shared.RabbitMQQueueFormatter:
-    class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
-    main: RabbitMQqueueFormatter
-    arguments: ['importer']
+    Shared.KafkaConnection:
+        class: ../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-connection
+        main: KafkaConnection
+        arguments: ["@Shared.KafkaConfig"]
 
-  Importer.Shared.RabbitMQConnection:
-    class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-connection
-    main: RabbitMqConnection
-    arguments: ['@Importer.Shared.RabbitMQConfig']
+    Shared.KafkaTopicFormatter:
+        class: ../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
+        main: KafkaTopicFormatter
+        arguments: ["importer"]
 
-  Importer.Shared.RabbitMQqueueFormatter:
-    class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
-    main: RabbitMQqueueFormatter
-    arguments: ['importer']
+    Shared.KafkaConfigurer:
+        class: ../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-configurer
+        main: KafkaConfigurer
+        arguments: ["@Shared.KafkaConnection", "@Shared.KafkaQueueFormatter"]
 
-  Importer.Shared.RabbitMQConfigurer:
-    class: ../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
-    main: RabbitMQConfigurer
-    arguments: ['@Importer.Shared.RabbitMQConnection', '@Importer.Shared.RabbitMQQueueFormatter']
-
-  Importer.Shared.domain.EventBus:
-    factory:
-      class: ../../../../contexts/importer/shared/infrastructure/kafka/kafka-event-bus-factory
-      main: KafkaEventBusFactory
-      method: 'create'
-    arguments:
-      [
-        '@Importer.Shared.DomainEventFailoverPublisher',
-        '@Importer.Shared.KafkaConnection',
-        '@Importer.Shared.KafkaTopicFormatter',
-        '@Shared.Logger',
-      ]
-
-  Importer.Shared.KafkaConfig:
-    factory:
-      class: ../../../../contexts/importer/shared/infrastructure/kafka/kafka-config-factory
-      main: KafkaConfigFactory
-      method: 'createConfig'
-  Importer.Shared.KafkaQueueFormatter:
-    class: ../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
-    main: KafkaTopicFormatter
-    arguments: ['importer']
-
-  Importer.Shared.KafkaConnection:
-    class: ../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-connection
-    main: KafkaConnection
-    arguments: ['@Importer.Shared.KafkaConfig']
-
-  Importer.Shared.KafkaTopicFormatter:
-    class: ../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
-    main: KafkaTopicFormatter
-    arguments: ['importer']
-
-  Importer.Shared.KafkaConfigurer:
-    class: ../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-configurer
-    main: KafkaConfigurer
-    arguments: ['@Importer.Shared.KafkaConnection', '@Importer.Shared.KafkaQueueFormatter']
-
-  Importer.Shared.DomainEventFailoverPublisher:
-    class: ../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
-    main: DomainEventFailoverPublisher
-    arguments: ['@Importer.Shared.ConnectionManager']
+    Shared.DomainEventFailoverPublisher:
+        class: ../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
+        main: DomainEventFailoverPublisher
+        arguments: ["@Shared.ConnectionManager"]

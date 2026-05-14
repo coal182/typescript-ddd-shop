@@ -1,12 +1,12 @@
 imports:
-  - { resource: ./application.yaml }
+    - { resource: ./application.yaml }
 
 services:
-  Shop.EnvironmentArranger:
-    class: ../../../../../tests/contexts/shared/infrastructure/mongo/mongo-environment-arranger
-    main: MongoEnvironmentArranger
-    arguments: ['@Shop.Shared.ConnectionManager']
-  Shop.ElasticEnvironmentArranger:
-    class: ../../../../../tests/contexts/shared/infrastructure/elasticsearch/elastic-environment-arranger
-    main: ElasticEnvironmentArranger
-    arguments: ['@Shop.Shared.ElasticConnectionManager', '@Shop.Shared.ElasticConfig']
+    Shop.EnvironmentArranger:
+        class: ../../../../../tests/contexts/shared/infrastructure/mongo/mongo-environment-arranger
+        main: MongoEnvironmentArranger
+        arguments: ["@Shared.ConnectionManager"]
+    Shop.ElasticEnvironmentArranger:
+        class: ../../../../../tests/contexts/shared/infrastructure/elasticsearch/elastic-environment-arranger
+        main: ElasticEnvironmentArranger
+        arguments: ["@Shared.ElasticConnectionManager", "@Shared.ElasticConfig"]

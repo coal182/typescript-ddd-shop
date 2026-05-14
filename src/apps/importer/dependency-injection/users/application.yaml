@@ -1,22 +1,23 @@
 services:
-  Importer.Users.domain.UserRepository:
-    class: ../../../../contexts/shop/user/infrastructure/persistence/mongo-user-repository
-    main: MongoUserRepository
-    arguments: ['@Importer.Shared.ConnectionManager']
+    Importer.Users.domain.UserRepository:
+        class: ../../../../contexts/shop/user/infrastructure/persistence/mongo-user-repository
+        main: MongoUserRepository
+        arguments: ["@Shared.ConnectionManager"]
 
-  Importer.Users.domain.UserEventStore:
-    class: ../../../../contexts/shop/user/infrastructure/persistence/mongo-user-event-store
-    main: MongoUserEventStore
-    arguments: ['@Importer.Shared.ConnectionManager']
+    Importer.Users.domain.UserEventStore:
+        class: ../../../../contexts/shop/user/infrastructure/persistence/mongo-user-event-store
+        main: MongoUserEventStore
+        arguments: ["@Shared.ConnectionManager"]
 
-  Importer.Users.application.UserCreator:
-    class: ../../../../contexts/shop/user/application/create/user-creator
-    main: UserCreator
-    arguments: ['@Importer.Shared.domain.EventBus', '@Importer.Users.domain.UserEventStore']
+    Importer.Users.application.UserCreator:
+        class: ../../../../contexts/shop/user/application/create/user-creator
+        main: UserCreator
+        arguments:
+            ["@Shared.domain.EventBus", "@Importer.Users.domain.UserEventStore"]
 
-  Importer.Users.CreateUserCommandHandler:
-    class: ../../../../contexts/shop/user/application/command-handlers/create-user-command-handler
-    main: CreateUserCommandHandler
-    arguments: ['@Importer.Users.application.UserCreator']
-    tags:
-      - { name: 'commandHandler' }
+    Importer.Users.CreateUserCommandHandler:
+        class: ../../../../contexts/shop/user/application/command-handlers/create-user-command-handler
+        main: CreateUserCommandHandler
+        arguments: ["@Importer.Users.application.UserCreator"]
+        tags:
+            - { name: "commandHandler" }

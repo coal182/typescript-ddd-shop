@@ -1,31 +1,19 @@
-import importerConfig from '@importer/shared/infrastructure/config';
-import {DomainEventSubscribers} from '@infrastructure/event-bus/domain-event-subscribers';
 import {KafkaConnection} from '@infrastructure/event-bus/kafka/kafka-connection';
-import {RabbitMqConnection} from '@infrastructure/event-bus/rabbitmq/rabbitmq-connection';
 import {CommandBus} from '@shared/domain/command-bus';
-import {EventBus} from '@shared/domain/event-bus';
 import {CreateUserCommand} from '@shop-backend/user/application/commands/create-user';
 import {ContainerBuilder} from 'node-dependency-injection';
 
-import {ConfigureKafkaCommand} from './command/configure-kafka-command';
-import {ConfigureRabbitMQCommand} from './command/configure-rabbitmq-command';
 import {containerFactory} from './dependency-injection';
 import {FeedInventoryAggregator} from './feed-inventory-aggregator';
 import {FeedParserFromContentType} from './feed-parser-from-content-type';
 import {getShopProductsFeed} from './get-shop-products-feed';
 
-enum MessageBroker {
-    Kafka = 'kafka',
-    RabbitMq = 'rabbitmq',
-}
-
 export class ImporterApp {
     container: ContainerBuilder;
-    messageBroker = importerConfig.get('messageBroker');
 
     async start(): Promise<void> {
         this.container = await containerFactory();
-        await this.configureEventBus();
+        await this.connectMessageBroker();
 
         await this.consumeFeed();
 
@@ -43,7 +31,7 @@ export class ImporterApp {
 
         const feedParserFromContentType = new FeedParserFromContentType();
         const parser = feedParserFromContentType.get(feed.contentType);
-        const commandBus = this.container.get<CommandBus>('Importer.Shared.domain.CommandBus');
+        const commandBus = this.container.get<CommandBus>('Shared.domain.CommandBus');
 
         const feedInventoryAggregator = new FeedInventoryAggregator(commandBus, parser);
         await feedInventoryAggregator.run(feed);
@@ -60,20 +48,11 @@ export class ImporterApp {
         commandBus.dispatch(createUserCommand);
     }
 
-    private async configureEventBus(): Promise<void> {
-        await this.configureMessageBroker();
-        const eventBus = this.container.get<EventBus>('Importer.Shared.domain.EventBus');
-        eventBus.addSubscribers(DomainEventSubscribers.from(this.container));
-    }
-
-    private async configureMessageBroker(): Promise<void> {
-        if (this.messageBroker === MessageBroker.RabbitMq) await ConfigureRabbitMQCommand.run(this.container);
-        if (this.messageBroker === MessageBroker.Kafka) await ConfigureKafkaCommand.run(this.container);
+    private async connectMessageBroker(): Promise<void> {
         await this.getMessageBrokerConnection().connect();
     }
 
-    private getMessageBrokerConnection(): RabbitMqConnection | KafkaConnection {
-        if (this.messageBroker === MessageBroker.RabbitMq) return this.container.get<RabbitMqConnection>('Importer.Shared.RabbitMQConnection');
-        return this.container.get<KafkaConnection>('Importer.Shared.KafkaConnection');
+    private getMessageBrokerConnection(): KafkaConnection {
+        return this.container.get<KafkaConnection>('Shared.KafkaConnection');
     }
 }

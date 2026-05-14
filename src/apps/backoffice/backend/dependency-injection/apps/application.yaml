@@ -1,34 +1,34 @@
 services:
-  Apps.Backoffice.Backend.controllers.ProductPostController:
-    class: ../../controllers/product-post-controller
-    main: ProductPostController
-    arguments: ['@Backoffice.Shared.domain.CommandBus']
+    Apps.Backoffice.Backend.controllers.ProductPostController:
+        class: ../../controllers/product-post-controller
+        main: ProductPostController
+        arguments: ["@Shared.domain.CommandBus"]
 
-  Apps.Backoffice.Backend.controllers.ProductPutDescriptionController:
-    class: ../../controllers/product-put-description-controller
-    main: ProductPutDescriptionController
-    arguments: ['@Backoffice.Shared.domain.CommandBus']
+    Apps.Backoffice.Backend.controllers.ProductPutDescriptionController:
+        class: ../../controllers/product-put-description-controller
+        main: ProductPutDescriptionController
+        arguments: ["@Shared.domain.CommandBus"]
 
-  Apps.Backoffice.Backend.controllers.ProductPutImageController:
-    class: ../../controllers/product-put-image-controller
-    main: ProductPutImageController
-    arguments: ['@Backoffice.Shared.domain.CommandBus']
+    Apps.Backoffice.Backend.controllers.ProductPutImageController:
+        class: ../../controllers/product-put-image-controller
+        main: ProductPutImageController
+        arguments: ["@Shared.domain.CommandBus"]
 
-  Apps.Backoffice.Backend.controllers.ProductGetAllController:
-    class: ../../controllers/product-get-all-controller
-    main: ProductGetAllController
-    arguments: ['@Backoffice.Shared.domain.QueryBus']
+    Apps.Backoffice.Backend.controllers.ProductGetAllController:
+        class: ../../controllers/product-get-all-controller
+        main: ProductGetAllController
+        arguments: ["@Shared.domain.QueryBus"]
 
-  Apps.Backoffice.Backend.controllers.ProductGetByIdController:
-    class: ../../controllers/product-get-by-id-controller
-    main: ProductGetByIdController
-    arguments: ['@Backoffice.Shared.domain.QueryBus']
+    Apps.Backoffice.Backend.controllers.ProductGetByIdController:
+        class: ../../controllers/product-get-by-id-controller
+        main: ProductGetByIdController
+        arguments: ["@Shared.domain.QueryBus"]
 
-  Apps.Backoffice.Backend.controllers.ProductGetByCriteriaController:
-    class: ../../controllers/product-get-by-criteria-controller
-    main: ProductGetByCriteriaController
-    arguments: ['@Backoffice.Shared.domain.QueryBus']
+    Apps.Backoffice.Backend.controllers.ProductGetByCriteriaController:
+        class: ../../controllers/product-get-by-criteria-controller
+        main: ProductGetByCriteriaController
+        arguments: ["@Shared.domain.QueryBus"]
 
-  Apps.Backoffice.Backend.controllers.HealthcheckController:
-    class: ../../controllers/healthcheck-get-controller
-    main: HealthcheckController
+    Apps.Backoffice.Backend.controllers.HealthcheckController:
+        class: ../../controllers/healthcheck-get-controller
+        main: HealthcheckController

@@ -2,21 +2,18 @@ services:
     Shop.Users.domain.UserRepository:
         class: ../../../../../contexts/shop/user/infrastructure/persistence/mongo-user-repository
         main: MongoUserRepository
-        arguments: ["@Shop.Shared.ConnectionManager"]
+        arguments: ["@Shared.ConnectionManager"]
 
     Shop.Users.domain.UserEventStore:
         class: ../../../../../contexts/shop/user/infrastructure/persistence/mongo-user-event-store
         main: MongoUserEventStore
-        arguments: ["@Shop.Shared.ConnectionManager"]
+        arguments: ["@Shared.ConnectionManager"]
 
     Shop.Users.application.UserCreator:
         class: ../../../../../contexts/shop/user/application/create/user-creator
         main: UserCreator
         arguments:
-            [
-                "@Shop.Shared.domain.EventBus",
-                "@Shop.Users.domain.UserEventStore",
-            ]
+            ["@Shared.domain.EventBus", "@Shop.Users.domain.UserEventStore"]
 
     Shop.Users.CreateUserCommandHandler:
         class: ../../../../../contexts/shop/user/application/command-handlers/create-user-command-handler
@@ -29,10 +26,7 @@ services:
         class: ../../../../../contexts/shop/user/application/command-handlers/update-user-command-handler
         main: UpdateUserCommandHandler
         arguments:
-            [
-                "@Shop.Shared.domain.EventBus",
-                "@Shop.Users.domain.UserEventStore",
-            ]
+            ["@Shared.domain.EventBus", "@Shop.Users.domain.UserEventStore"]
         tags:
             - { name: "commandHandler" }
 
@@ -40,10 +34,7 @@ services:
         class: ../../../../../contexts/shop/user/application/command-handlers/update-user-password-command-handler
         main: UpdateUserPasswordCommandHandler
         arguments:
-            [
-                "@Shop.Shared.domain.EventBus",
-                "@Shop.Users.domain.UserEventStore",
-            ]
+            ["@Shared.domain.EventBus", "@Shop.Users.domain.UserEventStore"]
         tags:
             - { name: "commandHandler" }
 

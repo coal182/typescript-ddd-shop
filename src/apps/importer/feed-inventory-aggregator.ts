@@ -1,3 +1,4 @@
+import {CreateProductCommand} from '@backoffice-backend/product/application/commands/create-product';
 import {CommandBus} from '@shared/domain/command-bus';
 
 import {Feed} from './feed';
@@ -15,7 +16,7 @@ export class FeedInventoryAggregator {
             .then((commands) => {
                 for (const command of commands) {
                     this.commandBus.dispatch(command);
-                    console.log('📝 ', command);
+                    console.log('📝 CreateProductCommand ', (command as CreateProductCommand).name);
                 }
             })
             .catch((err) => {

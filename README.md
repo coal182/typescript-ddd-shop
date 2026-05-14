@@ -10,7 +10,7 @@ The only source of truth of Event Sourcing systems is the `event store` while th
 
 In this example, we use `MongoDB` for both event store and read store, for example, having the collection `product_events` to store the events and th`collection`product` to project the last state of the aggregates as the read store model.
 
-The commands are sent by the frontend to the `commandBus` which then selects appropriate `command handlers` for the commands. The command handlers then prepare the `Aggregate Root` and apply the business logic suitable for them. If the commands succeed, they result in events which will then be sent to the `eventBus` to the `event handlers`. In this example, the eventBus is implemented using `RabbitMq`.
+The commands are sent by the frontend to the `commandBus` which then selects appropriate `command handlers` for the commands. The command handlers then prepare the `Aggregate Root` and apply the business logic suitable for them. If the commands succeed, they result in events which will then be sent to the `eventBus` to the `event handlers`. In this example, the eventBus is implemented using `Kafka`.
 
 ### Technologies
 
@@ -19,7 +19,7 @@ The commands are sent by the frontend to the `commandBus` which then selects app
 3. MongoDB with MongoDB native driver as event store and projections
 4. node-dependency-injection as an IoC container
 5. Express (via Inversify Express Utils) as an API framework
-6. RabbitMq/Kafka as message broker
+6. Kafka as message broker
 7. Angular as UI
 8. Elasticsearch as second repository for backoffice app
 

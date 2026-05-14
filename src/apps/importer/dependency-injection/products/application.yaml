@@ -1,17 +1,21 @@
 services:
-  Importer.Products.domain.ProductEventStore:
-    class: ../../../../contexts/backoffice/product/infrastructure/persistence/mongo-product-event-store
-    main: MongoProductEventStore
-    arguments: ['@Importer.Shared.ConnectionManager']
+    Importer.Products.domain.ProductEventStore:
+        class: ../../../../contexts/backoffice/product/infrastructure/persistence/mongo-product-event-store
+        main: MongoProductEventStore
+        arguments: ["@Shared.ConnectionManager"]
 
-  Importer.Products.application.ProductCreator:
-    class: ../../../../contexts/backoffice/product/application/create/product-creator
-    main: ProductCreator
-    arguments: ['@Importer.Shared.domain.EventBus', '@Importer.Products.domain.ProductEventStore']
+    Importer.Products.application.ProductCreator:
+        class: ../../../../contexts/backoffice/product/application/create/product-creator
+        main: ProductCreator
+        arguments:
+            [
+                "@Shared.domain.EventBus",
+                "@Importer.Products.domain.ProductEventStore",
+            ]
 
-  Importer.Products.CreateProductCommandHandler:
-    class: ../../../../contexts/backoffice/product/application/command-handlers/create-product-command-handler
-    main: CreateProductCommandHandler
-    arguments: ['@Importer.Products.application.ProductCreator']
-    tags:
-      - { name: 'commandHandler' }
+    Importer.Products.CreateProductCommandHandler:
+        class: ../../../../contexts/backoffice/product/application/command-handlers/create-product-command-handler
+        main: CreateProductCommandHandler
+        arguments: ["@Importer.Products.application.ProductCreator"]
+        tags:
+            - { name: "commandHandler" }

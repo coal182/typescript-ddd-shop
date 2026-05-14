@@ -1,129 +1,89 @@
 services:
-  Shared.Logger:
-    class: ../../../../../contexts/shared/infrastructure/winston-logger
-    main: WinstonLogger
-    arguments: []
-  Shop.Shared.MongoConfig:
-    factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/persistence/mongo/mongo-config-factory
-      main: MongoConfigFactory
-      method: 'createConfig'
+    Shared.Logger:
+        class: ../../../../../contexts/shared/infrastructure/winston-logger
+        main: WinstonLogger
+        arguments: []
+    Shared.MongoConfig:
+        factory:
+            class: ../../../../../contexts/shop/shared/infrastructure/persistence/mongo/mongo-config-factory
+            main: MongoConfigFactory
+            method: "createConfig"
 
-  Shop.Shared.ConnectionManager:
-    factory:
-      class: ../../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
-      main: MongoClientFactory
-      method: 'createClient'
-    arguments: ['shop', '@Shop.Shared.MongoConfig']
+    Shared.ConnectionManager:
+        factory:
+            class: ../../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
+            main: MongoClientFactory
+            method: "createClient"
+        arguments: ["shop", "@Shared.MongoConfig"]
 
-  Shop.Shared.CommandHandlers:
-    class: ../../../../../contexts/shared/infrastructure/command-bus/command-handlers
-    main: CommandHandlers
-    arguments: ['!tagged commandHandler']
+    Shared.CommandHandlers:
+        class: ../../../../../contexts/shared/infrastructure/command-bus/command-handlers
+        main: CommandHandlers
+        arguments: ["!tagged commandHandler"]
 
-  Shop.Shared.domain.CommandBus:
-    class: ../../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
-    main: InMemoryCommandBus
-    arguments: ['@Shop.Shared.CommandHandlers']
+    Shared.domain.CommandBus:
+        class: ../../../../../contexts/shared/infrastructure/command-bus/in-memory-command-bus
+        main: InMemoryCommandBus
+        arguments: ["@Shared.CommandHandlers"]
 
-  Shop.Shared.RabbitMQConfig:
-    factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-config-factory
-      main: RabbitMQConfigFactory
-      method: 'createConfig'
+    Shared.KafkaConfig:
+        factory:
+            class: ../../../../../contexts/shop/shared/infrastructure/kafka/kafka-config-factory
+            main: KafkaConfigFactory
+            method: "createConfig"
 
-  # Shop.Shared.domain.EventBus:
-  #   factory:
-  #     class: ../../../../../contexts/shop/shared/infrastructure/rabbitmq/rabbitmq-event-bus-factory
-  #     main: RabbitMQEventBusFactory
-  #     method: 'create'
-  #   arguments:
-  #     [
-  #       '@Shop.Shared.DomainEventFailoverPublisher',
-  #       '@Shop.Shared.RabbitMQConnection',
-  #       '@Shop.Shared.RabbitMQqueueFormatter',
-  #       '@Shop.Shared.RabbitMQConfig',
-  #       '@Shared.Logger',
-  #     ]
+    Shared.domain.EventBus:
+        factory:
+            class: ../../../../../contexts/shop/shared/infrastructure/kafka/kafka-event-bus-factory
+            main: KafkaEventBusFactory
+            method: "create"
+        arguments:
+            [
+                "@Shared.DomainEventFailoverPublisher",
+                "@Shared.KafkaConnection",
+                "@Shared.KafkaTopicFormatter",
+                "@Shared.Logger",
+            ]
 
-  Shop.Shared.RabbitMQQueueFormatter:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
-    main: RabbitMQqueueFormatter
-    arguments: ['shop']
+    Shared.KafkaTopicFormatter:
+        class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
+        main: KafkaTopicFormatter
+        arguments: ["shop"]
 
-  Shop.Shared.RabbitMQConnection:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-connection
-    main: RabbitMqConnection
-    arguments: ['@Shop.Shared.RabbitMQConfig']
+    Shared.KafkaConnection:
+        class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-connection
+        main: KafkaConnection
+        arguments: ["@Shared.KafkaConfig"]
 
-  Shop.Shared.RabbitMQqueueFormatter:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-queue-formatter
-    main: RabbitMQqueueFormatter
-    arguments: ['shop']
+    Shared.KafkaConfigurer:
+        class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-configurer
+        main: KafkaConfigurer
+        arguments: ["@Shared.KafkaConnection", "@Shared.KafkaTopicFormatter"]
 
-  Shop.Shared.RabbitMQConfigurer:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/rabbitmq/rabbitmq-configurer
-    main: RabbitMQConfigurer
-    arguments: ['@Shop.Shared.RabbitMQConnection', '@Shop.Shared.RabbitMQQueueFormatter']
+    Shared.DomainEventFailoverPublisher:
+        class: ../../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
+        main: DomainEventFailoverPublisher
+        arguments: ["@Shared.ConnectionManager"]
 
-  Shop.Shared.KafkaConfig:
-    factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/kafka/kafka-config-factory
-      main: KafkaConfigFactory
-      method: 'createConfig'
+    Shared.QueryHandlers:
+        class: ../../../../../contexts/shared/infrastructure/query-bus/query-handlers
+        main: QueryHandlers
+        arguments: ["!tagged queryHandler"]
 
-  Shop.Shared.domain.EventBus:
-    factory:
-      class: ../../../../../contexts/shop/shared/infrastructure/kafka/kafka-event-bus-factory
-      main: KafkaEventBusFactory
-      method: 'create'
-    arguments:
-      [
-        '@Shop.Shared.DomainEventFailoverPublisher',
-        '@Shop.Shared.KafkaConnection',
-        '@Shop.Shared.KafkaTopicFormatter',
-        '@Shared.Logger',
-      ]
+    Shared.domain.QueryBus:
+        class: ../../../../../contexts/shared/infrastructure/query-bus/in-memory-query-bus
+        main: InMemoryQueryBus
+        arguments: ["@Shared.QueryHandlers"]
 
-  Shop.Shared.KafkaTopicFormatter:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-topic-formatter
-    main: KafkaTopicFormatter
-    arguments: ['shop']
+    Shared.ElasticConfig:
+        factory:
+            class: ../../../../../contexts/shop/product/infrastructure/persistence/elastic-config-factory
+            main: ElasticConfigFactory
+            method: "createConfig"
 
-  Shop.Shared.KafkaConnection:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-connection
-    main: KafkaConnection
-    arguments: ['@Shop.Shared.KafkaConfig']
-
-  Shop.Shared.KafkaConfigurer:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/kafka/kafka-configurer
-    main: KafkaConfigurer
-    arguments: ['@Shop.Shared.KafkaConnection', '@Shop.Shared.KafkaTopicFormatter']
-
-  Shop.Shared.DomainEventFailoverPublisher:
-    class: ../../../../../contexts/shared/infrastructure/event-bus/domain-event-failover-publisher/domain-event-failover-publisher
-    main: DomainEventFailoverPublisher
-    arguments: ['@Shop.Shared.ConnectionManager']
-
-  Shop.Shared.QueryHandlers:
-    class: ../../../../../contexts/shared/infrastructure/query-bus/query-handlers
-    main: QueryHandlers
-    arguments: ['!tagged queryHandler']
-
-  Shop.Shared.domain.QueryBus:
-    class: ../../../../../contexts/shared/infrastructure/query-bus/in-memory-query-bus
-    main: InMemoryQueryBus
-    arguments: ['@Shop.Shared.QueryHandlers']
-
-  Shop.Shared.ElasticConfig:
-    factory:
-      class: ../../../../../contexts/shop/product/infrastructure/persistence/elastic-config-factory
-      main: ElasticConfigFactory
-      method: 'createConfig'
-
-  Shop.Shared.ElasticConnectionManager:
-    factory:
-      class: ../../../../../contexts/shared/infrastructure/persistence/elasticsearch/elastic-client-factory
-      main: ElasticClientFactory
-      method: 'createClient'
-    arguments: ['shop', '@Shop.Shared.ElasticConfig']
+    Shared.ElasticConnectionManager:
+        factory:
+            class: ../../../../../contexts/shared/infrastructure/persistence/elasticsearch/elastic-client-factory
+            main: ElasticClientFactory
+            method: "createClient"
+        arguments: ["shop", "@Shared.ElasticConfig"]

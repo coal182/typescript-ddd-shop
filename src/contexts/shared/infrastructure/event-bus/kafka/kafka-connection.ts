@@ -16,21 +16,42 @@ export class KafkaConnection {
     }
 
     async connect(): Promise<void> {
-        await this.producer.connect();
-        await this.consumer.connect();
-        await this.admin.connect();
+        let retries = 0;
+
+        while (retries < 10) {
+            try {
+                await this.admin.connect();
+                await this.producer.connect();
+                await this.consumer.connect();
+
+                await this.admin.listTopics();
+
+                return;
+            } catch (error) {
+                retries++;
+
+                console.log(`Kafka not ready. Retry ${retries}`);
+
+                await this.sleep(3000);
+            }
+        }
+
+        throw new Error('Kafka connection failed');
     }
 
     async createTopic(topic: string): Promise<void> {
         try {
             await this.admin.createTopics({
                 topics: [{topic}],
+                waitForLeaders: true,
             });
+            console.log('📌 ~ createTopic topic', topic);
         } catch (error) {
             if (this.isKafkaError(error)) {
-                if (error.code !== 36) {
-                    throw error;
+                if (error.message?.includes('already exists')) {
+                    return;
                 }
+                throw error;
             } else {
                 throw error;
             }
@@ -69,5 +90,9 @@ export class KafkaConnection {
 
     private isKafkaError(error: unknown): error is KafkaJSProtocolError {
         return (error as KafkaJSProtocolError).code !== undefined;
+    }
+
+    private async sleep(ms: number): Promise<void> {
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 }
