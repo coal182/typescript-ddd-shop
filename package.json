@@ -13,7 +13,7 @@
     "dev:backoffice:backend": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/backoffice/backend/start.ts",
     "dev:importer": "NODE_ENV=dev ts-node-dev --ignore-watch node_modules -r tsconfig-paths/register ./src/apps/importer/start.ts",
     "lint": "eslint --fix .",
-    "postinstall": "npm run build",
+    "postinstall": "",
     "test": "mocha --config ./tests/.mocharc.json ${MOCHA_ARGS}",
     "test-watch": "mocha -r ts-node/register -r tsconfig-paths/register tests/**/*.spec.ts --watch --extensions ts",
     "test:features": "npm run test:shop:backend:features && npm run test:backoffice:backend:features",

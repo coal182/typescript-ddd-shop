@@ -1,11 +1,11 @@
 {
   "mongo": { 
-        "url": "mongodb://shop-mongo-test/shop_test?retryWrites=true&w=majority",
+        "url": "mongodb://mongo-test/shop_test?retryWrites=true&w=majority",
         "username": "mongouser", 
         "password": "super-secret-password" 
   },
   "elastic": {
-    "url": "http://shop-elasticsearch-test:9200",
+    "url": "http://elasticsearch-test:9200",
     "indexName": "shop_products_test"
   }
 }

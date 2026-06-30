@@ -1,59 +1,66 @@
+x-node-service: &node-service
+    build:
+        context: .
+
+    init: true
+
+    working_dir: /app
+
+    volumes:
+        - ./:/app
+        - backend_node_modules:/app/node_modules
+
 services:
-    shop_backend:
-        image: node:24.15-alpine
-        container_name: shop-backend
+    backend:
+        <<: *node-service
         depends_on:
-            kafka:
-                condition: service_healthy
             kafka-configurer:
                 condition: service_completed_successfully
-        working_dir: /app
-        volumes:
-            - ./:/app
-            - ./node_modules/:/node_modules
         ports:
             - "5001:5001"
         healthcheck:
-            test: wget --no-verbose --tries=1 --spider http://shop_backend:5001/healthcheck || exit 1
-            interval: 30s
-            timeout: 10s
-            retries: 50
-        command: sh -c "npm install && npm run dev:shop:backend"
+            test:
+                [
+                    "CMD",
+                    "node",
+                    "-e",
+                    "fetch('http://localhost:5001/healthcheck').then(r=>process.exit(r.ok?0:1))",
+                ]
+            interval: 10s
+            timeout: 5s
+            retries: 3
 
-    backoffice_backend:
-        image: node:24.15-alpine
-        container_name: backoffice-backend
+        command: sh -c "npm run dev:shop:backend"
+
+    backoffice-backend:
+        <<: *node-service
         depends_on:
-            shop_backend:
+            backend:
                 condition: service_healthy
-        working_dir: /app
-        volumes:
-            - ./:/app
-            - ./node_modules/:/node_modules
         ports:
             - "3000:3000"
         healthcheck:
-            test: wget --no-verbose --tries=1 --spider http://backoffice_backend:3000/healthcheck || exit 1
-            interval: 30s
-            timeout: 10s
-            retries: 50
+            test:
+                [
+                    "CMD",
+                    "node",
+                    "-e",
+                    "fetch('http://localhost:5001/healthcheck').then(r=>process.exit(r.ok?0:1))",
+                ]
+            interval: 10s
+            timeout: 5s
+            retries: 3
         command: sh -c "npm run dev:backoffice:backend"
 
-    shop_importer:
-        image: node:24.15-alpine
-        container_name: shop-importer
+    importer:
+        <<: *node-service
         depends_on:
-            shop_backend:
+            backend:
                 condition: service_healthy
-        working_dir: /app
-        volumes:
-            - ./:/app
-            - ./node_modules/:/node_modules
         command: sh -c "npm run dev:importer"
 
     mongo:
         image: mongo:6.0.9
-        container_name: shop-mongo
         environment:
             MONGO_INITDB_ROOT_USERNAME: mongouser
             MONGO_INITDB_ROOT_PASSWORD: super-secret-password
@@ -66,7 +73,6 @@ services:
 
     kafka:
         image: confluentinc/cp-kafka:7.6.1
-        container_name: shop-kafka
         hostname: kafka
         ports:
             - "9092:9092"
@@ -103,21 +109,13 @@ services:
             retries: 10
 
     kafka-configurer:
-        image: node:24-alpine
-        container_name: kafka-configurer
-
+        <<: *node-service
         depends_on:
             kafka:
                 condition: service_healthy
-
-        working_dir: /app
-        volumes:
-            - ./:/app
-
         command: sh -c "node -r ts-node/register -r tsconfig-paths/register src/scripts/configure-shop-kafka.ts"
 
     kafbat-ui:
-        container_name: kafbat-ui
         image: ghcr.io/kafbat/kafka-ui:latest
         depends_on:
             kafka:
@@ -131,17 +129,16 @@ services:
 
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1
-        container_name: shop-elasticsearch
         healthcheck:
             test: curl -s http://elasticsearch:9200 >/dev/null || exit 1
             interval: 30s
             timeout: 10s
             retries: 50
         environment:
-            - node.name=shop-elasticsearch
+            - node.name=elasticsearch
             - discovery.type=single-node #Elasticsearch forms a single-node cluster
             - bootstrap.memory_lock=true # might cause the JVM or shell session to exit if it tries to allocate more memory than is available!
-            - "ES_JAVA_OPTS=-Xms2048m -Xmx2048m"
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
             - xpack.security.enabled=false
             - xpack.security.http.ssl.enabled=false
         ulimits:
@@ -154,23 +151,25 @@ services:
             - "9200:9200"
     kibana:
         image: docker.elastic.co/kibana/kibana:8.8.1
-        container_name: shop-kibana
         environment:
-            ELASTICSEARCH_URL: http://shop-elasticsearch:9200
-            ELASTICSEARCH_HOSTS: http://shop-elasticsearch:9200
+            ELASTICSEARCH_URL: http://elasticsearch:9200
+            ELASTICSEARCH_HOSTS: http://elasticsearch:9200
         ports:
             - 5601:5601
 
-    shop_frontend:
-        image: node:24.15-alpine
-        container_name: shop-frontend
+    frontend:
+        build:
+            context: ./src/apps/shop/frontend
         working_dir: /app
+        environment:
+            CHOKIDAR_USEPOLLING: "true"
         volumes:
             - ./src/apps/shop/frontend/:/app
-            - ./src/apps/shop/frontend/node_modules/:/node_modules
+            - frontend_node_modules:/app/node_modules
         ports:
             - "4200:4200"
             - "9876:9876"
-        command: sh -c "npm install && npm run start"
-# volumes:
-#     kafka-data:
+        command: sh -c "npm run start"
+volumes:
+    backend_node_modules:
+    frontend_node_modules:

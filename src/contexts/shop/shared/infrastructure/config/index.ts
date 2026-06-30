@@ -23,7 +23,7 @@ const shopConfig = convict({
         url: {
             doc: 'The Mongo connection URL',
             format: String,
-            default: 'mongodb://shop-mongo/shop?retryWrites=true&w=majority',
+            default: 'mongodb://mongo/shop?retryWrites=true&w=majority',
         },
         username: {
             doc: 'The Mongo connection user',
@@ -65,7 +65,7 @@ const shopConfig = convict({
             doc: 'The Elastic connection URL',
             format: String,
             env: 'ELASTIC_URL',
-            default: 'http://shop-elasticsearch:9200',
+            default: 'http://elasticsearch:9200',
         },
         indexName: {
             doc: 'The Elastic index name for this context',

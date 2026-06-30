@@ -1,4 +1,4 @@
-import {Consumer as KafkaConsumer, Kafka, Producer as KafkaProducer, Admin, KafkaJSProtocolError, EachMessagePayload, Message} from 'kafkajs';
+import {Consumer as KafkaConsumer, Kafka, Producer as KafkaProducer, Admin, KafkaJSProtocolError, EachMessagePayload, Message, Partitioners} from 'kafkajs';
 
 import {KafkaConfig} from './kafka-config';
 
@@ -11,7 +11,7 @@ export class KafkaConnection {
     constructor(private config: KafkaConfig) {
         this.kafka = new Kafka(config.brokerConfig);
         this.admin = this.kafka.admin();
-        this.producer = this.kafka.producer(config.producerConfig);
+        this.producer = this.kafka.producer({...config.producerConfig, createPartitioner: Partitioners.DefaultPartitioner});
         this.consumer = this.kafka.consumer(config.consumerConfig);
     }
 
@@ -45,7 +45,6 @@ export class KafkaConnection {
                 topics: [{topic}],
                 waitForLeaders: true,
             });
-            console.log('📌 ~ createTopic topic', topic);
         } catch (error) {
             if (this.isKafkaError(error)) {
                 if (error.message?.includes('already exists')) {

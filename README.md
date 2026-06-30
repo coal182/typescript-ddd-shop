@@ -55,6 +55,7 @@ cp .env_template .env
 **Deploying docker container**
 
 ```bash
+docker compose build
 docker-compose up
 ```
 
@@ -78,6 +79,8 @@ docker-compose -f docker-compose.test.yml up --abort-on-container-exit --force-r
 cd src/apps/shop/frontend
 npm run test
 ```
+
+**UI Login:** niclife7@gmail.com / 123456
 
 **Useful Kafka commands:**
 

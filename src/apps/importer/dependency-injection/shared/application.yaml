@@ -5,7 +5,7 @@ services:
         arguments: []
     Shared.MongoConfig:
         factory:
-            class: ../../../../contexts/backoffice/shared/infrastructure/persistence/mongo/mongo-config-factory
+            class: ../../../../contexts/importer/shared/infrastructure/persistence/mongo/mongo-config-factory
             main: MongoConfigFactory
             method: "createConfig"
 
@@ -14,7 +14,7 @@ services:
             class: ../../../../contexts/shared/infrastructure/persistence/mongo/mongo-client-factory
             main: MongoClientFactory
             method: "createClient"
-        arguments: ["backoffice", "@Shared.MongoConfig"]
+        arguments: ["importer", "@Shared.MongoConfig"]
 
     Shared.CommandHandlers:
         class: ../../../../contexts/shared/infrastructure/command-bus/command-handlers

@@ -32,7 +32,6 @@ export class KafkaEventBus implements EventBus {
     }
 
     async addSubscribers(subscribers: DomainEventSubscribers): Promise<void> {
-        console.log('📌 ~ addsubscribers', subscribers);
         const deserializer = DomainEventDeserializer.configure(subscribers);
         const consumerFactory = new KafkaConsumerFactory(deserializer, this.logger);
 

@@ -23,7 +23,7 @@ const backofficeConfig = convict({
         url: {
             doc: 'The Mongo connection URL',
             format: String,
-            default: 'mongodb://shop-mongo/shop?retryWrites=true&w=majority',
+            default: 'mongodb://mongo/shop?retryWrites=true&w=majority',
         },
         username: {
             doc: 'The Mongo connection user',

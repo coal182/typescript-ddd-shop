@@ -1061,7 +1061,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"email\":\"niclife7@gmail.com\", \"password\": \"060391\"}",
+							"raw": "{\"email\":\"niclife7@gmail.com\", \"password\": \"123456\"}",
 							"options": {
 								"raw": {
 									"language": "json"

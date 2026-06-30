@@ -1,6 +1,6 @@
 {
     "mongo": { 
-        "url": "mongodb://shop-mongo/shop?retryWrites=true&w=majority",
+        "url": "mongodb://mongo/shop?retryWrites=true&w=majority",
         "username": "mongouser", 
         "password": "super-secret-password" 
     },
@@ -9,7 +9,7 @@
         "secret": "eST0DEB3sercOMPlIC4D02080"
     },
     "elastic": {
-        "url": "http://shop-elasticsearch:9200"
+        "url": "http://elasticsearch:9200"
     }
 }
   
