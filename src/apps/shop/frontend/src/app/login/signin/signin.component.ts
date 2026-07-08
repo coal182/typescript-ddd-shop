@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgIconComponent } from '@ng-icons/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { HlmButtonImports } from '@spartan-ng/helm/button';
+import { HlmFieldImports } from '@spartan-ng/helm/field';
+import { HlmInputImports } from '@spartan-ng/helm/input';
+import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { LoginActions } from 'src/app/store/login/login.actions';
 import { Credentials } from 'src/app/store/login/state/model';
 
@@ -13,7 +15,7 @@ import { AuthService } from '../../shared/auth/auth.service';
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     styleUrls: ['./signin.component.css'],
-    imports: [ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatIconModule],
+    imports: [ReactiveFormsModule, NgIconComponent, ...HlmButtonImports, ...HlmFieldImports, ...HlmInputImports, ...HlmLabelImports],
 })
 export class SigninComponent implements OnInit, OnDestroy {
     signinForm: UntypedFormGroup;
