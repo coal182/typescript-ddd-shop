@@ -48,7 +48,8 @@
             "@spartan-ng/helm/tabs": ["./src/app/libs/ui/tabs/src/index.ts"],
             "@spartan-ng/helm/tooltip": [
                 "./src/app/libs/ui/tooltip/src/index.ts"
-            ]
+            ],
+            "@spartan-ng/helm/table": ["./src/app/libs/ui/table/src/index.ts"]
         }
     },
     "angularCompilerOptions": {

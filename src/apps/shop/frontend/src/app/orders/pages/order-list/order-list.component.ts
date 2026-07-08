@@ -1,10 +1,10 @@
 import {AsyncPipe, CurrencyPipe} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatTableModule} from '@angular/material/table';
 import {RouterModule} from '@angular/router';
+import {NgIconComponent} from '@ng-icons/core';
+import {HlmButtonImports} from '@spartan-ng/helm/button';
+import {HlmSpinnerImports} from '@spartan-ng/helm/spinner';
+import {HlmTableImports} from '@spartan-ng/helm/table';
 import {map, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
@@ -15,14 +15,12 @@ import {HttpOrderService} from '../../services/http-order.service';
     selector: 'app-order-list',
     templateUrl: './order-list.component.html',
     styleUrls: ['./order-list.component.css'],
-    imports: [MatButtonModule, MatIconModule, MatTableModule, AsyncPipe, CurrencyPipe, MatProgressSpinnerModule, RouterModule],
+    imports: [AsyncPipe, CurrencyPipe, RouterModule, NgIconComponent, ...HlmButtonImports, ...HlmSpinnerImports, ...HlmTableImports],
 })
 export class OrderListComponent implements OnInit {
     public isLoading = false;
 
-    columnsToDisplay = ['name', 'address', 'total', 'actions'];
-
-    orders$: Observable<any>;
+    orders$: Observable<Order[]>;
 
     constructor(public orderService: HttpOrderService) {}
 
@@ -35,8 +33,5 @@ export class OrderListComponent implements OnInit {
         );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public cancel(order: Order): void {
-        // not implemented yet
-    }
+    public cancel(order: Order): void {}
 }
