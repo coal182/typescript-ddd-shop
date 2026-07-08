@@ -4,7 +4,7 @@ import {bootstrapApplication} from '@angular/platform-browser';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideRouter, withComponentInputBinding} from '@angular/router';
 import {provideIcons} from '@ng-icons/core';
-import {lucideArrowRight, lucideList, lucideLogIn, lucideLogOut, lucideMenu, lucidePencil, lucideSave, lucideShare2, lucideShoppingCart, lucideStar, lucideUserCog, lucideUserPlus} from '@ng-icons/lucide';
+import {lucideArrowRight, lucideList, lucideLogIn, lucideLogOut, lucideMenu, lucidePencil, lucideSave, lucideShare2, lucideShoppingCart, lucideStar, lucideTrash, lucideUserCog, lucideUserPlus} from '@ng-icons/lucide';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 
@@ -30,7 +30,7 @@ bootstrapApplication(AppComponent, {
         provideRouter(routes, withComponentInputBinding()),
         provideAnimations(),
         provideHttpClient(withInterceptors([authInterceptor])),
-        provideIcons({lucideLogIn, lucideShoppingCart, lucideMenu, lucideUserCog, lucideList, lucideLogOut, lucideUserPlus, lucideShare2, lucideSave, lucidePencil, lucideStar, lucideArrowRight}),
+        provideIcons({lucideLogIn, lucideShoppingCart, lucideMenu, lucideUserCog, lucideList, lucideLogOut, lucideUserPlus, lucideShare2, lucideSave, lucidePencil, lucideStar, lucideArrowRight, lucideTrash}),
         provideSwalPopupService(),
         ValidationService,
         IdProviderService,

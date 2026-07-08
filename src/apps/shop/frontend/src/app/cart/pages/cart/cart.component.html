@@ -1,96 +1,79 @@
 <h3>Cart</h3>
 
-<div class="row animate__animated animate__fadeIn">
-    <div class="col-md-8">
-        <table mat-table [dataSource]="items" class="cart-table" #table>
-            <ng-container matColumnDef="image">
-                <th mat-header-cell *matHeaderCellDef>Image</th>
-                <td mat-cell *matCellDef="let item">
-                    <img
-                        [src]="item.product | image"
-                        class="cart-image"
-                        [routerLink]="['/products', item.product.id]" />
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Name</th>
-                <td mat-cell *matCellDef="let item">{{ item.product.name }}</td>
-            </ng-container>
-            <ng-container matColumnDef="qty">
-                <th mat-header-cell *matHeaderCellDef>Qty</th>
-                <td mat-cell *matCellDef="let item">{{ item.qty }}</td>
-            </ng-container>
-            <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef>Price</th>
-                <td mat-cell *matCellDef="let item">{{ item.price | currency }}</td>
-            </ng-container>
-            <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef>Actions</th>
-                <td mat-cell *matCellDef="let item">
-                    <button mat-icon-button type="button" (click)="removeFromCart(item)">
-                        <mat-icon mat-icon matTooltip="Remove">delete</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-        </table>
+<div class="flex gap-6 animate__animated animate__fadeIn">
+    <div class="flex-1">
+        <div hlmTableContainer>
+            <table hlmTable>
+                <thead hlmTHead>
+                    <tr hlmTr>
+                        <th hlmTh>Image</th>
+                        <th hlmTh>Name</th>
+                        <th hlmTh>Qty</th>
+                        <th hlmTh>Price</th>
+                        <th hlmTh>Actions</th>
+                    </tr>
+                </thead>
+                <tbody hlmTBody>
+                    @for (item of items; track item.product.id) {
+                        <tr hlmTr>
+                            <td hlmTd>
+                                <img
+                                    [src]="item.product | image"
+                                    class="cart-image"
+                                    [routerLink]="['/products', item.product.id]" />
+                            </td>
+                            <td hlmTd>{{ item.product.name }}</td>
+                            <td hlmTd>{{ item.qty }}</td>
+                            <td hlmTd>{{ item.price | currency }}</td>
+                            <td hlmTd>
+                                <button
+                                    hlmBtn
+                                    size="icon"
+                                    variant="ghost"
+                                    type="button"
+                                    [hlmTooltip]="'Remove'"
+                                    (click)="removeFromCart(item)">
+                                    <ng-icon name="lucideTrash" />
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
         <h1>Total:</h1>
         <h3>{{ total | currency }}</h3>
-
-        <!--<p>
-      <a routerLink="/shipping">Shipping Prices</a>
-    </p>-->
     </div>
-    <div class="col-md-4">
-        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="form-signin text-center">
-            <h3 class="h3 mb-3 font-weight-normal">Confirm your order</h3>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Name</mat-label>
-                <input matInput type="text" formControlName="name" placeholder="Name" />
-                <!--<mat-error *ngIf="profileForm.get('name')?.errors && profileForm.get('name')?.touched">
-          {{validateFormService.getError('Name', profileForm.get('name'))}}
-        </mat-error>-->
-            </mat-form-field>
+    <div class="w-80">
+        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+            <h3>Confirm your order</h3>
 
-            <br />
+            <hlm-field>
+                <label hlmLabel>Name</label>
+                <input hlmInput type="text" formControlName="name" placeholder="Name" />
+            </hlm-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Street</mat-label>
-                <input matInput type="text" formControlName="street" placeholder="Street" />
-                <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
-          {{validateFormService.getError('address', profileForm.get('address'))}}
-        </mat-error>-->
-            </mat-form-field>
+            <hlm-field>
+                <label hlmLabel>Street</label>
+                <input hlmInput type="text" formControlName="street" placeholder="Street" />
+            </hlm-field>
 
-            <br />
+            <hlm-field>
+                <label hlmLabel>City</label>
+                <input hlmInput type="text" formControlName="city" placeholder="City" />
+            </hlm-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>City</mat-label>
-                <input matInput type="text" formControlName="city" placeholder="City" />
-                <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
-          {{validateFormService.getError('address', profileForm.get('address'))}}
-        </mat-error>-->
-            </mat-form-field>
+            <hlm-field>
+                <label hlmLabel>Number</label>
+                <input hlmInput type="text" formControlName="number" placeholder="Number" />
+            </hlm-field>
 
-            <br />
-
-            <mat-form-field appearance="outline">
-                <mat-label>Number</mat-label>
-                <input matInput type="text" formControlName="number" placeholder="Number" />
-                <!--<mat-error *ngIf="profileForm.get('address')?.errors && profileForm.get('address')?.touched">
-          {{validateFormService.getError('address', profileForm.get('address'))}}
-        </mat-error>-->
-            </mat-form-field>
-
-            <br />
             <button
+                hlmBtn
                 type="submit"
-                mat-flat-button
-                color="primary"
+                class="w-full"
                 data-testid="submit-button"
                 [disabled]="!checkoutForm.valid">
                 Confirm purchase
