@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
 import {Router, RouterModule} from '@angular/router';
+import {NgIconComponent} from '@ng-icons/core';
 import {select, Store} from '@ngrx/store';
+import {HlmButtonImports} from '@spartan-ng/helm/button';
+import {HlmDropdownMenuImports} from '@spartan-ng/helm/dropdown-menu';
 import {Subject, switchMap, takeUntil} from 'rxjs';
 import Swal from 'sweetalert2';
 
@@ -17,7 +17,7 @@ import {LoginSelectors} from '../store/login/login.selectors';
 import {LoadingStatus} from '../store/metadata-types';
 
 @Component({
-    imports: [RouterModule, FinderComponent, MatButtonModule, MatIconModule, MatMenuModule],
+    imports: [RouterModule, FinderComponent, NgIconComponent, ...HlmButtonImports, ...HlmDropdownMenuImports],
     selector: 'app-top-bar',
     templateUrl: './top-bar.component.html',
     styleUrls: ['./top-bar.component.css'],

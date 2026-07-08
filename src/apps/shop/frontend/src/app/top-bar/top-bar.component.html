@@ -1,61 +1,59 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-2 v-centered">
-            <a [routerLink]="['/products']">
-                <h1>Shop</h1>
-            </a>
-        </div>
+<div class="flex items-center justify-between px-4">
+    <a [routerLink]="['/products']">
+        <h1>Shop</h1>
+    </a>
 
-        <div class="col-md-7 v-centered">
-            @if (this.authService.isLoggedIn) {
-                <finder class="v-centered"></finder>
+    <div class="flex-1 mx-6">
+        @if (authService.isLoggedIn) {
+            <finder></finder>
+        }
+    </div>
+
+    <div class="flex items-center gap-2">
+        <div class="cart-button-container">
+            @if (authService.isLoggedIn) {
+                <button hlmBtn variant="ghost" size="icon" routerLink="/cart">
+                    <ng-icon name="lucideShoppingCart" />
+                </button>
+                <span class="cart-counter">{{ cart_counter }}</span>
             }
         </div>
 
-        <div class="col-md-3 v-centered">
-            <div class="cart-button-container">
-                @if (this.authService.isLoggedIn) {
-                    <button routerLink="/cart" mat-icon-button>
-                        <mat-icon>shopping_cart</mat-icon>
+        @if (authService.isLoggedIn) {
+            <button hlmBtn variant="ghost" size="icon" class="user-menu-button"
+                [hlmDropdownMenuTrigger]="userMenu"
+                aria-label="User menu">
+                <ng-icon name="lucideMenu" />
+            </button>
+
+            <ng-template #userMenu>
+                <div hlmDropdownMenu>
+                    <button hlmDropdownMenuItem [routerLink]="['user-profile/' + user_id]">
+                        <ng-icon name="lucideUserCog" />
+                        <span>User Profile</span>
                     </button>
-                    <span class="cart-counter">{{ this.cart_counter }}</span>
-                }
-            </div>
+                    <button hlmDropdownMenuItem [routerLink]="['orders/']">
+                        <ng-icon name="lucideList" />
+                        <span>Orders</span>
+                    </button>
+                    <div hlmDropdownMenuSeparator></div>
+                    <button hlmDropdownMenuItem (click)="logout()">
+                        <ng-icon name="lucideLogOut" />
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </ng-template>
+        }
 
-            @if (this.authService.isLoggedIn) {
-                <button
-                    mat-icon-button
-                    [matMenuTriggerFor]="menu"
-                    aria-label="Example icon-button with a menu"
-                    class="user-menu-button">
-                    <mat-icon>menu</mat-icon>
-                </button>
-            }
-
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item [routerLink]="['user-profile/' + this.user_id]">
-                    <mat-icon>manage_accounts</mat-icon>
-                    <span>User Profile</span>
-                </button>
-                <button mat-menu-item [routerLink]="['orders/']">
-                    <mat-icon>list</mat-icon>
-                    <span>Orders</span>
-                </button>
-                <button mat-menu-item (click)="logout()">
-                    <mat-icon>logout</mat-icon>
-                    <span>Logout</span>
-                </button>
-            </mat-menu>
-            @if (!this.authService.isLoggedIn) {
-                <button mat-flat-button type="button" routerLinkActive="active" routerLink="/log-in">
-                    <mat-icon>login</mat-icon> Sign in
-                </button>
-                &nbsp;
-                <button mat-flat-button type="button" routerLinkActive="active" routerLink="/sign-up">
-                    <mat-icon>add</mat-icon>
-                    Sign up
-                </button>
-            }
-        </div>
+        @if (!authService.isLoggedIn) {
+            <button hlmBtn variant="ghost" type="button" routerLinkActive="active" routerLink="/log-in">
+                <ng-icon name="lucideLogIn" />
+                Sign in
+            </button>
+            <button hlmBtn variant="ghost" type="button" routerLinkActive="active" routerLink="/sign-up">
+                <ng-icon name="lucideUserPlus" />
+                Sign up
+            </button>
+        }
     </div>
 </div>
