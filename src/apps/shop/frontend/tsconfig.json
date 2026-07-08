@@ -12,7 +12,37 @@
         "importHelpers": true,
         "target": "ES2022",
         "typeRoots": ["node_modules/@types"],
-        "useDefineForClassFields": false
+        "useDefineForClassFields": false,
+        "paths": {
+            "@spartan-ng/helm/button": [
+                "./src/app/libs/ui/button/src/index.ts"
+            ],
+            "@spartan-ng/helm/utils": ["./src/app/libs/ui/utils/src/index.ts"],
+            "@spartan-ng/helm/input": ["./src/app/libs/ui/input/src/index.ts"],
+            "@spartan-ng/helm/label": ["./src/app/libs/ui/label/src/index.ts"],
+            "@spartan-ng/helm/field": ["./src/app/libs/ui/field/src/index.ts"],
+            "@spartan-ng/helm/separator": [
+                "./src/app/libs/ui/separator/src/index.ts"
+            ],
+            "@spartan-ng/helm/spinner": [
+                "./src/app/libs/ui/spinner/src/index.ts"
+            ],
+            "@spartan-ng/helm/dropdown-menu": [
+                "./src/app/libs/ui/dropdown-menu/src/index.ts"
+            ],
+            "@spartan-ng/helm/autocomplete": [
+                "./src/app/libs/ui/autocomplete/src/index.ts"
+            ],
+            "@spartan-ng/helm/popover": [
+                "./src/app/libs/ui/popover/src/index.ts"
+            ],
+            "@spartan-ng/helm/input-group": [
+                "./src/app/libs/ui/input-group/src/index.ts"
+            ],
+            "@spartan-ng/helm/textarea": [
+                "./src/app/libs/ui/textarea/src/index.ts"
+            ]
+        }
     },
     "angularCompilerOptions": {
         "enableIvy": false,

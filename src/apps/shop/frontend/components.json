@@ -1,0 +1,9 @@
+{
+    "$schema": "https://ui.spartan.ng/components-json-schema.json",
+    "spartanUIVersion": "1.0.4",
+    "componentsPath": "src/app/libs/ui",
+    "importAlias": "@spartan-ng/helm",
+    "generateAs": "entrypoint",
+    "installedComponents": [],
+    "style": "vega"
+}
