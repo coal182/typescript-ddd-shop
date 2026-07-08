@@ -1,6 +1,6 @@
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {injectBrnDialogContext} from '@spartan-ng/brain/dialog';
 
 import {AlertDialogComponent} from './alert-dialog.component';
 
@@ -10,11 +10,9 @@ describe('AlertDialogComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [AlertDialogComponent],
+            imports: [AlertDialogComponent],
             providers: [
-                {provide: MAT_DIALOG_DATA, useValue: {}},
-                {provide: MatDialogRef, useValue: {}},
-                {provide: MatDialog, useValue: {}},
+                {provide: injectBrnDialogContext, useValue: {title: 'Test', msg: 'Test message'}},
             ],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();

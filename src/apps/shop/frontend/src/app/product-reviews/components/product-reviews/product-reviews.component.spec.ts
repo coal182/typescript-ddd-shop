@@ -1,9 +1,8 @@
 import {TextFieldModule} from '@angular/cdk/text-field';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {Component, DebugElement, NO_ERRORS_SCHEMA, NgZone} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
 import {By} from '@angular/platform-browser';
 import {StarRatingComponent} from 'ngx-coal';
 import {IdProviderService} from 'src/app/shared/services/id-provider.service';
@@ -16,7 +15,7 @@ import {ProductReviewFormData, ProductReviewsComponent} from './product-reviews.
 
 import {MockProductReviewsService} from '../../../test/mock-product-reviews.service';
 import {ProductReviewBody, ProductReviewsService} from '../../services/product-reviews.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 
 describe(ProductReviewsComponent.name, () => {
     const productId = 'product-id';
@@ -147,7 +146,7 @@ describe(ProductReviewsComponent.name, () => {
         TestBed.configureTestingModule({
     declarations: [HostTestComponent, ProductReviewsComponent, StarRatingComponent],
     schemas: [NO_ERRORS_SCHEMA],
-    imports: [ReactiveFormsModule, TextFieldModule, MatIconModule],
+    imports: [ReactiveFormsModule, TextFieldModule],
     providers: [
         { provide: ProductReviewsService, useValue: productReviewsService },
         { provide: StorageService, useValue: storageService },
