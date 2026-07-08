@@ -4,7 +4,7 @@ import {bootstrapApplication} from '@angular/platform-browser';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideRouter, withComponentInputBinding} from '@angular/router';
 import {provideIcons} from '@ng-icons/core';
-import {lucideList, lucideLogIn, lucideLogOut, lucideMenu, lucideShoppingCart, lucideUserCog, lucideUserPlus} from '@ng-icons/lucide';
+import {lucideList, lucideLogIn, lucideLogOut, lucideMenu, lucideShare2, lucideShoppingCart, lucideUserCog, lucideUserPlus} from '@ng-icons/lucide';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 
@@ -30,7 +30,7 @@ bootstrapApplication(AppComponent, {
         provideRouter(routes, withComponentInputBinding()),
         provideAnimations(),
         provideHttpClient(withInterceptors([authInterceptor])),
-        provideIcons({lucideLogIn, lucideShoppingCart, lucideMenu, lucideUserCog, lucideList, lucideLogOut, lucideUserPlus}),
+        provideIcons({lucideLogIn, lucideShoppingCart, lucideMenu, lucideUserCog, lucideList, lucideLogOut, lucideUserPlus, lucideShare2}),
         provideSwalPopupService(),
         ValidationService,
         IdProviderService,

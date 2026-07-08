@@ -1,14 +1,18 @@
+import {AsyncPipe, CurrencyPipe} from '@angular/common';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, RouterModule} from '@angular/router';
+import {NgIconComponent} from '@ng-icons/core';
 import {select, Store} from '@ngrx/store';
+import {HlmButtonImports} from '@spartan-ng/helm/button';
+import {HlmSpinnerImports} from '@spartan-ng/helm/spinner';
+import {HlmTabsImports} from '@spartan-ng/helm/tabs';
 import {StatusCodes} from 'http-status-codes';
 import {map, Observable, Subject, throwError} from 'rxjs';
 import {catchError, tap, takeUntil} from 'rxjs/operators';
 import {CartItem} from 'src/app/cart/interfaces/cart';
 import {ProductReviewsComponent} from 'src/app/product-reviews/components/product-reviews/product-reviews.component';
 import {ImagePipe} from 'src/app/shared/pipes/image.pipe';
-import {SharedModule} from 'src/app/shared/shared.module';
 import {HlmDialogService} from 'src/app/libs/ui/dialog/src/lib/hlm-dialog.service';
 import {LoadingStatus} from 'src/app/store/metadata-types';
 import {ProductsActions} from 'src/app/store/products/products.actions';
@@ -20,7 +24,17 @@ import {HttpCartService} from '../../../cart/services/http-cart.service';
 import {HttpProductService} from '../../services/http-product.service';
 
 @Component({
-    imports: [ProductReviewsComponent, SharedModule, RouterModule, ImagePipe],
+    imports: [
+        ProductReviewsComponent,
+        RouterModule,
+        ImagePipe,
+        AsyncPipe,
+        CurrencyPipe,
+        NgIconComponent,
+        ...HlmButtonImports,
+        ...HlmSpinnerImports,
+        ...HlmTabsImports,
+    ],
     selector: 'app-product-details',
     templateUrl: './product-details.component.html',
     styleUrls: ['./product-details.component.css'],
@@ -55,14 +69,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        // First get the product id from the current route.
         const routeParams = this.route.snapshot.paramMap;
         const productIdFromRoute: string = routeParams.get('productId');
-
         const params = {id: productIdFromRoute};
-
         this.isLoading = true;
-
         this.store.dispatch(ProductsActions.fetchSingleProduct(params));
     }
 

@@ -3,76 +3,58 @@
 @if (product) {
     <div class="product-detail animate__animated animate__fadeIn">
         @if (!isLoading) {
-            <div>
-                <ng-container></ng-container>
-
-                <div class="row">
-                    <div class="col-md-6 img-wrapper">
+            <div class="flex flex-col gap-6">
+                <div class="flex gap-6">
+                    <div class="w-1/2 img-wrapper">
                         <img [src]="product | image" />
                     </div>
-                    <div class="col-md-6">
+                    <div class="w-1/2 flex flex-col gap-3">
                         <h1>{{ product.name }}</h1>
                         <h4>{{ product.price | currency }}</h4>
                         <p>{{ product.brand }}</p>
                         <p>{{ product.category }}</p>
-                        <div class="row">
-                            <div class="col-12">
-                                <button
-                                    mat-flat-button
-                                    type="button"
-                                    color="primary"
-                                    (click)="addToCart()"
-                                    class="add-to-cart">
-                                    Add to cart <mat-icon>add_shopping_cart</mat-icon>
-                                </button>
-                            </div>
-                            <div class="col-12">
-                                <button
-                                    mat-flat-button
-                                    type="button"
-                                    color="basic"
-                                    (click)="share()"
-                                    [disabled]="isLoading">
-                                    Share <mat-icon>share</mat-icon>
-                                    @if (isLoading) {
-                                        <mat-icon>
-                                            <mat-progress-spinner
-                                                mode="indeterminate"
-                                                diameter="24"
-                                                data-test="progress-spinner"></mat-progress-spinner>
-                                        </mat-icon>
-                                    }
-                                </button>
-                            </div>
+                        <div class="flex flex-col gap-2">
+                            <button hlmBtn type="button" (click)="addToCart()" class="add-to-cart">
+                                Add to cart
+                                <ng-icon name="lucideShoppingCart" />
+                            </button>
+                            <button hlmBtn variant="outline" type="button" (click)="share()" [disabled]="isLoading">
+                                Share
+                                @if (isLoading) {
+                                    <hlm-spinner size="sm" />
+                                } @else {
+                                    <ng-icon name="lucideShare2" />
+                                }
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col"><br /></div>
-                </div>
-                <div class="row">
-                    <mat-tab-group animationDuration="0ms" color="primary">
-                        <mat-tab label="Reviews"
-                            ><br />
-                            <h2>Reviews</h2>
-                            <app-product-reviews [productId]="product.id"></app-product-reviews>
-                        </mat-tab>
-                        <mat-tab label="Description"><br />{{ product.description }}</mat-tab>
-                        <mat-tab label="Caracteristics">
-                            <br />
 
-                            <table>
-                                <tr>
-                                    <th>Brand</th>
-                                    <td>{{ product.brand }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Category</th>
-                                    <td>{{ product.category }}</td>
-                                </tr>
-                            </table>
-                        </mat-tab>
-                    </mat-tab-group>
+                <div hlmTabs tab="reviews">
+                    <div hlmTabsList>
+                        <button hlmTabsTrigger="reviews">Reviews</button>
+                        <button hlmTabsTrigger="description">Description</button>
+                        <button hlmTabsTrigger="caracteristics">Caracteristics</button>
+                    </div>
+                    <div hlmTabsContent="reviews">
+                        <h2>Reviews</h2>
+                        <app-product-reviews [productId]="product.id"></app-product-reviews>
+                    </div>
+                    <div hlmTabsContent="description">
+                        {{ product.description }}
+                    </div>
+                    <div hlmTabsContent="caracteristics">
+                        <table>
+                            <tr>
+                                <th>Brand</th>
+                                <td>{{ product.brand }}</td>
+                            </tr>
+                            <tr>
+                                <th>Category</th>
+                                <td>{{ product.category }}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         }
@@ -80,8 +62,5 @@
 }
 
 @if (isLoading) {
-    <mat-progress-spinner
-        mode="indeterminate"
-        data-test="progress-spinner-2"
-        style="margin: 0 auto"></mat-progress-spinner>
+    <hlm-spinner class="mx-auto" data-test="progress-spinner-2" />
 }
