@@ -1,18 +1,25 @@
-<div class="auth-wrapper">
-    <form class="form-signin" [formGroup]="signupForm" (ngSubmit)="registerUser()">
-        <h3 class="h3 mb-3 font-weight-normal text-center">Please sign up</h3>
-        <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" formControlName="name" placeholder="Enter name" required />
-        </div>
-        <div class="form-group">
-            <label>Email address</label>
-            <input type="email" class="form-control" formControlName="email" placeholder="Enter email" required />
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" formControlName="password" placeholder="Password" required />
-        </div>
-        <button type="submit" class="btn btn-block btn-primary">Sign up</button>
-    </form>
+<div class="auth-wrapper animate__animated animate__fadeIn">
+    <div class="login-card">
+        <form class="login-form" [formGroup]="signupForm" (ngSubmit)="registerUser()">
+            <h2>Sign up</h2>
+            <p>Create your account</p>
+
+            <hlm-field>
+                <label hlmLabel>Name</label>
+                <input hlmInput type="text" formControlName="name" placeholder="Enter name" required />
+            </hlm-field>
+
+            <hlm-field>
+                <label hlmLabel>Email address</label>
+                <input hlmInput type="email" formControlName="email" placeholder="Enter email" required />
+            </hlm-field>
+
+            <hlm-field>
+                <label hlmLabel>Password</label>
+                <input hlmInput type="password" formControlName="password" placeholder="Password" required />
+            </hlm-field>
+
+            <button type="submit" hlmBtn class="w-full">Sign up</button>
+        </form>
+    </div>
 </div>

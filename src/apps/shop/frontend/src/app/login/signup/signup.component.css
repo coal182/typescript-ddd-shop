@@ -1,0 +1,53 @@
+:host {
+display: grid;
+place-items: center;
+margin: 0;
+padding: 0 24px;
+font-family: "Euclid Circular A";
+color: #000;
+}
+
+@media (width >= 500px) {
+:host {
+    padding: 0;
+}
+}
+
+.login-card {
+position: relative;
+z-index: 3;
+width: 100%;
+margin: 100px 20px;
+padding: 70px 30px 44px;
+border-radius: 1.25rem;
+background: #fff;
+text-align: center;
+}
+
+@media (width >= 500px) {
+.login-card {
+    margin: 50px 0;
+    width: 400px;
+}
+}
+
+.login-card > h2 {
+font-size: 36px;
+font-weight: 600;
+margin: 0;
+padding: 0;
+}
+
+.login-card > p {
+font-size: 36px;
+font-weight: 600;
+margin: 0;
+padding: 0;
+}
+
+.login-form {
+width: 100%;
+margin: 0;
+display: grid;
+gap: 1rem;
+}

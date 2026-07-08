@@ -43,7 +43,7 @@ animation: rotate 6s infinite alternate linear;
 }
 
 router-outlet + * {
-padding: 0 16px;
+padding: 1rem 1.5rem;
 }
 
 /* Text */
@@ -87,6 +87,14 @@ margin: 10px auto
 app-top-bar h1 {
 color: #fff;
 margin: 0;
+}
+
+app-top-bar button {
+color: #ffffff !important;
+}
+
+app-top-bar button:hover {
+background-color: rgba(255,255,255,0.1) !important;
 }
 
 app-top-bar .v-centered {
