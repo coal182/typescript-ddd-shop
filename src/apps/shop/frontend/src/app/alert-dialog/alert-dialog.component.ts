@@ -1,18 +1,17 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Component} from '@angular/core';
+import {injectBrnDialogContext} from '@spartan-ng/brain/dialog';
+import {HlmDialogImports} from '@spartan-ng/helm/dialog';
 
 export interface DialogData {
     title: string;
     msg: string;
 }
 
-/**
- * @title Dialog with header, scrollable content and actions
- */
 @Component({
     selector: 'alert-dialog',
     templateUrl: './alert-dialog.component.html',
+    imports: [...HlmDialogImports],
 })
 export class AlertDialogComponent {
-    constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    public readonly data = injectBrnDialogContext<DialogData>();
 }

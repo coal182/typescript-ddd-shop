@@ -41,7 +41,8 @@
             ],
             "@spartan-ng/helm/textarea": [
                 "./src/app/libs/ui/textarea/src/index.ts"
-            ]
+            ],
+            "@spartan-ng/helm/dialog": ["./src/app/libs/ui/dialog/src/index.ts"]
         }
     },
     "angularCompilerOptions": {

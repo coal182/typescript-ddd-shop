@@ -1,6 +1,5 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import {select, Store} from '@ngrx/store';
 import {StatusCodes} from 'http-status-codes';
@@ -10,6 +9,7 @@ import {CartItem} from 'src/app/cart/interfaces/cart';
 import {ProductReviewsComponent} from 'src/app/product-reviews/components/product-reviews/product-reviews.component';
 import {ImagePipe} from 'src/app/shared/pipes/image.pipe';
 import {SharedModule} from 'src/app/shared/shared.module';
+import {HlmDialogService} from 'src/app/libs/ui/dialog/src/lib/hlm-dialog.service';
 import {LoadingStatus} from 'src/app/store/metadata-types';
 import {ProductsActions} from 'src/app/store/products/products.actions';
 import {ProductSelectors} from 'src/app/store/products/products.selectors';
@@ -50,7 +50,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         public productService: HttpProductService,
         private cartService: HttpCartService,
-        private readonly dialog: MatDialog,
+        private readonly dialog: HlmDialogService,
         private store: Store,
     ) {}
 
@@ -112,7 +112,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
         setTimeout(() => {
             this.dialog.open(AlertDialogComponent, {
-                data: {title: 'Sharing Product', msg: 'The product has been shared!'},
+                context: {title: 'Sharing Product', msg: 'The product has been shared!'},
             });
 
             this.isLoading = false;
