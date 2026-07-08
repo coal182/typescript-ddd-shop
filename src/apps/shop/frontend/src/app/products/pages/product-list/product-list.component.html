@@ -1,18 +1,15 @@
-<div style="text-align: center">{{ productsCount$ | async }} products</div>
-<div class="row">
-    <div class="col-md-2">
+<div class="text-center">{{ productsCount$ | async }} products</div>
+<div class="flex gap-4">
+    <div class="w-48 shrink-0">
         @if (resultsWithFilterableFields$()) {
             <coal-filter-bar
                 [resultsWithFilterableFields]="resultsWithFilterableFields$()"
                 (filtersSelection)="onFilterSelection($event)"></coal-filter-bar>
         }
     </div>
-    <div class="col-md-10">
+    <div class="flex-1">
         @if (isLoading) {
-            <mat-progress-spinner
-                mode="indeterminate"
-                data-test="progress-spinner-2"
-                style="margin: 0 auto"></mat-progress-spinner>
+            <hlm-spinner class="mx-auto" data-test="progress-spinner-2" />
         }
         <div class="product-list animate__animated animate__fadeIn">
             @for (product of products$ | async; track product.id) {

@@ -5,6 +5,7 @@ import {FilterBarComponent, ResultWithFilterableFields, Selection} from 'ngx-coa
 import {BehaviorSubject, Subject, map, takeUntil, tap} from 'rxjs';
 import {ImagePipe} from 'src/app/shared/pipes/image.pipe';
 import {SharedModule} from 'src/app/shared/shared.module';
+import {HlmSpinnerImports} from '@spartan-ng/helm/spinner';
 import {LoadingStatus} from 'src/app/store/metadata-types';
 import {ProductsActions} from 'src/app/store/products/products.actions';
 import {ProductSelectors} from 'src/app/store/products/products.selectors';
@@ -17,7 +18,7 @@ import {Product} from '../../interfaces/products.interface';
 const AVAILABLE_FILTER_CATEGORIES = ['brand', 'category'] as const;
 
 @Component({
-    imports: [FilterBarComponent, SharedModule, RouterModule, ImagePipe],
+    imports: [FilterBarComponent, SharedModule, RouterModule, ImagePipe, ...HlmSpinnerImports],
     selector: 'app-product-list',
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.css'],
