@@ -1,90 +1,60 @@
-<div class="container">
+<div>
     @if (shouldShowForm) {
-        <form [formGroup]="reviewForm" data-test="review-form">
-            <div class="row">
-                <div class="col-md-12">
-                    <coal-star-rating [formControl]="rating"></coal-star-rating>
-                    <mat-form-field>
-                        <mat-label>Add your review: </mat-label>
-                        <textarea
-                            class="form-control"
-                            formControlName="comment"
-                            placeholder="Place here your review"
-                            matInput
-                            rows="4"
-                        ></textarea>
-                        @if (invalidInput("comment")) {
-                            <mat-error>{{ commentErrorMsg }}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-12">
-                    <button
-                        mat-flat-button
-                        type="submit"
-                        color="primary"
-                        (click)="saveReview()"
-                        class="btn btn-primary float-end"
-                        data-test="save-review-btn"
-                    >
-                        <mat-icon mat-icon matTooltip="Save">save</mat-icon>
-                        Send review
-                    </button>
-                </div>
+        <form [formGroup]="reviewForm" data-test="review-form" class="flex flex-col gap-4">
+            <coal-star-rating [formControl]="rating"></coal-star-rating>
+
+            <hlm-field>
+                <label hlmLabel>Add your review:</label>
+                <textarea
+                    hlmTextarea
+                    formControlName="comment"
+                    placeholder="Place here your review"
+                    rows="4"
+                ></textarea>
+                @if (invalidInput('comment')) {
+                    <hlm-field-error>{{ commentErrorMsg }}</hlm-field-error>
+                }
+            </hlm-field>
+
+            <div class="flex justify-end">
+                <button
+                    hlmBtn
+                    type="submit"
+                    (click)="saveReview()"
+                    [hlmTooltip]="'Save'"
+                    data-test="save-review-btn"
+                >
+                    <ng-icon name="lucideSave" />
+                    Send review
+                </button>
             </div>
         </form>
     }
 
-    <!--
-  <p>value: {{reviewForm.value | json}}</p>
-  <p>status: {{reviewForm.status | json}}</p>
-  <p>pristine: {{reviewForm.pristine| json}}</p>
-  <p>errors: {{reviewForm.errors | json}}</p>
-  <p>invalid input comment: {{invalidInput('comment')}}</p>
-  <p>invalid comment: {{reviewForm.get('comment').invalid | json}}</p>
-  <p>errors comment: {{reviewForm.get('comment').errors | json}}</p>
-  <p>invalid rating: {{reviewForm.get('rating').invalid | json}}</p>
-  <p>errors rating: {{reviewForm.get('rating').errors | json}}</p>
-  -->
-
-    <div class="row">
-        <div class="col-md-12">
-            @for (review of reviews; track review.id) {
-                <ul>
-                    <li>
-                        <div class="rating">
-                            @for (star of [1, 2, 3, 4, 5]; track $index) {
-                                <ng-container>
-                                    <mat-icon
-                                        fontIcon="star"
-                                        [class.filled]="star <= review.rating"
-                                    ></mat-icon>
-                                </ng-container>
-                            }
-                        </div>
-                        @if (review.userId === userId) {
-                            @if (review.userId === userId) {
-                                <div class="edit">
-                                    <mat-icon
-                                        (click)="edit(review)"
-                                        data-test="edit-review-btn"
-                                        >edit</mat-icon
-                                    >
-                                </div>
-                            }
-                        }
-
-                        <div class="user">{{ review.userId }}</div>
-                        <div class="date">
-                            {{ review.createdAt | date: "YYYY-MM-dd hh:mm" }}
-                        </div>
-                        <div class="comment">{{ review.comment }}</div>
-                    </li>
-                </ul>
-            }
-        </div>
-    </div>
+    <ul class="mt-4">
+        @for (review of reviews; track review.id) {
+            <li>
+                <div class="rating">
+                    @for (star of [1, 2, 3, 4, 5]; track $index) {
+                        <ng-icon
+                            name="lucideStar"
+                            [class.filled]="star <= review.rating"
+                        ></ng-icon>
+                    }
+                </div>
+                @if (review.userId === userId) {
+                    <div class="edit">
+                        <ng-icon
+                            name="lucidePencil"
+                            (click)="edit(review)"
+                            data-test="edit-review-btn"
+                        ></ng-icon>
+                    </div>
+                }
+                <div class="user">{{ review.userId }}</div>
+                <div class="date">{{ review.createdAt | date: 'YYYY-MM-dd hh:mm' }}</div>
+                <div class="comment">{{ review.comment }}</div>
+            </li>
+        }
+    </ul>
 </div>

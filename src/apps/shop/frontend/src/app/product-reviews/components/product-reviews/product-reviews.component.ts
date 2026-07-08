@@ -1,14 +1,18 @@
+import {DatePipe} from '@angular/common';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {Component, Input, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import {NgIconComponent} from '@ng-icons/core';
+import {HlmButtonImports} from '@spartan-ng/helm/button';
+import {HlmFieldImports} from '@spartan-ng/helm/field';
+import {HlmLabelImports} from '@spartan-ng/helm/label';
+import {HlmTextareaImports} from '@spartan-ng/helm/textarea';
+import {HlmTooltipImports} from '@spartan-ng/helm/tooltip';
 import {StarRatingComponent} from 'ngx-coal';
 import {Subject} from 'rxjs';
 import {IdProviderService} from 'src/app/shared/services/id-provider.service';
 import {PopupService} from 'src/app/shared/services/popup/popup-service';
 import {StorageService} from 'src/app/shared/services/storage.service';
-import {SharedModule} from 'src/app/shared/shared.module';
 
 import {ProductReview} from '../../interfaces/product-reviews.interface';
 import {HttpProductReviewsService} from '../../services/http-product-reviews.service';
@@ -27,7 +31,18 @@ export interface ProductReviewFormData {
 }
 
 @Component({
-    imports: [StarRatingComponent, SharedModule, MatFormFieldModule, MatInputModule, TextFieldModule, ReactiveFormsModule],
+    imports: [
+        StarRatingComponent,
+        ReactiveFormsModule,
+        TextFieldModule,
+        DatePipe,
+        NgIconComponent,
+        ...HlmButtonImports,
+        ...HlmFieldImports,
+        ...HlmLabelImports,
+        ...HlmTextareaImports,
+        ...HlmTooltipImports,
+    ],
     providers: [{provide: ProductReviewsService, useClass: HttpProductReviewsService}],
     selector: 'app-product-reviews',
     templateUrl: './product-reviews.component.html',
@@ -73,7 +88,6 @@ export class ProductReviewsComponent implements OnInit, OnDestroy {
         } else if (errors?.['maxLength']) {
             return 'Comment is too long, maximum is 1000';
         }
-
         return '';
     }
 
@@ -146,15 +160,11 @@ export class ProductReviewsComponent implements OnInit, OnDestroy {
 
     private resetForm(): void {
         this.reviewForm.reset(this.defaultFormValue);
-        // Object.keys(this.reviewForm.controls).forEach((key) => {
-        //   this.reviewForm.controls[key].setErrors(null);
-        // });
     }
 
     private loadProductReviews(): void {
         this.productReviewsService.get(this.productId).subscribe((res) => {
             this.reviews = res.data;
-
             this.handleFormVisibility();
         });
     }

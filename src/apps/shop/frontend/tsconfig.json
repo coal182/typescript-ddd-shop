@@ -45,7 +45,10 @@
             "@spartan-ng/helm/dialog": [
                 "./src/app/libs/ui/dialog/src/index.ts"
             ],
-            "@spartan-ng/helm/tabs": ["./src/app/libs/ui/tabs/src/index.ts"]
+            "@spartan-ng/helm/tabs": ["./src/app/libs/ui/tabs/src/index.ts"],
+            "@spartan-ng/helm/tooltip": [
+                "./src/app/libs/ui/tooltip/src/index.ts"
+            ]
         }
     },
     "angularCompilerOptions": {

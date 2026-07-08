@@ -1,9 +1,9 @@
-ul{
+ul {
     list-style: none;
     padding: 0;
 }
 
-li{
+li {
     background-color: #f9f9f9;
     padding: 10px;
     margin: 0;
@@ -26,7 +26,7 @@ li div {
 }
 
 .rating {
-    width: 90% ;
+    width: 90%;
 }
 
 .rating .filled {
@@ -39,14 +39,6 @@ li div {
     text-align: right;
 }
 
-.edit mat-icon{
-    font-size: 16px;
-}
-
-.comment{
+.comment {
     width: 100%;
-}
-
-mat-form-field {
-    width: 70%;
 }
