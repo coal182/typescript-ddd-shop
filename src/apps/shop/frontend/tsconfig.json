@@ -49,7 +49,14 @@
             "@spartan-ng/helm/tooltip": [
                 "./src/app/libs/ui/tooltip/src/index.ts"
             ],
-            "@spartan-ng/helm/table": ["./src/app/libs/ui/table/src/index.ts"]
+            "@spartan-ng/helm/table": ["./src/app/libs/ui/table/src/index.ts"],
+            "@spartan-ng/helm/date-picker": [
+                "./src/app/libs/ui/date-picker/src/index.ts"
+            ],
+            "@spartan-ng/helm/calendar": [
+                "./src/app/libs/ui/calendar/src/index.ts"
+            ],
+            "@spartan-ng/helm/select": ["./src/app/libs/ui/select/src/index.ts"]
         }
     },
     "angularCompilerOptions": {

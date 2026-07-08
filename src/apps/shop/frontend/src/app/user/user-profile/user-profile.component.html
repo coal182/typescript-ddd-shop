@@ -1,81 +1,61 @@
-<div class="auth-wrapper container animate__animated animate__fadeIn">
-    <div class="row">
-        <div class="col-md-12">
-            @if (isLoading) {
-                <mat-progress-spinner
-                    mode="indeterminate"
-                    data-test="progress-spinner-2"
-                    style="margin: 0 auto"></mat-progress-spinner>
-            }
-            @if (!isLoading) {
-                <form class="form-signin text-center" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-                    <h3 class="h3 mb-3 font-weight-normal">This is your profile, {{ (user$ | async)?.firstname }}</h3>
-                    @if (profileForm.hasError("entitiesAreEmpty")) {
-                        <mat-error>
-                            {{ profileForm.errors?.entitiesAreEmpty }}
-                        </mat-error>
-                    }
+<div class="auth-wrapper animate__animated animate__fadeIn">
+    @if (isLoading) {
+        <hlm-spinner class="mx-auto" data-test="progress-spinner-2" />
+    }
+    @if (!isLoading) {
+        <form class="flex flex-col gap-4 max-w-lg mx-auto" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <h3>This is your profile, {{ (user$ | async)?.firstname }}</h3>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Firstname</mat-label>
-                        <input matInput type="text" formControlName="firstname" placeholder="Firstname" />
-                        @if (profileForm.get("firstname")?.errors && profileForm.get("firstname")?.touched) {
-                            <mat-error>
-                                {{ validateFormService.getError("Firstname", profileForm.get("firstname")) }}
-                            </mat-error>
-                        }
-                    </mat-form-field>
-                    <br />
-                    <mat-form-field appearance="outline">
-                        <mat-label>Lastname</mat-label>
-                        <input matInput type="text" formControlName="lastname" placeholder="Lastname" />
-                        @if (profileForm.get("lastname")?.errors && profileForm.get("lastname")?.touched) {
-                            <mat-error>
-                                {{ validateFormService.getError("Lastname", profileForm.get("lastname")) }}
-                            </mat-error>
-                        }
-                    </mat-form-field>
-                    <br />
-                    <mat-form-field appearance="outline">
-                        <mat-label>Email</mat-label>
-                        <input matInput type="text" formControlName="email" placeholder="Email" />
-                        @if (profileForm.get("email")?.errors && profileForm.get("email")?.touched) {
-                            <mat-error>
-                                {{ validateFormService.getError("Email", profileForm.get("email")) }}
-                            </mat-error>
-                        }
-                    </mat-form-field>
-                    <br />
-                    <mat-form-field appearance="outline">
-                        <mat-label>Date of birth</mat-label>
-                        <input
-                            matInput
-                            [matDatepicker]="picker"
-                            formControlName="dateOfBirth"
-                            placeholder="Date of birth" />
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        @if (profileForm.get("dateOfBirth")?.errors && profileForm.get("dateOfBirth")?.touched) {
-                            <mat-error>
-                                {{ validateFormService.getError("Date Of Birth", profileForm.get("dateOfBirth")) }}
-                            </mat-error>
-                        }
-                    </mat-form-field>
-                    <p>Form Status: {{ profileForm.status }}</p>
-                    <p>Form Value: {{ profileForm.value | json }}</p>
-                    <p [innerHTML]="formattedMessage"></p>
-                    <br />
-                    <button
-                        type="submit"
-                        mat-flat-button
-                        color="primary"
-                        data-testid="submit-button"
-                        [disabled]="!profileForm.valid">
-                        Update
-                    </button>
-                </form>
+            @if (profileForm.hasError('entitiesAreEmpty')) {
+                <p class="text-destructive text-sm">{{ profileForm.errors?.['entitiesAreEmpty'] }}</p>
             }
-        </div>
-    </div>
+
+            <hlm-field>
+                <label hlmLabel>Firstname</label>
+                <input hlmInput type="text" formControlName="firstname" placeholder="Firstname" />
+                @if (profileForm.get('firstname')?.errors && profileForm.get('firstname')?.touched) {
+                    <hlm-field-error>{{ validateFormService.getError('Firstname', profileForm.get('firstname')) }}</hlm-field-error>
+                }
+            </hlm-field>
+
+            <hlm-field>
+                <label hlmLabel>Lastname</label>
+                <input hlmInput type="text" formControlName="lastname" placeholder="Lastname" />
+                @if (profileForm.get('lastname')?.errors && profileForm.get('lastname')?.touched) {
+                    <hlm-field-error>{{ validateFormService.getError('Lastname', profileForm.get('lastname')) }}</hlm-field-error>
+                }
+            </hlm-field>
+
+            <hlm-field>
+                <label hlmLabel>Email</label>
+                <input hlmInput type="text" formControlName="email" placeholder="Email" />
+                @if (profileForm.get('email')?.errors && profileForm.get('email')?.touched) {
+                    <hlm-field-error>{{ validateFormService.getError('Email', profileForm.get('email')) }}</hlm-field-error>
+                }
+            </hlm-field>
+
+            <hlm-field>
+                <label hlmLabel>Date of birth</label>
+                <hlm-date-picker formControlName="dateOfBirth">
+                    <hlm-date-picker-input placeholder="MM/DD/YYYY" />
+                </hlm-date-picker>
+                @if (profileForm.get('dateOfBirth')?.errors && profileForm.get('dateOfBirth')?.touched) {
+                    <hlm-field-error>{{ validateFormService.getError('Date Of Birth', profileForm.get('dateOfBirth')) }}</hlm-field-error>
+                }
+            </hlm-field>
+
+            <p class="text-sm text-muted-foreground">Form Status: {{ profileForm.status }}</p>
+            <p class="text-sm text-muted-foreground">Form Value: {{ profileForm.value | json }}</p>
+            <p [innerHTML]="formattedMessage"></p>
+
+            <button
+                hlmBtn
+                type="submit"
+                class="w-full"
+                data-testid="submit-button"
+                [disabled]="!profileForm.valid">
+                Update
+            </button>
+        </form>
+    }
 </div>

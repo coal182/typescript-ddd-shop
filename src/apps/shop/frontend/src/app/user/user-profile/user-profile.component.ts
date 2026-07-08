@@ -2,10 +2,15 @@ import {AsyncPipe, JsonPipe} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {ActivatedRoute, RouterModule} from '@angular/router';
+import {HlmButtonImports} from '@spartan-ng/helm/button';
+import {HlmDatePickerImports} from '@spartan-ng/helm/date-picker';
+import {HlmFieldImports} from '@spartan-ng/helm/field';
+import {HlmInputImports} from '@spartan-ng/helm/input';
+import {HlmLabelImports} from '@spartan-ng/helm/label';
+import {HlmSpinnerImports} from '@spartan-ng/helm/spinner';
 import {StatusCodes} from 'http-status-codes';
 import {map, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {MaterialModule} from 'src/app/shared/material/material.module';
 import {ValidationService} from 'src/app/shared/services/validation.service';
 import Swal from 'sweetalert2';
 
@@ -17,7 +22,18 @@ import {PutUserParams} from '../user-service/user.service';
     selector: 'app-user-profile',
     templateUrl: './user-profile.component.html',
     styleUrls: ['./user-profile.component.css'],
-    imports: [RouterModule, MaterialModule, ReactiveFormsModule, AsyncPipe, JsonPipe],
+    imports: [
+        RouterModule,
+        ReactiveFormsModule,
+        AsyncPipe,
+        JsonPipe,
+        ...HlmButtonImports,
+        ...HlmDatePickerImports,
+        ...HlmFieldImports,
+        ...HlmInputImports,
+        ...HlmLabelImports,
+        ...HlmSpinnerImports,
+    ],
 })
 export class UserProfileComponent implements OnInit {
     currentUser: User;
@@ -43,6 +59,7 @@ export class UserProfileComponent implements OnInit {
             {validators: this.mandatoryFieldsValidator('email')},
         );
     }
+
     ngOnInit(): void {
         const routeParams = this.route.snapshot.paramMap;
         this.userIdFromRoute = routeParams.get('id');
@@ -96,28 +113,13 @@ export class UserProfileComponent implements OnInit {
             next: (data) => {
                 switch (data.status) {
                     case StatusCodes.OK:
-                        Swal.fire({
-                            title: 'Success',
-                            text: 'User updated successfully',
-                            icon: 'success',
-                            confirmButtonText: 'OK',
-                        });
+                        Swal.fire({title: 'Success', text: 'User updated successfully', icon: 'success', confirmButtonText: 'OK'});
                         break;
                     case StatusCodes.BAD_REQUEST:
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'User already exists',
-                            icon: 'error',
-                            confirmButtonText: 'OK',
-                        });
+                        Swal.fire({title: 'Error', text: 'User already exists', icon: 'error', confirmButtonText: 'OK'});
                         break;
                     default:
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'There was an error!',
-                            icon: 'error',
-                            confirmButtonText: 'OK',
-                        });
+                        Swal.fire({title: 'Error', text: 'There was an error!', icon: 'error', confirmButtonText: 'OK'});
                         break;
                 }
             },
@@ -139,7 +141,6 @@ export class UserProfileComponent implements OnInit {
                     emptyFields.push(field);
                 }
             }
-
             return emptyFields.length === fields.length ? {entitiesAreEmpty: 'At least one supported entity must be provided.'} : null;
         };
     }
