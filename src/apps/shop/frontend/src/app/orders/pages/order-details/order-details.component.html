@@ -1,45 +1,40 @@
 <h2>Order Details</h2>
-@if (order$ | async) {
-    <div class="order-detail">
-        @if (!isLoading) {
-            <div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3>{{ (order$ | async)?.name }}</h3>
-                        <p>
-                            {{ (order$ | async)?.address.street }} {{ (order$ | async)?.address.number }}
-                            {{ (order$ | async)?.address.city }}
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <table mat-table [dataSource]="(order$ | async)?.lines" class="order-table" #table>
-                            <ng-container matColumnDef="name">
-                                <th mat-header-cell *matHeaderCellDef>Name</th>
-                                <td mat-cell *matCellDef="let item">{{ item.product.name }}</td>
-                            </ng-container>
-                            <ng-container matColumnDef="qty">
-                                <th mat-header-cell *matHeaderCellDef>Qty</th>
-                                <td mat-cell *matCellDef="let item">{{ item.qty }}</td>
-                            </ng-container>
-                            <ng-container matColumnDef="price">
-                                <th mat-header-cell *matHeaderCellDef>Price</th>
-                                <td mat-cell *matCellDef="let item">{{ item.price | currency }}</td>
-                            </ng-container>
-
-                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-                        </table>
-                        <h4>{{ (order$ | async)?.total | currency }}</h4>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-}
 
 @if (isLoading) {
-    <mat-progress-spinner
-        mode="indeterminate"
-        data-test="progress-spinner-2"
-        style="margin: 0 auto"></mat-progress-spinner>
+    <hlm-spinner class="mx-auto" data-test="progress-spinner-2" />
+}
+
+@let order = order$ | async;
+@if (order && !isLoading) {
+    <div class="order-detail animate__animated animate__fadeIn">
+        <div class="flex gap-6">
+            <div class="w-1/2">
+                <h3>{{ order.name }}</h3>
+                <p>{{ order.address }}</p>
+            </div>
+            <div class="w-1/2">
+                <div hlmTableContainer>
+                    <table hlmTable>
+                        <thead hlmTHead>
+                            <tr hlmTr>
+                                <th hlmTh>Name</th>
+                                <th hlmTh>Qty</th>
+                                <th hlmTh>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody hlmTBody>
+                            @for (item of order.items; track $index) {
+                                <tr hlmTr>
+                                    <td hlmTd>{{ item.product.name }}</td>
+                                    <td hlmTd>{{ item.qty }}</td>
+                                    <td hlmTd>{{ item.price | currency }}</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <h4>{{ order.total | currency }}</h4>
+            </div>
+        </div>
+    </div>
 }
